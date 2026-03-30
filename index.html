@@ -171,7 +171,9 @@ function parseCSV(text) {
       salePsfMax: parseInt(obj.salePsfMax) || 700,
       lat: parseFloat(obj.lat) || 3.170,
       lng: parseFloat(obj.lng) || 101.652,
-      developer: obj.developer || 'Other'
+      developer: obj.developer || 'Other',
+      ipropertyUrl: obj.iproperty_url || '',
+      homepageUrl: obj.homepage_url || ''
     };
   }).filter(c => c.name);
 }
@@ -304,7 +306,12 @@ function mkMarker(c) {
       <div class="popup-cell"><div class="popup-cell-label">Rent/mo</div><div class="popup-cell-val" style="color:#1a73e8">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>
       <div class="popup-cell"><div class="popup-cell-label">Size</div><div class="popup-cell-val">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</div></div>
       <div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#ea8600">${c.yield.toFixed(1)}%</div></div>
-    </div></div>`);
+    </div>
+    <div style="display:flex;gap:6px;margin-top:10px">
+      ${c.ipropertyUrl ? '<a href="'+c.ipropertyUrl+'" target="_blank" style="flex:1;text-align:center;padding:7px;background:#1a73e8;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600">iProperty</a>' : ''}
+      ${c.homepageUrl ? '<a href="'+c.homepageUrl+'" target="_blank" style="flex:1;text-align:center;padding:7px;background:#34a853;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600">Official Site</a>' : ''}
+    </div>
+    </div>`);
   m.on('click',()=>selectCondo(c.name));
 
   // Permanent label
