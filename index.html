@@ -133,73 +133,48 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 
 <script>
 // ============================================================
-// DATABASE: 61 Mont Kiara Condominiums
-// GPS: OpenStreetMap Nominatim (Mar 2026)
-// Luxury Index: Corrected formula (avg size, min-size penalty, brand boost)
+// DATA SOURCE: Google Sheets (CSV published)
 // ============================================================
-const CONDOS=[
-{name:"10 Mont Kiara (MK10)",addr:"Jalan Kiara 1, Mont Kiara, 50480 KL",year:2009,units:332,sizeMin:3478,sizeMax:7500,rentMin:15000,rentMax:20000,salePsfMin:1200,salePsfMax:1500,lat:3.17009,lng:101.65609},
-{name:"11 Mont Kiara (MK11)",addr:"Jalan Kiara 1, Mont Kiara, 50480 KL",year:2011,units:339,sizeMin:2707,sizeMax:6705,rentMin:13000,rentMax:20000,salePsfMin:1000,salePsfMax:1300,lat:3.16897,lng:101.65511},
-{name:"28 Mont Kiara (MK28)",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:2012,units:460,sizeMin:2535,sizeMax:3000,rentMin:9000,rentMax:15000,salePsfMin:850,salePsfMax:950,lat:3.17339,lng:101.65296},
-{name:"Agile Mont Kiara",addr:"Jalan Duta Kiara, Dutamas, 50480 KL",year:2020,units:813,sizeMin:1215,sizeMax:5090,rentMin:5000,rentMax:15000,salePsfMin:950,salePsfMax:1100,lat:3.17192,lng:101.66176},
-{name:"Allevia Mont Kiara",addr:"Jalan Kiara 4, Mont Kiara, 50480 KL",year:2025,units:294,sizeMin:1703,sizeMax:2634,rentMin:10000,rentMax:20000,salePsfMin:1000,salePsfMax:1200,lat:3.17238,lng:101.65057},
-{name:"Almaspuri Mont Kiara",addr:"Jalan 1/70C, off Jalan Kiara, 50480 KL",year:2003,units:132,sizeMin:1550,sizeMax:1600,rentMin:4500,rentMax:6000,salePsfMin:600,salePsfMax:700,lat:3.16971,lng:101.65209},
-{name:"Aman Mont Kiara",addr:"Jalan Kiara 2, Mont Kiara, 50480 KL",year:2005,units:345,sizeMin:1668,sizeMax:4647,rentMin:6000,rentMax:10000,salePsfMin:650,salePsfMax:750,lat:3.17271,lng:101.65540},
-{name:"Angkupuri Mont Kiara",addr:"20 Jalan 1/70C, Mont Kiara, 50480 KL",year:1998,units:210,sizeMin:1249,sizeMax:1550,rentMin:3000,rentMax:4500,salePsfMin:500,salePsfMax:550,lat:3.17028,lng:101.65215},
-{name:"Arcoris Mont Kiara",addr:"10 Jalan Kiara, Mont Kiara, 50480 KL",year:2016,units:697,sizeMin:496,sizeMax:4241,rentMin:3000,rentMax:15000,salePsfMin:950,salePsfMax:1300,lat:3.16784,lng:101.65183},
-{name:"Arte Mont Kiara",addr:"Jalan Sultan Haji Ahmad Shah, 50480 KL",year:2020,units:1707,sizeMin:442,sizeMax:1851,rentMin:2000,rentMax:7000,salePsfMin:900,salePsfMax:1000,lat:3.17613,lng:101.66497},
-{name:"Astana Mont Kiara",addr:"Jalan Kiara 2, Mont Kiara, 50480 KL",year:2000,units:281,sizeMin:1241,sizeMax:1690,rentMin:4000,rentMax:6500,salePsfMin:600,salePsfMax:700,lat:3.17140,lng:101.65431},
-{name:"Aston Kiara 3",addr:"27 Jalan Kiara 3, Mont Kiara, 51200 KL",year:2011,units:160,sizeMin:1517,sizeMax:1598,rentMin:2500,rentMax:3000,salePsfMin:350,salePsfMax:400,lat:3.17277,lng:101.65072},
-{name:"Astrea Mont Kiara",addr:"Jalan Kiara 5, Mont Kiara, 50480 KL",year:2024,units:240,sizeMin:1364,sizeMax:1859,rentMin:4500,rentMax:9000,salePsfMin:900,salePsfMax:1000,lat:3.16998,lng:101.64669},
-{name:"Banyan Mont Kiara",addr:"Jalan Kiara 2, Mont Kiara, 50480 KL",year:2007,units:147,sizeMin:1838,sizeMax:2648,rentMin:6000,rentMax:10000,salePsfMin:650,salePsfMax:750,lat:3.17236,lng:101.65228},
-{name:"Bayu Mont Kiara",addr:"Jalan Kiara 2, Mont Kiara, 50480 KL",year:2002,units:398,sizeMin:798,sizeMax:2300,rentMin:2200,rentMax:4000,salePsfMin:600,salePsfMax:700,lat:3.17279,lng:101.65399},
-{name:"Casa Kiara 1",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2006,units:223,sizeMin:1235,sizeMax:1268,rentMin:3000,rentMax:4000,salePsfMin:500,salePsfMax:550,lat:3.16891,lng:101.64813},
-{name:"Casa Kiara 2",addr:"Jalan Kiara 5, Mont Kiara, 50480 KL",year:2009,units:206,sizeMin:1375,sizeMax:1574,rentMin:3500,rentMax:4500,salePsfMin:600,salePsfMax:700,lat:3.16891,lng:101.64813},
-{name:"Ceriaan Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2009,units:238,sizeMin:1828,sizeMax:2208,rentMin:4000,rentMax:6000,salePsfMin:500,salePsfMax:550,lat:3.16936,lng:101.65018},
-{name:"Damai Mont Kiara",addr:"Jalan Kiara 2, Mont Kiara, 50480 KL",year:2004,units:230,sizeMin:2272,sizeMax:5700,rentMin:8000,rentMax:16000,salePsfMin:800,salePsfMax:900,lat:3.17111,lng:101.65617},
-{name:"Flora Murni Mont Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2006,units:71,sizeMin:1615,sizeMax:5490,rentMin:7000,rentMax:20000,salePsfMin:600,salePsfMax:1000,lat:3.16607,lng:101.64952},
-{name:"Gateway Kiaramas",addr:"No 1, Jalan Desa Kiara, Mont Kiara, 50480 KL",year:2010,units:168,sizeMin:743,sizeMax:3563,rentMin:2500,rentMax:5000,salePsfMin:550,salePsfMax:850,lat:3.16584,lng:101.64584},
-{name:"Hartamas Regency 1",addr:"Persiaran Dutamas, Desa Sri Hartamas, 50480 KL",year:2005,units:244,sizeMin:1181,sizeMax:2935,rentMin:3000,rentMax:6000,salePsfMin:550,salePsfMax:600,lat:3.17428,lng:101.66312},
-{name:"Hartamas Regency 2",addr:"Persiaran Dutamas, Desa Sri Hartamas, 50480 KL",year:2007,units:210,sizeMin:1315,sizeMax:3380,rentMin:3000,rentMax:6000,salePsfMin:550,salePsfMax:600,lat:3.17237,lng:101.66312},
-{name:"Hijauan Kiara",addr:"Jalan Kiara 5, Mont Kiara, 50480 KL",year:2008,units:188,sizeMin:2090,sizeMax:5045,rentMin:6500,rentMax:12000,salePsfMin:600,salePsfMax:700,lat:3.16664,lng:101.64580},
-{name:"Icon Residence",addr:"No 20, Persiaran Dutamas, 50480 KL",year:2014,units:260,sizeMin:673,sizeMax:4719,rentMin:3000,rentMax:12000,salePsfMin:800,salePsfMax:900,lat:3.17350,lng:101.66450},
-{name:"Inspirasi Mont Kiara",addr:"Jalan Kiara 4, Mont Kiara, 50480 KL",year:2022,units:640,sizeMin:940,sizeMax:1015,rentMin:3000,rentMax:4500,salePsfMin:750,salePsfMax:850,lat:3.17177,lng:101.65053},
-{name:"Kami Mont Kiara",addr:"Jalan Duta Kiara, Dutamas, 50480 KL",year:2025,units:168,sizeMin:840,sizeMax:1604,rentMin:4000,rentMax:10000,salePsfMin:1100,salePsfMax:1200,lat:3.17395,lng:101.66240},
-{name:"i-Zen Kiara 1",addr:"1 Jalan Kiara, Mont Kiara, 50480 KL",year:2008,units:302,sizeMin:805,sizeMax:1407,rentMin:2500,rentMax:5500,salePsfMin:700,salePsfMax:750,lat:3.16597,lng:101.65476},
-{name:"i-Zen Kiara 2",addr:"1 Jalan Kiara, Mont Kiara, 50480 KL",year:2006,units:238,sizeMin:725,sizeMax:1701,rentMin:2500,rentMax:6500,salePsfMin:600,salePsfMax:650,lat:3.16620,lng:101.65500},
-{name:"Kiara 1888",addr:"No 17, Jalan Kiara 3, Mont Kiara, 50480 KL",year:2008,units:182,sizeMin:1238,sizeMax:3982,rentMin:3500,rentMax:9000,salePsfMin:550,salePsfMax:600,lat:3.16993,lng:101.65015},
-{name:"Kiara 9 Residency",addr:"22 Jalan Kiara 3, Mont Kiara, 50480 KL",year:2011,units:192,sizeMin:1661,sizeMax:2691,rentMin:5000,rentMax:15000,salePsfMin:700,salePsfMax:800,lat:3.16994,lng:101.64827},
-{name:"Kiara Designer Suites",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2007,units:324,sizeMin:1088,sizeMax:1600,rentMin:3000,rentMax:4500,salePsfMin:600,salePsfMax:650,lat:3.16839,lng:101.64752},
-{name:"Kiaramas Ayuria",addr:"9 Jalan Desa Kiara, Mont Kiara, 50480 KL",year:2008,units:480,sizeMin:1605,sizeMax:4000,rentMin:4000,rentMax:8000,salePsfMin:600,salePsfMax:650,lat:3.16770,lng:101.64227},
-{name:"Kiaramas Cendana",addr:"10 Jalan Desa Kiara, Mont Kiara, 50480 KL",year:2006,units:184,sizeMin:1650,sizeMax:4530,rentMin:4500,rentMax:8000,salePsfMin:650,salePsfMax:750,lat:3.16668,lng:101.64208},
-{name:"Kiaramas Danai",addr:"Jalan Desa Kiara, Mont Kiara, 50480 KL",year:2013,units:274,sizeMin:2025,sizeMax:2498,rentMin:6500,rentMax:10000,salePsfMin:800,salePsfMax:900,lat:3.16607,lng:101.64198},
-{name:"Kiaramas Sutera",addr:"Jalan Desa Kiara, Mont Kiara, 50480 KL",year:2004,units:315,sizeMin:1347,sizeMax:4100,rentMin:3000,rentMax:7000,salePsfMin:550,salePsfMax:600,lat:3.16769,lng:101.64386},
-{name:"Kiaraville",addr:"Changkat Duta Kiara, Mont Kiara, 50480 KL",year:2008,units:404,sizeMin:1593,sizeMax:3935,rentMin:5500,rentMax:15000,salePsfMin:700,salePsfMax:800,lat:3.17291,lng:101.65978},
-{name:"La Grande Mont Kiara",addr:"Jalan Duta Kiara, Mont Kiara, 50480 KL",year:2005,units:298,sizeMin:1961,sizeMax:2047,rentMin:4000,rentMax:6000,salePsfMin:550,salePsfMax:600,lat:3.17481,lng:101.65805},
-{name:"Laman Suria Mont Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2004,units:202,sizeMin:931,sizeMax:1178,rentMin:2500,rentMax:5000,salePsfMin:600,salePsfMax:650,lat:3.16881,lng:101.65005},
-{name:"Lanai Kiara",addr:"No 1, Jalan Kiara 3, Mont Kiara, 50480 KL",year:1998,units:181,sizeMin:1400,sizeMax:4300,rentMin:3000,rentMax:6000,salePsfMin:400,salePsfMax:450,lat:3.16551,lng:101.64942},
-{name:"Lumina Kiara",addr:"Jalan Duta Kiara, Mont Kiara, 50480 KL",year:2010,units:104,sizeMin:1448,sizeMax:3152,rentMin:4500,rentMax:15000,salePsfMin:600,salePsfMax:700,lat:3.17482,lng:101.65667},
-{name:"Meridin Mont Kiara",addr:"Jalan Duta Kiara, Mont Kiara, 50480 KL",year:2009,units:228,sizeMin:1787,sizeMax:2513,rentMin:4500,rentMax:8000,salePsfMin:550,salePsfMax:600,lat:3.17445,lng:101.65328},
-{name:"OOAK Kiara 163",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:2022,units:336,sizeMin:696,sizeMax:1016,rentMin:3000,rentMax:9000,salePsfMin:1200,salePsfMax:1300,lat:3.16686,lng:101.65161},
-{name:"Palma Mont Kiara",addr:"Jalan 1/70C, Mont Kiara, 50480 KL",year:1994,units:402,sizeMin:1208,sizeMax:1390,rentMin:4000,rentMax:6000,salePsfMin:700,salePsfMax:750,lat:3.16775,lng:101.65396},
-{name:"Pavilion Hilltop",addr:"Changkat Duta Kiara, Mont Kiara, 50480 KL",year:2018,units:621,sizeMin:1200,sizeMax:3671,rentMin:5000,rentMax:20000,salePsfMin:1000,salePsfMax:1200,lat:3.16946,lng:101.65745},
-{name:"Pelangi Mont Kiara",addr:"Jalan Kiara 1, Mont Kiara, 50480 KL",year:1994,units:302,sizeMin:1208,sizeMax:1390,rentMin:3500,rentMax:6000,salePsfMin:600,salePsfMax:650,lat:3.16877,lng:101.65341},
-{name:"Pentamont Mont Kiara",addr:"Jalan Kiara 5, Mont Kiara, 50480 KL",year:2023,units:330,sizeMin:1379,sizeMax:2125,rentMin:5000,rentMax:15000,salePsfMin:900,salePsfMax:1100,lat:3.17069,lng:101.64829},
-{name:"Pines Mont Kiara",addr:"Jalan Kiara 1, Mont Kiara, 50480 KL",year:1993,units:508,sizeMin:1208,sizeMax:1428,rentMin:3000,rentMax:6000,salePsfMin:600,salePsfMax:650,lat:3.16689,lng:101.65438},
-{name:"Residensi 22",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2017,units:534,sizeMin:1878,sizeMax:3043,rentMin:9000,rentMax:20000,salePsfMin:1200,salePsfMax:1400,lat:3.16796,lng:101.64991},
-{name:"Residensi Sefina",addr:"19 Jalan Kiara 3, Mont Kiara, 50480 KL",year:2019,units:245,sizeMin:1333,sizeMax:1771,rentMin:4500,rentMax:8000,salePsfMin:800,salePsfMax:850,lat:3.17093,lng:101.64956},
-{name:"Richmond Mont Kiara",addr:"Jalan Kiara 3, Mont Kiara, 51200 KL",year:2014,units:96,sizeMin:1931,sizeMax:2148,rentMin:3000,rentMax:4000,salePsfMin:350,salePsfMax:400,lat:3.17317,lng:101.65089},
-{name:"Seni Mont Kiara",addr:"Changkat Duta Kiara, Mont Kiara, 50480 KL",year:2010,units:605,sizeMin:2437,sizeMax:3531,rentMin:8000,rentMax:20000,salePsfMin:800,salePsfMax:900,lat:3.17082,lng:101.65963},
-{name:"Solaris Dutamas (Publika)",addr:"No 1, Jalan Dutamas 1, 50480 KL",year:2009,units:800,sizeMin:672,sizeMax:1238,rentMin:2500,rentMax:6000,salePsfMin:800,salePsfMax:950,lat:3.17108,lng:101.66591},
-{name:"Solaris Parq",addr:"Jalan Changkat Hartamas, 50480 KL",year:2023,units:576,sizeMin:721,sizeMax:1423,rentMin:3500,rentMax:9000,salePsfMin:1200,salePsfMax:1300,lat:3.17375,lng:101.66942},
-{name:"Sophia Mont Kiara",addr:"Jalan Kiara 1, Mont Kiara, 50480 KL",year:1997,units:238,sizeMin:750,sizeMax:1386,rentMin:3000,rentMax:6000,salePsfMin:650,salePsfMax:700,lat:3.17017,lng:101.65414},
-{name:"Sunway Mont",addr:"16 Jalan Kiara 5, Mont Kiara, 50480 KL",year:2020,units:288,sizeMin:1122,sizeMax:1906,rentMin:4000,rentMax:9000,salePsfMin:850,salePsfMax:950,lat:3.16948,lng:101.64641},
-{name:"Sunway Vivaldi",addr:"Jalan 19/70A, Desa Sri Hartamas, 50480 KL",year:2011,units:208,sizeMin:2573,sizeMax:3983,rentMin:9000,rentMax:20000,salePsfMin:800,salePsfMax:950,lat:3.16446,lng:101.64610},
-{name:"Tiffani Kiara",addr:"No 1, Changkat Duta Kiara, Mont Kiara, 50480 KL",year:2009,units:399,sizeMin:815,sizeMax:3729,rentMin:3000,rentMax:12000,salePsfMin:700,salePsfMax:800,lat:3.17341,lng:101.65833},
-{name:"TWY Mont Kiara",addr:"Jalan Duta Kiara, Mont Kiara, 50480 KL",year:2021,units:484,sizeMin:662,sizeMax:1385,rentMin:2500,rentMax:7000,salePsfMin:900,salePsfMax:1000,lat:3.17456,lng:101.65192},
-{name:"Verve Suites Mont Kiara",addr:"8 Jalan Kiara 5, Mont Kiara, 50480 KL",year:2013,units:933,sizeMin:462,sizeMax:1394,rentMin:2000,rentMax:6000,salePsfMin:850,salePsfMax:1000,lat:3.16769,lng:101.64605},
-{name:"Vista Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:1997,units:409,sizeMin:1230,sizeMax:1410,rentMin:3000,rentMax:4500,salePsfMin:500,salePsfMax:550,lat:3.16688,lng:101.64988}
-];
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIpzGj3RLzAjotAm0IcfBZPychw4C3thCWXGsNCfoN32v8gKwupseRtB-05puHFfg2QPmlBtf9yP0/pub?gid=943190081&single=true&output=csv';
+
+let CONDOS = [];
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',');
+  return lines.slice(1).map(line => {
+    // Handle commas inside quoted fields
+    const vals = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { vals.push(cur.trim()); cur = ''; }
+      else { cur += ch; }
+    }
+    vals.push(cur.trim());
+    const obj = {};
+    headers.forEach((h, i) => {
+      const v = (vals[i] || '').replace(/^"|"$/g, '');
+      obj[h.trim()] = v;
+    });
+    return {
+      name: obj.name || '',
+      addr: obj.addr || '',
+      year: parseInt(obj.year) || 2000,
+      units: parseInt(obj.units) || 100,
+      sizeMin: parseInt(obj.sizeMin) || 500,
+      sizeMax: parseInt(obj.sizeMax) || 1500,
+      rentMin: parseInt(obj.rentMin) || 2000,
+      rentMax: parseInt(obj.rentMax) || 5000,
+      salePsfMin: parseInt(obj.salePsfMin) || 500,
+      salePsfMax: parseInt(obj.salePsfMax) || 700,
+      lat: parseFloat(obj.lat) || 3.170,
+      lng: parseFloat(obj.lng) || 101.652,
+      developer: obj.developer || 'Other'
+    };
+  }).filter(c => c.name);
+}
 
 // ============================================================
 // DEVELOPER DATABASE & BRAND SCORING
@@ -228,31 +203,7 @@ const DEVELOPERS = {
   'Other':                {tier:'C', score:30, note:'Various smaller developers'}
 };
 
-// Map each condo to its developer
-const DEV_MAP = {
-  '10 Mont Kiara (MK10)':'UEM Sunrise','11 Mont Kiara (MK11)':'UEM Sunrise','28 Mont Kiara (MK28)':'UEM Sunrise',
-  'Allevia Mont Kiara':'UEM Sunrise','Aman Mont Kiara':'UEM Sunrise','Arcoris Mont Kiara':'UEM Sunrise',
-  'Astana Mont Kiara':'UEM Sunrise','Astrea Mont Kiara':'UEM Sunrise','Banyan Mont Kiara':'UEM Sunrise',
-  'Bayu Mont Kiara':'UEM Sunrise','Damai Mont Kiara':'UEM Sunrise','Inspirasi Mont Kiara':'UEM Sunrise',
-  'Kiara Designer Suites':'UEM Sunrise','La Grande Mont Kiara':'UEM Sunrise','Meridin Mont Kiara':'UEM Sunrise',
-  'Palma Mont Kiara':'UEM Sunrise','Pelangi Mont Kiara':'UEM Sunrise','Pines Mont Kiara':'UEM Sunrise',
-  'Sophia Mont Kiara':'UEM Sunrise','Residensi 22':'UEM Sunrise','Residensi Sefina':'UEM Sunrise',
-  'Seni Mont Kiara':'UEM Sunrise','Solaris Dutamas (Publika)':'UEM Sunrise','Solaris Parq':'UEM Sunrise',
-  'Pavilion Hilltop':'Pavilion Group',
-  'Sunway Vivaldi':'Sunway Property','Sunway Mont':'Sunway Property',
-  'Flora Murni Mont Kiara':'Bukit Kiara Properties','Hijauan Kiara':'Bukit Kiara Properties','Verve Suites Mont Kiara':'Bukit Kiara Properties',
-  'Kiaramas Ayuria':'Asia Quest','Kiaramas Cendana':'Asia Quest','Kiaramas Danai':'Asia Quest',
-  'Kiaramas Sutera':'Asia Quest','Gateway Kiaramas':'Asia Quest','Kiaraville':'Asia Quest',
-  'i-Zen Kiara 1':'Ireka','i-Zen Kiara 2':'Ireka','Tiffani Kiara':'Ireka',
-  'Agile Mont Kiara':'Agile','Arte Mont Kiara':'Arte Corp',
-  'OOAK Kiara 163':'Naza TTDI','TWY Mont Kiara':'Tropicana','Icon Residence':'Mah Sing',
-  'Kami Mont Kiara':'OSK Property','Pentamont Mont Kiara':'Trinity Group',
-  'Kiara 1888':'Bolton','Kiara 9 Residency':'Mitrajaya','Lumina Kiara':'UEM Sunrise',
-  'Almaspuri Mont Kiara':'Other','Angkupuri Mont Kiara':'Other','Aston Kiara 3':'Other',
-  'Casa Kiara 1':'Other','Casa Kiara 2':'Sunway Property','Ceriaan Kiara':'Other',
-  'Hartamas Regency 1':'Other','Hartamas Regency 2':'Other','Laman Suria Mont Kiara':'Other',
-  'Lanai Kiara':'Other','Richmond Mont Kiara':'Other','Vista Kiara':'Other'
-};
+// Developer is now read from Google Sheets CSV 'developer' column
 
 // ============================================================
 // LUXURY INDEX CALCULATION (with Brand factor)
@@ -267,7 +218,6 @@ function calcLuxury(condos) {
     c.rentPsf = c.sizeMid > 0 ? c.rentMid / c.sizeMid : 0;
     c.estPriceMid = c.salePsfMid * c.sizeMid;
     c.minSizeFactor = Math.min(1, Math.max(0.5, (c.sizeMin - 400) / 1100));
-    c.developer = DEV_MAP[c.name] || 'Other';
     c.devInfo = DEVELOPERS[c.developer] || DEVELOPERS['Other'];
     c.brandScore = c.devInfo.score;
   });
@@ -292,8 +242,6 @@ function calcLuxury(condos) {
     c.luxTier = c.luxScore >= 65 ? 'S' : c.luxScore >= 45 ? 'A' : c.luxScore >= 25 ? 'B' : 'C';
   });
 }
-
-calcLuxury(CONDOS);
 
 // ============================================================
 // YEAR COLOR SCALE (new=blue, old=amber/brown)
@@ -472,7 +420,23 @@ function togglePanel(){
   setTimeout(()=>map.invalidateSize(),300);
 }
 
-applyFilters();
+// ============================================================
+// INIT: Fetch from Google Sheets, then render
+// ============================================================
+(async function init() {
+  try {
+    document.getElementById('condoList').innerHTML = '<div style="padding:20px;text-align:center;color:#80868b">Loading data from Google Sheets...</div>';
+    const res = await fetch(SHEET_CSV_URL);
+    const text = await res.text();
+    CONDOS = parseCSV(text);
+    if (CONDOS.length === 0) throw new Error('No data');
+    calcLuxury(CONDOS);
+    filtered = [...CONDOS];
+    applyFilters();
+  } catch(e) {
+    document.getElementById('condoList').innerHTML = '<div style="padding:20px;text-align:center;color:#ea4335">Failed to load data: ' + e.message + '</div>';
+  }
+})();
 </script>
 </body>
 </html>
