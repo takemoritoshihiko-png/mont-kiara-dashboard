@@ -431,17 +431,35 @@ function togglePanel(){
 // INIT: Fetch from Google Sheets, then render
 // ============================================================
 (async function init() {
-  try {
-    document.getElementById('condoList').innerHTML = '<div style="padding:20px;text-align:center;color:#80868b">Loading data from Google Sheets...</div>';
-    const res = await fetch(SHEET_CSV_URL);
+  const listEl = document.getElementById('condoList');
+  listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#80868b">Loading data from Google Sheets...</div>';
+
+  async function tryFetch(url) {
+    const res = await fetch(url, { redirect: 'follow' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const text = await res.text();
+    // Check if response is HTML (error page) instead of CSV
+    if (text.trim().startsWith('<!') || text.trim().startsWith('<html')) throw new Error('Got HTML instead of CSV');
+    return text;
+  }
+
+  try {
+    let text;
+    try {
+      text = await tryFetch(SHEET_CSV_URL);
+    } catch(e1) {
+      // Fallback: try via allorigins proxy
+      listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#80868b">Retrying via proxy...</div>';
+      const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(SHEET_CSV_URL);
+      text = await tryFetch(proxyUrl);
+    }
     CONDOS = parseCSV(text);
-    if (CONDOS.length === 0) throw new Error('No data');
+    if (CONDOS.length === 0) throw new Error('No data parsed from CSV');
     calcLuxury(CONDOS);
     filtered = [...CONDOS];
     applyFilters();
   } catch(e) {
-    document.getElementById('condoList').innerHTML = '<div style="padding:20px;text-align:center;color:#ea4335">Failed to load data: ' + e.message + '</div>';
+    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#ea4335">Failed to load data: ' + e.message + '<br><br><small style="color:#80868b">Google Sheets URL may need re-publishing.<br>Check: File > Share > Publish to web</small></div>';
   }
 })();
 </script>
