@@ -248,21 +248,28 @@ function calcLuxury(condos) {
     c.brandScore = c.devInfo.score;
   });
 
-  const norm = (arr, inv) => {
-    const mn = Math.min(...arr), mx = Math.max(...arr);
-    if (mx === mn) return arr.map(() => 50);
-    return arr.map(v => inv ? 100*(1-(v-mn)/(mx-mn)) : 100*(v-mn)/(mx-mn));
+  // Fixed reference ranges (not affected by adding/removing condos)
+  // These define what "0" and "100" mean for each metric
+  const REF = {
+    sizeMid:  { min: 500,  max: 6000 },   // avg sqft: 500=studio, 6000=ultra luxury
+    psfMid:   { min: 200,  max: 2000 },   // RM PSF: 200=budget, 2000=ultra premium
+    rentMax:  { min: 2000, max: 25000 },   // RM/mo: 2000=basic, 25000=super luxury
+    priceMid: { min: 200000, max: 10000000 }, // RM total: 200K=budget, 10M=ultra
+    units:    { min: 10,   max: 1200 }     // exclusivity: 10=ultra exclusive, 1200=mass
+  };
+  const normFixed = (v, min, max, inv) => {
+    const t = Math.max(0, Math.min(1, (v - min) / (max - min)));
+    return (inv ? 1 - t : t) * 100;
   };
 
-  const nSz = norm(condos.map(c => c.sizeMid));
-  const nPsf = norm(condos.map(c => c.salePsfMid));
-  const nRent = norm(condos.map(c => c.rentMax));
-  const nPrice = norm(condos.map(c => c.estPriceMid));
-  const nExcl = norm(condos.map(c => c.units), true);
-  // Brand is already 0-100 scale, no normalization needed
-
   condos.forEach((c, i) => {
-    let raw = nSz[i]*0.20 + nPsf[i]*0.15 + nRent[i]*0.15 + nPrice[i]*0.15 + nExcl[i]*0.15 + c.brandScore*0.20;
+    const nSz = normFixed(c.sizeMid, REF.sizeMid.min, REF.sizeMid.max);
+    const nPsf = normFixed(c.salePsfMid, REF.psfMid.min, REF.psfMid.max);
+    const nRent = normFixed(c.rentMax, REF.rentMax.min, REF.rentMax.max);
+    const nPrice = normFixed(c.estPriceMid, REF.priceMid.min, REF.priceMid.max);
+    const nExcl = normFixed(c.units, REF.units.min, REF.units.max, true);
+
+    let raw = nSz*0.20 + nPsf*0.15 + nRent*0.15 + nPrice*0.15 + nExcl*0.15 + c.brandScore*0.20;
     raw *= c.minSizeFactor;
     c.luxScore = Math.round(raw * 10) / 10;
     c.luxTier = c.luxScore >= 65 ? 'S' : c.luxScore >= 45 ? 'A' : c.luxScore >= 25 ? 'B' : 'C';
