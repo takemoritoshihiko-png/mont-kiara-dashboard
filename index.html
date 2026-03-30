@@ -125,6 +125,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
         <button class="sort-btn" data-sort="yieldHigh" onclick="setSort(this)">Yield ↓</button>
         <button class="sort-btn" data-sort="yearNew" onclick="setSort(this)">Newest</button>
         <button class="sort-btn" data-sort="yearOld" onclick="setSort(this)">Oldest</button>
+        <button class="sort-btn active" id="toggleCommercial" onclick="toggleCommercial(this)" style="margin-left:auto;background:#ff6d00;color:#fff;border-color:#e65100">🛒 Commercial</button>
       </div>
     </div>
     <div class="legend">
@@ -505,6 +506,8 @@ function applyFilters(){
     if(yl&&(c.yield<yl.min||c.yield>yl.max))return false;
     // Age filter (skip for upcoming)
     if(age&&c.status==='completed'){const a=currentYear-c.year; if(a<age.min||a>age.max) return false;}
+    // Commercial toggle
+    if(!showCommercial&&c.status==='commercial') return false;
     // Status filter
     if(statusFilter==='residential'&&c.status==='commercial') return false;
     else if(statusFilter&&statusFilter!=='residential'&&c.status!==statusFilter) return false;
@@ -531,7 +534,9 @@ function doSort(){
     return currentSort==='name'?a.name.localeCompare(b.name):currentSort==='salePsfHigh'?b.salePsfMid-a.salePsfMid:currentSort==='rentHigh'?b.rentMid-a.rentMid:currentSort==='yieldHigh'?b.yield-a.yield:currentSort==='yearNew'?b.year-a.year:currentSort==='yearOld'?a.year-b.year:currentSort==='luxHigh'?b.luxScore-a.luxScore:0;
   });
 }
-function setSort(btn){document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentSort=btn.dataset.sort;doSort();renderList();}
+function setSort(btn){document.querySelectorAll('.sort-btn[data-sort]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentSort=btn.dataset.sort;doSort();renderList();}
+let showCommercial=true;
+function toggleCommercial(btn){showCommercial=!showCommercial;btn.classList.toggle('active');btn.style.background=showCommercial?'#ff6d00':'#f8f9fb';btn.style.color=showCommercial?'#fff':'#999';btn.style.borderColor=showCommercial?'#e65100':'#e0e0e0';applyFilters();}
 
 function renderList(){
   document.getElementById('condoList').innerHTML=filtered.map(c=>`
