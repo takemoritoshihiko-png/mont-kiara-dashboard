@@ -327,7 +327,7 @@ function calcLuxury(condos) {
     let raw = nSzAvg*0.08 + nSzMax*0.05 + nPsf*0.16 + nRentPsf*0.13
             + nPrice*0.10 + nExcl*0.14 + nAge*0.13 + c.brandScore*0.21;
     c.luxScore = Math.round(raw * 10) / 10;
-    c.luxTier = c.luxScore >= 70 ? 'S' : c.luxScore >= 55 ? 'A' : c.luxScore >= 40 ? 'B' : c.luxScore >= 25 ? 'C' : 'D';
+    c.luxTier = c.luxScore >= 70 ? 'S' : c.luxScore >= 60 ? 'A' : c.luxScore >= 50 ? 'B' : c.luxScore >= 40 ? 'C' : 'D';
   });
 }
 
@@ -471,7 +471,7 @@ function updateLegend(){
     ml.innerHTML+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${getYearColor(y)}"></div>${l}</div>`;
   });
   ml.innerHTML+=`<div class="map-legend-section"><div class="map-legend-title">Luxury Tier (Border & Label)</div></div>`;
-  [{t:'S',l:'Ultra Luxury (70+)'},{t:'A',l:'Super Luxury (55-69)'},{t:'B',l:'Luxury (40-54)'},{t:'C',l:'Upper Mid (25-39)'},{t:'D',l:'Standard (<25)'}].forEach(({t,l})=>{
+  [{t:'S',l:'Ultra Luxury (70+)'},{t:'A',l:'Super Luxury (60-69)'},{t:'B',l:'Luxury (50-59)'},{t:'C',l:'Upper Mid (40-49)'},{t:'D',l:'Standard (<40)'}].forEach(({t,l})=>{
     ml.innerHTML+=`<div class="map-legend-item"><span class="tier-badge" style="background:${TIER_COLORS[t]}">${t}</span>${l}</div>`;
   });
   ml.innerHTML+=`<div class="map-legend-section"><div class="map-legend-title">Circle Size = Units</div><div style="font-size:10px;color:#80868b">Larger circle = more units</div></div>`;
