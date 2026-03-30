@@ -102,7 +102,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
         <div class="filter-group" style="flex:2"><label>Search</label><input type="text" id="fSearch" placeholder="Name, address, tier (S/A/B/C)..." oninput="applyFilters()"></div>
       </div>
       <div class="filter-row">
-        <div class="filter-group"><label>Luxury Tier</label><select id="fTier" onchange="applyFilters()"><option value="">All</option><option value="S">S - Super Luxury</option><option value="A">A - Luxury</option><option value="B">B - Mid-Range</option><option value="C">C - Standard</option></select></div>
+        <div class="filter-group"><label>Luxury Tier</label><select id="fTier" onchange="applyFilters()"><option value="">All</option><option value="S+">S+ (Super Luxury)</option><option value="A+">A+ (Luxury &amp; above)</option><option value="B+">B+ (Mid &amp; above)</option><option value="S">S only</option><option value="A">A only</option><option value="B">B only</option><option value="C">C only</option></select></div>
         <div class="filter-group"><label>Sale PSF</label><select id="fSalePsf" onchange="applyFilters()"><option value="">All</option><option value="0-500">&lt;500</option><option value="500-700">500-700</option><option value="700-900">700-900</option><option value="900-1100">900-1.1K</option><option value="1100-9999">&gt;1.1K</option></select></div>
         <div class="filter-group"><label>Year</label><select id="fYear" onchange="applyFilters()"><option value="">All</option><option value="1990-2000">&lt;2000</option><option value="2000-2010">2000s</option><option value="2010-2020">2010s</option><option value="2020-2030">2020+</option></select></div>
       </div>
@@ -110,6 +110,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
         <div class="filter-group"><label>Rent/mo</label><select id="fRent" onchange="applyFilters()"><option value="">All</option><option value="0-3000">&lt;3K</option><option value="3000-5000">3-5K</option><option value="5000-8000">5-8K</option><option value="8000-12000">8-12K</option><option value="12000-99999">&gt;12K</option></select></div>
         <div class="filter-group"><label>Size sqft</label><select id="fSize" onchange="applyFilters()"><option value="">All</option><option value="0-800">&lt;800</option><option value="800-1500">800-1.5K</option><option value="1500-2500">1.5-2.5K</option><option value="2500-99999">&gt;2.5K</option></select></div>
         <div class="filter-group"><label>Yield</label><select id="fYield" onchange="applyFilters()"><option value="">All</option><option value="0-3">&lt;3%</option><option value="3-4">3-4%</option><option value="4-5">4-5%</option><option value="5-99">&gt;5%</option></select></div>
+      </div>
+      <div class="filter-row">
+        <div class="filter-group"><label>築年数 (Years Old)</label><select id="fAge" onchange="applyFilters()"><option value="">All</option><option value="0-5">0-5年 (2021+)</option><option value="0-10">0-10年 (2016+)</option><option value="0-15">0-15年 (2011+)</option><option value="0-20">0-20年 (2006+)</option><option value="10-20">10-20年</option><option value="20-99">20年超</option></select></div>
       </div>
       <div class="sort-row">
         <button class="sort-btn" data-sort="luxHigh" onclick="setSort(this)">Luxury ↓</button>
@@ -355,18 +358,31 @@ function updateLegend(){
 }
 
 function parseR(v){if(!v)return null;const[a,b]=v.split('-').map(Number);return{min:a,max:b}}
+const TIER_ORDER = {S:4, A:3, B:2, C:1};
 function applyFilters(){
   const q=document.getElementById('fSearch').value.toLowerCase();
-  const tier=document.getElementById('fTier').value;
+  const tierVal=document.getElementById('fTier').value;
   const sp=parseR(document.getElementById('fSalePsf').value),rn=parseR(document.getElementById('fRent').value),yr=parseR(document.getElementById('fYear').value),sz=parseR(document.getElementById('fSize').value),yl=parseR(document.getElementById('fYield').value);
+  const age=parseR(document.getElementById('fAge').value);
+  const currentYear = new Date().getFullYear();
   filtered=CONDOS.filter(c=>{
     if(q&&!c.name.toLowerCase().includes(q)&&!c.addr.toLowerCase().includes(q)&&!c.luxTier.toLowerCase().includes(q))return false;
-    if(tier&&c.luxTier!==tier)return false;
+    // Tier filter: "A+" means A and above (A, S)
+    if(tierVal){
+      if(tierVal.endsWith('+')){
+        const minTier = tierVal[0];
+        if(TIER_ORDER[c.luxTier] < TIER_ORDER[minTier]) return false;
+      } else {
+        if(c.luxTier !== tierVal) return false;
+      }
+    }
     if(sp&&(c.salePsfMid<sp.min||c.salePsfMid>sp.max))return false;
     if(rn&&(c.rentMid<rn.min||c.rentMid>rn.max))return false;
     if(yr&&(c.year<yr.min||c.year>yr.max))return false;
     if(sz&&(c.sizeMid<sz.min||c.sizeMid>sz.max))return false;
     if(yl&&(c.yield<yl.min||c.yield>yl.max))return false;
+    // Age filter
+    if(age){const a=currentYear-c.year; if(a<age.min||a>age.max) return false;}
     return true;
   });
   doSort();rebuild();renderList();updateSummary();
