@@ -313,8 +313,8 @@ function calcLuxury(condos) {
     return (inv ? 1 - t : t) * 100;
   };
 
-  // v4 Weights: AvgSize 8% | MaxSize 5% | PSF 15% | RentPSF 12% | TopPrice 10% |
-  //             Exclusivity(density) 13% | Age 12% | Tenure 5% | Brand 20%
+  // v4 Weights (Tenure excluded): AvgSize 8% | MaxSize 5% | PSF 16% | RentPSF 13% |
+  //   TopPrice 10% | Exclusivity(density) 14% | Age 13% | Brand 21% = 100%
   condos.forEach((c, i) => {
     const nSzAvg  = normFixed(c.sizeMid, REF.sizeMid.min, REF.sizeMid.max);
     const nSzMax  = normFixed(c.sizeMax, REF.sizeMax.min, REF.sizeMax.max);
@@ -323,10 +323,9 @@ function calcLuxury(condos) {
     const nPrice  = normFixed(c.estPriceMax, REF.priceMax.min, REF.priceMax.max);
     const nExcl   = normFixed(c.density, REF.density.min, REF.density.max, true);
     const nAge    = normFixed(c.buildingAge, REF.age.min, REF.age.max, true);
-    const nTenure = c.tenureScore;
 
-    let raw = nSzAvg*0.08 + nSzMax*0.05 + nPsf*0.15 + nRentPsf*0.12
-            + nPrice*0.10 + nExcl*0.13 + nAge*0.12 + nTenure*0.05 + c.brandScore*0.20;
+    let raw = nSzAvg*0.08 + nSzMax*0.05 + nPsf*0.16 + nRentPsf*0.13
+            + nPrice*0.10 + nExcl*0.14 + nAge*0.13 + c.brandScore*0.21;
     c.luxScore = Math.round(raw * 10) / 10;
     c.luxTier = c.luxScore >= 75 ? 'S' : c.luxScore >= 60 ? 'A' : c.luxScore >= 45 ? 'B' : c.luxScore >= 30 ? 'C' : 'D';
   });
