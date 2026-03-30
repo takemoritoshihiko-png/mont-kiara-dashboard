@@ -202,11 +202,63 @@ const CONDOS=[
 ];
 
 // ============================================================
-// LUXURY INDEX CALCULATION (Corrected formula)
+// DEVELOPER DATABASE & BRAND SCORING
+// Sources: The Edge Top Property Developers Awards 2024, industry reputation
+// ============================================================
+const DEVELOPERS = {
+  // S-tier: Ultra premium brand recognition
+  'Pavilion Group':       {tier:'S', score:100, note:'Pavilion KL Mall developer, ultra-luxury brand'},
+  // A-tier: Top national developers with strong luxury track record
+  'UEM Sunrise':          {tier:'A', score:80, note:'Top 8 nationally, dominant Mont Kiara developer (fka Sunrise)'},
+  'Sunway Property':      {tier:'A', score:80, note:'Top 2-3 nationally, integrated conglomerate'},
+  'Bukit Kiara Properties':{tier:'A',score:80, note:'Dato Alan Tong, iconic Mont Kiara pioneer'},
+  // B-tier: Established reputable developers
+  'Tropicana':            {tier:'B', score:60, note:'Top 10, premium locations focus'},
+  'Mah Sing':             {tier:'B', score:60, note:'Top 7 nationally'},
+  'Asia Quest':           {tier:'B', score:55, note:'Kiaramas series specialist'},
+  'Ireka':                {tier:'B', score:55, note:'i-Zen & Tiffani series'},
+  'Naza TTDI':            {tier:'B', score:55, note:'OOAK/Kiara 163 developer'},
+  'OSK Property':         {tier:'B', score:55, note:'Established mid-luxury'},
+  'Trinity Group':        {tier:'B', score:50, note:'Pentamont developer'},
+  'Bolton':               {tier:'B', score:50, note:'Kiara 1888 developer'},
+  'Mitrajaya':            {tier:'B', score:50, note:'Kiara 9 developer'},
+  // C-tier: Smaller/foreign developers
+  'Agile':                {tier:'C', score:40, note:'Major Chinese developer, less local luxury recognition'},
+  'Arte Corp':            {tier:'C', score:35, note:'Arte Mont Kiara developer'},
+  'Other':                {tier:'C', score:30, note:'Various smaller developers'}
+};
+
+// Map each condo to its developer
+const DEV_MAP = {
+  '10 Mont Kiara (MK10)':'UEM Sunrise','11 Mont Kiara (MK11)':'UEM Sunrise','28 Mont Kiara (MK28)':'UEM Sunrise',
+  'Allevia Mont Kiara':'UEM Sunrise','Aman Mont Kiara':'UEM Sunrise','Arcoris Mont Kiara':'UEM Sunrise',
+  'Astana Mont Kiara':'UEM Sunrise','Astrea Mont Kiara':'UEM Sunrise','Banyan Mont Kiara':'UEM Sunrise',
+  'Bayu Mont Kiara':'UEM Sunrise','Damai Mont Kiara':'UEM Sunrise','Inspirasi Mont Kiara':'UEM Sunrise',
+  'Kiara Designer Suites':'UEM Sunrise','La Grande Mont Kiara':'UEM Sunrise','Meridin Mont Kiara':'UEM Sunrise',
+  'Palma Mont Kiara':'UEM Sunrise','Pelangi Mont Kiara':'UEM Sunrise','Pines Mont Kiara':'UEM Sunrise',
+  'Sophia Mont Kiara':'UEM Sunrise','Residensi 22':'UEM Sunrise','Residensi Sefina':'UEM Sunrise',
+  'Seni Mont Kiara':'UEM Sunrise','Solaris Dutamas (Publika)':'UEM Sunrise','Solaris Parq':'UEM Sunrise',
+  'Pavilion Hilltop':'Pavilion Group',
+  'Sunway Vivaldi':'Sunway Property','Sunway Mont':'Sunway Property',
+  'Flora Murni Mont Kiara':'Bukit Kiara Properties','Hijauan Kiara':'Bukit Kiara Properties','Verve Suites Mont Kiara':'Bukit Kiara Properties',
+  'Kiaramas Ayuria':'Asia Quest','Kiaramas Cendana':'Asia Quest','Kiaramas Danai':'Asia Quest',
+  'Kiaramas Sutera':'Asia Quest','Gateway Kiaramas':'Asia Quest','Kiaraville':'Asia Quest',
+  'i-Zen Kiara 1':'Ireka','i-Zen Kiara 2':'Ireka','Tiffani Kiara':'Ireka',
+  'Agile Mont Kiara':'Agile','Arte Mont Kiara':'Arte Corp',
+  'OOAK Kiara 163':'Naza TTDI','TWY Mont Kiara':'Tropicana','Icon Residence':'Mah Sing',
+  'Kami Mont Kiara':'OSK Property','Pentamont Mont Kiara':'Trinity Group',
+  'Kiara 1888':'Bolton','Kiara 9 Residency':'Mitrajaya','Lumina Kiara':'UEM Sunrise',
+  'Almaspuri Mont Kiara':'Other','Angkupuri Mont Kiara':'Other','Aston Kiara 3':'Other',
+  'Casa Kiara 1':'Other','Casa Kiara 2':'Sunway Property','Ceriaan Kiara':'Other',
+  'Hartamas Regency 1':'Other','Hartamas Regency 2':'Other','Laman Suria Mont Kiara':'Other',
+  'Lanai Kiara':'Other','Richmond Mont Kiara':'Other','Vista Kiara':'Other'
+};
+
+// ============================================================
+// LUXURY INDEX CALCULATION (with Brand factor)
+// Weights: AvgSize 20% | PSF 15% | Rent 15% | Price 15% | Exclusivity 15% | Brand 20%
 // ============================================================
 function calcLuxury(condos) {
-  // Use AVERAGE size instead of max to avoid penthouse distortion
-  // Add min-size penalty: if smallest unit < 800sqft, it's not truly luxury
   condos.forEach(c => {
     c.sizeMid = (c.sizeMin + c.sizeMax) / 2;
     c.salePsfMid = (c.salePsfMin + c.salePsfMax) / 2;
@@ -214,8 +266,10 @@ function calcLuxury(condos) {
     c.yield = c.salePsfMid * c.sizeMid > 0 ? (c.rentMid * 12) / (c.salePsfMid * c.sizeMid) * 100 : 0;
     c.rentPsf = c.sizeMid > 0 ? c.rentMid / c.sizeMid : 0;
     c.estPriceMid = c.salePsfMid * c.sizeMid;
-    // Min-size penalty factor: 1.0 if sizeMin >= 1500, scales down to 0.5 if sizeMin < 500
     c.minSizeFactor = Math.min(1, Math.max(0.5, (c.sizeMin - 400) / 1100));
+    c.developer = DEV_MAP[c.name] || 'Other';
+    c.devInfo = DEVELOPERS[c.developer] || DEVELOPERS['Other'];
+    c.brandScore = c.devInfo.score;
   });
 
   const norm = (arr, inv) => {
@@ -224,15 +278,15 @@ function calcLuxury(condos) {
     return arr.map(v => inv ? 100*(1-(v-mn)/(mx-mn)) : 100*(v-mn)/(mx-mn));
   };
 
-  const nSzAvg = norm(condos.map(c => c.sizeMid));           // Average size (not max)
-  const nPsf = norm(condos.map(c => c.salePsfMid));           // Sale PSF
-  const nRent = norm(condos.map(c => c.rentMax));              // Max rent
-  const nPrice = norm(condos.map(c => c.estPriceMid));         // Estimated mid-range total price
-  const nExcl = norm(condos.map(c => c.units), true);          // Exclusivity (fewer = better)
+  const nSz = norm(condos.map(c => c.sizeMid));
+  const nPsf = norm(condos.map(c => c.salePsfMid));
+  const nRent = norm(condos.map(c => c.rentMax));
+  const nPrice = norm(condos.map(c => c.estPriceMid));
+  const nExcl = norm(condos.map(c => c.units), true);
+  // Brand is already 0-100 scale, no normalization needed
 
   condos.forEach((c, i) => {
-    let raw = nSzAvg[i] * 0.25 + nPsf[i] * 0.20 + nRent[i] * 0.20 + nPrice[i] * 0.20 + nExcl[i] * 0.15;
-    // Apply min-size penalty
+    let raw = nSz[i]*0.20 + nPsf[i]*0.15 + nRent[i]*0.15 + nPrice[i]*0.15 + nExcl[i]*0.15 + c.brandScore*0.20;
     raw *= c.minSizeFactor;
     c.luxScore = Math.round(raw * 10) / 10;
     c.luxTier = c.luxScore >= 65 ? 'S' : c.luxScore >= 45 ? 'A' : c.luxScore >= 25 ? 'B' : 'C';
@@ -293,6 +347,7 @@ function mkMarker(c) {
     <div style="margin-bottom:8px">
       <span class="tier-badge" style="background:${tierColor};width:22px;height:22px;line-height:22px;font-size:11px">${c.luxTier}</span>
       <span style="font-size:12px;font-weight:700;margin-left:4px">Luxury Score: ${c.luxScore}</span>
+      <div style="font-size:10px;color:#5f6368;margin-top:3px">Developer: <strong>${c.developer}</strong> (Brand ${c.devInfo.tier})</div>
     </div>
     <div class="popup-grid">
       <div class="popup-cell"><div class="popup-cell-label">Year</div><div class="popup-cell-val">${c.year}</div></div>
@@ -375,7 +430,7 @@ function renderList(){
         <span class="condo-name" style="margin:0">${c.name}</span>
         <span style="margin-left:auto;font-size:11px;font-weight:700;color:${TIER_COLORS[c.luxTier]}">${c.luxScore}</span>
       </div>
-      <div class="condo-addr">${c.addr}</div>
+      <div class="condo-addr">${c.addr} | ${c.developer}</div>
       <div class="condo-meta">
         <span class="condo-tag tag-year">${c.year}</span>
         <span class="condo-tag tag-units">${c.units} units</span>
