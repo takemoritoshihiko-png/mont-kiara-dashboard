@@ -141,8 +141,11 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 // DATA SOURCE: Google Sheets (CSV published)
 // ============================================================
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIpzGj3RLzAjotAm0IcfBZPychw4C3thCWXGsNCfoN32v8gKwupseRtB-05puHFfg2QPmlBtf9yP0/pub?gid=943190081&single=true&output=csv';
+// Commercial sheet - user needs to set the correct gid after creating Sheet2
+const COMMERCIAL_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIpzGj3RLzAjotAm0IcfBZPychw4C3thCWXGsNCfoN32v8gKwupseRtB-05puHFfg2QPmlBtf9yP0/pub?gid=0&single=true&output=csv';
 
 let CONDOS = [];
+let COMMERCIALS = [];
 
 function parseCSV(text) {
   const lines = text.trim().split('\n');
@@ -182,6 +185,41 @@ function parseCSV(text) {
       status: obj.status || 'completed',
       nameJa: obj.name_ja || '',
       brandScoreCSV: parseInt(obj.brand_score) || 0,
+      anchorTenants: obj.anchor_tenants || ''
+    };
+  }).filter(c => c.name && c.lat > 1);
+}
+
+function parseCommercialCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',');
+  return lines.slice(1).map(line => {
+    const vals = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { vals.push(cur.trim()); cur = ''; }
+      else { cur += ch; }
+    }
+    vals.push(cur.trim());
+    const obj = {};
+    headers.forEach((h, i) => { obj[h.trim()] = (vals[i] || '').replace(/^"|"$/g, ''); });
+    return {
+      name: obj.name || '',
+      addr: obj.addr || '',
+      year: parseInt(obj.year) || 2000,
+      units: parseInt(obj.tenants) || 0,
+      sizeMin: parseInt(obj.nla_sqft) || 0,
+      sizeMax: 0, rentMin: 0, rentMax: 0, salePsfMin: 0, salePsfMax: 0,
+      lat: parseFloat(obj.lat) || 0,
+      lng: parseFloat(obj.lng) || 0,
+      developer: obj.developer || '',
+      ipropertyUrl: '',
+      homepageUrl: obj.homepage_url || '',
+      status: 'commercial',
+      nameJa: obj.name_ja || '',
+      brandScoreCSV: 0,
       anchorTenants: obj.anchor_tenants || ''
     };
   }).filter(c => c.name && c.lat > 1);
@@ -544,18 +582,31 @@ function togglePanel(){
   }
 
   try {
+    // Load condos
     let text;
     try {
       text = await tryFetch(SHEET_CSV_URL);
     } catch(e1) {
-      // Fallback: try via allorigins proxy
       listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#80868b">Retrying via proxy...</div>';
       const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(SHEET_CSV_URL);
       text = await tryFetch(proxyUrl);
     }
     CONDOS = parseCSV(text);
-    if (CONDOS.length === 0) throw new Error('No data parsed from CSV');
+    if (CONDOS.length === 0) throw new Error('No condo data parsed');
     calcLuxury(CONDOS);
+
+    // Load commercial (separate sheet)
+    try {
+      let comText;
+      try { comText = await tryFetch(COMMERCIAL_CSV_URL); } catch(e) {
+        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(COMMERCIAL_CSV_URL);
+        comText = await tryFetch(proxyUrl);
+      }
+      COMMERCIALS = parseCommercialCSV(comText);
+    } catch(e) { COMMERCIALS = []; }
+
+    // Merge for display
+    CONDOS = [...CONDOS, ...COMMERCIALS];
     filtered = [...CONDOS];
     applyFilters();
   } catch(e) {
