@@ -181,7 +181,8 @@ function parseCSV(text) {
       homepageUrl: obj.homepage_url || '',
       status: obj.status || 'completed',
       nameJa: obj.name_ja || '',
-      brandScoreCSV: parseInt(obj.brand_score) || 0
+      brandScoreCSV: parseInt(obj.brand_score) || 0,
+      anchorTenants: obj.anchor_tenants || ''
     };
   }).filter(c => c.name && c.lat > 1);
 }
@@ -330,6 +331,11 @@ function mkMarker(c) {
       ${c.nameJa ? '<div style="font-size:12px;color:#5f6368;margin-bottom:2px">'+c.nameJa+'</div>' : ''}
       <div class="popup-addr">${c.addr}</div>
       <div style="font-size:12px;margin-bottom:6px"><strong>商業施設</strong> | 開業: ${c.year}年</div>
+      <div class="popup-grid">
+        <div class="popup-cell"><div class="popup-cell-label">Tenants</div><div class="popup-cell-val" style="color:#e65100">${c.units > 0 ? '~'+c.units+'店' : '-'}</div></div>
+        <div class="popup-cell"><div class="popup-cell-label">Retail NLA</div><div class="popup-cell-val">${c.sizeMin > 0 ? (c.sizeMin/1000).toFixed(0)+'K sqft' : '-'}</div></div>
+      </div>
+      ${c.anchorTenants ? '<div style="margin-top:6px;font-size:11px;color:#5f6368"><strong>Key Tenants:</strong> '+c.anchorTenants+'</div>' : ''}
       ${c.ipropertyUrl||c.homepageUrl ? '<div style="display:flex;gap:6px;margin-top:8px">'+(c.homepageUrl?'<a href="'+c.homepageUrl+'" target="_blank" style="flex:1;text-align:center;padding:7px;background:#ff6d00;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600">Official Site</a>':'')+(c.ipropertyUrl?'<a href="'+c.ipropertyUrl+'" target="_blank" style="flex:1;text-align:center;padding:7px;background:#1a73e8;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600">iProperty</a>':'')+'</div>' : ''}
     </div>`);
     m.on('click',()=>selectCondo(c.name));
@@ -480,15 +486,16 @@ function renderList(){
       ${c.nameJa ? '<div style="font-size:10px;color:#5f6368;margin-bottom:1px">'+c.nameJa+'</div>' : ''}
       <div class="condo-addr">${c.addr} | ${c.developer}</div>
       <div class="condo-meta">
-        ${c.status==='upcoming'?'<span class="condo-tag" style="background:#fff3e0;color:#e65100">🔜 '+c.year+'予定</span>':'<span class="condo-tag tag-year">'+c.year+'</span>'}
-        <span class="condo-tag tag-units">${c.units} units</span>
-        <span class="condo-tag tag-size">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</span>
+        ${c.status==='upcoming'?'<span class="condo-tag" style="background:#fff3e0;color:#e65100">🔜 '+c.year+'予定</span>':c.status==='commercial'?'<span class="condo-tag" style="background:#fff3e0;color:#e65100">🛒 '+c.year+'年開業</span>':'<span class="condo-tag tag-year">'+c.year+'</span>'}
+        ${c.status==='commercial'?'<span class="condo-tag" style="background:#fbe9e7;color:#bf360c">~'+c.units+'店舗</span>':'<span class="condo-tag tag-units">'+c.units+' units</span>'}
+        ${c.status==='commercial'&&c.sizeMin>0?'<span class="condo-tag tag-size">'+(c.sizeMin/1000).toFixed(0)+'K sqft</span>':''}
+        ${c.status!=='commercial'?'<span class="condo-tag tag-size">'+c.sizeMin.toLocaleString()+'-'+c.sizeMax.toLocaleString()+' sf</span>':''}
         ${c.status==='completed'?'<span class="condo-tag tag-yield">Yield '+c.yield.toFixed(1)+'%</span>':''}
       </div>
-      <div class="condo-prices">
+      ${c.status==='commercial'?(c.anchorTenants?'<div style="margin-top:4px;font-size:10px;color:#bf360c">'+c.anchorTenants+'</div>':''):`<div class="condo-prices">
         <div class="price-col"><div class="price-label">Sale PSF</div><div class="price-value sale-price">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>
         <div class="price-col"><div class="price-label">Rent/mo</div><div class="price-value rent-price">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>
-      </div>
+      </div>`}
     </div>`).join('');
 }
 
