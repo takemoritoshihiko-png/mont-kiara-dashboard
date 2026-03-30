@@ -180,7 +180,8 @@ function parseCSV(text) {
       ipropertyUrl: obj.iproperty_url || '',
       homepageUrl: obj.homepage_url || '',
       status: obj.status || 'completed',
-      nameJa: obj.name_ja || ''
+      nameJa: obj.name_ja || '',
+      brandScoreCSV: parseInt(obj.brand_score) || 0
     };
   }).filter(c => c.name && c.lat > 1);
 }
@@ -245,7 +246,7 @@ function calcLuxury(condos) {
     c.estPriceMid = c.salePsfMid * c.sizeMid;
     c.minSizeFactor = Math.min(1, Math.max(0.5, (c.sizeMin - 400) / 1100));
     c.devInfo = DEVELOPERS[c.developer] || DEVELOPERS['Other'];
-    c.brandScore = c.devInfo.score;
+    c.brandScore = c.brandScoreCSV > 0 ? c.brandScoreCSV : c.devInfo.score;
   });
 
   // Fixed reference ranges (not affected by adding/removing condos)
