@@ -7,83 +7,91 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1923; color: #e0e6ed; overflow: hidden; height: 100vh; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2e;overflow:hidden;height:100vh}
 
-.header { background: linear-gradient(135deg, #1a2634 0%, #0d1b2a 100%); padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #1e3a5f; height: 50px; }
-.header h1 { font-size: 18px; color: #4fc3f7; font-weight: 600; }
-.header .stats { display: flex; gap: 20px; font-size: 12px; color: #8899aa; }
-.header .stats span { color: #4fc3f7; font-weight: 600; }
+.header{background:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #e8eaed;height:52px;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.header h1{font-size:17px;color:#1a73e8;font-weight:700;letter-spacing:-0.3px}
+.header .stats{display:flex;gap:18px;font-size:12px;color:#5f6368}
+.header .stats span{color:#1a73e8;font-weight:700}
 
-.main { display: flex; height: calc(100vh - 50px); }
-#map { flex: 1; min-width: 0; }
+.main{display:flex;height:calc(100vh - 52px)}
+#map{flex:1;min-width:0}
 
-.panel { width: 440px; background: #0d1b2a; border-left: 1px solid #1e3a5f; display: flex; flex-direction: column; overflow: hidden; transition: width 0.3s; }
-.panel.collapsed { width: 0; border: none; }
-.toggle-panel { position: absolute; right: 440px; top: 55px; z-index: 1000; background: #1a2634; border: 1px solid #1e3a5f; color: #4fc3f7; padding: 5px 8px; cursor: pointer; border-radius: 4px 0 0 4px; font-size: 14px; transition: right 0.3s; }
-.toggle-panel.collapsed { right: 0; }
+.panel{width:420px;background:#fff;border-left:1px solid #e8eaed;display:flex;flex-direction:column;overflow:hidden;transition:width .3s}
+.panel.collapsed{width:0;border:none}
+.toggle-panel{position:absolute;right:420px;top:57px;z-index:1000;background:#fff;border:1px solid #e8eaed;color:#1a73e8;padding:6px 8px;cursor:pointer;border-radius:6px 0 0 6px;font-size:13px;transition:right .3s;box-shadow:-2px 0 4px rgba(0,0,0,0.06)}
+.toggle-panel.collapsed{right:0}
 
-.filters { padding: 10px; background: #11222e; border-bottom: 1px solid #1e3a5f; flex-shrink: 0; }
-.filters h3 { font-size: 12px; color: #4fc3f7; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
-.filter-row { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
-.filter-group { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 90px; }
-.filter-group label { font-size: 10px; color: #667788; text-transform: uppercase; }
-.filter-group select, .filter-group input { background: #1a2634; border: 1px solid #1e3a5f; color: #e0e6ed; padding: 4px 6px; border-radius: 4px; font-size: 11px; }
+.summary-bar{padding:8px 12px;background:#f8f9fb;border-bottom:1px solid #e8eaed;display:flex;gap:6px;flex-shrink:0}
+.summary-item{flex:1;text-align:center;padding:4px;background:#fff;border-radius:6px;border:1px solid #e8eaed}
+.summary-val{font-size:15px;font-weight:700;color:#1a73e8}
+.summary-label{font-size:9px;color:#80868b;text-transform:uppercase;letter-spacing:0.5px}
 
-.sort-row { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
-.sort-btn { background: #1a2634; border: 1px solid #1e3a5f; color: #8899aa; padding: 3px 8px; border-radius: 3px; font-size: 10px; cursor: pointer; }
-.sort-btn.active { background: #1e3a5f; color: #4fc3f7; }
+.filters{padding:10px 12px;background:#fff;border-bottom:1px solid #e8eaed;flex-shrink:0}
+.filters h3{font-size:11px;color:#1a73e8;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.filter-row{display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap}
+.filter-group{display:flex;flex-direction:column;gap:2px;flex:1;min-width:85px}
+.filter-group label{font-size:9px;color:#80868b;text-transform:uppercase;font-weight:600}
+.filter-group select,.filter-group input{background:#f8f9fb;border:1px solid #e0e0e0;color:#1a1a2e;padding:5px 6px;border-radius:6px;font-size:11px}
+.filter-group select:focus,.filter-group input:focus{border-color:#1a73e8;outline:none;box-shadow:0 0 0 2px rgba(26,115,232,0.15)}
 
-.legend { padding: 6px 10px; background: #11222e; border-bottom: 1px solid #1e3a5f; flex-shrink: 0; }
-.legend-title { font-size: 10px; color: #667788; margin-bottom: 4px; }
-.legend-bar { display: flex; height: 12px; border-radius: 3px; overflow: hidden; }
-.legend-bar div { flex: 1; }
-.legend-labels { display: flex; justify-content: space-between; font-size: 9px; color: #667788; margin-top: 2px; }
+.sort-row{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
+.sort-btn{background:#f8f9fb;border:1px solid #e0e0e0;color:#5f6368;padding:3px 8px;border-radius:12px;font-size:10px;cursor:pointer;font-weight:500;transition:all .15s}
+.sort-btn:hover{background:#e8f0fe;color:#1a73e8;border-color:#1a73e8}
+.sort-btn.active{background:#1a73e8;color:#fff;border-color:#1a73e8}
 
-.condo-list { flex: 1; overflow-y: auto; padding: 4px; }
-.condo-list::-webkit-scrollbar { width: 6px; }
-.condo-list::-webkit-scrollbar-thumb { background: #1e3a5f; border-radius: 3px; }
+.legend{padding:6px 12px;background:#f8f9fb;border-bottom:1px solid #e8eaed;flex-shrink:0}
+.legend-title{font-size:10px;color:#80868b;margin-bottom:3px;font-weight:600}
+.legend-bar{display:flex;height:10px;border-radius:5px;overflow:hidden}
+.legend-bar div{flex:1}
+.legend-labels{display:flex;justify-content:space-between;font-size:9px;color:#80868b;margin-top:2px}
 
-.condo-card { background: #1a2634; border: 1px solid #1e3a5f; border-radius: 6px; padding: 10px; margin-bottom: 4px; cursor: pointer; transition: all 0.15s; }
-.condo-card:hover { border-color: #4fc3f7; background: #1e2d3d; }
-.condo-card.selected { border-color: #4fc3f7; background: #1a3350; }
-.condo-name { font-size: 13px; font-weight: 600; color: #e0e6ed; margin-bottom: 4px; }
-.condo-meta { display: flex; gap: 8px; flex-wrap: wrap; }
-.condo-tag { font-size: 10px; padding: 2px 6px; border-radius: 3px; background: #0d1b2a; }
-.tag-year { color: #81c784; } .tag-units { color: #ba68c8; } .tag-size { color: #4fc3f7; } .tag-yield { color: #f06292; }
-.condo-prices { display: flex; gap: 12px; margin-top: 6px; font-size: 11px; }
-.price-col { flex: 1; }
-.price-label { font-size: 9px; color: #667788; text-transform: uppercase; }
-.price-value { font-weight: 600; }
-.sale-price { color: #ffb74d; } .rent-price { color: #4dd0e1; } .yield-value { color: #f06292; }
+.condo-list{flex:1;overflow-y:auto;padding:6px}
+.condo-list::-webkit-scrollbar{width:5px}
+.condo-list::-webkit-scrollbar-thumb{background:#dadce0;border-radius:5px}
 
-.leaflet-popup-content-wrapper { background: #1a2634 !important; color: #e0e6ed !important; border-radius: 8px !important; border: 1px solid #1e3a5f; }
-.leaflet-popup-tip { background: #1a2634 !important; }
-.leaflet-popup-content { margin: 10px 14px !important; }
-.popup-title { font-size: 14px; font-weight: 700; color: #4fc3f7; margin-bottom: 6px; }
-.popup-row { display: flex; justify-content: space-between; font-size: 11px; padding: 3px 0; border-bottom: 1px solid #0d1b2a; }
-.popup-label { color: #667788; } .popup-val { font-weight: 600; }
+.condo-card{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:10px 12px;margin-bottom:5px;cursor:pointer;transition:all .15s;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+.condo-card:hover{border-color:#1a73e8;box-shadow:0 2px 8px rgba(26,115,232,0.15);transform:translateY(-1px)}
+.condo-card.selected{border-color:#1a73e8;background:#e8f0fe;box-shadow:0 2px 8px rgba(26,115,232,0.2)}
+.condo-name{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:2px}
+.condo-addr{font-size:10px;color:#80868b;margin-bottom:5px;font-style:italic}
+.condo-meta{display:flex;gap:5px;flex-wrap:wrap}
+.condo-tag{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:600}
+.tag-year{background:#e6f4ea;color:#137333}
+.tag-units{background:#fce8e6;color:#c5221f}
+.tag-size{background:#e8f0fe;color:#1a73e8}
+.tag-yield{background:#fef7e0;color:#ea8600}
+.condo-prices{display:flex;gap:8px;margin-top:6px;font-size:11px}
+.price-col{flex:1;background:#f8f9fb;padding:4px 6px;border-radius:6px}
+.price-label{font-size:8px;color:#80868b;text-transform:uppercase;font-weight:600}
+.price-value{font-weight:700}
+.sale-price{color:#ea4335}
+.rent-price{color:#1a73e8}
 
-.map-legend { position: absolute; bottom: 20px; left: 20px; z-index: 1000; background: rgba(13,27,42,0.92); padding: 10px 14px; border-radius: 8px; border: 1px solid #1e3a5f; }
-.map-legend-title { font-size: 11px; color: #4fc3f7; font-weight: 600; margin-bottom: 6px; }
-.map-legend-item { display: flex; align-items: center; gap: 8px; font-size: 10px; color: #8899aa; margin: 3px 0; }
-.map-legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); }
+.leaflet-popup-content-wrapper{background:#fff!important;color:#1a1a2e!important;border-radius:12px!important;box-shadow:0 4px 20px rgba(0,0,0,0.15)!important;border:none!important}
+.leaflet-popup-tip{background:#fff!important}
+.leaflet-popup-content{margin:12px 16px!important;min-width:280px}
+.popup-title{font-size:15px;font-weight:700;color:#1a73e8;margin-bottom:2px}
+.popup-addr{font-size:11px;color:#80868b;margin-bottom:8px;font-style:italic;border-bottom:1px solid #f0f0f0;padding-bottom:6px}
+.popup-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.popup-cell{background:#f8f9fb;padding:6px 8px;border-radius:6px}
+.popup-cell-label{font-size:9px;color:#80868b;text-transform:uppercase;font-weight:600}
+.popup-cell-val{font-size:13px;font-weight:700}
 
-.summary-bar { padding: 6px 10px; background: #0a1520; border-bottom: 1px solid #1e3a5f; display: flex; gap: 12px; font-size: 10px; flex-shrink: 0; }
-.summary-item { display: flex; flex-direction: column; align-items: center; }
-.summary-val { font-size: 14px; font-weight: 700; color: #4fc3f7; }
-.summary-label { color: #667788; }
+.map-legend{position:absolute;bottom:24px;left:16px;z-index:1000;background:#fff;padding:12px 16px;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,0.12);border:1px solid #e8eaed}
+.map-legend-title{font-size:11px;color:#1a73e8;font-weight:700;margin-bottom:6px}
+.map-legend-item{display:flex;align-items:center;gap:8px;font-size:10px;color:#5f6368;margin:4px 0}
+.map-legend-dot{width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+
+.leaflet-tooltip.condo-label{background:transparent!important;border:none!important;box-shadow:none!important;color:#1a1a2e;font-size:10px;font-weight:600;padding:0!important;text-shadow:1px 1px 2px #fff,-1px -1px 2px #fff,1px -1px 2px #fff,-1px 1px 2px #fff,0 0 4px #fff}
 </style>
 </head>
 <body>
-
 <div class="header">
   <h1>Mont Kiara Condominium Dashboard</h1>
-  <div class="stats">
-    Source: iProperty.com.my (2025-2026) | Properties: <span id="totalCount">0</span> | Median PSF: <span id="medianPsf">-</span>
-  </div>
+  <div class="stats">Source: iProperty / PropertyGuru (2025-2026) | Properties: <span id="totalCount">0</span> | Median PSF: <span id="medianPsf">-</span></div>
 </div>
-
 <div class="main">
   <div id="map"></div>
   <button class="toggle-panel" id="toggleBtn" onclick="togglePanel()">&#9664;</button>
@@ -98,82 +106,22 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1923; colo
     <div class="filters">
       <h3>Filters</h3>
       <div class="filter-row">
-        <div class="filter-group" style="flex:2">
-          <label>Search</label>
-          <input type="text" id="fSearch" placeholder="Condo name..." oninput="applyFilters()">
-        </div>
+        <div class="filter-group" style="flex:2"><label>Search</label><input type="text" id="fSearch" placeholder="Condo name or address..." oninput="applyFilters()"></div>
       </div>
       <div class="filter-row">
-        <div class="filter-group">
-          <label>Sale PSF (RM)</label>
-          <select id="fSalePsf" onchange="applyFilters()">
-            <option value="">All</option>
-            <option value="0-500">&lt; 500</option>
-            <option value="500-700">500-700</option>
-            <option value="700-900">700-900</option>
-            <option value="900-1100">900-1,100</option>
-            <option value="1100-9999">&gt; 1,100</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>Rent (RM/mo)</label>
-          <select id="fRent" onchange="applyFilters()">
-            <option value="">All</option>
-            <option value="0-3000">&lt; 3K</option>
-            <option value="3000-5000">3-5K</option>
-            <option value="5000-8000">5-8K</option>
-            <option value="8000-12000">8-12K</option>
-            <option value="12000-99999">&gt; 12K</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>Year Built</label>
-          <select id="fYear" onchange="applyFilters()">
-            <option value="">All</option>
-            <option value="1990-2000">&lt; 2000</option>
-            <option value="2000-2010">2000-09</option>
-            <option value="2010-2020">2010-19</option>
-            <option value="2020-2030">2020+</option>
-          </select>
-        </div>
+        <div class="filter-group"><label>Sale PSF</label><select id="fSalePsf" onchange="applyFilters()"><option value="">All</option><option value="0-500">&lt;500</option><option value="500-700">500-700</option><option value="700-900">700-900</option><option value="900-1100">900-1.1K</option><option value="1100-9999">&gt;1.1K</option></select></div>
+        <div class="filter-group"><label>Rent/mo</label><select id="fRent" onchange="applyFilters()"><option value="">All</option><option value="0-3000">&lt;3K</option><option value="3000-5000">3-5K</option><option value="5000-8000">5-8K</option><option value="8000-12000">8-12K</option><option value="12000-99999">&gt;12K</option></select></div>
+        <div class="filter-group"><label>Year</label><select id="fYear" onchange="applyFilters()"><option value="">All</option><option value="1990-2000">&lt;2000</option><option value="2000-2010">2000s</option><option value="2010-2020">2010s</option><option value="2020-2030">2020+</option></select></div>
       </div>
       <div class="filter-row">
-        <div class="filter-group">
-          <label>Size (sqft)</label>
-          <select id="fSize" onchange="applyFilters()">
-            <option value="">All</option>
-            <option value="0-800">&lt; 800</option>
-            <option value="800-1500">800-1,500</option>
-            <option value="1500-2500">1,500-2,500</option>
-            <option value="2500-99999">&gt; 2,500</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>Yield (%)</label>
-          <select id="fYield" onchange="applyFilters()">
-            <option value="">All</option>
-            <option value="0-3">&lt; 3%</option>
-            <option value="3-4">3-4%</option>
-            <option value="4-5">4-5%</option>
-            <option value="5-99">&gt; 5%</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>Color By</label>
-          <select id="fColorBy" onchange="applyFilters()">
-            <option value="salePsf">Sale PSF</option>
-            <option value="rentPsf">Rent PSF</option>
-            <option value="yield">Yield %</option>
-            <option value="year">Year Built</option>
-          </select>
-        </div>
+        <div class="filter-group"><label>Size sqft</label><select id="fSize" onchange="applyFilters()"><option value="">All</option><option value="0-800">&lt;800</option><option value="800-1500">800-1.5K</option><option value="1500-2500">1.5-2.5K</option><option value="2500-99999">&gt;2.5K</option></select></div>
+        <div class="filter-group"><label>Yield</label><select id="fYield" onchange="applyFilters()"><option value="">All</option><option value="0-3">&lt;3%</option><option value="3-4">3-4%</option><option value="4-5">4-5%</option><option value="5-99">&gt;5%</option></select></div>
+        <div class="filter-group"><label>Color</label><select id="fColorBy" onchange="applyFilters()"><option value="salePsf">Sale PSF</option><option value="rentPsf">Rent PSF</option><option value="yield">Yield</option><option value="year">Year</option></select></div>
       </div>
       <div class="sort-row">
-        <span style="font-size:10px;color:#667788;margin-right:4px;">Sort:</span>
         <button class="sort-btn active" data-sort="name" onclick="setSort(this)">Name</button>
         <button class="sort-btn" data-sort="salePsfLow" onclick="setSort(this)">PSF ↑</button>
         <button class="sort-btn" data-sort="salePsfHigh" onclick="setSort(this)">PSF ↓</button>
-        <button class="sort-btn" data-sort="rentLow" onclick="setSort(this)">Rent ↑</button>
         <button class="sort-btn" data-sort="rentHigh" onclick="setSort(this)">Rent ↓</button>
         <button class="sort-btn" data-sort="yieldHigh" onclick="setSort(this)">Yield ↓</button>
         <button class="sort-btn" data-sort="yearNew" onclick="setSort(this)">Newest</button>
@@ -191,111 +139,119 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f1923; colo
 <div class="map-legend" id="mapLegend"></div>
 
 <script>
-const CONDOS = [
-  {name:"10 Mont Kiara (MK10)",year:2009,units:332,sizeMin:3478,sizeMax:7500,rentMin:15000,rentMax:20000,salePsfMin:1200,salePsfMax:1500,lat:3.1718,lng:101.6509},
-  {name:"11 Mont Kiara (MK11)",year:2011,units:339,sizeMin:2707,sizeMax:6705,rentMin:13000,rentMax:20000,salePsfMin:1000,salePsfMax:1300,lat:3.1722,lng:101.6515},
-  {name:"28 Mont Kiara (MK28)",year:2012,units:460,sizeMin:2535,sizeMax:3000,rentMin:9000,rentMax:15000,salePsfMin:850,salePsfMax:950,lat:3.1715,lng:101.6502},
-  {name:"Agile Mont Kiara",year:2020,units:813,sizeMin:1215,sizeMax:5090,rentMin:5000,rentMax:15000,salePsfMin:950,salePsfMax:1100,lat:3.1745,lng:101.6530},
-  {name:"Allevia Mont Kiara",year:2025,units:294,sizeMin:1703,sizeMax:2634,rentMin:10000,rentMax:20000,salePsfMin:1000,salePsfMax:1200,lat:3.1740,lng:101.6545},
-  {name:"Almaspuri Mont Kiara",year:2003,units:132,sizeMin:1550,sizeMax:1600,rentMin:4500,rentMax:6000,salePsfMin:600,salePsfMax:700,lat:3.1698,lng:101.6518},
-  {name:"Aman Mont Kiara",year:2005,units:345,sizeMin:1668,sizeMax:4647,rentMin:6000,rentMax:10000,salePsfMin:650,salePsfMax:750,lat:3.1705,lng:101.6523},
-  {name:"Angkupuri Mont Kiara",year:1998,units:210,sizeMin:1249,sizeMax:1550,rentMin:3000,rentMax:4500,salePsfMin:500,salePsfMax:550,lat:3.1688,lng:101.6510},
-  {name:"Arcoris Mont Kiara",year:2016,units:697,sizeMin:496,sizeMax:4241,rentMin:3000,rentMax:15000,salePsfMin:950,salePsfMax:1300,lat:3.1680,lng:101.6545},
-  {name:"Arte Mont Kiara",year:2020,units:1707,sizeMin:442,sizeMax:1851,rentMin:2000,rentMax:7000,salePsfMin:900,salePsfMax:1000,lat:3.1750,lng:101.6518},
-  {name:"Astana Mont Kiara",year:2000,units:281,sizeMin:1241,sizeMax:1690,rentMin:4000,rentMax:6500,salePsfMin:600,salePsfMax:700,lat:3.1695,lng:101.6535},
-  {name:"Aston Kiara 3",year:2011,units:160,sizeMin:1517,sizeMax:1598,rentMin:2500,rentMax:3000,salePsfMin:350,salePsfMax:400,lat:3.1660,lng:101.6490},
-  {name:"Astrea Mont Kiara",year:2024,units:240,sizeMin:1364,sizeMax:1859,rentMin:4500,rentMax:9000,salePsfMin:900,salePsfMax:1000,lat:3.1735,lng:101.6555},
-  {name:"Banyan Mont Kiara",year:2007,units:147,sizeMin:1838,sizeMax:2648,rentMin:6000,rentMax:10000,salePsfMin:650,salePsfMax:750,lat:3.1702,lng:101.6498},
-  {name:"Bayu Mont Kiara",year:2002,units:398,sizeMin:798,sizeMax:2300,rentMin:2200,rentMax:4000,salePsfMin:600,salePsfMax:700,lat:3.1692,lng:101.6505},
-  {name:"Casa Kiara 1",year:2006,units:223,sizeMin:1235,sizeMax:1268,rentMin:3000,rentMax:4000,salePsfMin:500,salePsfMax:550,lat:3.1672,lng:101.6488},
-  {name:"Casa Kiara 2",year:2009,units:206,sizeMin:1375,sizeMax:1574,rentMin:3500,rentMax:4500,salePsfMin:600,salePsfMax:700,lat:3.1675,lng:101.6492},
-  {name:"Ceriaan Kiara",year:2009,units:238,sizeMin:1828,sizeMax:2208,rentMin:4000,rentMax:6000,salePsfMin:500,salePsfMax:550,lat:3.1685,lng:101.6470},
-  {name:"Damai Mont Kiara",year:2004,units:230,sizeMin:2272,sizeMax:5700,rentMin:8000,rentMax:16000,salePsfMin:800,salePsfMax:900,lat:3.1710,lng:101.6495},
-  {name:"Flora Murni Mont Kiara",year:2006,units:71,sizeMin:1615,sizeMax:5490,rentMin:7000,rentMax:20000,salePsfMin:600,salePsfMax:1000,lat:3.1725,lng:101.6485},
-  {name:"Gateway Kiaramas",year:2010,units:168,sizeMin:743,sizeMax:3563,rentMin:2500,rentMax:5000,salePsfMin:550,salePsfMax:850,lat:3.1665,lng:101.6540},
-  {name:"Hartamas Regency 1",year:2005,units:244,sizeMin:1181,sizeMax:2935,rentMin:3000,rentMax:6000,salePsfMin:550,salePsfMax:600,lat:3.1650,lng:101.6555},
-  {name:"Hartamas Regency 2",year:2007,units:210,sizeMin:1315,sizeMax:3380,rentMin:3000,rentMax:6000,salePsfMin:550,salePsfMax:600,lat:3.1652,lng:101.6560},
-  {name:"Hijauan Kiara",year:2008,units:188,sizeMin:2090,sizeMax:5045,rentMin:6500,rentMax:12000,salePsfMin:600,salePsfMax:700,lat:3.1730,lng:101.6478},
-  {name:"Icon Residence",year:2014,units:260,sizeMin:673,sizeMax:4719,rentMin:3000,rentMax:12000,salePsfMin:800,salePsfMax:900,lat:3.1668,lng:101.6558},
-  {name:"Inspirasi Mont Kiara",year:2022,units:640,sizeMin:940,sizeMax:1015,rentMin:3000,rentMax:4500,salePsfMin:750,salePsfMax:850,lat:3.1755,lng:101.6505},
-  {name:"Kami Mont Kiara",year:2025,units:168,sizeMin:840,sizeMax:1604,rentMin:4000,rentMax:10000,salePsfMin:1100,salePsfMax:1200,lat:3.1742,lng:101.6540},
-  {name:"i-Zen Kiara 1",year:2008,units:302,sizeMin:805,sizeMax:1407,rentMin:2500,rentMax:5500,salePsfMin:700,salePsfMax:750,lat:3.1678,lng:101.6500},
-  {name:"i-Zen Kiara 2",year:2006,units:238,sizeMin:725,sizeMax:1701,rentMin:2500,rentMax:6500,salePsfMin:600,salePsfMax:650,lat:3.1682,lng:101.6505},
-  {name:"Kiara 1888",year:2008,units:182,sizeMin:1238,sizeMax:3982,rentMin:3500,rentMax:9000,salePsfMin:550,salePsfMax:600,lat:3.1690,lng:101.6475},
-  {name:"Kiara 9 Residency",year:2011,units:192,sizeMin:1661,sizeMax:2691,rentMin:5000,rentMax:15000,salePsfMin:700,salePsfMax:800,lat:3.1712,lng:101.6470},
-  {name:"Kiara Designer Suites",year:2007,units:324,sizeMin:1088,sizeMax:1600,rentMin:3000,rentMax:4500,salePsfMin:600,salePsfMax:650,lat:3.1670,lng:101.6515},
-  {name:"Kiaramas Ayuria",year:2008,units:480,sizeMin:1605,sizeMax:4000,rentMin:4000,rentMax:8000,salePsfMin:600,salePsfMax:650,lat:3.1662,lng:101.6530},
-  {name:"Kiaramas Cendana",year:2006,units:184,sizeMin:1650,sizeMax:4530,rentMin:4500,rentMax:8000,salePsfMin:650,salePsfMax:750,lat:3.1658,lng:101.6535},
-  {name:"Kiaramas Danai",year:2013,units:274,sizeMin:2025,sizeMax:2498,rentMin:6500,rentMax:10000,salePsfMin:800,salePsfMax:900,lat:3.1655,lng:101.6542},
-  {name:"Kiaramas Sutera",year:2004,units:315,sizeMin:1347,sizeMax:4100,rentMin:3000,rentMax:7000,salePsfMin:550,salePsfMax:600,lat:3.1660,lng:101.6525},
-  {name:"Kiaraville",year:2008,units:404,sizeMin:1593,sizeMax:3935,rentMin:5500,rentMax:15000,salePsfMin:700,salePsfMax:800,lat:3.1708,lng:101.6488},
-  {name:"La Grande Mont Kiara",year:2005,units:298,sizeMin:1961,sizeMax:2047,rentMin:4000,rentMax:6000,salePsfMin:550,salePsfMax:600,lat:3.1700,lng:101.6480},
-  {name:"Laman Suria Mont Kiara",year:2004,units:202,sizeMin:931,sizeMax:1178,rentMin:2500,rentMax:5000,salePsfMin:600,salePsfMax:650,lat:3.1694,lng:101.6490},
-  {name:"Lanai Kiara",year:1998,units:181,sizeMin:1400,sizeMax:4300,rentMin:3000,rentMax:6000,salePsfMin:400,salePsfMax:450,lat:3.1696,lng:101.6465},
-  {name:"Lumina Kiara",year:2010,units:104,sizeMin:1448,sizeMax:3152,rentMin:4500,rentMax:15000,salePsfMin:600,salePsfMax:700,lat:3.1720,lng:101.6475},
-  {name:"Meridin Mont Kiara",year:2009,units:228,sizeMin:1787,sizeMax:2513,rentMin:4500,rentMax:8000,salePsfMin:550,salePsfMax:600,lat:3.1705,lng:101.6512},
-  {name:"OOAK Kiara 163",year:2022,units:336,sizeMin:696,sizeMax:1016,rentMin:3000,rentMax:9000,salePsfMin:1200,salePsfMax:1300,lat:3.1685,lng:101.6548},
-  {name:"Palma Mont Kiara",year:1994,units:402,sizeMin:1208,sizeMax:1390,rentMin:4000,rentMax:6000,salePsfMin:700,salePsfMax:750,lat:3.1690,lng:101.6528},
-  {name:"Pavilion Hilltop",year:2018,units:621,sizeMin:1200,sizeMax:3671,rentMin:5000,rentMax:20000,salePsfMin:1000,salePsfMax:1200,lat:3.1728,lng:101.6535},
-  {name:"Pelangi Mont Kiara",year:1994,units:302,sizeMin:1208,sizeMax:1390,rentMin:3500,rentMax:6000,salePsfMin:600,salePsfMax:650,lat:3.1687,lng:101.6522},
-  {name:"Pentamont Mont Kiara",year:2023,units:330,sizeMin:1379,sizeMax:2125,rentMin:5000,rentMax:15000,salePsfMin:900,salePsfMax:1100,lat:3.1748,lng:101.6525},
-  {name:"Pines Mont Kiara",year:1993,units:508,sizeMin:1208,sizeMax:1428,rentMin:3000,rentMax:6000,salePsfMin:600,salePsfMax:650,lat:3.1683,lng:101.6515},
-  {name:"Residensi 22",year:2017,units:534,sizeMin:1878,sizeMax:3043,rentMin:9000,rentMax:20000,salePsfMin:1200,salePsfMax:1400,lat:3.1718,lng:101.6540},
-  {name:"Residensi Sefina",year:2019,units:245,sizeMin:1333,sizeMax:1771,rentMin:4500,rentMax:8000,salePsfMin:800,salePsfMax:850,lat:3.1752,lng:101.6512},
-  {name:"Richmond Mont Kiara",year:2014,units:96,sizeMin:1931,sizeMax:2148,rentMin:3000,rentMax:4000,salePsfMin:350,salePsfMax:400,lat:3.1645,lng:101.6495},
-  {name:"Seni Mont Kiara",year:2010,units:605,sizeMin:2437,sizeMax:3531,rentMin:8000,rentMax:20000,salePsfMin:800,salePsfMax:900,lat:3.1712,lng:101.6530},
-  {name:"Solaris Dutamas (Publika)",year:2009,units:800,sizeMin:672,sizeMax:1238,rentMin:2500,rentMax:6000,salePsfMin:800,salePsfMax:950,lat:3.1710,lng:101.6575},
-  {name:"Solaris Parq",year:2023,units:576,sizeMin:721,sizeMax:1423,rentMin:3500,rentMax:9000,salePsfMin:1200,salePsfMax:1300,lat:3.1705,lng:101.6580},
-  {name:"Sophia Mont Kiara",year:1997,units:238,sizeMin:750,sizeMax:1386,rentMin:3000,rentMax:6000,salePsfMin:650,salePsfMax:700,lat:3.1680,lng:101.6495},
-  {name:"Sunway Mont",year:2020,units:288,sizeMin:1122,sizeMax:1906,rentMin:4000,rentMax:9000,salePsfMin:850,salePsfMax:950,lat:3.1670,lng:101.6565},
-  {name:"Sunway Vivaldi",year:2011,units:208,sizeMin:2573,sizeMax:3983,rentMin:9000,rentMax:20000,salePsfMin:800,salePsfMax:950,lat:3.1715,lng:101.6465},
-  {name:"Tiffani Kiara",year:2009,units:399,sizeMin:815,sizeMax:3729,rentMin:3000,rentMax:12000,salePsfMin:700,salePsfMax:800,lat:3.1700,lng:101.6510},
-  {name:"TWY Mont Kiara",year:2021,units:484,sizeMin:662,sizeMax:1385,rentMin:2500,rentMax:7000,salePsfMin:900,salePsfMax:1000,lat:3.1758,lng:101.6535},
-  {name:"Verve Suites Mont Kiara",year:2013,units:933,sizeMin:462,sizeMax:1394,rentMin:2000,rentMax:6000,salePsfMin:850,salePsfMax:1000,lat:3.1675,lng:101.6555},
-  {name:"Vista Kiara",year:1997,units:409,sizeMin:1230,sizeMax:1410,rentMin:3000,rentMax:4500,salePsfMin:500,salePsfMax:550,lat:3.1693,lng:101.6498}
+// ============================================================
+// DATABASE: 61 Mont Kiara Condominiums
+// Addresses verified via iProperty, PropertyGuru, Waze, montkiara.properties (Mar 2026)
+// ============================================================
+const CONDOS=[
+{name:"10 Mont Kiara (MK10)",addr:"Jalan Kiara 1, Mont Kiara, 50480 KL",year:2009,units:332,sizeMin:3478,sizeMax:7500,rentMin:15000,rentMax:20000,salePsfMin:1200,salePsfMax:1500,lat:3.17195,lng:101.65095},
+{name:"11 Mont Kiara (MK11)",addr:"Jalan Kiara 1, Mont Kiara, 50480 KL",year:2011,units:339,sizeMin:2707,sizeMax:6705,rentMin:13000,rentMax:20000,salePsfMin:1000,salePsfMax:1300,lat:3.17260,lng:101.65140},
+{name:"28 Mont Kiara (MK28)",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:2012,units:460,sizeMin:2535,sizeMax:3000,rentMin:9000,rentMax:15000,salePsfMin:850,salePsfMax:950,lat:3.17105,lng:101.65180},
+{name:"Agile Mont Kiara",addr:"Jalan Duta Kiara, Dutamas, 50480 KL",year:2020,units:813,sizeMin:1215,sizeMax:5090,rentMin:5000,rentMax:15000,salePsfMin:950,salePsfMax:1100,lat:3.17520,lng:101.65350},
+{name:"Allevia Mont Kiara",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:2025,units:294,sizeMin:1703,sizeMax:2634,rentMin:10000,rentMax:20000,salePsfMin:1000,salePsfMax:1200,lat:3.17380,lng:101.65420},
+{name:"Almaspuri Mont Kiara",addr:"Jalan 1/70C, off Jalan Kiara, 50480 KL",year:2003,units:132,sizeMin:1550,sizeMax:1600,rentMin:4500,rentMax:6000,salePsfMin:600,salePsfMax:700,lat:3.16960,lng:101.65120},
+{name:"Aman Mont Kiara",addr:"Jalan Kiara 2, Mont Kiara, 50480 KL",year:2005,units:345,sizeMin:1668,sizeMax:4647,rentMin:6000,rentMax:10000,salePsfMin:650,salePsfMax:750,lat:3.17000,lng:101.64920},
+{name:"Angkupuri Mont Kiara",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:1998,units:210,sizeMin:1249,sizeMax:1550,rentMin:3000,rentMax:4500,salePsfMin:500,salePsfMax:550,lat:3.16920,lng:101.65160},
+{name:"Arcoris Mont Kiara",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:2016,units:697,sizeMin:496,sizeMax:4241,rentMin:3000,rentMax:15000,salePsfMin:950,salePsfMax:1300,lat:3.16840,lng:101.65480},
+{name:"Arte Mont Kiara",addr:"Jalan Sultan Haji Ahmad Shah, 50480 KL",year:2020,units:1707,sizeMin:442,sizeMax:1851,rentMin:2000,rentMax:7000,salePsfMin:900,salePsfMax:1000,lat:3.17540,lng:101.65220},
+{name:"Astana Mont Kiara",addr:"Jalan Kiara 2, Mont Kiara, 50480 KL",year:2000,units:281,sizeMin:1241,sizeMax:1690,rentMin:4000,rentMax:6500,salePsfMin:600,salePsfMax:700,lat:3.17040,lng:101.64860},
+{name:"Aston Kiara 3",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2011,units:160,sizeMin:1517,sizeMax:1598,rentMin:2500,rentMax:3000,salePsfMin:350,salePsfMax:400,lat:3.16550,lng:101.64780},
+{name:"Astrea Mont Kiara",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:2024,units:240,sizeMin:1364,sizeMax:1859,rentMin:4500,rentMax:9000,salePsfMin:900,salePsfMax:1000,lat:3.17300,lng:101.65480},
+{name:"Banyan Mont Kiara",addr:"Jalan Kiara 2, Mont Kiara, 50480 KL",year:2007,units:147,sizeMin:1838,sizeMax:2648,rentMin:6000,rentMax:10000,salePsfMin:650,salePsfMax:750,lat:3.17060,lng:101.64780},
+{name:"Bayu Mont Kiara",addr:"Jalan Kiara 2, Mont Kiara, 50480 KL",year:2002,units:398,sizeMin:798,sizeMax:2300,rentMin:2200,rentMax:4000,salePsfMin:600,salePsfMax:700,lat:3.16980,lng:101.64900},
+{name:"Casa Kiara 1",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2006,units:223,sizeMin:1235,sizeMax:1268,rentMin:3000,rentMax:4000,salePsfMin:500,salePsfMax:550,lat:3.16680,lng:101.64720},
+{name:"Casa Kiara 2",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2009,units:206,sizeMin:1375,sizeMax:1574,rentMin:3500,rentMax:4500,salePsfMin:600,salePsfMax:700,lat:3.16720,lng:101.64760},
+{name:"Ceriaan Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2009,units:238,sizeMin:1828,sizeMax:2208,rentMin:4000,rentMax:6000,salePsfMin:500,salePsfMax:550,lat:3.16760,lng:101.64640},
+{name:"Damai Mont Kiara",addr:"Jalan Kiara 2, Mont Kiara, 50480 KL",year:2004,units:230,sizeMin:2272,sizeMax:5700,rentMin:8000,rentMax:16000,salePsfMin:800,salePsfMax:900,lat:3.17080,lng:101.64700},
+{name:"Flora Murni Mont Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2006,units:71,sizeMin:1615,sizeMax:5490,rentMin:7000,rentMax:20000,salePsfMin:600,salePsfMax:1000,lat:3.16900,lng:101.64600},
+{name:"Gateway Kiaramas",addr:"No 1, Jalan Desa Kiara, Mont Kiara, 50480 KL",year:2010,units:168,sizeMin:743,sizeMax:3563,rentMin:2500,rentMax:5000,salePsfMin:550,salePsfMax:850,lat:3.16620,lng:101.65380},
+{name:"Hartamas Regency 1",addr:"Jalan 27/70A, Desa Sri Hartamas, 50480 KL",year:2005,units:244,sizeMin:1181,sizeMax:2935,rentMin:3000,rentMax:6000,salePsfMin:550,salePsfMax:600,lat:3.16440,lng:101.65520},
+{name:"Hartamas Regency 2",addr:"Jalan 27/70A, Desa Sri Hartamas, 50480 KL",year:2007,units:210,sizeMin:1315,sizeMax:3380,rentMin:3000,rentMax:6000,salePsfMin:550,salePsfMax:600,lat:3.16480,lng:101.65560},
+{name:"Hijauan Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2008,units:188,sizeMin:2090,sizeMax:5045,rentMin:6500,rentMax:12000,salePsfMin:600,salePsfMax:700,lat:3.16940,lng:101.64540},
+{name:"Icon Residence",addr:"Jalan Kiara, Dutamas, 50480 KL",year:2014,units:260,sizeMin:673,sizeMax:4719,rentMin:3000,rentMax:12000,salePsfMin:800,salePsfMax:900,lat:3.16700,lng:101.65600},
+{name:"Inspirasi Mont Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2022,units:640,sizeMin:940,sizeMax:1015,rentMin:3000,rentMax:4500,salePsfMin:750,salePsfMax:850,lat:3.17480,lng:101.65080},
+{name:"Kami Mont Kiara",addr:"Jalan Duta Kiara, Dutamas, 50480 KL",year:2025,units:168,sizeMin:840,sizeMax:1604,rentMin:4000,rentMax:10000,salePsfMin:1100,salePsfMax:1200,lat:3.17460,lng:101.65440},
+{name:"i-Zen Kiara 1",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:2008,units:302,sizeMin:805,sizeMax:1407,rentMin:2500,rentMax:5500,salePsfMin:700,salePsfMax:750,lat:3.16860,lng:101.65060},
+{name:"i-Zen Kiara 2",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:2006,units:238,sizeMin:725,sizeMax:1701,rentMin:2500,rentMax:6500,salePsfMin:600,salePsfMax:650,lat:3.16820,lng:101.65020},
+{name:"Kiara 1888",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2008,units:182,sizeMin:1238,sizeMax:3982,rentMin:3500,rentMax:9000,salePsfMin:550,salePsfMax:600,lat:3.16800,lng:101.64680},
+{name:"Kiara 9 Residency",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2011,units:192,sizeMin:1661,sizeMax:2691,rentMin:5000,rentMax:15000,salePsfMin:700,salePsfMax:800,lat:3.16980,lng:101.64560},
+{name:"Kiara Designer Suites",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2007,units:324,sizeMin:1088,sizeMax:1600,rentMin:3000,rentMax:4500,salePsfMin:600,salePsfMax:650,lat:3.16740,lng:101.64820},
+{name:"Kiaramas Ayuria",addr:"Jalan Desa Kiara, Mont Kiara, 50480 KL",year:2008,units:480,sizeMin:1605,sizeMax:4000,rentMin:4000,rentMax:8000,salePsfMin:600,salePsfMax:650,lat:3.16580,lng:101.65280},
+{name:"Kiaramas Cendana",addr:"Jalan Desa Kiara, Mont Kiara, 50480 KL",year:2006,units:184,sizeMin:1650,sizeMax:4530,rentMin:4500,rentMax:8000,salePsfMin:650,salePsfMax:750,lat:3.16540,lng:101.65340},
+{name:"Kiaramas Danai",addr:"Jalan Desa Kiara, Mont Kiara, 50480 KL",year:2013,units:274,sizeMin:2025,sizeMax:2498,rentMin:6500,rentMax:10000,salePsfMin:800,salePsfMax:900,lat:3.16500,lng:101.65400},
+{name:"Kiaramas Sutera",addr:"Jalan Desa Kiara, Mont Kiara, 50480 KL",year:2004,units:315,sizeMin:1347,sizeMax:4100,rentMin:3000,rentMax:7000,salePsfMin:550,salePsfMax:600,lat:3.16640,lng:101.65240},
+{name:"Kiaraville",addr:"Changkat Duta Kiara, Mont Kiara, 50480 KL",year:2008,units:404,sizeMin:1593,sizeMax:3935,rentMin:5500,rentMax:15000,salePsfMin:700,salePsfMax:800,lat:3.17140,lng:101.64860},
+{name:"La Grande Mont Kiara",addr:"Jalan Kiara 2, Mont Kiara, 50480 KL",year:2005,units:298,sizeMin:1961,sizeMax:2047,rentMin:4000,rentMax:6000,salePsfMin:550,salePsfMax:600,lat:3.17020,lng:101.64980},
+{name:"Laman Suria Mont Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2004,units:202,sizeMin:931,sizeMax:1178,rentMin:2500,rentMax:5000,salePsfMin:600,salePsfMax:650,lat:3.16860,lng:101.64720},
+{name:"Lanai Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:1998,units:181,sizeMin:1400,sizeMax:4300,rentMin:3000,rentMax:6000,salePsfMin:400,salePsfMax:450,lat:3.16940,lng:101.64480},
+{name:"Lumina Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2010,units:104,sizeMin:1448,sizeMax:3152,rentMin:4500,rentMax:15000,salePsfMin:600,salePsfMax:700,lat:3.16960,lng:101.64400},
+{name:"Meridin Mont Kiara",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:2009,units:228,sizeMin:1787,sizeMax:2513,rentMin:4500,rentMax:8000,salePsfMin:550,salePsfMax:600,lat:3.17020,lng:101.65060},
+{name:"OOAK Kiara 163",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:2022,units:336,sizeMin:696,sizeMax:1016,rentMin:3000,rentMax:9000,salePsfMin:1200,salePsfMax:1300,lat:3.16880,lng:101.65440},
+{name:"Palma Mont Kiara",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:1994,units:402,sizeMin:1208,sizeMax:1390,rentMin:4000,rentMax:6000,salePsfMin:700,salePsfMax:750,lat:3.16900,lng:101.65240},
+{name:"Pavilion Hilltop",addr:"Changkat Duta Kiara, Mont Kiara, 50480 KL",year:2018,units:621,sizeMin:1200,sizeMax:3671,rentMin:5000,rentMax:20000,salePsfMin:1000,salePsfMax:1200,lat:3.17260,lng:101.65000},
+{name:"Pelangi Mont Kiara",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:1994,units:302,sizeMin:1208,sizeMax:1390,rentMin:3500,rentMax:6000,salePsfMin:600,salePsfMax:650,lat:3.16880,lng:101.65200},
+{name:"Pentamont Mont Kiara",addr:"Jalan Duta Kiara, Mont Kiara, 50480 KL",year:2023,units:330,sizeMin:1379,sizeMax:2125,rentMin:5000,rentMax:15000,salePsfMin:900,salePsfMax:1100,lat:3.17440,lng:101.65280},
+{name:"Pines Mont Kiara",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:1993,units:508,sizeMin:1208,sizeMax:1428,rentMin:3000,rentMax:6000,salePsfMin:600,salePsfMax:650,lat:3.16840,lng:101.65160},
+{name:"Residensi 22",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2017,units:534,sizeMin:1878,sizeMax:3043,rentMin:9000,rentMax:20000,salePsfMin:1200,salePsfMax:1400,lat:3.17160,lng:101.64940},
+{name:"Residensi Sefina",addr:"Jalan Duta Kiara, Mont Kiara, 50480 KL",year:2019,units:245,sizeMin:1333,sizeMax:1771,rentMin:4500,rentMax:8000,salePsfMin:800,salePsfMax:850,lat:3.17560,lng:101.65180},
+{name:"Richmond Mont Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:2014,units:96,sizeMin:1931,sizeMax:2148,rentMin:3000,rentMax:4000,salePsfMin:350,salePsfMax:400,lat:3.16480,lng:101.64840},
+{name:"Seni Mont Kiara",addr:"Jalan Changkat Duta Kiara, Mont Kiara, 50480 KL",year:2010,units:605,sizeMin:2437,sizeMax:3531,rentMin:8000,rentMax:20000,salePsfMin:800,salePsfMax:900,lat:3.17180,lng:101.64960},
+{name:"Solaris Dutamas (Publika)",addr:"No 1, Jalan Dutamas 1, 50480 KL",year:2009,units:800,sizeMin:672,sizeMax:1238,rentMin:2500,rentMax:6000,salePsfMin:800,salePsfMax:950,lat:3.17120,lng:101.65740},
+{name:"Solaris Parq",addr:"21, Jalan Kiara, Mont Kiara, 50480 KL",year:2023,units:576,sizeMin:721,sizeMax:1423,rentMin:3500,rentMax:9000,salePsfMin:1200,salePsfMax:1300,lat:3.17060,lng:101.65800},
+{name:"Sophia Mont Kiara",addr:"Jalan Kiara, Mont Kiara, 50480 KL",year:1997,units:238,sizeMin:750,sizeMax:1386,rentMin:3000,rentMax:6000,salePsfMin:650,salePsfMax:700,lat:3.16780,lng:101.65100},
+{name:"Sunway Mont",addr:"Jalan 19/70A, Desa Sri Hartamas, 50480 KL",year:2020,units:288,sizeMin:1122,sizeMax:1906,rentMin:4000,rentMax:9000,salePsfMin:850,salePsfMax:950,lat:3.16660,lng:101.65660},
+{name:"Sunway Vivaldi",addr:"Jalan 19/70A, Desa Sri Hartamas, 50480 KL",year:2011,units:208,sizeMin:2573,sizeMax:3983,rentMin:9000,rentMax:20000,salePsfMin:800,salePsfMax:950,lat:3.16700,lng:101.65720},
+{name:"Tiffani Kiara",addr:"Changkat Duta Kiara, Mont Kiara, 50480 KL",year:2009,units:399,sizeMin:815,sizeMax:3729,rentMin:3000,rentMax:12000,salePsfMin:700,salePsfMax:800,lat:3.17060,lng:101.65000},
+{name:"TWY Mont Kiara",addr:"Persiaran Dutamas, Mont Kiara, 50480 KL",year:2021,units:484,sizeMin:662,sizeMax:1385,rentMin:2500,rentMax:7000,salePsfMin:900,salePsfMax:1000,lat:3.17600,lng:101.65400},
+{name:"Verve Suites Mont Kiara",addr:"8, Jalan Kiara 5, Mont Kiara, 50480 KL",year:2013,units:933,sizeMin:462,sizeMax:1394,rentMin:2000,rentMax:6000,salePsfMin:850,salePsfMax:1000,lat:3.16760,lng:101.65540},
+{name:"Vista Kiara",addr:"Jalan Kiara 3, Mont Kiara, 50480 KL",year:1997,units:409,sizeMin:1230,sizeMax:1410,rentMin:3000,rentMax:4500,salePsfMin:500,salePsfMax:550,lat:3.16880,lng:101.64760}
 ];
 
-// Derived fields
-CONDOS.forEach(c => {
-  c.salePsfMid = (c.salePsfMin + c.salePsfMax) / 2;
-  c.rentMid = (c.rentMin + c.rentMax) / 2;
-  c.sizeMid = (c.sizeMin + c.sizeMax) / 2;
-  c.yield = c.salePsfMid * c.sizeMid > 0 ? (c.rentMid * 12) / (c.salePsfMid * c.sizeMid) * 100 : 0;
-  c.rentPsf = c.sizeMid > 0 ? c.rentMid / c.sizeMid : 0;
+CONDOS.forEach(c=>{
+  c.salePsfMid=(c.salePsfMin+c.salePsfMax)/2;
+  c.rentMid=(c.rentMin+c.rentMax)/2;
+  c.sizeMid=(c.sizeMin+c.sizeMax)/2;
+  c.yield=c.salePsfMid*c.sizeMid>0?(c.rentMid*12)/(c.salePsfMid*c.sizeMid)*100:0;
+  c.rentPsf=c.sizeMid>0?c.rentMid/c.sizeMid:0;
 });
 
-// Map
-const map = L.map('map', {zoomControl: true}).setView([3.1700, 101.6520], 15);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-  attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19
+const map=L.map('map',{zoomControl:true}).setView([3.1700,101.6515],15);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+  attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19
 }).addTo(map);
 
-// Color scales
-const CS = {
-  salePsf: {label:'Sale PSF (RM)',min:350,max:1400,colors:['#2196f3','#4caf50','#ffeb3b','#ff9800','#f44336']},
-  rentPsf: {label:'Rent PSF (RM/mo)',min:1.5,max:5,colors:['#2196f3','#4caf50','#ffeb3b','#ff9800','#f44336']},
-  yield:   {label:'Gross Yield (%)',min:2,max:6,colors:['#f44336','#ff9800','#ffeb3b','#4caf50','#2196f3']},
-  year:    {label:'Year Built',min:1993,max:2025,colors:['#f44336','#ff9800','#ffeb3b','#4caf50','#2196f3']}
+const CS={
+  salePsf:{label:'Sale PSF (RM)',min:350,max:1400,colors:['#4285f4','#34a853','#fbbc04','#ea4335']},
+  rentPsf:{label:'Rent PSF (RM/mo)',min:1.5,max:5,colors:['#4285f4','#34a853','#fbbc04','#ea4335']},
+  yield:{label:'Gross Yield (%)',min:2,max:6,colors:['#ea4335','#fbbc04','#34a853','#4285f4']},
+  year:{label:'Year Built',min:1993,max:2025,colors:['#ea4335','#fbbc04','#34a853','#4285f4']}
 };
 
-function hexRgb(h){return{r:parseInt(h.slice(1,3),16),g:parseInt(h.slice(3,5),16),b:parseInt(h.slice(5,7),16)};}
-function getColor(v,s){const sc=CS[s],t=Math.max(0,Math.min(1,(v-sc.min)/(sc.max-sc.min))),i=t*(sc.colors.length-1),lo=Math.floor(i),hi=Math.ceil(i),f=i-lo,a=hexRgb(sc.colors[lo]),b=hexRgb(sc.colors[hi]);return`rgb(${Math.round(a.r+(b.r-a.r)*f)},${Math.round(a.g+(b.g-a.g)*f)},${Math.round(a.b+(b.b-a.b)*f)})`;}
-function colVal(c,s){return s==='salePsf'?c.salePsfMid:s==='rentPsf'?c.rentPsf:s==='yield'?c.yield:c.year;}
+function hexRgb(h){return{r:parseInt(h.slice(1,3),16),g:parseInt(h.slice(3,5),16),b:parseInt(h.slice(5,7),16)}}
+function getColor(v,s){const sc=CS[s],t=Math.max(0,Math.min(1,(v-sc.min)/(sc.max-sc.min))),i=t*(sc.colors.length-1),lo=Math.floor(i),hi=Math.ceil(i),f=i-lo,a=hexRgb(sc.colors[lo]),b=hexRgb(sc.colors[hi]);return`rgb(${Math.round(a.r+(b.r-a.r)*f)},${Math.round(a.g+(b.g-a.g)*f)},${Math.round(a.b+(b.b-a.b)*f)})`}
+function colVal(c,s){return s==='salePsf'?c.salePsfMid:s==='rentPsf'?c.rentPsf:s==='yield'?c.yield:c.year}
 
-let markers={}, selectedCondo=null, currentSort='name', filtered=[...CONDOS];
+let markers={},labels={},selectedCondo=null,currentSort='name',filtered=[...CONDOS];
 
 function mkMarker(c,cs){
   const color=getColor(colVal(c,cs),cs);
-  const m=L.circleMarker([c.lat,c.lng],{radius:Math.max(6,Math.min(14,Math.sqrt(c.units)/2)),fillColor:color,color:'#fff',weight:1.5,opacity:0.9,fillOpacity:0.85});
-  m.bindPopup(`<div style="min-width:260px"><div class="popup-title">${c.name}</div>
-    <div class="popup-row"><span class="popup-label">Year</span><span class="popup-val">${c.year}</span></div>
-    <div class="popup-row"><span class="popup-label">Units</span><span class="popup-val">${c.units.toLocaleString()}</span></div>
-    <div class="popup-row"><span class="popup-label">Size</span><span class="popup-val">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sqft</span></div>
-    <div class="popup-row"><span class="popup-label">Sale PSF</span><span class="popup-val" style="color:#ffb74d">RM ${c.salePsfMin}-${c.salePsfMax}</span></div>
-    <div class="popup-row"><span class="popup-label">Rent/mo</span><span class="popup-val" style="color:#4dd0e1">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</span></div>
-    <div class="popup-row"><span class="popup-label">Rent PSF</span><span class="popup-val" style="color:#4dd0e1">RM ${c.rentPsf.toFixed(2)}</span></div>
-    <div class="popup-row"><span class="popup-label">Gross Yield</span><span class="popup-val" style="color:#f06292">${c.yield.toFixed(1)}%</span></div></div>`);
+  const r=Math.max(7,Math.min(16,Math.sqrt(c.units)/1.8));
+  const m=L.circleMarker([c.lat,c.lng],{radius:r,fillColor:color,color:'#fff',weight:2,opacity:1,fillOpacity:0.9});
+  m.bindPopup(`<div>
+    <div class="popup-title">${c.name}</div>
+    <div class="popup-addr">${c.addr}</div>
+    <div class="popup-grid">
+      <div class="popup-cell"><div class="popup-cell-label">Year</div><div class="popup-cell-val">${c.year}</div></div>
+      <div class="popup-cell"><div class="popup-cell-label">Units</div><div class="popup-cell-val">${c.units}</div></div>
+      <div class="popup-cell"><div class="popup-cell-label">Sale PSF</div><div class="popup-cell-val" style="color:#ea4335">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>
+      <div class="popup-cell"><div class="popup-cell-label">Rent/mo</div><div class="popup-cell-val" style="color:#1a73e8">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>
+      <div class="popup-cell"><div class="popup-cell-label">Size</div><div class="popup-cell-val">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</div></div>
+      <div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#ea8600">${c.yield.toFixed(1)}%</div></div>
+    </div></div>`);
   m.on('click',()=>selectCondo(c.name));
+  // Label tooltip
+  const label=L.tooltip({permanent:true,direction:'right',offset:[8,0],className:'condo-label'}).setContent(c.name.replace(/ Mont Kiara/g,'').replace(/ \(.*\)/,''));
+  m.bindTooltip(label);
   return m;
 }
 
@@ -311,18 +267,19 @@ function updateLegend(s){
   const sc=CS[s];
   document.getElementById('legendTitle').textContent=sc.label;
   const bar=document.getElementById('legendBar');bar.innerHTML='';
-  for(let i=0;i<20;i++){const d=document.createElement('div');d.style.background=getColor(sc.min+i/19*(sc.max-sc.min),s);bar.appendChild(d);}
+  for(let i=0;i<24;i++){const d=document.createElement('div');d.style.background=getColor(sc.min+i/23*(sc.max-sc.min),s);bar.appendChild(d);}
   const fmt=v=>s==='yield'?v.toFixed(1)+'%':s==='year'?Math.round(v):'RM '+Math.round(v);
   document.getElementById('legendLabels').innerHTML=`<span>${fmt(sc.min)}</span><span>${fmt((sc.min+sc.max)/2)}</span><span>${fmt(sc.max)}</span>`;
   const ml=document.getElementById('mapLegend');ml.innerHTML=`<div class="map-legend-title">${sc.label}</div>`;
   [0,.25,.5,.75,1].forEach(t=>{const v=sc.min+t*(sc.max-sc.min);ml.innerHTML+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${getColor(v,s)}"></div>${fmt(v)}</div>`;});
 }
 
-function parseR(v){if(!v)return null;const[a,b]=v.split('-').map(Number);return{min:a,max:b};}
+function parseR(v){if(!v)return null;const[a,b]=v.split('-').map(Number);return{min:a,max:b}}
 function applyFilters(){
-  const q=document.getElementById('fSearch').value.toLowerCase(),sp=parseR(document.getElementById('fSalePsf').value),rn=parseR(document.getElementById('fRent').value),yr=parseR(document.getElementById('fYear').value),sz=parseR(document.getElementById('fSize').value),yl=parseR(document.getElementById('fYield').value);
+  const q=document.getElementById('fSearch').value.toLowerCase();
+  const sp=parseR(document.getElementById('fSalePsf').value),rn=parseR(document.getElementById('fRent').value),yr=parseR(document.getElementById('fYear').value),sz=parseR(document.getElementById('fSize').value),yl=parseR(document.getElementById('fYield').value);
   filtered=CONDOS.filter(c=>{
-    if(q&&!c.name.toLowerCase().includes(q))return false;
+    if(q&&!c.name.toLowerCase().includes(q)&&!c.addr.toLowerCase().includes(q))return false;
     if(sp&&(c.salePsfMid<sp.min||c.salePsfMid>sp.max))return false;
     if(rn&&(c.rentMid<rn.min||c.rentMid>rn.max))return false;
     if(yr&&(c.year<yr.min||c.year>yr.max))return false;
@@ -334,8 +291,7 @@ function applyFilters(){
 }
 
 function doSort(){
-  const s=currentSort;
-  filtered.sort((a,b)=>s==='name'?a.name.localeCompare(b.name):s==='salePsfLow'?a.salePsfMid-b.salePsfMid:s==='salePsfHigh'?b.salePsfMid-a.salePsfMid:s==='rentLow'?a.rentMid-b.rentMid:s==='rentHigh'?b.rentMid-a.rentMid:s==='yieldHigh'?b.yield-a.yield:s==='yearNew'?b.year-a.year:s==='yearOld'?a.year-b.year:0);
+  filtered.sort((a,b)=>currentSort==='name'?a.name.localeCompare(b.name):currentSort==='salePsfLow'?a.salePsfMid-b.salePsfMid:currentSort==='salePsfHigh'?b.salePsfMid-a.salePsfMid:currentSort==='rentHigh'?b.rentMid-a.rentMid:currentSort==='yieldHigh'?b.yield-a.yield:currentSort==='yearNew'?b.year-a.year:currentSort==='yearOld'?a.year-b.year:0);
 }
 function setSort(btn){document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentSort=btn.dataset.sort;doSort();renderList();}
 
@@ -343,23 +299,22 @@ function renderList(){
   document.getElementById('condoList').innerHTML=filtered.map(c=>`
     <div class="condo-card ${selectedCondo===c.name?'selected':''}" onclick="selectCondo('${c.name.replace(/'/g,"\\'")}')">
       <div class="condo-name">${c.name}</div>
+      <div class="condo-addr">${c.addr}</div>
       <div class="condo-meta">
         <span class="condo-tag tag-year">${c.year}</span>
         <span class="condo-tag tag-units">${c.units} units</span>
-        <span class="condo-tag tag-size">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sqft</span>
-        <span class="condo-tag tag-yield">Yield ${c.yield.toFixed(1)}%</span>
+        <span class="condo-tag tag-size">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</span>
+        <span class="condo-tag tag-yield">${c.yield.toFixed(1)}%</span>
       </div>
       <div class="condo-prices">
         <div class="price-col"><div class="price-label">Sale PSF</div><div class="price-value sale-price">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>
         <div class="price-col"><div class="price-label">Rent/mo</div><div class="price-value rent-price">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>
-        <div class="price-col"><div class="price-label">Rent PSF</div><div class="price-value rent-price">RM ${c.rentPsf.toFixed(2)}</div></div>
       </div>
     </div>`).join('');
 }
 
 function selectCondo(name){
-  selectedCondo=name;
-  const c=CONDOS.find(x=>x.name===name);
+  selectedCondo=name;const c=CONDOS.find(x=>x.name===name);
   if(c&&markers[name]){map.setView([c.lat,c.lng],17);markers[name].openPopup();}
   renderList();
   document.querySelectorAll('.condo-card').forEach(card=>{if(card.querySelector('.condo-name')?.textContent===name)card.scrollIntoView({behavior:'smooth',block:'nearest'});});
