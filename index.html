@@ -114,6 +114,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
       <div class="filter-row">
         <div class="filter-group"><label>築年数 (Years Old)</label><select id="fAge" onchange="applyFilters()"><option value="">All</option><option value="0-5">0-5年 (2021+)</option><option value="0-10">0-10年 (2016+)</option><option value="0-15">0-15年 (2011+)</option><option value="0-20">0-20年 (2006+)</option><option value="10-20">10-20年</option><option value="20-99">20年超</option></select></div>
         <div class="filter-group"><label>Status</label><select id="fStatus" onchange="applyFilters()"><option value="">All</option><option value="completed">Completed (既築)</option><option value="upcoming">Upcoming (今後建つ)</option></select></div>
+        <div class="filter-group"><label>Area</label><select id="fArea" onchange="applyFilters()"><option value="">All</option><option value="mont-kiara">Mont Kiara</option><option value="desa-parkcity">Desa ParkCity</option></select></div>
       </div>
       <div class="sort-row">
         <button class="sort-btn" data-sort="luxHigh" onclick="setSort(this)">Luxury ↓</button>
@@ -178,7 +179,8 @@ function parseCSV(text) {
       developer: obj.developer || 'Other',
       ipropertyUrl: obj.iproperty_url || '',
       homepageUrl: obj.homepage_url || '',
-      status: obj.status || 'completed'
+      status: obj.status || 'completed',
+      nameJa: obj.name_ja || ''
     };
   }).filter(c => c.name);
 }
@@ -270,7 +272,7 @@ const TIER_COLORS = {S:'#7b1fa2',A:'#1565c0',B:'#2e7d32',C:'#78909c'};
 // ============================================================
 // MAP
 // ============================================================
-const map = L.map('map',{zoomControl:true}).setView([3.1700,101.6520],15);
+const map = L.map('map',{zoomControl:true}).setView([3.1780,101.6450],14);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
   attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19
 }).addTo(map);
@@ -304,6 +306,7 @@ function mkMarker(c) {
   const m = L.marker([c.lat,c.lng],{icon});
   m.bindPopup(`<div>
     <div class="popup-title">${c.name}</div>
+    ${c.nameJa ? '<div style="font-size:12px;color:#5f6368;margin-bottom:2px">'+c.nameJa+'</div>' : ''}
     <div class="popup-addr">${c.addr}</div>
     <div style="margin-bottom:8px">
       <span class="tier-badge" style="background:${tierColor};width:22px;height:22px;line-height:22px;font-size:11px">${c.luxTier}</span>
@@ -373,9 +376,10 @@ function applyFilters(){
   const sp=parseR(document.getElementById('fSalePsf').value),rn=parseR(document.getElementById('fRent').value),yr=parseR(document.getElementById('fYear').value),sz=parseR(document.getElementById('fSize').value),yl=parseR(document.getElementById('fYield').value);
   const age=parseR(document.getElementById('fAge').value);
   const statusFilter=document.getElementById('fStatus').value;
+  const areaFilter=document.getElementById('fArea').value;
   const currentYear = new Date().getFullYear();
   filtered=CONDOS.filter(c=>{
-    if(q&&!c.name.toLowerCase().includes(q)&&!c.addr.toLowerCase().includes(q)&&!c.luxTier.toLowerCase().includes(q))return false;
+    if(q&&!c.name.toLowerCase().includes(q)&&!c.addr.toLowerCase().includes(q)&&!c.luxTier.toLowerCase().includes(q)&&!(c.nameJa||'').includes(q))return false;
     // Tier filter: "A+" means A and above (A, S)
     if(tierVal){
       if(tierVal.endsWith('+')){
@@ -394,6 +398,9 @@ function applyFilters(){
     if(age&&c.status==='completed'){const a=currentYear-c.year; if(a<age.min||a>age.max) return false;}
     // Status filter
     if(statusFilter&&c.status!==statusFilter) return false;
+    // Area filter
+    if(areaFilter==='mont-kiara'&&c.addr.toLowerCase().includes('desa parkcity')) return false;
+    if(areaFilter==='desa-parkcity'&&!c.addr.toLowerCase().includes('desa parkcity')) return false;
     return true;
   });
   doSort();rebuild();renderList();updateSummary();
@@ -412,6 +419,7 @@ function renderList(){
         <span class="condo-name" style="margin:0">${c.name}</span>
         <span style="margin-left:auto;font-size:11px;font-weight:700;color:${TIER_COLORS[c.luxTier]}">${c.luxScore}</span>
       </div>
+      ${c.nameJa ? '<div style="font-size:10px;color:#5f6368;margin-bottom:1px">'+c.nameJa+'</div>' : ''}
       <div class="condo-addr">${c.addr} | ${c.developer}</div>
       <div class="condo-meta">
         ${c.status==='upcoming'?'<span class="condo-tag" style="background:#fff3e0;color:#e65100">🔜 '+c.year+'予定</span>':'<span class="condo-tag tag-year">'+c.year+'</span>'}
