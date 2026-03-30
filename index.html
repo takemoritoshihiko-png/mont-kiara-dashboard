@@ -113,6 +113,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
       </div>
       <div class="filter-row">
         <div class="filter-group"><label>築年数 (Years Old)</label><select id="fAge" onchange="applyFilters()"><option value="">All</option><option value="0-5">0-5年 (2021+)</option><option value="0-10">0-10年 (2016+)</option><option value="0-15">0-15年 (2011+)</option><option value="0-20">0-20年 (2006+)</option><option value="10-20">10-20年</option><option value="20-99">20年超</option></select></div>
+        <div class="filter-group"><label>Status</label><select id="fStatus" onchange="applyFilters()"><option value="">All</option><option value="completed">Completed (既築)</option><option value="upcoming">Upcoming (今後建つ)</option></select></div>
       </div>
       <div class="sort-row">
         <button class="sort-btn" data-sort="luxHigh" onclick="setSort(this)">Luxury ↓</button>
@@ -176,7 +177,8 @@ function parseCSV(text) {
       lng: parseFloat(obj.lng) || 101.652,
       developer: obj.developer || 'Other',
       ipropertyUrl: obj.iproperty_url || '',
-      homepageUrl: obj.homepage_url || ''
+      homepageUrl: obj.homepage_url || '',
+      status: obj.status || 'completed'
     };
   }).filter(c => c.name);
 }
@@ -282,14 +284,20 @@ function mkMarker(c) {
   // Circle size based on units (min 34, max 52)
   const sz = Math.max(34, Math.min(52, 20 + Math.sqrt(c.units) * 1.2));
   const yr2 = String(c.year).slice(-2);
+  const isUpcoming = c.status === 'upcoming';
+  const borderStyle = isUpcoming ? `3px dashed ${tierColor}` : `3px solid ${tierColor}`;
+  const bgColor = isUpcoming ? 'rgba(255,255,255,0.85)' : yearColor;
+  const textColor = isUpcoming ? '#333' : '#fff';
+  const label1 = isUpcoming ? '🔜' : c.luxTier;
+  const label2 = "'" + yr2;
 
   const icon = L.divIcon({
     className: '',
     iconSize: [sz, sz],
     iconAnchor: [sz/2, sz/2],
-    html: `<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${yearColor};border:3px solid ${tierColor};display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;line-height:1.1">
-      <span style="color:#fff;font-size:${sz>40?13:11}px;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,0.5)">${c.luxTier}</span>
-      <span style="color:rgba(255,255,255,0.85);font-size:${sz>40?10:8}px;font-weight:600;text-shadow:0 1px 2px rgba(0,0,0,0.5)">'${yr2}</span>
+    html: `<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${bgColor};border:${borderStyle};display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;line-height:1.1">
+      <span style="color:${textColor};font-size:${sz>40?13:11}px;font-weight:800;text-shadow:${isUpcoming?'none':'0 1px 2px rgba(0,0,0,0.5)'}">${label1}</span>
+      <span style="color:${isUpcoming?'#666':'rgba(255,255,255,0.85)'};font-size:${sz>40?10:8}px;font-weight:600;text-shadow:${isUpcoming?'none':'0 1px 2px rgba(0,0,0,0.5)'}">${label2}</span>
     </div>`
   });
 
@@ -364,6 +372,7 @@ function applyFilters(){
   const tierVal=document.getElementById('fTier').value;
   const sp=parseR(document.getElementById('fSalePsf').value),rn=parseR(document.getElementById('fRent').value),yr=parseR(document.getElementById('fYear').value),sz=parseR(document.getElementById('fSize').value),yl=parseR(document.getElementById('fYield').value);
   const age=parseR(document.getElementById('fAge').value);
+  const statusFilter=document.getElementById('fStatus').value;
   const currentYear = new Date().getFullYear();
   filtered=CONDOS.filter(c=>{
     if(q&&!c.name.toLowerCase().includes(q)&&!c.addr.toLowerCase().includes(q)&&!c.luxTier.toLowerCase().includes(q))return false;
@@ -381,8 +390,10 @@ function applyFilters(){
     if(yr&&(c.year<yr.min||c.year>yr.max))return false;
     if(sz&&(c.sizeMid<sz.min||c.sizeMid>sz.max))return false;
     if(yl&&(c.yield<yl.min||c.yield>yl.max))return false;
-    // Age filter
-    if(age){const a=currentYear-c.year; if(a<age.min||a>age.max) return false;}
+    // Age filter (skip for upcoming)
+    if(age&&c.status==='completed'){const a=currentYear-c.year; if(a<age.min||a>age.max) return false;}
+    // Status filter
+    if(statusFilter&&c.status!==statusFilter) return false;
     return true;
   });
   doSort();rebuild();renderList();updateSummary();
@@ -403,10 +414,10 @@ function renderList(){
       </div>
       <div class="condo-addr">${c.addr} | ${c.developer}</div>
       <div class="condo-meta">
-        <span class="condo-tag tag-year">${c.year}</span>
+        ${c.status==='upcoming'?'<span class="condo-tag" style="background:#fff3e0;color:#e65100">🔜 '+c.year+'予定</span>':'<span class="condo-tag tag-year">'+c.year+'</span>'}
         <span class="condo-tag tag-units">${c.units} units</span>
         <span class="condo-tag tag-size">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</span>
-        <span class="condo-tag tag-yield">Yield ${c.yield.toFixed(1)}%</span>
+        ${c.status==='completed'?'<span class="condo-tag tag-yield">Yield '+c.yield.toFixed(1)+'%</span>':''}
       </div>
       <div class="condo-prices">
         <div class="price-col"><div class="price-label">Sale PSF</div><div class="price-value sale-price">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>
