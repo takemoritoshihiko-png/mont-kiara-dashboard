@@ -182,7 +182,7 @@ function parseCSV(text) {
       status: obj.status || 'completed',
       nameJa: obj.name_ja || ''
     };
-  }).filter(c => c.name);
+  }).filter(c => c.name && c.lat > 1);
 }
 
 // ============================================================
@@ -213,7 +213,9 @@ const DEVELOPERS = {
   'Kerjaya Prospek':      {tier:'B', score:55, note:'Papyrus developer, established builder'},
   'BRDB':                 {tier:'B', score:60, note:'Miranda Hill developer, established luxury'},
   'Bon Estates':          {tier:'B', score:55, note:'Bon Kiara developer'},
+  'Bon Estates (Land Marker)':{tier:'B', score:55, note:'Bon Kiara developer'},
   'WCT Land':             {tier:'A', score:75, note:'Pavilion Mont Kiara developer'},
+  'WCT Land (Pavilion Group)':{tier:'A', score:75, note:'Pavilion Mont Kiara developer'},
   // C-tier: Smaller/foreign developers
   'Agile':                {tier:'C', score:40, note:'Major Chinese developer, less local luxury recognition'},
   'Arte Corp':            {tier:'C', score:35, note:'Arte Mont Kiara developer'},
