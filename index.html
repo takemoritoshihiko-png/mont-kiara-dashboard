@@ -524,7 +524,12 @@ function applyFilters(){
 }
 
 function doSort(){
-  filtered.sort((a,b)=>currentSort==='name'?a.name.localeCompare(b.name):currentSort==='salePsfHigh'?b.salePsfMid-a.salePsfMid:currentSort==='rentHigh'?b.rentMid-a.rentMid:currentSort==='yieldHigh'?b.yield-a.yield:currentSort==='yearNew'?b.year-a.year:currentSort==='yearOld'?a.year-b.year:currentSort==='luxHigh'?b.luxScore-a.luxScore:0);
+  filtered.sort((a,b)=>{
+    // Commercial always at the bottom
+    if(a.status==='commercial'&&b.status!=='commercial') return 1;
+    if(a.status!=='commercial'&&b.status==='commercial') return -1;
+    return currentSort==='name'?a.name.localeCompare(b.name):currentSort==='salePsfHigh'?b.salePsfMid-a.salePsfMid:currentSort==='rentHigh'?b.rentMid-a.rentMid:currentSort==='yieldHigh'?b.yield-a.yield:currentSort==='yearNew'?b.year-a.year:currentSort==='yearOld'?a.year-b.year:currentSort==='luxHigh'?b.luxScore-a.luxScore:0;
+  });
 }
 function setSort(btn){document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentSort=btn.dataset.sort;doSort();renderList();}
 
