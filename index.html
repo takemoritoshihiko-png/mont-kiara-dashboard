@@ -363,8 +363,8 @@ let markers={},selectedCondo=null,currentSort='name',filtered=[...CONDOS];
 function mkMarker(c) {
   const yearColor = getYearColor(c.year);
   const tierColor = TIER_COLORS[c.luxTier];
-  // Circle size based on units (min 34, max 52)
-  const sz = Math.max(34, Math.min(52, 20 + Math.sqrt(c.units) * 1.2));
+  // Circle size based on units (min 26, max 42)
+  const sz = Math.max(26, Math.min(42, 14 + Math.sqrt(c.units) * 1.0));
   const yr2 = String(c.year).slice(-2);
   const isUpcoming = c.status === 'upcoming';
   const isCommercial = c.status === 'commercial';
@@ -411,8 +411,8 @@ function mkMarker(c) {
     iconSize: [sz, sz],
     iconAnchor: [sz/2, sz/2],
     html: `<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${bgColor};border:${borderStyle};display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;line-height:1.1">
-      <span style="color:${textColor};font-size:${sz>40?13:11}px;font-weight:800;text-shadow:${isUpcoming?'none':'0 1px 2px rgba(0,0,0,0.5)'}">${label1}</span>
-      <span style="color:${isUpcoming?'#666':'rgba(255,255,255,0.85)'};font-size:${sz>40?10:8}px;font-weight:600;text-shadow:${isUpcoming?'none':'0 1px 2px rgba(0,0,0,0.5)'}">${label2}</span>
+      <span style="color:${textColor};font-size:${sz>34?11:9}px;font-weight:800;text-shadow:${isUpcoming?'none':'0 1px 2px rgba(0,0,0,0.5)'}">${label1}</span>
+      <span style="color:${isUpcoming?'#666':'rgba(255,255,255,0.85)'};font-size:${sz>34?8:7}px;font-weight:600;text-shadow:${isUpcoming?'none':'0 1px 2px rgba(0,0,0,0.5)'}">${label2}</span>
     </div>`
   });
 
