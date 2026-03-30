@@ -283,34 +283,35 @@ function calcLuxury(condos) {
     c.yield = c.salePsfMid * c.sizeMid > 0 ? (c.rentMid * 12) / (c.salePsfMid * c.sizeMid) * 100 : 0;
     c.rentPsf = c.sizeMid > 0 ? c.rentMid / c.sizeMid : 0;
     c.estPriceMid = c.salePsfMid * c.sizeMid;
-    c.minSizeFactor = Math.min(1, Math.max(0.5, (c.sizeMin - 400) / 1100));
+    c.estPriceMax = c.salePsfMax * c.sizeMax; // Top-end price for luxury evaluation
     c.devInfo = DEVELOPERS[c.developer] || DEVELOPERS['Other'];
     c.brandScore = c.brandScoreCSV > 0 ? c.brandScoreCSV : c.devInfo.score;
   });
 
-  // Fixed reference ranges (not affected by adding/removing condos)
-  // These define what "0" and "100" mean for each metric
+  // Fixed reference ranges (v2 - expanded for ultra-premium)
   const REF = {
-    sizeMid:  { min: 500,  max: 6000 },   // avg sqft: 500=studio, 6000=ultra luxury
-    psfMid:   { min: 200,  max: 2000 },   // RM PSF: 200=budget, 2000=ultra premium
-    rentMax:  { min: 2000, max: 25000 },   // RM/mo: 2000=basic, 25000=super luxury
-    priceMid: { min: 200000, max: 10000000 }, // RM total: 200K=budget, 10M=ultra
-    units:    { min: 10,   max: 1200 }     // exclusivity: 10=ultra exclusive, 1200=mass
+    sizeMid:  { min: 500,  max: 5000 },   // avg sqft
+    sizeMax:  { min: 800,  max: 8000 },   // largest unit available
+    psfMid:   { min: 200,  max: 3000 },   // RM PSF (expanded for ultra-premium)
+    rentMax:  { min: 2000, max: 30000 },   // RM/mo (expanded)
+    priceMax: { min: 300000, max: 15000000 }, // Top-end total price
+    units:    { min: 10,   max: 1200 }     // exclusivity
   };
   const normFixed = (v, min, max, inv) => {
     const t = Math.max(0, Math.min(1, (v - min) / (max - min)));
     return (inv ? 1 - t : t) * 100;
   };
 
+  // Weights: AvgSize 12% | MaxSize 8% | PSF 17% | Rent 13% | TopPrice 15% | Exclusivity 15% | Brand 20%
   condos.forEach((c, i) => {
-    const nSz = normFixed(c.sizeMid, REF.sizeMid.min, REF.sizeMid.max);
+    const nSzAvg = normFixed(c.sizeMid, REF.sizeMid.min, REF.sizeMid.max);
+    const nSzMax = normFixed(c.sizeMax, REF.sizeMax.min, REF.sizeMax.max);
     const nPsf = normFixed(c.salePsfMid, REF.psfMid.min, REF.psfMid.max);
     const nRent = normFixed(c.rentMax, REF.rentMax.min, REF.rentMax.max);
-    const nPrice = normFixed(c.estPriceMid, REF.priceMid.min, REF.priceMid.max);
+    const nPrice = normFixed(c.estPriceMax, REF.priceMax.min, REF.priceMax.max);
     const nExcl = normFixed(c.units, REF.units.min, REF.units.max, true);
 
-    let raw = nSz*0.20 + nPsf*0.15 + nRent*0.15 + nPrice*0.15 + nExcl*0.15 + c.brandScore*0.20;
-    raw *= c.minSizeFactor;
+    let raw = nSzAvg*0.12 + nSzMax*0.08 + nPsf*0.17 + nRent*0.13 + nPrice*0.15 + nExcl*0.15 + c.brandScore*0.20;
     c.luxScore = Math.round(raw * 10) / 10;
     c.luxTier = c.luxScore >= 65 ? 'S' : c.luxScore >= 45 ? 'A' : c.luxScore >= 25 ? 'B' : 'C';
   });
