@@ -114,7 +114,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
       <div class="filter-row">
         <div class="filter-group"><label>築年数 (Years Old)</label><select id="fAge" onchange="applyFilters()"><option value="">All</option><option value="0-5">0-5年 (2021+)</option><option value="0-10">0-10年 (2016+)</option><option value="0-15">0-15年 (2011+)</option><option value="0-20">0-20年 (2006+)</option><option value="10-20">10-20年</option><option value="20-99">20年超</option></select></div>
         <div class="filter-group"><label>Status</label><select id="fStatus" onchange="applyFilters()"><option value="">All</option><option value="completed">Completed (既築)</option><option value="upcoming">Upcoming (今後建つ)</option></select></div>
-        <div class="filter-group"><label>Area</label><select id="fArea" onchange="applyFilters()"><option value="">All</option><option value="mont-kiara">Mont Kiara</option><option value="desa-parkcity">Desa ParkCity</option></select></div>
+        <div class="filter-group"><label>Area</label><select id="fArea" onchange="applyFilters()"><option value="">All</option><option value="mont-kiara">Mont Kiara</option><option value="desa-parkcity">Desa ParkCity</option><option value="bangsar">Bangsar</option></select></div>
       </div>
       <div class="sort-row">
         <button class="sort-btn" data-sort="luxHigh" onclick="setSort(this)">Luxury ↓</button>
@@ -216,6 +216,13 @@ const DEVELOPERS = {
   'Bon Estates (Land Marker)':{tier:'B', score:55, note:'Bon Kiara developer'},
   'WCT Land':             {tier:'A', score:75, note:'Pavilion Mont Kiara developer'},
   'WCT Land (Pavilion Group)':{tier:'A', score:75, note:'Pavilion Mont Kiara developer'},
+  // A-tier: Bangsar premium developers
+  'Bandar Raya Developments':{tier:'A',score:80, note:'One Menerung, Serai, Sri Penaga developer'},
+  'Ken Holdings':         {tier:'A', score:75, note:'Ken Bangsar developer, luxury brand'},
+  'Hap Seng Land':        {tier:'A', score:75, note:'Nadi Bangsar developer'},
+  'Bolton':               {tier:'B', score:55, note:'Bangsar Peak developer'},
+  'UDA':                  {tier:'B', score:55, note:'Residensi 38 Bangsar developer'},
+  'UM Land':              {tier:'B', score:50, note:'Suasana Bangsar developer'},
   // C-tier: Smaller/foreign developers
   'Agile':                {tier:'C', score:40, note:'Major Chinese developer, less local luxury recognition'},
   'Arte Corp':            {tier:'C', score:35, note:'Arte Mont Kiara developer'},
@@ -282,7 +289,7 @@ const TIER_COLORS = {S:'#7b1fa2',A:'#1565c0',B:'#2e7d32',C:'#78909c'};
 // ============================================================
 // MAP
 // ============================================================
-const map = L.map('map',{zoomControl:true}).setView([3.1780,101.6450],14);
+const map = L.map('map',{zoomControl:true}).setView([3.1550,101.6550],13);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
   attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19
 }).addTo(map);
@@ -409,8 +416,15 @@ function applyFilters(){
     // Status filter
     if(statusFilter&&c.status!==statusFilter) return false;
     // Area filter
-    if(areaFilter==='mont-kiara'&&c.addr.toLowerCase().includes('desa parkcity')) return false;
-    if(areaFilter==='desa-parkcity'&&!c.addr.toLowerCase().includes('desa parkcity')) return false;
+    if(areaFilter){
+      const a=c.addr.toLowerCase();
+      const isDPC=a.includes('desa parkcity');
+      const isBangsar=a.includes('bangsar');
+      const isMK=!isDPC&&!isBangsar;
+      if(areaFilter==='mont-kiara'&&!isMK) return false;
+      if(areaFilter==='desa-parkcity'&&!isDPC) return false;
+      if(areaFilter==='bangsar'&&!isBangsar) return false;
+    }
     return true;
   });
   doSort();rebuild();renderList();updateSummary();
