@@ -472,7 +472,7 @@ function mkMarker(c) {
       <div class="popup-cell"><div class="popup-cell-label">Sale PSF</div><div class="popup-cell-val" style="color:#ea4335">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>
       <div class="popup-cell"><div class="popup-cell-label">Rent/mo</div><div class="popup-cell-val" style="color:#1a73e8">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>
       <div class="popup-cell"><div class="popup-cell-label">Size</div><div class="popup-cell-val">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</div></div>
-      <div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#ea8600">${c.yield.toFixed(1)}%</div></div>
+      <div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#ea8600">${(c.yield||0).toFixed(1)}%</div></div>
     </div>
     <div style="display:flex;gap:6px;margin-top:10px">
       ${c.ipropertyUrl ? '<a href="'+c.ipropertyUrl+'" target="_blank" style="flex:1;text-align:center;padding:7px;background:#1a73e8;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600">iProperty</a>' : ''}
@@ -607,7 +607,7 @@ function renderList(){
         ${c.status==='commercial'?'<span class="condo-tag" style="background:#fbe9e7;color:#bf360c">~'+c.units+'店舗</span>':'<span class="condo-tag tag-units">'+c.units+' units</span>'}
         ${c.status==='commercial'&&c.sizeMin>0?'<span class="condo-tag tag-size">'+(c.sizeMin/1000).toFixed(0)+'K sqft</span>':''}
         ${c.status!=='commercial'?'<span class="condo-tag tag-size">'+c.sizeMin.toLocaleString()+'-'+c.sizeMax.toLocaleString()+' sf</span>':''}
-        ${c.status==='completed'?'<span class="condo-tag tag-yield">Yield '+c.yield.toFixed(1)+'%</span>':''}
+        ${c.status==='completed'?'<span class="condo-tag tag-yield">Yield '+(c.yield||0).toFixed(1)+'%</span>':''}
       </div>
       ${c.status==='commercial'?(c.anchorTenants?'<div style="margin-top:4px;font-size:10px;color:#bf360c">'+c.anchorTenants+'</div>':''):`<div class="condo-prices">
         <div class="price-col"><div class="price-label">Sale PSF</div><div class="price-value sale-price">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>
@@ -628,12 +628,19 @@ function updateSummary(){
   document.getElementById('sumFiltered').textContent=filtered.length;
   document.getElementById('totalCount').textContent=CONDOS.length;
   if(filtered.length){
-    const sp=filtered.map(c=>c.salePsfMid).sort((a,b)=>a-b),rp=filtered.map(c=>c.rentPsf).sort((a,b)=>a-b),ys=filtered.map(c=>c.yield);
-    const ms=sp[Math.floor(sp.length/2)],mr=rp[Math.floor(rp.length/2)],ay=ys.reduce((s,v)=>s+v,0)/ys.length;
-    document.getElementById('sumMedianSale').textContent='RM '+Math.round(ms);
-    document.getElementById('sumMedianRent').textContent='RM '+mr.toFixed(2);
-    document.getElementById('sumAvgYield').textContent=ay.toFixed(1)+'%';
-    document.getElementById('medianPsf').textContent='RM '+Math.round(ms);
+    const res=filtered.filter(c=>c.status!=='commercial');
+    if(res.length){
+      const sp=res.map(c=>c.salePsfMid||0).sort((a,b)=>a-b);
+      const rp=res.map(c=>c.rentPsfMid||0).sort((a,b)=>a-b);
+      const ys=res.map(c=>c.yield||0);
+      const ms=sp[Math.floor(sp.length/2)]||0;
+      const mr=rp[Math.floor(rp.length/2)]||0;
+      const ay=ys.length>0?ys.reduce((s,v)=>s+v,0)/ys.length:0;
+      document.getElementById('sumMedianSale').textContent='RM '+Math.round(ms);
+      document.getElementById('sumMedianRent').textContent='RM '+mr.toFixed(2);
+      document.getElementById('sumAvgYield').textContent=ay.toFixed(1)+'%';
+      document.getElementById('medianPsf').textContent='RM '+Math.round(ms);
+    }
   }
 }
 
