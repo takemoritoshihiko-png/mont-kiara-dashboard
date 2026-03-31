@@ -433,7 +433,7 @@ function calcLuxury(condos) {
                   + nPrice*0.03 + nExcl*0.07 + nDensity*0.03 + nAge*0.12 + c.brandScore*0.17;
     let raw = baseScore + premiumNorm * 0.15;
     c.luxScore = Math.round(raw * 10) / 10;
-    c.luxTier = c.luxScore >= 70 ? 'S' : c.luxScore >= 60 ? 'A' : c.luxScore >= 50 ? 'B' : c.luxScore >= 40 ? 'C' : 'D';
+    c.luxTier = c.luxScore >= 67 ? 'S' : c.luxScore >= 57 ? 'A' : c.luxScore >= 47 ? 'B' : c.luxScore >= 37 ? 'C' : 'D';
   });
 }
 
