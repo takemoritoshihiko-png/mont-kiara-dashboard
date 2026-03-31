@@ -177,11 +177,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 
 <script>
 // ============================================================
-// DATA SOURCE: Google Sheets (CSV published)
+// DATA SOURCE: GitHub raw CSV (auto-updated on push)
 // ============================================================
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIpzGj3RLzAjotAm0IcfBZPychw4C3thCWXGsNCfoN32v8gKwupseRtB-05puHFfg2QPmlBtf9yP0/pub?gid=943190081&single=true&output=csv';
-// Commercial sheet - user needs to set the correct gid after creating Sheet2
-const COMMERCIAL_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIpzGj3RLzAjotAm0IcfBZPychw4C3thCWXGsNCfoN32v8gKwupseRtB-05puHFfg2QPmlBtf9yP0/pub?gid=580192161&single=true&output=csv';
+const CONDOS_CSV_URL = 'https://raw.githubusercontent.com/takemoritoshihiko-png/mont-kiara-dashboard/master/condos_data.csv';
+const COMMERCIAL_CSV_URL = 'https://raw.githubusercontent.com/takemoritoshihiko-png/mont-kiara-dashboard/master/commercial_data.csv';
 
 let CONDOS = [];
 let COMMERCIALS = [];
@@ -672,10 +671,10 @@ function togglePanel(){
     // Load condos
     let text;
     try {
-      text = await tryFetch(SHEET_CSV_URL);
+      text = await tryFetch(CONDOS_CSV_URL);
     } catch(e1) {
       listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#80868b">Retrying via proxy...</div>';
-      const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(SHEET_CSV_URL);
+      const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(CONDOS_CSV_URL);
       text = await tryFetch(proxyUrl);
     }
     CONDOS = parseCSV(text);
