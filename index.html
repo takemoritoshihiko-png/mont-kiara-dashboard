@@ -169,7 +169,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
         <button class="sort-btn" data-sort="yieldHigh" onclick="setSort(this)">Yield ↓</button>
         <button class="sort-btn" data-sort="yearNew" onclick="setSort(this)">Newest</button>
         <button class="sort-btn" data-sort="yearOld" onclick="setSort(this)">Oldest</button>
-        <button class="sort-btn active" id="toggleCommercial" onclick="toggleCommercial(this)" style="margin-left:auto;background:#ff6d00;color:#fff;border-color:#e65100">🛒 Commercial</button>
+        <button class="sort-btn active" id="toggleCommercial" onclick="toggleCommercial(this)" style="margin-left:auto;background:#ff6d00;color:#fff;border-color:#e65100">🛒</button>
+        <button class="sort-btn active" id="toggleSchools" onclick="toggleSchools(this)" style="background:#1565c0;color:#fff;border-color:#0d47a1">🎓</button>
       </div>
     </div>
     <div class="legend">
@@ -189,9 +190,11 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 // ============================================================
 const CONDOS_CSV_URL = 'https://raw.githubusercontent.com/takemoritoshihiko-png/mont-kiara-dashboard/master/condos_data.csv';
 const COMMERCIAL_CSV_URL = 'https://raw.githubusercontent.com/takemoritoshihiko-png/mont-kiara-dashboard/master/commercial_data.csv';
+const SCHOOLS_CSV_URL = 'https://raw.githubusercontent.com/takemoritoshihiko-png/mont-kiara-dashboard/master/schools_data.csv';
 
 let CONDOS = [];
 let COMMERCIALS = [];
+let SCHOOLS = [];
 
 function parseCSV(text) {
   const lines = text.trim().split('\n');
@@ -272,6 +275,47 @@ function parseCommercialCSV(text) {
       nameJa: obj.name_ja || '',
       brandScoreCSV: 0,
       anchorTenants: obj.anchor_tenants || ''
+    };
+  }).filter(c => c.name && c.lat > 1);
+}
+
+function parseSchoolsCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',');
+  return lines.slice(1).map(line => {
+    const vals = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { vals.push(cur.trim()); cur = ''; }
+      else { cur += ch; }
+    }
+    vals.push(cur.trim());
+    const obj = {};
+    headers.forEach((h, i) => { obj[h.trim()] = (vals[i] || '').replace(/^"|"$/g, ''); });
+    return {
+      name: obj.name || '',
+      addr: obj.addr || '',
+      year: parseInt(obj.year) || 2000,
+      curriculum: obj.curriculum || '',
+      ageRange: obj.age_range || '',
+      units: parseInt(obj.students) || 0,
+      sizeMin: parseInt(obj.annual_fee_min) || 0,
+      sizeMax: parseInt(obj.annual_fee_max) || 0,
+      rentMin: 0, rentMax: 0, salePsfMin: 0, salePsfMax: 0,
+      sizeMid: 0, salePsfMid: 0, rentMid: 0, yield: 0, rentPsfMid: 0,
+      estPriceMax: 0, luxScore: 0, luxTier: 'D', density: 0, buildingAge: 0,
+      blocks: 1, floors: 0, tenure: 'FH', brandScore: 0,
+      lat: parseFloat(obj.lat) || 0,
+      lng: parseFloat(obj.lng) || 0,
+      developer: '',
+      ipropertyUrl: '',
+      homepageUrl: obj.homepage_url || '',
+      status: 'school',
+      nameJa: obj.name_ja || '',
+      brandScoreCSV: 0,
+      anchorTenants: obj.curriculum || ''
     };
   }).filter(c => c.name && c.lat > 1);
 }
@@ -416,6 +460,24 @@ function mkMarker(c) {
   const isUpcoming = c.status === 'upcoming';
   const isCommercial = c.status === 'commercial';
 
+  const isSchool = c.status === 'school';
+
+  if (isSchool) {
+    const csz = 20;
+    const icon = L.divIcon({
+      className: '',
+      iconSize: [csz, csz],
+      iconAnchor: [csz/2, csz/2],
+      html: `<div style="width:${csz}px;height:${csz}px;border-radius:50%;background:#1565c0;border:2px solid #0d47a1;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.3);cursor:pointer">
+        <span style="color:#fff;font-size:10px">🎓</span>
+      </div>`
+    });
+    const m = L.marker([c.lat,c.lng],{icon});
+    m.on('click',()=>selectCondo(c.name));
+    m.bindTooltip(c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), {permanent:true,direction:'right',offset:[csz/2+2,0],className:'condo-label-tip'});
+    return m;
+  }
+
   if (isCommercial) {
     // Size based on NLA: large(>200K)=28, medium(50K-200K)=22, small(<50K)=16
     const nla = c.sizeMin || 0;
@@ -533,10 +595,11 @@ function applyFilters(){
     if(yl&&(c.yield<yl.min||c.yield>yl.max))return false;
     // Age filter (skip for upcoming)
     if(age&&c.status==='completed'){const a=currentYear-c.year; if(a<age.min||a>age.max) return false;}
-    // Commercial toggle
+    // Commercial & School toggles
     if(!showCommercial&&c.status==='commercial') return false;
+    if(!showSchools&&c.status==='school') return false;
     // Status filter
-    if(statusFilter==='residential'&&c.status==='commercial') return false;
+    if(statusFilter==='residential'&&(c.status==='commercial'||c.status==='school')) return false;
     else if(statusFilter&&statusFilter!=='residential'&&c.status!==statusFilter) return false;
     // Area filter
     if(areaFilter){
@@ -555,23 +618,26 @@ function applyFilters(){
 
 function doSort(){
   filtered.sort((a,b)=>{
-    // Commercial always at the bottom
-    if(a.status==='commercial'&&b.status!=='commercial') return 1;
-    if(a.status!=='commercial'&&b.status==='commercial') return -1;
+    // Commercial & schools always at the bottom
+    const aBot=a.status==='commercial'||a.status==='school'?1:0;
+    const bBot=b.status==='commercial'||b.status==='school'?1:0;
+    if(aBot!==bBot) return aBot-bBot;
     return currentSort==='name'?a.name.localeCompare(b.name):currentSort==='salePsfHigh'?b.salePsfMid-a.salePsfMid:currentSort==='rentHigh'?b.rentMid-a.rentMid:currentSort==='yieldHigh'?b.yield-a.yield:currentSort==='yearNew'?b.year-a.year:currentSort==='yearOld'?a.year-b.year:currentSort==='luxHigh'?b.luxScore-a.luxScore:0;
   });
 }
 function setSort(btn){document.querySelectorAll('.sort-btn[data-sort]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentSort=btn.dataset.sort;doSort();renderList();}
 let showCommercial=true;
 function toggleCommercial(btn){showCommercial=!showCommercial;btn.classList.toggle('active');btn.style.background=showCommercial?'#ff6d00':'#f8f9fb';btn.style.color=showCommercial?'#fff':'#999';btn.style.borderColor=showCommercial?'#e65100':'#e0e0e0';applyFilters();}
+let showSchools=true;
+function toggleSchools(btn){showSchools=!showSchools;btn.classList.toggle('active');btn.style.background=showSchools?'#1565c0':'#f8f9fb';btn.style.color=showSchools?'#fff':'#999';btn.style.borderColor=showSchools?'#0d47a1':'#e0e0e0';applyFilters();}
 
 function renderList(){
   document.getElementById('condoList').innerHTML=filtered.map(c=>`
     <div class="condo-card ${selectedCondo===c.name?'selected':''}" onclick="selectCondo('${c.name.replace(/'/g,"\\'")}')">
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">
-        ${c.status==='commercial'?'<span class="tier-badge" style="background:#ff6d00">🛒</span>':'<span class="tier-badge" style="background:'+TIER_COLORS[c.luxTier]+'">'+c.luxTier+'</span>'}
+        ${c.status==='commercial'?'<span class="tier-badge" style="background:#ff6d00">🛒</span>':c.status==='school'?'<span class="tier-badge" style="background:#1565c0">🎓</span>':'<span class="tier-badge" style="background:'+TIER_COLORS[c.luxTier]+'">'+c.luxTier+'</span>'}
         <span class="condo-name" style="margin:0">${c.name}</span>
-        ${c.status!=='commercial'?'<span style="margin-left:auto;font-size:11px;font-weight:700;color:'+TIER_COLORS[c.luxTier]+'">'+c.luxScore+'</span>':'<span style="margin-left:auto;font-size:10px;color:#ff6d00;font-weight:600">商業施設</span>'}
+        ${c.status==='commercial'?'<span style="margin-left:auto;font-size:10px;color:#ff6d00;font-weight:600">商業施設</span>':c.status==='school'?'<span style="margin-left:auto;font-size:10px;color:#1565c0;font-weight:600">'+(c.curriculum||'')+'</span>':'<span style="margin-left:auto;font-size:11px;font-weight:700;color:'+TIER_COLORS[c.luxTier]+'">'+c.luxScore+'</span>'}
       </div>
       ${c.nameJa ? '<div style="font-size:10px;color:#5f6368;margin-bottom:1px">'+c.nameJa+'</div>' : ''}
       <div class="condo-addr">${c.addr} | ${c.developer}</div>
@@ -598,7 +664,17 @@ function selectCondo(name){
     map.setView([c.lat, c.lng], 16);
     // Build info panel content
     let h='';
-    if(c.status==='commercial'){
+    if(c.status==='school'){
+      h+=`<div class="popup-title" style="color:#1565c0">🎓 ${c.name}</div>`;
+      h+=c.nameJa?'<div style="font-size:11px;color:#5f6368;margin-bottom:2px">'+c.nameJa+'</div>':'';
+      h+=`<div class="popup-addr">${c.addr}</div>`;
+      h+=`<div style="font-size:12px;margin-bottom:6px"><strong>${c.curriculum||c.anchorTenants}</strong> | 設立: ${c.year}年</div>`;
+      h+=`<div class="popup-grid">`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Students</div><div class="popup-cell-val" style="color:#1565c0">${c.units>0?'~'+c.units.toLocaleString()+'名':'-'}</div></div>`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Ages</div><div class="popup-cell-val">${c.ageRange||'-'}</div></div>`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Fee Min</div><div class="popup-cell-val" style="color:#ea4335">${c.sizeMin>0?'RM'+c.sizeMin.toLocaleString():'-'}</div></div>`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Fee Max</div><div class="popup-cell-val" style="color:#ea4335">${c.sizeMax>0?'RM'+c.sizeMax.toLocaleString():'-'}</div></div></div>`;
+    } else if(c.status==='commercial'){
       h+=`<div class="popup-title" style="color:#e65100">${c.name}</div>`;
       h+=c.nameJa?'<div style="font-size:11px;color:#5f6368;margin-bottom:2px">'+c.nameJa+'</div>':'';
       h+=`<div class="popup-addr">${c.addr}</div>`;
@@ -695,7 +771,7 @@ function togglePanel(){
     if (CONDOS.length === 0) throw new Error('No condo data parsed');
     calcLuxury(CONDOS);
 
-    // Load commercial (separate sheet)
+    // Load commercial
     try {
       let comText;
       try { comText = await tryFetch(COMMERCIAL_CSV_URL); } catch(e) {
@@ -705,8 +781,18 @@ function togglePanel(){
       COMMERCIALS = parseCommercialCSV(comText);
     } catch(e) { COMMERCIALS = []; }
 
+    // Load schools
+    try {
+      let schText;
+      try { schText = await tryFetch(SCHOOLS_CSV_URL); } catch(e) {
+        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(SCHOOLS_CSV_URL);
+        schText = await tryFetch(proxyUrl);
+      }
+      SCHOOLS = parseSchoolsCSV(schText);
+    } catch(e) { SCHOOLS = []; }
+
     // Merge for display
-    CONDOS = [...CONDOS, ...COMMERCIALS];
+    CONDOS = [...CONDOS, ...COMMERCIALS, ...SCHOOLS];
     filtered = [...CONDOS];
     applyFilters();
   } catch(e) {
