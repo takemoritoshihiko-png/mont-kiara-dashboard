@@ -1,2 +1,23 @@
 name,addr,year,curriculum,age_range,students,annual_fee_min,annual_fee_max,lat,lng,homepage_url,name_ja
-Garden International School,16 Jalan Kiara 3 Mont Kiara 50480 KL,1951,British,3-18,2100,30000,95000,3.16880,101.64900,https://www.gardenschool.edu.my/,ガーデン・インターナショナルスクール
+International School of Kuala Lumpur (ISKL),2 Lorong Kelab Polo Di Raja Ampang Hilir 55000 KL,1965,American / IB,3-18,1700,75000,135000,3.15900,101.74450,https://www.iskl.edu.my/,インターナショナル・スクール・オブ・KL (ISKL)
+Alice Smith School,2 Jalan Bellamy 50460 KL,1946,British,3-18,1700,45000,95000,3.14800,101.68800,https://www.alice-smith.edu.my/,アリス・スミス・スクール
+Garden International School (GIS),16 Jalan Kiara 3 Mont Kiara 50480 KL,1951,British,3-18,2100,45000,95000,3.17100,101.65100,https://www.gardenschool.edu.my/,ガーデン・インターナショナル・スクール (GIS)
+British International School of KL (BSKL),1 Changkat Semantan Damansara Heights 50490 KL,2009,British / IB,2-18,1200,55000,120000,3.15400,101.66700,https://www.nordangliaeducation.com/bskl,ブリティッシュ・インターナショナル・スクール (BSKL)
+Mont Kiara International School (MKIS),22 Jalan Kiara Mont Kiara 50480 KL,1994,American / IB,3-18,800,50000,100000,3.17300,101.64800,https://www.mkis.edu.my/,モントキアラ・インターナショナル・スクール (MKIS)
+The International School @ ParkCity (ISP),Persiaran Residen Desa ParkCity 52200 KL,2011,IB,3-18,1200,50000,95000,3.18700,101.63200,https://www.isp.edu.my/,インターナショナル・スクール・アット・パークシティ (ISP)
+IGB International School (IGBIS),Jalan Sierramas Utama Sierramas 47000 Sungai Buloh,2014,IB,3-18,800,45000,105000,3.19400,101.62200,https://www.igbis.edu.my/,IGB インターナショナル・スクール
+St Joseph Institution International (SJII),Lot PT 6433 Persiaran Tropicana PJU 3 47410 PJ,2016,British / IB,4-18,700,50000,95000,3.14700,101.60800,https://www.sjiim.edu.my/,セント・ジョセフ・インスティテューション (SJII)
+ELC International School,Jalan Teknologi 5 Kota Damansara 47810 PJ,2012,IB,3-18,800,30000,75000,3.15700,101.58900,https://www.elc.edu.my/,ELC インターナショナル・スクール
+Nexus International School,1 Jalan Diplomatik 3/6 Presint 15 62050 Putrajaya,2008,IB,3-18,900,35000,85000,2.93700,101.69200,https://www.nexus.edu.my/,ネクサス・インターナショナル・スクール
+Lycee Francais de KL (LFKL),34 Jalan Dutamas Raya Dutamas 51200 KL,1962,French,3-18,700,30000,55000,3.17800,101.66300,https://www.lfkl.edu.my/,リセ・フランセ・ドゥ・KL（フランス学校）
+Sunway International School,33 Jalan Setia Tropika Sunway City 47500 Subang Jaya,2008,Canadian / IB,7-18,600,30000,65000,3.06600,101.60400,https://www.sis.sunway.edu.my/,サンウェイ・インターナショナル・スクール
+Fairview International School,Lot 4 Jalan 1/27D Wangsa Maju 53300 KL,1978,IB,3-18,1500,30000,60000,3.20100,101.72300,https://www.fairview.edu.my/,フェアビュー・インターナショナル・スクール
+Sri KDU International School,Jalan Teknologi 2/1 Kota Damansara 47810 PJ,2003,British / IB,3-18,1200,30000,65000,3.15500,101.58700,https://www.srikdu.edu.my/,スリKDU インターナショナル・スクール
+Cempaka International School,Jalan 4/27A Wangsa Maju 53300 KL,1983,IB,3-18,800,30000,55000,3.19800,101.73100,https://www.cempaka.edu.my/,チェンパカ・インターナショナル・スクール
+Taylor's International School,8 Jalan Teknologi 5 Kota Damansara 47810 PJ,2010,British / IB,3-18,800,30000,60000,3.15200,101.59200,https://www.tis.edu.my/,テイラーズ・インターナショナル・スクール
+Australian International School (AISM),22 Jalan Anggerik MINES Resort 43300 Seri Kembangan,2000,Australian,3-18,600,30000,65000,3.03500,101.72000,https://www.aism.edu.my/,オーストラリアン・インターナショナル・スクール (AISM)
+GEMS International School,Jalan Tropicana Selatan 1 PJ 47410 PJ,2014,British,3-18,500,30000,55000,3.14600,101.60600,https://www.gems.edu.my/,ジェムズ・インターナショナル・スクール
+Tenby International School (Setia Eco Park),Persiaran Setia Eco Park 40170 Shah Alam,1960,British / IB,3-18,800,30000,65000,3.11000,101.55300,https://www.tenby.edu.my/,テンビー・インターナショナル・スクール
+HELP International School,2 Persiaran Cakerawala U4 40150 Shah Alam,2014,British / IB,3-18,600,30000,60000,3.11200,101.55900,https://www.his.edu.my/,ヘルプ・インターナショナル・スクール
+IGB International School (IGBIS) Kota Damansara,Jalan Teknologi 5 Kota Damansara 47810 PJ,2012,British / IB,3-18,800,30000,80000,3.15700,101.58900,https://www.elc.edu.my/,ELCインターナショナル・スクール (コタダマンサラ)
+Japanese School of Kuala Lumpur (JSKL),18 Saujana Resort U2 40150 Shah Alam,1966,Japanese,6-15,400,20000,40000,3.11600,101.56900,https://www.jskl.edu.my/,クアラルンプール日本人学校 (JSKL)
