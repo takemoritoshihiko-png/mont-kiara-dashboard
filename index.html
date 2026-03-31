@@ -617,7 +617,12 @@ function renderList(){
 
 function selectCondo(name){
   selectedCondo=name;const c=CONDOS.find(x=>x.name===name);
-  if(c&&markers[name]){map.setView([c.lat,c.lng],17);markers[name].openPopup();}
+  if(c&&markers[name]){
+    // Offset view south so popup (opens upward) stays in view
+    const offset = window.innerWidth<=768 ? 0.003 : 0.002;
+    map.setView([c.lat - offset, c.lng], 17);
+    setTimeout(()=>markers[name].openPopup(), 300);
+  }
   renderList();
   document.querySelectorAll('.condo-card').forEach(card=>{if(card.querySelector('.condo-name')?.textContent===name)card.scrollIntoView({behavior:'smooth',block:'nearest'});});
 }
