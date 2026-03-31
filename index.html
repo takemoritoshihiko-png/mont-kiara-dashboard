@@ -236,7 +236,8 @@ function parseCSV(text) {
       brandScoreCSV: parseInt(obj.brand_score) || 0,
       blocks: parseInt(obj.blocks) || 1,
       floors: parseInt(obj.floors) || 0,
-      tenure: obj.tenure || 'FH'
+      tenure: obj.tenure || 'FH',
+      premiumScoreCSV: parseInt(obj.premium_score) || 0
     };
   }).filter(c => c.name && c.lat > 1);
 }
@@ -367,10 +368,18 @@ const DEVELOPERS = {
 // Developer is now read from Google Sheets CSV 'developer' column
 
 // ============================================================
-// LUXURY INDEX v4
-// Indicators: AvgSize, MaxSize, PSF, RentPSF, TopPrice,
-//             Density(units/blocks), Age, Tenure, Brand
+// LUXURY INDEX v4.2
+// Base(85%): AvgSize, MaxSize, PSF, RentPSF, TopPrice,
+//            Exclusivity, Density, Age, Brand
+// Premium Features Bonus(15%): Private Lift, Concierge, etc.
 // ============================================================
+function calcNAge(buildingAge) {
+  if (buildingAge <= 0) return 100;
+  if (buildingAge <= 15) return Math.max(0, 100 - (buildingAge * 3.2));
+  const base = 100 - (15 * 3.2);
+  return Math.max(0, base - ((buildingAge - 15) * 5.2));
+}
+
 function calcLuxury(condos) {
   const currentYear = new Date().getFullYear();
 
@@ -383,31 +392,28 @@ function calcLuxury(condos) {
     c.devInfo = DEVELOPERS[c.developer] || DEVELOPERS['Other'];
     c.brandScore = c.brandScoreCSV > 0 ? c.brandScoreCSV : c.devInfo.score;
 
-    // v4 derived values
     c.rentPsfMid = c.sizeMid > 0 ? c.rentMid / c.sizeMid : 0;
-    c.density = (c.blocks && c.blocks > 0) ? c.units / c.blocks : c.units; // units/block
+    c.density = (c.blocks && c.blocks > 0) ? c.units / c.blocks : c.units;
     c.buildingAge = currentYear - c.year;
-    c.tenureScore = (c.tenure === 'LH') ? 30 : 100; // FH=100, LH=30
+    c.premiumScore = parseInt(c.premiumScoreCSV) || 0;
   });
 
-  // v4.1 Fixed reference ranges (MK-market calibrated)
+  // v4.2 Fixed reference ranges
   const REF = {
     sizeMid:  { min: 600,   max: 4500 },
     sizeMax:  { min: 1000,  max: 7500 },
-    psfMid:   { min: 400,   max: 1200 },
+    psfMid:   { min: 400,   max: 1800 },   // v4.2: 1200→1800
     rentPsf:  { min: 2.0,   max: 6.0 },
     priceMax: { min: 1000000, max: 12000000 },
-    units:    { min: 80,    max: 1000 },   // total units (inverted) - main exclusivity
-    density:  { min: 40,    max: 250 },    // units per block (inverted) - density bonus
-    age:      { min: 0,     max: 25 }      // years (inverted)
+    units:    { min: 80,    max: 1000 },
+    density:  { min: 40,    max: 250 }
   };
   const normFixed = (v, min, max, inv) => {
     const t = Math.max(0, Math.min(1, (v - min) / (max - min)));
     return (inv ? 1 - t : t) * 100;
   };
 
-  // v4.1 Weights: AvgSize 8% | MaxSize 5% | PSF 17% | RentPSF 13% |
-  //   TopPrice 11% | Exclusivity(units) 8% | Density(bonus) 5% | Age 12% | Brand 21% = 100%
+  // v4.2 Weights: Base 85% + Premium 15% = 100%
   condos.forEach((c, i) => {
     const nSzAvg  = normFixed(c.sizeMid, REF.sizeMid.min, REF.sizeMid.max);
     const nSzMax  = normFixed(c.sizeMax, REF.sizeMax.min, REF.sizeMax.max);
@@ -416,10 +422,12 @@ function calcLuxury(condos) {
     const nPrice  = normFixed(c.estPriceMax, REF.priceMax.min, REF.priceMax.max);
     const nExcl   = normFixed(c.units, REF.units.min, REF.units.max, true);
     const nDensity= normFixed(c.density, REF.density.min, REF.density.max, true);
-    const nAge    = normFixed(c.buildingAge, REF.age.min, REF.age.max, true);
+    const nAge    = calcNAge(c.buildingAge);
+    const premiumNorm = (c.premiumScore / 15) * 100;
 
-    let raw = nSzAvg*0.08 + nSzMax*0.05 + nPsf*0.17 + nRentPsf*0.13
-            + nPrice*0.11 + nExcl*0.08 + nDensity*0.05 + nAge*0.12 + c.brandScore*0.21;
+    let baseScore = nSzAvg*0.08 + nSzMax*0.04 + nPsf*0.16 + nRentPsf*0.13
+                  + nPrice*0.03 + nExcl*0.07 + nDensity*0.03 + nAge*0.12 + c.brandScore*0.19;
+    let raw = baseScore + premiumNorm * 0.15;
     c.luxScore = Math.round(raw * 10) / 10;
     c.luxTier = c.luxScore >= 70 ? 'S' : c.luxScore >= 60 ? 'A' : c.luxScore >= 50 ? 'B' : c.luxScore >= 40 ? 'C' : 'D';
   });
