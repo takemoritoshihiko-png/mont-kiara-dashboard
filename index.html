@@ -157,7 +157,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
       <div class="filter-row">
         <div class="filter-group"><label>築年数 (Years Old)</label><select id="fAge" onchange="applyFilters()"><option value="">All</option><option value="0-5">0-5年 (2021+)</option><option value="0-10">0-10年 (2016+)</option><option value="0-15">0-15年 (2011+)</option><option value="0-20">0-20年 (2006+)</option><option value="10-20">10-20年</option><option value="20-99">20年超</option></select></div>
         <div class="filter-group"><label>Status</label><select id="fStatus" onchange="applyFilters()"><option value="">All</option><option value="completed">Completed (既築)</option><option value="upcoming">Upcoming (今後建つ)</option><option value="commercial">Commercial (商業施設)</option><option value="residential">Residential Only</option></select></div>
-        <div class="filter-group"><label>Area</label><select id="fArea" onchange="applyFilters()"><option value="">All</option><option value="mont-kiara">Mont Kiara</option><option value="desa-parkcity">Desa ParkCity</option><option value="bangsar">Bangsar</option></select></div>
+        <div class="filter-group"><label>Area</label><select id="fArea" onchange="applyFilters()"><option value="">All</option><option value="mont-kiara">Mont Kiara</option><option value="desa-parkcity">Desa ParkCity</option><option value="bangsar">Bangsar</option><option value="klgcc">KLGCC Resort</option></select></div>
       </div>
       <div class="sort-row">
         <button class="sort-btn" data-sort="luxHigh" onclick="setSort(this)">Luxury ↓</button>
@@ -365,6 +365,8 @@ const DEVELOPERS = {
   // C-tier: Smaller/foreign developers
   'Agile':                {tier:'C', score:40, note:'Major Chinese developer, less local luxury recognition'},
   'Arte Corp':            {tier:'C', score:35, note:'Arte Mont Kiara developer'},
+  // A-tier: KLGCC Resort master developer
+  'Sime Darby Property':  {tier:'A', score:80, note:'KLGCC Resort master developer, top 5 nationally'},
   'Other':                {tier:'C', score:30, note:'Various smaller developers'}
 };
 
@@ -600,12 +602,14 @@ function applyFilters(){
       if(q&&!c.name.toLowerCase().includes(q)&&!c.addr.toLowerCase().includes(q)&&!(c.nameJa||'').includes(q))return false;
       if(areaFilter){
         const a=c.addr.toLowerCase();
+        const isKLGCC=a.includes('bukit kiara')||c.name.toLowerCase().includes('klgcc');
         const isDPC=a.includes('desa parkcity');
         const isBangsar=a.includes('bangsar');
-        const isMK=!isDPC&&!isBangsar;
+        const isMK=!isDPC&&!isBangsar&&!isKLGCC;
         if(areaFilter==='mont-kiara'&&!isMK) return false;
         if(areaFilter==='desa-parkcity'&&!isDPC) return false;
         if(areaFilter==='bangsar'&&!isBangsar) return false;
+        if(areaFilter==='klgcc'&&!isKLGCC) return false;
       }
       return true;
     }
@@ -632,12 +636,14 @@ function applyFilters(){
     // Area filter
     if(areaFilter){
       const a=c.addr.toLowerCase();
+      const isKLGCC=a.includes('bukit kiara')||c.name.toLowerCase().includes('klgcc');
       const isDPC=a.includes('desa parkcity');
       const isBangsar=a.includes('bangsar');
-      const isMK=!isDPC&&!isBangsar;
+      const isMK=!isDPC&&!isBangsar&&!isKLGCC;
       if(areaFilter==='mont-kiara'&&!isMK) return false;
       if(areaFilter==='desa-parkcity'&&!isDPC) return false;
       if(areaFilter==='bangsar'&&!isBangsar) return false;
+      if(areaFilter==='klgcc'&&!isKLGCC) return false;
     }
     return true;
   });
