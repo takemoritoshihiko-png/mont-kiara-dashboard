@@ -385,6 +385,7 @@ function calcLuxury(condos) {
 
   condos.forEach(c => {
     c.sizeMid = (c.sizeMin + c.sizeMax) / 2;
+    c.sizeComposite = (c.sizeMin * 0.6) + (c.sizeMid * 0.4);
     c.salePsfMid = (c.salePsfMin + c.salePsfMax) / 2;
     c.rentMid = (c.rentMin + c.rentMax) / 2;
     c.yield = c.salePsfMid * c.sizeMid > 0 ? (c.rentMid * 12) / (c.salePsfMid * c.sizeMid) * 100 : 0;
@@ -400,7 +401,7 @@ function calcLuxury(condos) {
 
   // v4.2 Fixed reference ranges
   const REF = {
-    sizeMid:  { min: 600,   max: 4500 },
+    sizeComp: { min: 500,   max: 3500 },
     sizeMax:  { min: 1000,  max: 7500 },
     psfMid:   { min: 400,   max: 1800 },   // v4.2: 1200→1800
     rentPsf:  { min: 2.0,   max: 6.0 },
@@ -415,7 +416,7 @@ function calcLuxury(condos) {
 
   // v4.2 Weights: Base 85% + Premium 15% = 100%
   condos.forEach((c, i) => {
-    const nSzAvg  = normFixed(c.sizeMid, REF.sizeMid.min, REF.sizeMid.max);
+    const nSzAvg  = normFixed(c.sizeComposite, REF.sizeComp.min, REF.sizeComp.max);
     const nSzMax  = normFixed(c.sizeMax, REF.sizeMax.min, REF.sizeMax.max);
     const nPsf    = normFixed(c.salePsfMid, REF.psfMid.min, REF.psfMid.max);
     const nRentPsf= normFixed(c.rentPsfMid, REF.rentPsf.min, REF.rentPsf.max);
@@ -588,6 +589,24 @@ function applyFilters(){
   const areaFilter=document.getElementById('fArea').value;
   const currentYear = new Date().getFullYear();
   filtered=CONDOS.filter(c=>{
+    // Commercial & School: only apply their own toggles, search, status and area filters
+    if(c.status==='commercial'||c.status==='school'){
+      if(!showCommercial&&c.status==='commercial') return false;
+      if(!showSchools&&c.status==='school') return false;
+      if(statusFilter==='residential') return false;
+      if(q&&!c.name.toLowerCase().includes(q)&&!c.addr.toLowerCase().includes(q)&&!(c.nameJa||'').includes(q))return false;
+      if(areaFilter){
+        const a=c.addr.toLowerCase();
+        const isDPC=a.includes('desa parkcity');
+        const isBangsar=a.includes('bangsar');
+        const isMK=!isDPC&&!isBangsar;
+        if(areaFilter==='mont-kiara'&&!isMK) return false;
+        if(areaFilter==='desa-parkcity'&&!isDPC) return false;
+        if(areaFilter==='bangsar'&&!isBangsar) return false;
+      }
+      return true;
+    }
+    // Condo filters
     if(q&&!c.name.toLowerCase().includes(q)&&!c.addr.toLowerCase().includes(q)&&!c.luxTier.toLowerCase().includes(q)&&!(c.nameJa||'').includes(q))return false;
     // Tier filter: "A+" means A and above (A, S)
     if(tierVal){
@@ -605,12 +624,8 @@ function applyFilters(){
     if(yl&&(c.yield<yl.min||c.yield>yl.max))return false;
     // Age filter (skip for upcoming)
     if(age&&c.status==='completed'){const a=currentYear-c.year; if(a<age.min||a>age.max) return false;}
-    // Commercial & School toggles
-    if(!showCommercial&&c.status==='commercial') return false;
-    if(!showSchools&&c.status==='school') return false;
     // Status filter
-    if(statusFilter==='residential'&&(c.status==='commercial'||c.status==='school')) return false;
-    else if(statusFilter&&statusFilter!=='residential'&&c.status!==statusFilter) return false;
+    if(statusFilter&&c.status!==statusFilter) return false;
     // Area filter
     if(areaFilter){
       const a=c.addr.toLowerCase();
