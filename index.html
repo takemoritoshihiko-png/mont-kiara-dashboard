@@ -237,7 +237,13 @@ function parseCSV(text) {
       blocks: parseInt(obj.blocks) || 1,
       floors: parseInt(obj.floors) || 0,
       tenure: obj.tenure || 'FH',
-      premiumScoreCSV: parseInt(obj.premium_score) || 0
+      premiumScoreCSV: parseInt(obj.premium_score) || 0,
+      pLift: parseInt(obj.premium_private_lift) || 0,
+      pConcierge: parseInt(obj.premium_concierge) || 0,
+      pLowDensity: parseInt(obj.premium_low_density) || 0,
+      pPool: parseInt(obj.premium_pool) || 0,
+      pSkyLounge: parseInt(obj.premium_sky_lounge) || 0,
+      pEV: parseInt(obj.premium_ev_charging) || 0
     };
   }).filter(c => c.name && c.lat > 1);
 }
@@ -723,6 +729,21 @@ function selectCondo(name){
       h+=`<div class="popup-cell"><div class="popup-cell-label">Rent/mo</div><div class="popup-cell-val" style="color:#1a73e8">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>`;
       h+=`<div class="popup-cell"><div class="popup-cell-label">Size</div><div class="popup-cell-val">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</div></div>`;
       h+=`<div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#ea8600">${(c.yield||0).toFixed(1)}%</div></div></div>`;
+      // Premium Features
+      if(c.premiumScore>0){
+        const pf=[];
+        if(c.pLift) pf.push('🔑 Private Lift');
+        if(c.pConcierge) pf.push('🛎️ Concierge');
+        if(c.pLowDensity>=3) pf.push('🏠 ≤3 units/floor');
+        else if(c.pLowDensity>=2) pf.push('🏠 ≤5 units/floor');
+        else if(c.pLowDensity>=1) pf.push('🏠 ≤8 units/floor');
+        if(c.pPool) pf.push('🏊 50m Pool');
+        if(c.pSkyLounge) pf.push('🌆 Sky Lounge');
+        if(c.pEV) pf.push('⚡ EV Charging');
+        h+=`<div style="margin-top:6px;padding:6px 8px;background:#f0f7ff;border-radius:6px;border:1px solid #d2e3fc">`;
+        h+=`<div style="font-size:9px;color:#1a73e8;font-weight:700;margin-bottom:3px">PREMIUM FEATURES (${c.premiumScore}/15)</div>`;
+        h+=`<div style="font-size:11px;color:#1a1a2e;line-height:1.6">${pf.join(' &nbsp;')}</div></div>`;
+      }
     }
     // Links
     const links=[];
