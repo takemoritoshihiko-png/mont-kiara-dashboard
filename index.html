@@ -390,14 +390,15 @@ function calcLuxury(condos) {
     c.tenureScore = (c.tenure === 'LH') ? 30 : 100; // FH=100, LH=30
   });
 
-  // v4 Fixed reference ranges (MK-market calibrated)
+  // v4.1 Fixed reference ranges (MK-market calibrated)
   const REF = {
     sizeMid:  { min: 600,   max: 4500 },
     sizeMax:  { min: 1000,  max: 7500 },
     psfMid:   { min: 400,   max: 1200 },
     rentPsf:  { min: 2.0,   max: 6.0 },
     priceMax: { min: 1000000, max: 12000000 },
-    density:  { min: 30,    max: 250 },    // units per block (inverted)
+    units:    { min: 80,    max: 1000 },   // total units (inverted) - main exclusivity
+    density:  { min: 40,    max: 250 },    // units per block (inverted) - density bonus
     age:      { min: 0,     max: 25 }      // years (inverted)
   };
   const normFixed = (v, min, max, inv) => {
@@ -405,19 +406,20 @@ function calcLuxury(condos) {
     return (inv ? 1 - t : t) * 100;
   };
 
-  // v4 Weights (Tenure excluded): AvgSize 8% | MaxSize 5% | PSF 16% | RentPSF 13% |
-  //   TopPrice 10% | Exclusivity(density) 14% | Age 13% | Brand 21% = 100%
+  // v4.1 Weights: AvgSize 8% | MaxSize 5% | PSF 17% | RentPSF 13% |
+  //   TopPrice 11% | Exclusivity(units) 8% | Density(bonus) 5% | Age 12% | Brand 21% = 100%
   condos.forEach((c, i) => {
     const nSzAvg  = normFixed(c.sizeMid, REF.sizeMid.min, REF.sizeMid.max);
     const nSzMax  = normFixed(c.sizeMax, REF.sizeMax.min, REF.sizeMax.max);
     const nPsf    = normFixed(c.salePsfMid, REF.psfMid.min, REF.psfMid.max);
     const nRentPsf= normFixed(c.rentPsfMid, REF.rentPsf.min, REF.rentPsf.max);
     const nPrice  = normFixed(c.estPriceMax, REF.priceMax.min, REF.priceMax.max);
-    const nExcl   = normFixed(c.density, REF.density.min, REF.density.max, true);
+    const nExcl   = normFixed(c.units, REF.units.min, REF.units.max, true);
+    const nDensity= normFixed(c.density, REF.density.min, REF.density.max, true);
     const nAge    = normFixed(c.buildingAge, REF.age.min, REF.age.max, true);
 
-    let raw = nSzAvg*0.08 + nSzMax*0.05 + nPsf*0.16 + nRentPsf*0.13
-            + nPrice*0.10 + nExcl*0.14 + nAge*0.13 + c.brandScore*0.21;
+    let raw = nSzAvg*0.08 + nSzMax*0.05 + nPsf*0.17 + nRentPsf*0.13
+            + nPrice*0.11 + nExcl*0.08 + nDensity*0.05 + nAge*0.12 + c.brandScore*0.21;
     c.luxScore = Math.round(raw * 10) / 10;
     c.luxTier = c.luxScore >= 70 ? 'S' : c.luxScore >= 60 ? 'A' : c.luxScore >= 50 ? 'B' : c.luxScore >= 40 ? 'C' : 'D';
   });
