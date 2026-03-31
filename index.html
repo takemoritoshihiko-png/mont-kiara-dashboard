@@ -59,6 +59,12 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 .tag-lux-C{background:#78909c;color:#fff}
 .tag-lux-D{background:#bdbdbd;color:#fff}
 
+/* Fixed info panel (replaces map popup) */
+.info-overlay{position:absolute;top:52px;left:0;z-index:1001;background:#fff;border-radius:0 0 12px 0;box-shadow:2px 2px 12px rgba(0,0,0,0.2);padding:14px 16px;max-width:340px;max-height:calc(100vh - 60px);overflow-y:auto;display:none}
+.info-overlay.active{display:block}
+.info-close{position:absolute;top:6px;right:10px;background:none;border:none;font-size:18px;cursor:pointer;color:#999;line-height:1}
+.info-close:hover{color:#333}
+
 /* Mobile responsive */
 @media(max-width:768px){
   .header{padding:6px 10px;height:44px}
@@ -89,6 +95,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
   .map-legend-dot{width:8px!important;height:8px!important}
   .map-legend-section{margin-top:3px;padding-top:2px}
   .tier-badge{width:12px!important;height:12px!important;line-height:12px!important;font-size:6px!important}
+  .info-overlay{top:44px;max-width:75vw;padding:10px 12px;font-size:11px}
   .leaflet-popup-content{margin:8px 10px!important;min-width:220px}
   .popup-title{font-size:13px}
   .popup-grid{grid-template-columns:1fr 1fr;gap:4px}
@@ -174,6 +181,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
   </div>
 </div>
 <div class="map-legend" id="mapLegend" style="cursor:pointer" onclick="toggleLegend()"></div>
+<div class="info-overlay" id="infoOverlay"><button class="info-close" onclick="closeInfo()">✕</button><div id="infoContent"></div></div>
 
 <script>
 // ============================================================
@@ -422,18 +430,6 @@ function mkMarker(c) {
       </div>`
     });
     const m = L.marker([c.lat,c.lng],{icon});
-    m.bindPopup(`<div>
-      <div class="popup-title" style="color:#e65100">${c.name}</div>
-      ${c.nameJa ? '<div style="font-size:12px;color:#5f6368;margin-bottom:2px">'+c.nameJa+'</div>' : ''}
-      <div class="popup-addr">${c.addr}</div>
-      <div style="font-size:12px;margin-bottom:6px"><strong>商業施設</strong> | 開業: ${c.year}年</div>
-      <div class="popup-grid">
-        <div class="popup-cell"><div class="popup-cell-label">Tenants</div><div class="popup-cell-val" style="color:#e65100">${c.units > 0 ? '~'+c.units+'店' : '-'}</div></div>
-        <div class="popup-cell"><div class="popup-cell-label">Retail NLA</div><div class="popup-cell-val">${c.sizeMin > 0 ? (c.sizeMin/1000).toFixed(0)+'K sqft' : '-'}</div></div>
-      </div>
-      ${c.anchorTenants ? '<div style="margin-top:6px;font-size:11px;color:#5f6368"><strong>Key Tenants:</strong> '+c.anchorTenants+'</div>' : ''}
-      ${c.ipropertyUrl||c.homepageUrl ? '<div style="display:flex;gap:6px;margin-top:8px">'+(c.homepageUrl?'<a href="'+c.homepageUrl+'" target="_blank" style="flex:1;text-align:center;padding:7px;background:#ff6d00;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600">Official Site</a>':'')+(c.ipropertyUrl?'<a href="'+c.ipropertyUrl+'" target="_blank" style="flex:1;text-align:center;padding:7px;background:#1a73e8;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600">iProperty</a>':'')+'</div>' : ''}
-    </div>`);
     m.on('click',()=>selectCondo(c.name));
     m.bindTooltip(c.name.replace(/ \(.*\)/,''), {permanent:true,direction:'right',offset:[csz/2+2,0],className:'condo-label-tip'});
     return m;
@@ -456,28 +452,6 @@ function mkMarker(c) {
   });
 
   const m = L.marker([c.lat,c.lng],{icon});
-  m.bindPopup(`<div>
-    <div class="popup-title">${c.name}</div>
-    ${c.nameJa ? '<div style="font-size:12px;color:#5f6368;margin-bottom:2px">'+c.nameJa+'</div>' : ''}
-    <div class="popup-addr">${c.addr}</div>
-    <div style="margin-bottom:8px">
-      <span class="tier-badge" style="background:${tierColor};width:22px;height:22px;line-height:22px;font-size:11px">${c.luxTier}</span>
-      <span style="font-size:12px;font-weight:700;margin-left:4px">Luxury Score: ${c.luxScore}</span>
-      <div style="font-size:10px;color:#5f6368;margin-top:3px">Developer: <strong>${c.developer}</strong> (Brand ${c.devInfo.tier})</div>
-    </div>
-    <div class="popup-grid">
-      <div class="popup-cell"><div class="popup-cell-label">Year</div><div class="popup-cell-val">${c.year}</div></div>
-      <div class="popup-cell"><div class="popup-cell-label">Units</div><div class="popup-cell-val">${c.units}</div></div>
-      <div class="popup-cell"><div class="popup-cell-label">Sale PSF</div><div class="popup-cell-val" style="color:#ea4335">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>
-      <div class="popup-cell"><div class="popup-cell-label">Rent/mo</div><div class="popup-cell-val" style="color:#1a73e8">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>
-      <div class="popup-cell"><div class="popup-cell-label">Size</div><div class="popup-cell-val">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</div></div>
-      <div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#ea8600">${(c.yield||0).toFixed(1)}%</div></div>
-    </div>
-    <div style="display:flex;gap:6px;margin-top:10px">
-      ${c.ipropertyUrl ? '<a href="'+c.ipropertyUrl+'" target="_blank" style="flex:1;text-align:center;padding:7px;background:#1a73e8;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600">iProperty</a>' : ''}
-      ${c.homepageUrl ? '<a href="'+c.homepageUrl+'" target="_blank" style="flex:1;text-align:center;padding:7px;background:#34a853;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600">Official Site</a>' : ''}
-    </div>
-    </div>`);
   m.on('click',()=>selectCondo(c.name));
 
   // Permanent label
@@ -615,13 +589,48 @@ function renderList(){
     </div>`).join('');
 }
 
+function closeInfo(){ document.getElementById('infoOverlay').classList.remove('active'); }
+
 function selectCondo(name){
-  selectedCondo=name;const c=CONDOS.find(x=>x.name===name);
-  if(c&&markers[name]){
-    // Offset view south so popup (opens upward) stays in view
-    const offset = window.innerWidth<=768 ? 0.003 : 0.002;
-    map.setView([c.lat - offset, c.lng], 17);
-    setTimeout(()=>markers[name].openPopup(), 300);
+  selectedCondo=name;
+  const c=CONDOS.find(x=>x.name===name);
+  if(c){
+    map.setView([c.lat, c.lng], 16);
+    // Build info panel content
+    let h='';
+    if(c.status==='commercial'){
+      h+=`<div class="popup-title" style="color:#e65100">${c.name}</div>`;
+      h+=c.nameJa?'<div style="font-size:11px;color:#5f6368;margin-bottom:2px">'+c.nameJa+'</div>':'';
+      h+=`<div class="popup-addr">${c.addr}</div>`;
+      h+=`<div style="font-size:12px;margin-bottom:6px"><strong>商業施設</strong> | 開業: ${c.year}年</div>`;
+      h+=`<div class="popup-grid">`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Tenants</div><div class="popup-cell-val" style="color:#e65100">${c.units>0?'~'+c.units+'店':'-'}</div></div>`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">NLA</div><div class="popup-cell-val">${c.sizeMin>0?(c.sizeMin/1000).toFixed(0)+'K sf':'-'}</div></div></div>`;
+      h+=c.anchorTenants?'<div style="margin-top:6px;font-size:11px;color:#5f6368"><strong>Key Tenants:</strong> '+c.anchorTenants+'</div>':'';
+    } else {
+      const tierColor=TIER_COLORS[c.luxTier]||'#999';
+      h+=`<div class="popup-title">${c.name}</div>`;
+      h+=c.nameJa?'<div style="font-size:11px;color:#5f6368;margin-bottom:2px">'+c.nameJa+'</div>':'';
+      h+=`<div class="popup-addr">${c.addr}</div>`;
+      h+=`<div style="margin-bottom:8px"><span class="tier-badge" style="background:${tierColor};width:20px;height:20px;line-height:20px;font-size:10px">${c.luxTier}</span>`;
+      h+=` <span style="font-size:12px;font-weight:700;margin-left:4px">Score: ${c.luxScore}</span>`;
+      h+=`<div style="font-size:10px;color:#5f6368;margin-top:2px">${c.developer}</div></div>`;
+      h+=`<div class="popup-grid">`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Year</div><div class="popup-cell-val">${c.year}</div></div>`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Units</div><div class="popup-cell-val">${c.units}</div></div>`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Sale PSF</div><div class="popup-cell-val" style="color:#ea4335">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Rent/mo</div><div class="popup-cell-val" style="color:#1a73e8">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Size</div><div class="popup-cell-val">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</div></div>`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#ea8600">${(c.yield||0).toFixed(1)}%</div></div></div>`;
+    }
+    // Links
+    const links=[];
+    if(c.ipropertyUrl) links.push('<a href="'+c.ipropertyUrl+'" target="_blank" style="flex:1;text-align:center;padding:6px;background:#1a73e8;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600">iProperty</a>');
+    if(c.homepageUrl) links.push('<a href="'+c.homepageUrl+'" target="_blank" style="flex:1;text-align:center;padding:6px;background:'+(c.status==='commercial'?'#ff6d00':'#34a853')+';color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600">Official</a>');
+    if(links.length) h+='<div style="display:flex;gap:6px;margin-top:8px">'+links.join('')+'</div>';
+
+    document.getElementById('infoContent').innerHTML=h;
+    document.getElementById('infoOverlay').classList.add('active');
   }
   renderList();
   document.querySelectorAll('.condo-card').forEach(card=>{if(card.querySelector('.condo-name')?.textContent===name)card.scrollIntoView({behavior:'smooth',block:'nearest'});});
