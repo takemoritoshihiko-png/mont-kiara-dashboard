@@ -499,38 +499,34 @@ function rebuild(){
   updateLegend();
 }
 
-let legendOpen=true;
-function toggleLegend(){
+let legendOpen=false;
+function toggleLegend(e){
+  e&&e.stopPropagation();
   legendOpen=!legendOpen;
-  const ml=document.getElementById('mapLegend');
-  const body=ml.querySelector('.legend-body');
+  const body=document.getElementById('legendBody');
+  const tog=document.getElementById('legendToggle');
   if(body) body.style.display=legendOpen?'block':'none';
-  const tog=ml.querySelector('.legend-toggle');
   if(tog) tog.textContent=legendOpen?'▼':'▶';
 }
 function updateLegend(){
-  // Year color bar
   const bar=document.getElementById('legendBar');bar.innerHTML='';
   for(let i=0;i<24;i++){const d=document.createElement('div');d.style.background=getYearColor(YEAR_MIN+i/23*(YEAR_MAX-YEAR_MIN));bar.appendChild(d);}
   document.getElementById('legendLabels').innerHTML=`<span>${YEAR_MIN} (Oldest)</span><span>${Math.round((YEAR_MIN+YEAR_MAX)/2)}</span><span>${YEAR_MAX} (Newest)</span>`;
 
-  // Map legend with toggle
   const ml=document.getElementById('mapLegend');
-  ml.innerHTML=`<div class="map-legend-title" style="display:flex;justify-content:space-between;align-items:center">Legend <span class="legend-toggle" style="font-size:10px">${legendOpen?'▼':'▶'}</span></div>`;
-  ml.innerHTML+=`<div class="legend-body" style="display:${legendOpen?'block':'none'}">`;
-
-  let body='';
-  body+=`<div class="map-legend-title" style="margin-top:4px">Year Built (Fill Color)</div>`;
+  let h=`<div class="map-legend-title" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">Legend <span id="legendToggle" style="font-size:10px">${legendOpen?'▼':'▶'}</span></div>`;
+  h+=`<div id="legendBody" style="display:${legendOpen?'block':'none'}">`;
+  h+=`<div class="map-legend-title" style="margin-top:2px">Year Built</div>`;
   [{y:1993,l:'~1993'},{y:2001,l:'~2001'},{y:2009,l:'~2009'},{y:2017,l:'~2017'},{y:2025,l:'~2025'}].forEach(({y,l})=>{
-    body+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${getYearColor(y)}"></div>${l}</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${getYearColor(y)}"></div>${l}</div>`;
   });
-  body+=`<div class="map-legend-section"><div class="map-legend-title">Luxury Tier</div></div>`;
+  h+=`<div class="map-legend-section"><div class="map-legend-title">Luxury Tier</div></div>`;
   [{t:'S',l:'Ultra Luxury (70+)'},{t:'A',l:'Super Luxury (60-69)'},{t:'B',l:'Luxury (50-59)'},{t:'C',l:'Upper Mid (40-49)'},{t:'D',l:'Standard (<40)'}].forEach(({t,l})=>{
-    body+=`<div class="map-legend-item"><span class="tier-badge" style="background:${TIER_COLORS[t]}">${t}</span>${l}</div>`;
+    h+=`<div class="map-legend-item"><span class="tier-badge" style="background:${TIER_COLORS[t]}">${t}</span>${l}</div>`;
   });
-  body+=`<div class="map-legend-section"><div class="map-legend-title">Circle Size = Units</div><div style="font-size:10px;color:#80868b">Larger = more units</div></div>`;
-  body+=`</div>`;
-  ml.innerHTML+=body;
+  h+=`<div class="map-legend-section"><div class="map-legend-title">Circle = Units</div></div>`;
+  h+=`</div>`;
+  ml.innerHTML=h;
 }
 
 function parseR(v){if(!v)return null;const[a,b]=v.split('-').map(Number);return{min:a,max:b}}
