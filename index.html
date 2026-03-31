@@ -60,7 +60,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 .tag-lux-D{background:#bdbdbd;color:#fff}
 
 /* Fixed info panel (replaces map popup) */
-.info-overlay{position:absolute;top:52px;left:0;z-index:1001;background:#fff;border-radius:0 0 12px 0;box-shadow:2px 2px 12px rgba(0,0,0,0.2);padding:10px 12px;width:280px;max-height:calc(100vh - 60px);overflow-y:auto;display:none;font-size:11px}
+.info-overlay{position:absolute;top:0;left:0;z-index:1001;background:#fff;border-radius:0 0 12px 0;box-shadow:2px 2px 12px rgba(0,0,0,0.2);padding:10px 12px;width:280px;max-height:calc(100vh - 60px);overflow-y:auto;display:none;font-size:11px}
 .info-overlay.active{display:block}
 .info-close{position:absolute;top:6px;right:10px;background:none;border:none;font-size:18px;cursor:pointer;color:#999;line-height:1}
 .info-close:hover{color:#333}
@@ -95,7 +95,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
   .map-legend-dot{width:8px!important;height:8px!important}
   .map-legend-section{margin-top:3px;padding-top:2px}
   .tier-badge{width:12px!important;height:12px!important;line-height:12px!important;font-size:6px!important}
-  .info-overlay{top:44px;width:70vw;max-width:260px;padding:8px 10px;font-size:10px}
+  .info-overlay{top:0;width:70vw;max-width:260px;padding:8px 10px;font-size:10px}
   .leaflet-popup-content{margin:8px 10px!important;min-width:220px}
   .popup-title{font-size:13px}
   .popup-grid{grid-template-columns:1fr 1fr;gap:4px}
@@ -130,8 +130,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
   <h1>Mont Kiara Condominium Dashboard</h1>
   <div class="stats">Source: iProperty / PropertyGuru (2025-2026) | Properties: <span id="totalCount">0</span> | Median PSF: <span id="medianPsf">-</span></div>
 </div>
-<div class="main">
+<div class="main" style="position:relative">
   <div id="map"></div>
+  <div class="info-overlay" id="infoOverlay"><button class="info-close" onclick="closeInfo()">✕</button><div id="infoContent"></div></div>
   <button class="toggle-panel" id="toggleBtn" onclick="togglePanel()">&#9664;</button>
   <div class="panel" id="panel">
     <div class="summary-bar">
@@ -182,7 +183,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
   </div>
 </div>
 <div class="map-legend" id="mapLegend" style="cursor:pointer" onclick="toggleLegend()"></div>
-<div class="info-overlay" id="infoOverlay"><button class="info-close" onclick="closeInfo()">✕</button><div id="infoContent"></div></div>
 
 <script>
 // ============================================================
