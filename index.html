@@ -157,7 +157,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
       <div class="filter-row">
         <div class="filter-group"><label>築年数 (Years Old)</label><select id="fAge" onchange="applyFilters()"><option value="">All</option><option value="0-5">0-5年 (2021+)</option><option value="0-10">0-10年 (2016+)</option><option value="0-15">0-15年 (2011+)</option><option value="0-20">0-20年 (2006+)</option><option value="10-20">10-20年</option><option value="20-99">20年超</option></select></div>
         <div class="filter-group"><label>Status</label><select id="fStatus" onchange="applyFilters()"><option value="">All</option><option value="completed">Completed (既築)</option><option value="upcoming">Upcoming (今後建つ)</option><option value="commercial">Commercial (商業施設)</option><option value="residential">Residential Only</option></select></div>
-        <div class="filter-group"><label>Area</label><select id="fArea" onchange="applyFilters()"><option value="">All</option><option value="mont-kiara">Mont Kiara</option><option value="desa-parkcity">Desa ParkCity</option><option value="bangsar">Bangsar</option><option value="klgcc">KLGCC Resort</option></select></div>
+        <div class="filter-group"><label>Area</label><select id="fArea" onchange="applyFilters()"><option value="">All</option><option value="mont-kiara">Mont Kiara</option><option value="desa-parkcity">Desa ParkCity</option><option value="bangsar">Bangsar</option><option value="klgcc">KLGCC Resort</option><option value="klcc">KLCC</option><option value="ampang">Ampang/U-Thant</option><option value="damansara">Damansara Heights</option></select></div>
       </div>
       <div class="sort-row">
         <button class="sort-btn" data-sort="luxHigh" onclick="setSort(this)">Luxury ↓</button>
@@ -367,6 +367,29 @@ const DEVELOPERS = {
   'Arte Corp':            {tier:'C', score:35, note:'Arte Mont Kiara developer'},
   // A-tier: KLGCC Resort master developer
   'Sime Darby Property':  {tier:'A', score:80, note:'KLGCC Resort master developer, top 5 nationally'},
+  // A-tier: KLCC / Ampang / Damansara Heights developers
+  'KLCC Property Holdings':{tier:'A', score:85, note:'Petronas subsidiary, The Binjai developer'},
+  'GuocoLand (Hong Leong Group)':{tier:'A', score:80, note:'The Oval KLCC developer'},
+  'Hong Leong Group':     {tier:'A', score:75, note:'3 Kia Peng developer'},
+  'Wing Tai Malaysia':    {tier:'A', score:75, note:'Le Nouvel KLCC developer'},
+  'Tan & Tan (IGB)':      {tier:'A', score:80, note:'IGB Bhd, Cendana/U-Thant/Stonor 3 developer'},
+  'Tan & Tan / Mitsubishi Jisho':{tier:'A', score:70, note:'Stonor 3 JV developer'},
+  'CMY Capital':          {tier:'B', score:60, note:'One KL developer'},
+  'Berjaya Corp':         {tier:'B', score:60, note:'Ritz-Carlton Residences KL developer'},
+  'Venus Assets':         {tier:'B', score:60, note:'Four Seasons Place developer'},
+  'KSK Land':             {tier:'B', score:50, note:'8 Conlay (YOO8) developer'},
+  'MRCB':                 {tier:'B', score:60, note:'St Regis Residences, national infra developer'},
+  'Selangor Dredging Bhd (SDB)':{tier:'B', score:60, note:'Dedaun, luxury boutique developer'},
+  'Beverly Group':        {tier:'C', score:40, note:'Marc Residences KLCC developer'},
+  'Magna Prima':          {tier:'C', score:40, note:'The Avare KLCC developer'},
+  'Glomac Bhd':           {tier:'B', score:60, note:'Suria Stonor developer'},
+  'Prinaissance':         {tier:'C', score:40, note:'Gallery U-Thant developer'},
+  'Amphil Corp':          {tier:'B', score:50, note:'Rimbun Embassy Row developer'},
+  'Revival Capital':      {tier:'C', score:40, note:'Residensi R8 developer'},
+  'Clearwater Development':{tier:'C', score:40, note:'Clearwater Residences developer'},
+  'Selangor Properties':  {tier:'B', score:60, note:'AIRA Residence developer'},
+  'E&O / Mitsui Fudosan': {tier:'A', score:85, note:'The Peak DH, E&O + Mitsui Fudosan JV'},
+  'Satin Magic':          {tier:'C', score:40, note:'The Cedar DH developer'},
   'Other':                {tier:'C', score:30, note:'Various smaller developers'}
 };
 
@@ -459,7 +482,7 @@ const TIER_COLORS = {S:'#7b1fa2',A:'#1565c0',B:'#2e7d32',C:'#78909c',D:'#bdbdbd'
 // ============================================================
 // MAP
 // ============================================================
-const map = L.map('map',{zoomControl:true}).setView([3.1550,101.6550],13);
+const map = L.map('map',{zoomControl:true}).setView([3.1550,101.6850],12);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
   attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19
 }).addTo(map);
@@ -602,14 +625,21 @@ function applyFilters(){
       if(q&&!c.name.toLowerCase().includes(q)&&!c.addr.toLowerCase().includes(q)&&!(c.nameJa||'').includes(q))return false;
       if(areaFilter){
         const a=c.addr.toLowerCase();
-        const isKLGCC=a.includes('bukit kiara')||c.name.toLowerCase().includes('klgcc');
+        const n=c.name.toLowerCase();
+        const isKLGCC=a.includes('bukit kiara')||n.includes('klgcc');
         const isDPC=a.includes('desa parkcity');
         const isBangsar=a.includes('bangsar');
-        const isMK=!isDPC&&!isBangsar&&!isKLGCC;
+        const isKLCC=a.includes('klcc')||a.includes('bukit bintang')||a.includes('jalan conlay')||a.includes('jalan imbi')||a.includes('jalan pinang')||a.includes('kl sentral')||n.includes('klcc');
+        const isAmpang=a.includes('u-thant')||a.includes('ampang hilir')||a.includes('embassy row')||a.includes('kia peng')||a.includes('persiaran stonor')||a.includes('lorong kuda');
+        const isDH=a.includes('damansara heights')||a.includes('jalan batai')||a.includes('changkat semantan');
+        const isMK=!isDPC&&!isBangsar&&!isKLGCC&&!isKLCC&&!isAmpang&&!isDH;
         if(areaFilter==='mont-kiara'&&!isMK) return false;
         if(areaFilter==='desa-parkcity'&&!isDPC) return false;
         if(areaFilter==='bangsar'&&!isBangsar) return false;
         if(areaFilter==='klgcc'&&!isKLGCC) return false;
+        if(areaFilter==='klcc'&&!isKLCC) return false;
+        if(areaFilter==='ampang'&&!isAmpang) return false;
+        if(areaFilter==='damansara'&&!isDH) return false;
       }
       return true;
     }
@@ -636,14 +666,21 @@ function applyFilters(){
     // Area filter
     if(areaFilter){
       const a=c.addr.toLowerCase();
-      const isKLGCC=a.includes('bukit kiara')||c.name.toLowerCase().includes('klgcc');
+      const n=c.name.toLowerCase();
+      const isKLGCC=a.includes('bukit kiara')||n.includes('klgcc');
       const isDPC=a.includes('desa parkcity');
       const isBangsar=a.includes('bangsar');
-      const isMK=!isDPC&&!isBangsar&&!isKLGCC;
+      const isKLCC=a.includes('klcc')||a.includes('bukit bintang')||a.includes('jalan conlay')||a.includes('jalan imbi')||a.includes('jalan pinang')||a.includes('kl sentral')||n.includes('klcc');
+      const isAmpang=a.includes('u-thant')||a.includes('ampang hilir')||a.includes('embassy row')||a.includes('kia peng')||a.includes('persiaran stonor')||a.includes('lorong kuda');
+      const isDH=a.includes('damansara heights')||a.includes('jalan batai')||a.includes('changkat semantan');
+      const isMK=!isDPC&&!isBangsar&&!isKLGCC&&!isKLCC&&!isAmpang&&!isDH;
       if(areaFilter==='mont-kiara'&&!isMK) return false;
       if(areaFilter==='desa-parkcity'&&!isDPC) return false;
       if(areaFilter==='bangsar'&&!isBangsar) return false;
       if(areaFilter==='klgcc'&&!isKLGCC) return false;
+      if(areaFilter==='klcc'&&!isKLCC) return false;
+      if(areaFilter==='ampang'&&!isAmpang) return false;
+      if(areaFilter==='damansara'&&!isDH) return false;
     }
     return true;
   });
