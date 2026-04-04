@@ -442,7 +442,7 @@ function calcLuxury(condos) {
 // ============================================================
 // YEAR COLOR SCALE (new=blue, old=amber/brown)
 // ============================================================
-const YEAR_MIN = 1993, YEAR_MAX = 2025;
+const YEAR_MIN = 1993, YEAR_MAX = 2026;
 const YEAR_COLORS = ['#8d6e63','#bcaaa4','#90a4ae','#64b5f6','#1565c0']; // brown->blue
 
 function getYearColor(year) {
@@ -682,7 +682,10 @@ function renderList(){
         ${c.status!=='commercial'?'<span class="condo-tag tag-size">'+c.sizeMin.toLocaleString()+'-'+c.sizeMax.toLocaleString()+' sf</span>':''}
         ${c.status==='completed'?'<span class="condo-tag tag-yield">Yield '+(c.yield||0).toFixed(1)+'%</span>':''}
       </div>
-      ${c.status==='commercial'?(c.anchorTenants?'<div style="margin-top:4px;font-size:10px;color:#bf360c">'+c.anchorTenants+'</div>':''):`<div class="condo-prices">
+      ${c.status==='commercial'?(c.anchorTenants?'<div style="margin-top:4px;font-size:10px;color:#bf360c">'+c.anchorTenants+'</div>':''):c.status==='upcoming'?`<div class="condo-prices">
+        <div class="price-col"><div class="price-label">Sale PSF</div><div class="price-value sale-price" style="color:#999">未定</div></div>
+        <div class="price-col"><div class="price-label">Rent/mo</div><div class="price-value rent-price" style="color:#999">未定</div></div>
+      </div>`:`<div class="condo-prices">
         <div class="price-col"><div class="price-label">Sale PSF</div><div class="price-value sale-price">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>
         <div class="price-col"><div class="price-label">Rent/mo</div><div class="price-value rent-price">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>
       </div>`}
@@ -728,10 +731,19 @@ function selectCondo(name){
       h+=`<div class="popup-grid">`;
       h+=`<div class="popup-cell"><div class="popup-cell-label">Year</div><div class="popup-cell-val">${c.year}</div></div>`;
       h+=`<div class="popup-cell"><div class="popup-cell-label">Units</div><div class="popup-cell-val">${c.units}</div></div>`;
-      h+=`<div class="popup-cell"><div class="popup-cell-label">Sale PSF</div><div class="popup-cell-val" style="color:#ea4335">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>`;
-      h+=`<div class="popup-cell"><div class="popup-cell-label">Rent/mo</div><div class="popup-cell-val" style="color:#1a73e8">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>`;
+      if(c.status==='upcoming'){
+        h+=`<div class="popup-cell"><div class="popup-cell-label">Sale PSF</div><div class="popup-cell-val" style="color:#999">未定</div></div>`;
+        h+=`<div class="popup-cell"><div class="popup-cell-label">Rent/mo</div><div class="popup-cell-val" style="color:#999">未定</div></div>`;
+      } else {
+        h+=`<div class="popup-cell"><div class="popup-cell-label">Sale PSF</div><div class="popup-cell-val" style="color:#ea4335">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>`;
+        h+=`<div class="popup-cell"><div class="popup-cell-label">Rent/mo</div><div class="popup-cell-val" style="color:#1a73e8">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>`;
+      }
       h+=`<div class="popup-cell"><div class="popup-cell-label">Size</div><div class="popup-cell-val">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</div></div>`;
-      h+=`<div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#ea8600">${(c.yield||0).toFixed(1)}%</div></div></div>`;
+      if(c.status==='upcoming'){
+        h+=`<div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#999">-</div></div></div>`;
+      } else {
+        h+=`<div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#ea8600">${(c.yield||0).toFixed(1)}%</div></div></div>`;
+      }
       // Premium Features
       if(c.premiumScore>0){
         const pf=[];
@@ -766,7 +778,7 @@ function updateSummary(){
   document.getElementById('sumFiltered').textContent=filtered.length;
   document.getElementById('totalCount').textContent=CONDOS.length;
   if(filtered.length){
-    const res=filtered.filter(c=>c.status!=='commercial');
+    const res=filtered.filter(c=>c.status!=='commercial'&&c.status!=='upcoming'&&c.status!=='school');
     if(res.length){
       const sp=res.map(c=>c.salePsfMid||0).sort((a,b)=>a-b);
       const rp=res.map(c=>c.rentPsfMid||0).sort((a,b)=>a-b);
@@ -795,7 +807,7 @@ function togglePanel(){
 // ============================================================
 (async function init() {
   const listEl = document.getElementById('condoList');
-  listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#80868b">Loading data from Google Sheets...</div>';
+  listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#80868b">Loading data...</div>';
 
   async function tryFetch(url) {
     const res = await fetch(url, { redirect: 'follow' });
@@ -845,7 +857,7 @@ function togglePanel(){
     filtered = [...CONDOS];
     applyFilters();
   } catch(e) {
-    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#ea4335">Failed to load data: ' + e.message + '<br><br><small style="color:#80868b">Google Sheets URL may need re-publishing.<br>Check: File > Share > Publish to web</small></div>';
+    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#ea4335">Failed to load data: ' + e.message + '<br><br><small style="color:#80868b">Check GitHub repository CSV files.</small></div>';
   }
 })();
 </script>
