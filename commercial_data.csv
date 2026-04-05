@@ -1,64 +1,64 @@
 name,addr,year,tenants,nla_sqft,lat,lng,developer,homepage_url,anchor_tenants,name_ja
-Publika (Solaris Dutamas),1 Jalan Dutamas 1 50480 KL,2012,250,340000,3.17119,101.66579,UEM Sunrise,https://www.publika.com.my/,BIG Supermarket; Art Galleries; F&B,プブリカ (ソラリス・ドゥタマス)
-Solaris Mont Kiara,2 Jalan Solaris Mont Kiara 50480 KL,2011,60,100000,3.17597,101.66021,UEM Sunrise,,F&B; Restaurants & Bars,ソラリス・モントキアラ
-Plaza Mont Kiara,2 Jalan Kiara Mont Kiara 50480 KL,2004,50,100000,3.16566,101.65152,Other,https://www.plazamontkiara.com.my/,McDonalds; Starbucks; Banks,プラザ・モントキアラ
-163 Retail Park (Sunway),8 Jalan Kiara Mont Kiara 50480 KL,2018,120,300000,3.16664,101.65200,Sunway Property,https://www.sunway163mall.com/,Jaya Grocer; Velvet Cinemas; Blue Ice Skating,163 リテールパーク
-Plaza Damas / Hartamas SC,60 Jalan Sri Hartamas 1 50480 KL,2003,200,200000,3.16400,101.65661,Other,https://www.hartamassc.com.my/,Watsons; F&B; 200+ shops,プラザ・ダマス / ハルタマスSC
-1 Mont Kiara Mall,1 Jalan Kiara Mont Kiara 50480 KL,2014,65,200000,3.16561,101.65321,Ireka,https://1mk.com.my/,Village Grocer; Harvey Norman; Sports Direct,ワン・モントキアラ・モール
-Bangsar Shopping Centre,285 Jalan Maarof Bangsar 59000 KL,1990,150,350000,3.14310,101.66733,Other,,Jaya Grocer; Celebrity Fitness,バンサー・ショッピングセンター
-Bangsar Village I & II,1 Jalan Telawi 1 Bangsar 59100 KL,2004,160,400000,3.12960,101.67085,Other,,Village Grocer; Fitness First,バンサー・ヴィレッジ I & II
-Lucky Garden,Jalan Ara Bangsar 59100 KL,1975,50,80000,3.12881,101.67047,Other,,Hawker Food; Wet Market; Local Eateries,ラッキー・ガーデン
-KL Gateway Mall,2 Jalan Kerinchi Bangsar South 59200 KL,2017,110,350000,3.11362,101.66326,Other,,Jaya Grocer; H&M; Anytime Fitness,KL ゲートウェイモール
-The Waterfront @ ParkCity,Persiaran Residen Desa ParkCity 52200 KL,2016,85,190000,3.18708,101.62729,Perdana ParkCity,,AEON MaxValu Prime; Celebrity Fitness,ザ・ウォーターフロント
-Plaza Arkadia (DPC),Jalan Intisari Perdana Desa ParkCity 52200 KL,2018,65,150000,3.18629,101.63524,Perdana ParkCity,https://plazaarkadia.com.my/,BIG Supermarket; Fitness First,プラザ・アルカディア (DPC)
-Arcoris Plaza,10 Jalan Kiara 4 Mont Kiara 50480 KL,2019,28,90000,3.16775,101.65190,UEM Sunrise,,Japan Grocer; Clinics; F&B,アルコリス・プラザ
-VERVE Shops,8 Jalan Kiara 5 Mont Kiara 50480 KL,2016,24,57000,3.16757,101.64675,Bukit Kiara Properties,,Jaya Grocer; Healthworks Gym,ヴァーヴ・ショップス
+Publika (Solaris Dutamas),1 Jalan Dutamas 1 50480 KL,2012,250,320000,3.17119,101.66579,UEM Sunrise,https://www.publika.com.my/,BIG Supermarket; Art Galleries; F&B,プブリカ (ソラリス・ドゥタマス)
+Solaris Mont Kiara,2 Jalan Solaris Mont Kiara 50480 KL,2009,60,100000,3.17597,101.66021,UEM Sunrise,,F&B; Restaurants & Bars,ソラリス・モントキアラ
+Plaza Mont Kiara,2 Jalan Kiara Mont Kiara 50480 KL,2000,50,73408,3.16566,101.65152,UEM Sunrise,https://www.plazamontkiara.com.my/,McDonalds; Starbucks; Village Grocer; Banks,プラザ・モントキアラ
+163 Retail Park (Sunway),8 Jalan Kiara Mont Kiara 50480 KL,2018,120,255535,3.16664,101.65200,YNH Property (now Sunway REIT),https://www.sunway163mall.com/,Jaya Grocer; Velvet Cinemas; Blue Ice Skating,163 リテールパーク
+Plaza Damas / Hartamas SC,60 Jalan Sri Hartamas 1 50480 KL,2003,200,300000,3.16400,101.65661,Mayland,https://www.hartamassc.com.my/,Watsons; Village Grocer; F&B,プラザ・ダマス / ハルタマスSC
+1 Mont Kiara Mall,1 Jalan Kiara Mont Kiara 50480 KL,2010,100,237488,3.16561,101.65321,Ireka,https://1mk.com.my/,Village Grocer; Harvey Norman; Sports Direct; Fitness First,ワン・モントキアラ・モール
+Bangsar Shopping Centre,285 Jalan Maarof Bangsar 59000 KL,1990,170,350000,3.14310,101.66733,Other,https://www.bsc.com.my/,BSC Fine Foods; Celebrity Fitness,バンサー・ショッピングセンター
+Bangsar Village I & II,1 Jalan Telawi 1 Bangsar 59100 KL,2004,70,250000,3.12960,101.67085,Other,https://www.bangsarvillage.com/,Village Grocer; Celebrity Fitness,バンサー・ヴィレッジ I & II
+Lucky Garden,Jalan Ara Bangsar 59100 KL,1973,120,250000,3.12881,101.67047,Other,,TMC Supermarket; Hawker Food; Wet Market; Local Eateries,ラッキー・ガーデン
+KL Gateway Mall,2 Jalan Kerinchi Bangsar South 59200 KL,2017,200,300000,3.11362,101.66326,Other,https://www.klgatewaymall.com/,Village Grocer; H&M; Anytime Fitness,KL ゲートウェイモール
+The Waterfront @ ParkCity,Persiaran Residen Desa ParkCity 52200 KL,2007,91,124471,3.18708,101.62729,Perdana ParkCity,https://www.desaparkcity.com/thewaterfront.html,AEON MaxValu Prime; Celebrity Fitness,ザ・ウォーターフロント
+Plaza Arkadia (DPC),Jalan Intisari Perdana Desa ParkCity 52200 KL,2018,65,150000,3.18629,101.63524,Perdana ParkCity,https://plazaarkadia.com.my/,Village Grocer; Maybank,プラザ・アルカディア (DPC)
+Arcoris Plaza,10 Jalan Kiara 4 Mont Kiara 50480 KL,2018,28,198242,3.16775,101.65190,UEM Sunrise,,Japan Grocer; Clinics; F&B,アルコリス・プラザ
+VERVE Shops,8 Jalan Kiara 5 Mont Kiara 50480 KL,2014,24,74000,3.16757,101.64675,Bukit Kiara Properties,https://www.verveshops.com/,Jaya Grocer; Healthworks Gym,ヴァーヴ・ショップス
 Bangsar Telawi Street,Jalan Telawi 2-5 Bangsar Baru 59100 KL,1990,120,150000,3.12949,101.67014,Other,,Restaurants; Bars; Cafes; Boutiques,テラウィ・ストリート (バンサー)
-Mid Valley Megamall,Lingkaran Syed Putra Mid Valley City 59200 KL,1999,430,1800000,3.11780,101.67700,IGB Berhad,https://www.midvalley.com.my/,AEON; GSC Cinemas; Sogo,ミッドバレー・メガモール
-The Gardens Mall,Lingkaran Syed Putra Mid Valley City 59200 KL,2007,200,700000,3.11690,101.67620,IGB Berhad,https://www.thegardensmall.com.my/,Isetan; Robinsons; Marquee,ザ・ガーデンズモール
-Nu Sentral,201 Jalan Tun Sambanthan KL Sentral 50470 KL,2014,180,700000,3.13380,101.68640,MRCB,https://www.nusentral.com/,Parkson; GSC Cinemas; H&M,ニュー・セントラル
+Mid Valley Megamall,Lingkaran Syed Putra Mid Valley City 59200 KL,1999,500,1800000,3.11780,101.67700,IGB Berhad,https://www.midvalley.com.my/,AEON; GSC Cinemas; Metrojaya,ミッドバレー・メガモール
+The Gardens Mall,Lingkaran Syed Putra Mid Valley City 59200 KL,2007,200,873076,3.11690,101.67620,IGB Berhad,https://www.thegardensmall.com.my/,Isetan; Aurum Theatre,ザ・ガーデンズモール
+Nu Sentral,201 Jalan Tun Sambanthan KL Sentral 50470 KL,2014,270,650000,3.13380,101.68640,MRCB,https://www.nusentral.com/,GSC Cinemas; H&M; Sam's Groceria,ヌ・セントラル
 Pavilion KL,168 Jalan Bukit Bintang 55100 KL,2007,700,1368000,3.14890,101.71340,Pavilion REIT,https://www.pavilion-kl.com/,Dadi Cinema; Parkson Elite; Zara; H&M,パビリオン KL
-Suria KLCC,Kuala Lumpur City Centre 50088 KL,1998,300,1100000,3.15870,101.71170,KLCC Holdings,https://www.suriaklcc.com.my/,Isetan; Parkson; Petrosains; Aquaria,スリア KLCC
-Lot 10,50 Jalan Sultan Ismail 50250 KL,1990,100,400000,3.14820,101.71000,YTL Corporation,https://www.lot10.com.my/,Isetan; Don Don Donki; H&M,ロット・テン
-Fahrenheit 88,179 Jalan Bukit Bintang 55100 KL,2010,250,300000,3.14760,101.71120,Pavilion REIT,https://www.fahrenheit88.com/,Uniqlo; Celsius,ファーレンハイト 88
-Sungei Wang Plaza,Jalan Sultan Ismail 55100 KL,1977,500,800000,3.14470,101.71090,CapitaLand Malaysia Trust,https://www.sungeiwang.com/,Cold Storage; Camp5; Daiso,スンガイ・ワン・プラザ
-The Starhill,181 Jalan Bukit Bintang 55100 KL,2005,240,740000,3.14850,101.71260,YTL Corporation,https://www.thestarhillkl.com/,Eslite Spectrum; Balmain; Luxury Boutiques,ザ・スターヒル
+Suria KLCC,Kuala Lumpur City Centre 50088 KL,1998,300,1500000,3.15870,101.71170,KLCC Holdings,https://www.suriaklcc.com.my/,Isetan; Petrosains; Aquaria KLCC,スリア KLCC
+Lot 10,50 Jalan Sultan Ismail 50250 KL,1990,100,254163,3.14820,101.71000,Starhill Global REIT,https://www.lot10.com.my/,Isetan; Don Don Donki; H&M,ロット・テン
+Fahrenheit 88,179 Jalan Bukit Bintang 55100 KL,2010,250,300000,3.14760,101.71120,Pavilion Group,https://www.fahrenheit88.com/,Uniqlo; Celsius,ファーレンハイト 88
+Sungei Wang Plaza,Jalan Sultan Ismail 55100 KL,1977,600,800000,3.14470,101.71090,CapitaLand Malaysia Trust,https://www.sungeiwang.com/,Cold Storage; Camp5; Daiso,スンガイ・ワン・プラザ
+The Starhill,181 Jalan Bukit Bintang 55100 KL,2005,100,333289,3.14850,101.71260,Starhill Global REIT,https://thestarhill.com.my/,Eslite Spectrum; Balmain; Luxury Boutiques,ザ・スターヒル
 Berjaya Times Square,1 Jalan Imbi 55100 KL,2003,1000,2700000,3.14240,101.71060,Berjaya Corporation,https://berjayatimessquarekl.com/,NSK Grocer; Theme Park; MM Cineplexes,ベルジャヤ・タイムズスクエア
 LaLaport BBCC,2 Jalan Hang Tuah 55100 KL,2022,400,861000,3.14060,101.70820,Mitsui Fudosan,https://mitsui-shopping-park.com.my/LaLaportBBCC/,Jaya Grocer; Nitori; Nojima; MR DIY,ららぽーと BBCC
-Nexus Bangsar South,7 Jalan Kerinchi Bangsar South 59200 KL,2014,80,350000,3.11180,101.66530,UOA Development,,Souled Out; Starbucks; F&B,ネクサス・バンサーサウス
-The Sphere Bangsar South,8 Jalan Kerinchi Bangsar South 59200 KL,2015,50,150000,3.11240,101.66420,UOA Development,https://thesphere.com.my/,F&B; Wellness; Retail,ザ・スフィア・バンサーサウス
+Nexus Bangsar South,7 Jalan Kerinchi Bangsar South 59200 KL,2014,55,300000,3.11180,101.66530,UOA Development,http://nexus.bangsarsouth.com/,Souled Out; Starbucks; F&B,ネクサス・バンサーサウス
+The Sphere Bangsar South,8 Jalan Kerinchi Bangsar South 59200 KL,2014,50,120000,3.11240,101.66420,UOA Development,https://thesphere.com.my/,F&B; Wellness; Retail,ザ・スフィア・バンサーサウス
 INC (KL Eco City),3 Jalan Bangsar KL Eco City 59200 KL,2017,80,250000,3.11600,101.67200,SP Setia,https://spsetia.com/en-us/property/malaysia-(central)/bangsar/kl-eco-city/home,Jaya Grocer; Climbing Gym; Art Gallery,INC (KL エコシティ)
-Damansara City Mall (DC Mall),6 Jalan Damanlela Damansara Heights 50490 KL,2017,90,170000,3.14556,101.66252,GuocoLand,https://guocoland.com.my/investments/dc-mall/,Jaya Grocer; Kampachi; B.I.G.,ダマンサラ・シティモール (DC モール)
-The LINC KL,360 Jalan Tun Razak 50400 KL,2019,60,120000,3.15800,101.72300,PPB Properties,https://ppbproperties.com.my/the-linc-kl/,B.I.G. Supermarket; F&B; Art Galleries,ザ・リンク KL
-Glo Damansara,699 Jalan Damansara TTDI 60000 KL,2015,80,380000,3.13384,101.62988,Glomac Bhd,https://glodamansara.com.my/,B.I.G. Supermarket; Anytime Fitness; F&B,グロー・ダマンサラ
-Plaza Low Yat,7 Jalan Bintang off Jalan Bukit Bintang 55100 KL,1999,500,320000,3.14600,101.71050,Low Yat Group,https://www.plazalowyat.com/,IT & Electronics Retailers,プラザ・ロウヤット
-Intermark Mall,348 Jalan Tun Razak 50400 KL,2012,100,200000,3.16100,101.71900,Pavilion REIT,https://www.intermark-mall.com/,Jaya Grocer; Tsutaya Bookstore; SportsDirect,インターマーク・モール
-Avenue K,156 Jalan Ampang 50450 KL,2013,100,250000,3.15700,101.71600,Boustead Holdings,,Don Don Donki; F&B; Lifestyle Retail,アベニュー K
+Damansara City Mall (DC Mall),6 Jalan Damanlela Damansara Heights 50490 KL,2017,90,170000,3.14556,101.66252,GuocoLand,https://guocoland.com.my/investments/dc-mall/,B.I.G.; Kampachi; F&B,ダマンサラ・シティモール (DC モール)
+The LINC KL,360 Jalan Tun Razak 50400 KL,2018,60,133085,3.15800,101.72300,PPB Properties,https://ppbproperties.com.my/the-linc-kl/,B.I.G. Supermarket; F&B; Art Galleries,ザ・リンク KL
+Glo Damansara,699 Jalan Damansara TTDI 60000 KL,2015,80,375000,3.13384,101.62988,Glomac Bhd,https://glodamansara.com.my/,Jaya Grocer; Samanea by LESSOHOME; Anytime Fitness,グロー・ダマンサラ
+Plaza Low Yat,7 Jalan Bintang off Jalan Bukit Bintang 55100 KL,1999,500,520000,3.14600,101.71050,Low Yat Group,https://www.plazalowyat.com/,IT & Electronics Retailers,プラザ・ロウヤット
+Intermark Mall,348 Jalan Tun Razak 50400 KL,2012,100,225014,3.16100,101.71900,Pavilion REIT,https://www.intermark-mall.com/,Jaya Grocer; Tsutaya Bookstore; SportsDirect,インターマーク・モール
+Avenue K,156 Jalan Ampang 50450 KL,2013,100,250000,3.15700,101.71600,City Properties Sdn Bhd,https://www.avenuek.com.my/,H&M; SuperPark; Muji; F&B,アベニュー・ケー
 KLGCC Mall,10 Jalan 1/70D KLGCC Resort 60000 KL,2025,80,240000,3.14500,101.63700,Sime Darby Property,https://simedarbyproperty.com/malls/klgcc-mall/,Jaya Grocer; ACE Hardware; HarborLand,KLGCC モール
 Tropicana Gardens Mall,2A Jalan Aman Sinaria 47810 PJ,2020,160,1050000,3.14942,101.59393,Tropicana Corp (IOI Properties),https://www.tropicanacorp.com.my/TropicanaGardensMall,Village Grocer; Don Don Donki; GSC Cinemas,トロピカーナ・ガーデンズモール
-Scott Garden,289 Jalan Klang Lama 58000 KL,2012,100,495000,3.09498,101.67396,Other,,Lotus's (fmr. Tesco); F&B; Bars & Restaurants,スコット・ガーデン
+Scott Garden,289 Jalan Klang Lama 58000 KL,2011,100,495000,3.09498,101.67396,Aston Villa Sdn Bhd,,Lotus's (fmr. Tesco); F&B; Bars & Restaurants,スコット・ガーデン
 1 Utama Shopping Centre,1 Lebuh Bandar Utama Bandar Utama 47800 PJ,1995,713,2190000,3.14833,101.61605,Bandar Utama City Corp,https://www.1utama.com.my/,AEON; Jaya Grocer; Parkson; GSC,ワン・ユタマ
-The Curve,6 Jalan PJU 7/3 Mutiara Damansara 47800 PJ,2005,200,560000,3.15777,101.61180,Boustead Holdings,https://thecurve.com.my/,Tesco; Cold Storage; F&B,ザ・カーブ
-IPC Shopping Centre,2 Jalan PJU 7/2 Mutiara Damansara 47800 PJ,2003,120,402000,3.15607,101.61137,IKEA / IPC,https://www.ipc.com.my/,IKEA; Jaya Grocer,IPC ショッピングセンター
-Starling Mall,6 Jalan SS 21/37 Damansara Uptown 47400 PJ,2016,150,450000,3.13534,101.62279,Exsim Group,https://www.thestarling.com.my/,Jaya Grocer; MBO Cinemas; Daiso,スターリング・モール
-Atria Shopping Gallery,Jalan SS 22/23 Damansara Jaya 47400 PJ,2015,100,300000,3.12716,101.61656,OSK Property,https://www.atria.com.my/,Village Grocer; GSC Cinemas,アトリア・ショッピング
-Citta Mall,1 Jalan PJU 1A/48 Ara Damansara 47301 PJ,2011,120,452000,3.11218,101.57853,Land & General Bhd,https://citta.com.my/,Jaya Grocer; F&B,チッタ・モール
+The Curve,6 Jalan PJU 7/3 Mutiara Damansara 47800 PJ,2005,220,660000,3.15777,101.61180,Boustead Holdings,https://thecurve.com.my/,Village Grocer; Uniqlo; Metrojaya; F&B,ザ・カーブ
+IPC Shopping Centre,2 Jalan PJU 7/2 Mutiara Damansara 47800 PJ,2003,145,402000,3.15607,101.61137,Ikano Corporation,https://www.ipc.com.my/,IKEA; B.I.G.; MR DIY Plus,IPC ショッピングセンター
+Starling Mall,6 Jalan SS 21/37 Damansara Uptown 47400 PJ,2016,200,450000,3.13534,101.62279,See Hoy Chan,https://www.thestarling.com.my/,Jaya Grocer; GSC Cinemas; Daiso,スターリング・モール
+Atria Shopping Gallery,Jalan SS 22/23 Damansara Jaya 47400 PJ,2015,100,470000,3.12716,101.61656,OSK Property,https://www.atria.com.my/,Village Grocer; MBO Cinemas,アトリア・ショッピング・ギャラリー
+Citta Mall,1 Jalan PJU 1A/48 Ara Damansara 47301 PJ,2011,108,462119,3.11218,101.57853,ARA Asset Management (ESR Group),https://citta.com.my/,Village Grocer; GSC Cinemas; Harvey Norman; Mr D.I.Y.,チッタ・モール
 Paradigm Mall PJ,1 Jalan SS 7/26A Kelana Jaya 47301 PJ,2012,300,700000,3.10512,101.59591,WCT Holdings,https://www.paradigmmall.com.my/,Lotus's; GSC Cinemas; Harvey Norman; H&M,パラダイム・モール PJ
-Encorp Strand Mall,12 Jalan PJU 5/22 Kota Damansara 47810 PJ,2014,100,435000,3.15559,101.59368,Encorp Bhd,,TGV Cinema; Sam Groceria,エンコープ・ストランド・モール
-IKEA Damansara,2 Jalan PJU 7/2 Mutiara Damansara 47800 PJ,2003,1,807000,3.15536,101.61175,IKEA / Ikano,,IKEA Home Furnishing; IKEA Restaurant,イケア・ダマンサラ
-AEON Mall Metro Prima,1 Jalan Metro Prima Kepong 52100 KL,2004,120,800000,3.21320,101.63888,AEON,,AEON Supermarket; TGV Cinemas,イオンモール・メトロプリマ
+Encorp Strand Mall,12 Jalan PJU 5/22 Kota Damansara 47810 PJ,2014,30,435000,3.15559,101.59368,Encorp Bhd,https://www.strandmall.com.my/,TGV Cinemas; CHI Fitness,エンコープ・ストランド・モール
+IKEA Damansara,2 Jalan PJU 7/2 Mutiara Damansara 47800 PJ,2003,1,807000,3.15536,101.61175,Ikano Corporation,https://www.ikea.com/my/en/stores/damansara/,IKEA Home Furnishing; IKEA Restaurant,イケア・ダマンサラ
+AEON Mall Metro Prima,1 Jalan Metro Prima Kepong 52100 KL,2004,120,800000,3.21320,101.63888,AEON,https://aeonmallmy.com/page/mall/aeon-mall-metro-prima,AEON Supermarket; TGV Cinemas,イオンモール・メトロプリマ
 Kepong Village Mall,3 Jalan 7A/62A Bandar Menjalara 52200 KL,2010,80,200000,3.19235,101.63283,Other,,Lotus's; F&B; Services,ケポン・ヴィレッジ・モール
 Brem Mall,Jalan Kepong Jinjang Selatan 52000 KL,2011,100,350000,3.20451,101.66745,BREM Group,https://www.bremmall.com.my/,NSK Trade City; MR DIY,ブレム・モール
 Pavilion Damansara Heights,3 Jalan Damanlela Pusat Bandar Damansara 50490 KL,2023,380,1062714,3.14639,101.66306,Pavilion Group (Malton),https://pavilion-dh.com/,The Food Merchant; Harvey Norman; Din Tai Fung; Food Republic,パビリオン・ダマンサラ・ハイツ
-Quill City Mall,1018 Jalan Sultan Ismail Bandar Wawasan 50250 KL,2014,200,752000,3.15927,101.69913,Quill Group,https://quillcitymall.com.my/,AEON; GSC Cinemas; Celebrity Fitness; H&M,クイル・シティモール
-The Weld,76 Jalan Raja Chulan 50200 KL,1990,35,130000,3.15133,101.70691,Great Eastern Life,,Guardian; F&B; Specialty Retail,ザ・ウェルド
+Quill City Mall,1018 Jalan Sultan Ismail Bandar Wawasan 50250 KL,2014,200,770000,3.15927,101.69913,Quill Group,https://quillcitymall.com.my/,NSK Grocer; GSC Cinemas; Celebrity Fitness; H&M,クイル・シティモール
+The Weld,76 Jalan Raja Chulan 50200 KL,1990,35,130000,3.15133,101.70691,Great Eastern Life,https://www.theweld.com.my/,Guardian; F&B; Specialty Retail,ザ・ウェルド
 GMBB,2 Jalan Robertson Bukit Bintang 50150 KL,2018,100,110000,3.14476,101.70454,Other,https://gmbb.com.my/,Art Studios; Galleries; Craft Workshops; Cafes,GMBB (クリエイティブ・コミュニティモール)
-Kenanga Wholesale City,2 Jalan Gelugor Pudu 55200 KL,2011,800,500000,3.13672,101.70584,Kha Seng Group,,Fashion Wholesale; Old Town Coffee; RHB Bank,ケナンガ・ホールセール・シティ
-Pertama Complex,Jalan Tuanku Abdul Rahman 50100 KL,1976,150,200000,3.15734,101.69526,Other,,Sporting Goods; Electronics; Budget Fashion,ペルタマ・コンプレックス
+Kenanga Wholesale City,2 Jalan Gelugor Pudu 55200 KL,2011,800,500000,3.13672,101.70584,Kha Seng Group,https://www.kenangacity.com.my/en/,Fashion Wholesale; Old Town Coffee; RHB Bank,ケナンガ・ホールセール・シティ
+Pertama Complex,Jalan Tuanku Abdul Rahman 50100 KL,1976,150,200000,3.15734,101.69526,UDA Holdings,https://www.udamalls.com.my/pertama-complex,Sporting Goods; Electronics; Budget Fashion,ペルタマ・コンプレックス
 Great Eastern Mall,303 Jalan Ampang Desa Pahlawan 55000 KL,2002,100,200000,3.16030,101.73670,Great Eastern Life Assurance,https://greateasternmall.com.my/,Cold Storage; Ace Hardware; Anytime Fitness,グレート・イースタン・モール
-MyTOWN Shopping Centre,6 Jalan Cochrane Seksyen 90 Cheras 55100 KL,2017,400,1100000,3.13400,101.72290,Boustead Ikano Sdn Bhd,https://mytownkl.com.my/,IKEA; Parkson; GSC Cinemas; Zara; Village Grocer,マイタウン・ショッピングセンター
+MyTOWN Shopping Centre,6 Jalan Cochrane Seksyen 90 Cheras 55100 KL,2017,460,1100000,3.13400,101.72290,Boustead Ikano Sdn Bhd,https://mytownkl.com.my/,IKEA; GSC Cinemas; Zara; H&M; Village Grocer,マイタウン・ショッピングセンター
 Sunway Velocity Mall,Lingkaran SV Sunway Velocity Cheras 55100 KL,2016,500,1000000,3.12750,101.72450,Sunway Group,https://www.sunwayvelocitymall.com/,AEON MaxValu Prime; TGV IMAX; Parkson; Harvey Norman,サンウェイ・ベロシティ・モール
-Viva Mall,85 Jalan Loke Yew Taman Miharja 55200 KL,2011,220,660000,3.12310,101.71930,Kha Seng Group,https://www.vivamall.com.my/,Giant Superstore; MBO Cinemas; F&B,ビバ・モール
-Sunway Putra Mall,100 Jalan Putra 50350 KL,2015,300,560000,3.16530,101.69100,Sunway REIT,https://www.sunwayputramall.com/,Parkson; Celebrity Fitness; F&B,サンウェイ・プトラ・モール
-3 Damansara (fmr. Tropicana City Mall),3 Jalan SS 20/27 Damansara Intan 47400 PJ,2008,200,467123,3.13047,101.62708,CapitaLand Malaysia Trust,https://3damansara.com.my/,AEON BiG; NSK Grocers; F&B,スリー・ダマンサラ
+Viva Mall,85 Jalan Loke Yew Taman Miharja 55200 KL,2011,220,660000,3.12310,101.71930,Kha Seng Group,https://www.vivamall.com.my/,Giant Superstore; F&B,ビバ・モール
+Sunway Putra Mall,100 Jalan Putra 50350 KL,2015,300,620000,3.16530,101.69100,Sunway REIT,https://www.sunwayputramall.com/,Celebrity Fitness; F&B,サンウェイ・プトラ・モール
+3 Damansara (fmr. Tropicana City Mall),3 Jalan SS 20/27 Damansara Intan 47400 PJ,2008,200,468792,3.13047,101.62708,CapitaLand Malaysia Trust,https://3damansara.com.my/,NSK Grocer; Esquire Kitchen; TBM; Idea Live Arena,スリー・ダマンサラ
 Kompleks Desa Kepong,8 Jalan Kepong Taman Kepong 52100 KL,1985,60,150000,3.20960,101.63200,Other,,Desa Home Theatre; Local Retail & Services,コンプレックス・デサ・ケポン
