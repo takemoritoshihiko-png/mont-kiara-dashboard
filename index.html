@@ -641,9 +641,8 @@ function applyFilters(){
   const areaFilter=document.getElementById('fArea').value;
   const currentYear = new Date().getFullYear();
   filtered=CONDOS.filter(c=>{
-    // Award filter: hide non-award condos when active (commercial/school always hidden)
-    if(showAwardOnly){
-      if(c.status==='commercial'||c.status==='school') return false;
+    // Award filter: hide non-award condos when active (commercial/school unaffected)
+    if(showAwardOnly&&c.status!=='commercial'&&c.status!=='school'){
       if(!c.fiabciAward) return false;
     }
     // Commercial & School: only apply their own toggles, search, status and area filters
