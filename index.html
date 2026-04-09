@@ -137,7 +137,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
       <div class="summary-item"><div class="summary-val" id="sumFiltered">0</div><div class="summary-label">Shown</div></div>
       <div class="summary-item"><div class="summary-val" id="sumMedianSale">-</div><div class="summary-label">Med.PSF</div></div>
       <div class="summary-item"><div class="summary-val" id="sumMedianRent">-</div><div class="summary-label">Med.Rent</div></div>
-      <div class="summary-item"><div class="summary-val" id="sumAvgYield">-</div><div class="summary-label">Avg Yield</div></div>
     </div>
     <div class="filters">
       <h3>Filters</h3>
@@ -152,7 +151,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
       <div class="filter-row">
         <div class="filter-group"><label>Rent/mo</label><select id="fRent" onchange="applyFilters()"><option value="">All</option><option value="0-3000">&lt;3K</option><option value="3000-5000">3-5K</option><option value="5000-8000">5-8K</option><option value="8000-12000">8-12K</option><option value="12000-99999">&gt;12K</option></select></div>
         <div class="filter-group"><label>Size sqft</label><select id="fSize" onchange="applyFilters()"><option value="">All</option><option value="0-800">&lt;800</option><option value="800-1500">800-1.5K</option><option value="1500-2500">1.5-2.5K</option><option value="2500-99999">&gt;2.5K</option></select></div>
-        <div class="filter-group"><label>Yield</label><select id="fYield" onchange="applyFilters()"><option value="">All</option><option value="0-3">&lt;3%</option><option value="3-4">3-4%</option><option value="4-5">4-5%</option><option value="5-99">&gt;5%</option></select></div>
       </div>
       <div class="filter-row">
         <div class="filter-group"><label>築年数 (Years Old)</label><select id="fAge" onchange="applyFilters()"><option value="">All</option><option value="0-5">0-5年 (2021+)</option><option value="0-10">0-10年 (2016+)</option><option value="0-15">0-15年 (2011+)</option><option value="0-20">0-20年 (2006+)</option><option value="10-20">10-20年</option><option value="20-99">20年超</option></select></div>
@@ -164,10 +162,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
         <button class="sort-btn active" data-sort="name" onclick="setSort(this)">Name</button>
         <button class="sort-btn" data-sort="salePsfHigh" onclick="setSort(this)">PSF ↓</button>
         <button class="sort-btn" data-sort="rentHigh" onclick="setSort(this)">Rent ↓</button>
-        <button class="sort-btn" data-sort="yieldHigh" onclick="setSort(this)">Yield ↓</button>
         <button class="sort-btn" data-sort="yearNew" onclick="setSort(this)">Newest</button>
         <button class="sort-btn" data-sort="yearOld" onclick="setSort(this)">Oldest</button>
-        <button class="sort-btn active" id="toggleCommercial" onclick="toggleCommercial(this)" style="margin-left:auto;background:#ff6d00;color:#fff;border-color:#e65100">🛒</button>
+        <button class="sort-btn" id="toggleAward" onclick="toggleAward(this)" style="margin-left:auto;background:#f8f9fb;color:#999;border-color:#e0e0e0" title="FIABCI Award Winners Only">🏆</button>
+        <button class="sort-btn active" id="toggleCommercial" onclick="toggleCommercial(this)" style="background:#ff6d00;color:#fff;border-color:#e65100">🛒</button>
         <button class="sort-btn active" id="toggleSchools" onclick="toggleSchools(this)" style="background:#1565c0;color:#fff;border-color:#0d47a1">🎓</button>
       </div>
     </div>
@@ -192,6 +190,24 @@ const SCHOOLS_CSV_URL = 'https://raw.githubusercontent.com/takemoritoshihiko-png
 let CONDOS = [];
 let COMMERCIALS = [];
 let SCHOOLS = [];
+
+// FIABCI Malaysia Property Award winners (2010-2025)
+const FIABCI_AWARDS = {
+  '10 Mont Kiara (MK10)':          {year:2011, category:'High-Rise'},
+  '28 Mont Kiara (MK28)':          {year:2012, category:'High-Rise'},
+  'Seni Mont Kiara':               {year:2013, category:'High-Rise'},
+  'Verve Suites Mont Kiara':       {year:2014, category:'High-Rise'},
+  'Pentamont Mont Kiara':          {year:2024, category:'Housing Residential High-Rise'},
+  'Solaris Parq':                  {year:2024, category:'Commercial Residential High-Rise'},
+  'The Estate':                    {year:2023, category:'High-Rise'},
+  'Dedaun':                        {year:2013, category:'Mid-Rise'},
+  'U-Thant Residence':             {year:2012, category:'High-Rise'},
+  'Setia V Residences':            {year:2022, category:'High-Rise'},
+  'Infinity Beachfront':           {year:2011, category:'High-Rise'},
+  'Springtide Residences':         {year:2010, category:'High-Rise'},
+  'By The Sea':                    {year:2016, category:'Mid-Rise'},
+  'Alila2':                        {year:2021, category:'High-Rise'}
+};
 
 function parseCSV(text) {
   const lines = text.trim().split('\n');
@@ -240,7 +256,8 @@ function parseCSV(text) {
       pLowDensity: parseInt(obj.premium_low_density) || 0,
       pPool: parseInt(obj.premium_pool) || 0,
       pSkyLounge: parseInt(obj.premium_sky_lounge) || 0,
-      pEV: parseInt(obj.premium_ev_charging) || 0
+      pEV: parseInt(obj.premium_ev_charging) || 0,
+      fiabciAward: FIABCI_AWARDS[obj.name] || null
     };
   }).filter(c => c.name && c.lat > 1);
 }
@@ -614,12 +631,17 @@ const TIER_ORDER = {S:5, A:4, B:3, C:2, D:1};
 function applyFilters(){
   const q=document.getElementById('fSearch').value.toLowerCase();
   const tierVal=document.getElementById('fTier').value;
-  const sp=parseR(document.getElementById('fSalePsf').value),rn=parseR(document.getElementById('fRent').value),yr=parseR(document.getElementById('fYear').value),sz=parseR(document.getElementById('fSize').value),yl=parseR(document.getElementById('fYield').value);
+  const sp=parseR(document.getElementById('fSalePsf').value),rn=parseR(document.getElementById('fRent').value),yr=parseR(document.getElementById('fYear').value),sz=parseR(document.getElementById('fSize').value);
   const age=parseR(document.getElementById('fAge').value);
   const statusFilter=document.getElementById('fStatus').value;
   const areaFilter=document.getElementById('fArea').value;
   const currentYear = new Date().getFullYear();
   filtered=CONDOS.filter(c=>{
+    // Award filter: hide non-award condos when active (commercial/school always hidden)
+    if(showAwardOnly){
+      if(c.status==='commercial'||c.status==='school') return false;
+      if(!c.fiabciAward) return false;
+    }
     // Commercial & School: only apply their own toggles, search, status and area filters
     if(c.status==='commercial'||c.status==='school'){
       if(!showCommercial&&c.status==='commercial') return false;
@@ -661,7 +683,6 @@ function applyFilters(){
     if(rn&&(c.rentMid<rn.min||c.rentMid>rn.max))return false;
     if(yr&&(c.year<yr.min||c.year>yr.max))return false;
     if(sz&&(c.sizeMid<sz.min||c.sizeMid>sz.max))return false;
-    if(yl&&(c.yield<yl.min||c.yield>yl.max))return false;
     // Age filter (skip for upcoming)
     if(age&&c.status==='completed'){const a=currentYear-c.year; if(a<age.min||a>age.max) return false;}
     // Status filter
@@ -704,12 +725,15 @@ let showCommercial=true;
 function toggleCommercial(btn){showCommercial=!showCommercial;btn.classList.toggle('active');btn.style.background=showCommercial?'#ff6d00':'#f8f9fb';btn.style.color=showCommercial?'#fff':'#999';btn.style.borderColor=showCommercial?'#e65100':'#e0e0e0';applyFilters();}
 let showSchools=true;
 function toggleSchools(btn){showSchools=!showSchools;btn.classList.toggle('active');btn.style.background=showSchools?'#1565c0':'#f8f9fb';btn.style.color=showSchools?'#fff':'#999';btn.style.borderColor=showSchools?'#0d47a1':'#e0e0e0';applyFilters();}
+let showAwardOnly=false;
+function toggleAward(btn){showAwardOnly=!showAwardOnly;btn.classList.toggle('active');btn.style.background=showAwardOnly?'#f9a825':'#f8f9fb';btn.style.color=showAwardOnly?'#fff':'#999';btn.style.borderColor=showAwardOnly?'#f57f17':'#e0e0e0';applyFilters();}
 
 function renderList(){
   document.getElementById('condoList').innerHTML=filtered.map(c=>`
     <div class="condo-card ${selectedCondo===c.name?'selected':''}" onclick="selectCondo('${c.name.replace(/'/g,"\\'")}')">
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">
         ${c.status==='commercial'?'<span class="tier-badge" style="background:#ff6d00">🛒</span>':c.status==='school'?'<span class="tier-badge" style="background:#1565c0">🎓</span>':'<span class="tier-badge" style="background:'+TIER_COLORS[c.luxTier]+'">'+c.luxTier+'</span>'}
+        ${c.fiabciAward?'<span title="FIABCI MPA '+c.fiabciAward.year+' '+c.fiabciAward.category+'" style="font-size:12px">🏆</span>':''}
         <span class="condo-name" style="margin:0">${c.name}</span>
         ${c.status==='commercial'?'<span style="margin-left:auto;font-size:10px;color:#ff6d00;font-weight:600">商業施設</span>':c.status==='school'?'<span style="margin-left:auto;font-size:10px;color:#1565c0;font-weight:600">'+(c.curriculum||'')+'</span>':'<span style="margin-left:auto;font-size:11px;font-weight:700;color:'+TIER_COLORS[c.luxTier]+'">'+c.luxScore+'</span>'}
       </div>
@@ -720,7 +744,6 @@ function renderList(){
         ${c.status==='commercial'?'<span class="condo-tag" style="background:#fbe9e7;color:#bf360c">~'+c.units+'店舗</span>':'<span class="condo-tag tag-units">'+c.units+' units</span>'}
         ${c.status==='commercial'&&c.sizeMin>0?'<span class="condo-tag tag-size">'+(c.sizeMin/1000).toFixed(0)+'K sqft</span>':''}
         ${c.status!=='commercial'?'<span class="condo-tag tag-size">'+c.sizeMin.toLocaleString()+'-'+c.sizeMax.toLocaleString()+' sf</span>':''}
-        ${c.status==='completed'?'<span class="condo-tag tag-yield">Yield '+(c.yield||0).toFixed(1)+'%</span>':''}
       </div>
       ${c.status==='commercial'?(c.anchorTenants?'<div style="margin-top:4px;font-size:10px;color:#bf360c">'+c.anchorTenants+'</div>':''):c.status==='upcoming'?`<div class="condo-prices">
         <div class="price-col"><div class="price-label">Sale PSF</div><div class="price-value sale-price" style="color:#999">未定</div></div>
@@ -778,11 +801,12 @@ function selectCondo(name){
         h+=`<div class="popup-cell"><div class="popup-cell-label">Sale PSF</div><div class="popup-cell-val" style="color:#ea4335">RM ${c.salePsfMin}-${c.salePsfMax}</div></div>`;
         h+=`<div class="popup-cell"><div class="popup-cell-label">Rent/mo</div><div class="popup-cell-val" style="color:#1a73e8">RM ${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}</div></div>`;
       }
-      h+=`<div class="popup-cell"><div class="popup-cell-label">Size</div><div class="popup-cell-val">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</div></div>`;
-      if(c.status==='upcoming'){
-        h+=`<div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#999">-</div></div></div>`;
-      } else {
-        h+=`<div class="popup-cell"><div class="popup-cell-label">Yield</div><div class="popup-cell-val" style="color:#ea8600">${(c.yield||0).toFixed(1)}%</div></div></div>`;
+      h+=`<div class="popup-cell"><div class="popup-cell-label">Size</div><div class="popup-cell-val">${c.sizeMin.toLocaleString()}-${c.sizeMax.toLocaleString()} sf</div></div></div>`;
+      // FIABCI Award
+      if(c.fiabciAward){
+        h+=`<div style="margin-top:6px;padding:6px 8px;background:#fffde7;border-radius:6px;border:1px solid #f9a825">`;
+        h+=`<div style="font-size:9px;color:#f57f17;font-weight:700;margin-bottom:2px">🏆 FIABCI MALAYSIA PROPERTY AWARD</div>`;
+        h+=`<div style="font-size:11px;color:#1a1a2e">${c.fiabciAward.year} ${c.fiabciAward.category}</div></div>`;
       }
       // Premium Features
       if(c.premiumScore>0){
@@ -822,13 +846,10 @@ function updateSummary(){
     if(res.length){
       const sp=res.map(c=>c.salePsfMid||0).sort((a,b)=>a-b);
       const rp=res.map(c=>c.rentPsfMid||0).sort((a,b)=>a-b);
-      const ys=res.map(c=>c.yield||0);
       const ms=sp[Math.floor(sp.length/2)]||0;
       const mr=rp[Math.floor(rp.length/2)]||0;
-      const ay=ys.length>0?ys.reduce((s,v)=>s+v,0)/ys.length:0;
       document.getElementById('sumMedianSale').textContent='RM '+Math.round(ms);
       document.getElementById('sumMedianRent').textContent='RM '+mr.toFixed(2);
-      document.getElementById('sumAvgYield').textContent=ay.toFixed(1)+'%';
       document.getElementById('medianPsf').textContent='RM '+Math.round(ms);
     }
   }
