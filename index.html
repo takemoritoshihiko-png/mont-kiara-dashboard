@@ -203,7 +203,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
     </div>
     <div class="school-finder" id="schoolFinder" style="display:none;flex-direction:column;flex:1;overflow:hidden">
       <div class="sf-header">
-        <div class="sf-title">🎓 Penang School Finder</div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="sf-title" style="margin-bottom:0">🎓 Penang School Finder</div>
+          <button onclick="toggleSchoolFinder()" style="background:#1565c0;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:700;cursor:pointer">✕ 戻る</button>
+        </div>
         <div class="sf-age-row">
           <label>お子様の年齢:</label>
           <select id="sfAge" onchange="renderSchoolFinder(parseInt(this.value))">
