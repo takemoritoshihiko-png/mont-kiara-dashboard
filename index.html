@@ -120,6 +120,32 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 .map-legend-dot{width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
 .map-legend-section{margin-top:8px;padding-top:6px;border-top:1px solid #e8eaed}
 .tier-badge{display:inline-block;width:18px;height:18px;border-radius:50%;text-align:center;line-height:18px;font-size:9px;font-weight:800;color:#fff}
+
+.school-finder{flex:1;overflow:hidden;display:flex;flex-direction:column}
+/* School Finder */
+.sf-header{padding:8px 12px;background:#e3f2fd;border-bottom:1px solid #bbdefb;flex-shrink:0}
+.sf-title{font-size:12px;font-weight:700;color:#1565c0;margin-bottom:6px}
+.sf-age-row{display:flex;align-items:center;gap:6px}
+.sf-age-row label{font-size:10px;color:#0d47a1;font-weight:600;white-space:nowrap}
+.sf-age-row select{flex:1;padding:4px 6px;border:1px solid #90caf9;border-radius:6px;font-size:11px;background:#fff;color:#1a1a2e}
+.sf-count{font-size:10px;color:#5f6368;white-space:nowrap}
+.sf-body{flex:1;overflow-y:auto;padding:6px 8px}
+.sf-row{display:flex;align-items:center;padding:6px 4px;border-bottom:1px solid #f0f0f0;cursor:pointer;gap:4px;transition:background .1s}
+.sf-row:hover{background:#e8f0fe}
+.sf-row.sf-selected{background:#e8f0fe;border-left:3px solid #1565c0}
+.sf-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sf-name{font-size:11px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sf-cur{font-size:8px;color:#5f6368;background:#f0f0f0;padding:1px 4px;border-radius:8px;white-space:nowrap}
+.sf-fee{font-size:11px;font-weight:700;color:#e65100;white-space:nowrap}
+.sf-max{font-size:8px;color:#80868b;white-space:nowrap}
+.sf-chart-wrap{margin-top:8px;padding:6px;background:#f8f9fb;border-radius:8px}
+.sf-chart-title{font-size:9px;color:#80868b;font-weight:600;margin-bottom:2px}
+.sf-legend{text-align:center;line-height:2;margin-top:2px}
+.sf-legend span{display:inline-flex;align-items:center;gap:2px;margin:0 3px;font-size:8px;font-weight:600}
+.sf-condo-section{margin-top:8px;padding:6px 8px;background:#e8f5e9;border-radius:8px;border:1px solid #81c784}
+.sf-condo-title{font-size:9px;color:#2e7d32;font-weight:700;margin-bottom:4px}
+.sf-condo-row{padding:3px 0;border-bottom:1px solid #c8e6c9;font-size:10px;cursor:pointer;display:flex;justify-content:space-between}
+.sf-condo-row:hover{color:#1565c0}
 </style>
 </head>
 <body>
@@ -164,7 +190,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
         <button class="sort-btn" data-sort="rentHigh" onclick="setSort(this)">Rent ↓</button>
         <button class="sort-btn" data-sort="yearNew" onclick="setSort(this)">Newest</button>
         <button class="sort-btn" data-sort="yearOld" onclick="setSort(this)">Oldest</button>
-        <button class="sort-btn" id="toggleAward" onclick="toggleAward(this)" style="margin-left:auto;background:#f8f9fb;color:#999;border-color:#e0e0e0" title="FIABCI Award Winners Only">🏆</button>
+        <button class="sort-btn" id="sfToggle" onclick="toggleSchoolFinder()" style="margin-left:auto;background:#e8f0fe;color:#1565c0;border-color:#1565c0" title="Penang School Finder">🎓比較</button>
+        <button class="sort-btn" id="toggleAward" onclick="toggleAward(this)" style="background:#f8f9fb;color:#999;border-color:#e0e0e0" title="FIABCI Award Winners Only">🏆</button>
         <button class="sort-btn active" id="toggleCommercial" onclick="toggleCommercial(this)" style="background:#ff6d00;color:#fff;border-color:#e65100">🛒</button>
         <button class="sort-btn active" id="toggleSchools" onclick="toggleSchools(this)" style="background:#1565c0;color:#fff;border-color:#0d47a1">🎓</button>
       </div>
@@ -173,6 +200,26 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
       <div class="legend-title">Year Built (Circle Color)</div>
       <div class="legend-bar" id="legendBar"></div>
       <div class="legend-labels" id="legendLabels"></div>
+    </div>
+    <div class="school-finder" id="schoolFinder" style="display:none;flex-direction:column;flex:1;overflow:hidden">
+      <div class="sf-header">
+        <div class="sf-title">🎓 Penang School Finder</div>
+        <div class="sf-age-row">
+          <label>お子様の年齢:</label>
+          <select id="sfAge" onchange="renderSchoolFinder(parseInt(this.value))">
+            <option value="3">3歳 (Nursery)</option><option value="4">4歳 (Reception)</option>
+            <option value="5" selected>5歳 (Year 1)</option><option value="6">6歳 (Year 2)</option>
+            <option value="7">7歳 (Year 3)</option><option value="8">8歳 (Year 4)</option>
+            <option value="9">9歳 (Year 5)</option><option value="10">10歳 (Year 6)</option>
+            <option value="11">11歳 (Year 7)</option><option value="12">12歳 (Year 8)</option>
+            <option value="13">13歳 (Year 9)</option><option value="14">14歳 (Year 10)</option>
+            <option value="15">15歳 (Year 11)</option><option value="16">16歳 (Year 12)</option>
+            <option value="17">17歳 (Year 13)</option>
+          </select>
+          <span class="sf-count" id="sfCount"></span>
+        </div>
+      </div>
+      <div class="sf-body" id="sfContent"></div>
     </div>
     <div class="condo-list" id="condoList"></div>
   </div>
@@ -214,6 +261,139 @@ const FIABCI_AWARDS = {
   'i-Santorini':                   {year:2024, category:'Affordable Housing High-Rise'},
   'TreeO':                         {year:2025, category:'Affordable Housing Super High-Rise'}
 };
+
+// ============================================================
+// PENANG SCHOOL FINDER DATA
+// ============================================================
+const SF_SCHOOLS = [
+  {key:'Uplands',    name:'Uplands',    curriculum:'IB (PYP/IGCSE/DP)',   maxLevel:'Y13', color:'#1565c0', students:'~520',     nat:37, lat:5.46998,lng:100.24947},
+  {key:'Dalat',      name:'Dalat',      curriculum:'American',            maxLevel:'G12', color:'#e65100', students:'~735',     nat:25, lat:5.46661,lng:100.28982},
+  {key:'POWIIS',     name:'POWIIS',     curriculum:'British (IGCSE/A-Lv)',maxLevel:'Y13', color:'#2e7d32', students:'~450',     nat:43, lat:5.45700,lng:100.27800},
+  {key:'Stonyhurst', name:'Stonyhurst', curriculum:'British (IGCSE/A-Lv)',maxLevel:'Y13', color:'#7b1fa2', students:'~300+',    nat:33, lat:5.45999,lng:100.31005},
+  {key:'Straits',    name:'Straits',    curriculum:'Cambridge',           maxLevel:'Y11', color:'#00838f', students:'N/A',      nat:17, lat:5.29759,lng:100.26780},
+  {key:'Tenby',      name:'Tenby',      curriculum:'Cambridge IGCSE',     maxLevel:'Y11', color:'#bf360c', students:'~560',     nat:33, lat:5.45803,lng:100.28244},
+  {key:'SCIPS',      name:'SCIPS',      curriculum:'British (IPC)',       maxLevel:'Y8',  color:'#f57f17', students:'~580',     nat:35, lat:5.42210,lng:100.31450},
+  {key:'Pelita',     name:'Pelita',     curriculum:'Cambridge IGCSE',     maxLevel:'Y11', color:'#78909c', students:'~300',     nat:0,  lat:5.46530,lng:100.28430},
+  {key:'Fairview',   name:'Fairview',   curriculum:'IB (PYP/MYP)',        maxLevel:'Y11*',color:'#c62828', students:'~300-500', nat:20, lat:5.34592,lng:100.27482}
+];
+const SF_FEES = {
+  Uplands:   {4:24800,5:30200,6:37200,7:44200,8:44200,9:53000,10:53000,11:68000,12:68000,13:68000,14:68000,15:68000,16:70800,17:70800},
+  Dalat:     {3:21000,4:21000,5:26000,6:30500,7:30500,8:40500,9:40500,10:49800,11:49800,12:55500,13:55500,14:57200,15:57200,16:57200,17:57200},
+  POWIIS:    {3:17040,4:21840,5:24570,6:24570,7:30900,8:30900,9:36570,10:36570,11:49500,12:49500,13:57720,14:59100,15:59100,16:62970,17:62970},
+  Stonyhurst:{3:16500,4:18975,5:27468,6:27468,7:34335,8:34335,9:41202,10:41202,11:53424,12:53424,13:53424,14:56604,15:56604,16:57498,17:57498},
+  Straits:   {3:14580,4:15660,5:19590,6:21630,7:23700,8:25770,9:26280,10:27840,11:29400,12:30450,13:31500,14:32010,15:32520},
+  Tenby:     {3:14763,4:15000,5:20430,6:24609,7:29661,8:33009,9:38001,10:39810,11:43848,12:47562,13:50355,14:54594,15:84636},
+  SCIPS:     {3:15000,4:17700,5:21300,6:21300,7:28200,8:28200,9:33000,10:33000,11:37200,12:37200},
+  Pelita:    {3:9360,4:13110,5:15480,6:15480,7:19440,8:19440,9:21240,10:21240,11:25185,12:27600,13:30015,14:31050,15:33810},
+  Fairview:  {3:15000,4:15000,5:20000,6:20000,7:25000,8:25000,9:32000,10:32000,11:38000,12:38000,13:38000,14:48000,15:48000}
+};
+function haversineKm(lat1,lng1,lat2,lng2){const R=6371,dLat=(lat2-lat1)*Math.PI/180,dLng=(lng2-lng1)*Math.PI/180;const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+
+let sfActive=false, sfSelectedSchool=null;
+function toggleSchoolFinder(){
+  sfActive=!sfActive;
+  const btn=document.getElementById('sfToggle');
+  btn.style.background=sfActive?'#1565c0':'#e8f0fe';
+  btn.style.color=sfActive?'#fff':'#1565c0';
+  document.getElementById('schoolFinder').style.display=sfActive?'flex':'none';
+  document.querySelector('.filters').style.display=sfActive?'none':'';
+  document.querySelector('.legend').style.display=sfActive?'none':'';
+  document.getElementById('condoList').style.display=sfActive?'none':'';
+  if(sfActive){
+    renderSchoolFinder(parseInt(document.getElementById('sfAge').value)||5);
+    map.setView([5.40,100.28],12);
+  }
+}
+
+function renderSchoolFinder(age){
+  const eligible=SF_SCHOOLS.filter(s=>SF_FEES[s.key]&&SF_FEES[s.key][age]);
+  eligible.sort((a,b)=>SF_FEES[a.key][age]-SF_FEES[b.key][age]);
+  document.getElementById('sfCount').textContent=eligible.length+'校対象';
+  let h='';
+  // Comparison rows
+  eligible.forEach(s=>{
+    const fee=SF_FEES[s.key][age];
+    const sel=sfSelectedSchool===s.key;
+    h+=`<div class="sf-row ${sel?'sf-selected':''}" onclick="sfSelectSchool('${s.key}',${age})">`;
+    h+=`<span class="sf-dot" style="background:${s.color}"></span>`;
+    h+=`<span class="sf-name">${s.name}</span>`;
+    h+=`<span class="sf-cur">${s.curriculum}</span>`;
+    h+=`<span class="sf-fee">RM${fee.toLocaleString()}</span>`;
+    h+=`<span class="sf-max">～${s.maxLevel}</span>`;
+    h+=`</div>`;
+  });
+  // Chart
+  h+=`<div class="sf-chart-wrap">`;
+  h+=`<div class="sf-chart-title">学費推移チャート（全校・年齢別）</div>`;
+  h+=renderFeeChart(age);
+  h+=`<div class="sf-legend">${SF_SCHOOLS.map(s=>`<span style="color:${s.color}">● ${s.key}</span>`).join('')}</div>`;
+  h+=`</div>`;
+  // Condo list placeholder
+  h+=`<div id="sfCondoList"></div>`;
+  document.getElementById('sfContent').innerHTML=h;
+  // Restore condo list if school was selected
+  if(sfSelectedSchool) sfShowCondos(sfSelectedSchool);
+}
+
+function renderFeeChart(selAge){
+  const W=310,H=190,PL=38,PR=8,PT=8,PB=22;
+  const pw=W-PL-PR,ph=H-PT-PB;
+  const maxFee=90000;
+  const x=a=>PL+(a-3)/(17-3)*pw;
+  const y=f=>PT+(1-f/maxFee)*ph;
+  let svg=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;font-family:sans-serif">`;
+  // Grid
+  [0,30000,60000,90000].forEach(f=>{
+    svg+=`<line x1="${PL}" y1="${y(f)}" x2="${W-PR}" y2="${y(f)}" stroke="#e0e0e0" stroke-width="0.5"/>`;
+    svg+=`<text x="${PL-3}" y="${y(f)+3}" text-anchor="end" fill="#bbb" font-size="7">${f/1000}K</text>`;
+  });
+  // Age labels
+  for(let a=3;a<=17;a++){
+    svg+=`<text x="${x(a)}" y="${H-PB+12}" text-anchor="middle" fill="#bbb" font-size="6.5">${a}歳</text>`;
+    if(a===selAge) svg+=`<line x1="${x(a)}" y1="${PT}" x2="${x(a)}" y2="${H-PB}" stroke="#1a73e8" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.4"/>`;
+  }
+  // Lines
+  SF_SCHOOLS.forEach(s=>{
+    const fees=SF_FEES[s.key];if(!fees)return;
+    const pts=[];for(let a=3;a<=17;a++){if(fees[a])pts.push(`${x(a)},${y(fees[a])}`);}
+    if(pts.length>1) svg+=`<polyline points="${pts.join(' ')}" fill="none" stroke="${s.color}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>`;
+  });
+  // Dots at selected age
+  SF_SCHOOLS.forEach(s=>{
+    const fees=SF_FEES[s.key];if(!fees||!fees[selAge])return;
+    svg+=`<circle cx="${x(selAge)}" cy="${y(fees[selAge])}" r="3" fill="${s.color}" stroke="#fff" stroke-width="1"/>`;
+  });
+  svg+=`</svg>`;
+  return svg;
+}
+
+function sfSelectSchool(key,age){
+  sfSelectedSchool=key;
+  renderSchoolFinder(age||parseInt(document.getElementById('sfAge').value)||5);
+  const s=SF_SCHOOLS.find(x=>x.key===key);
+  if(s) map.setView([s.lat,s.lng],14);
+}
+
+function sfShowCondos(key){
+  const s=SF_SCHOOLS.find(x=>x.key===key);
+  if(!s)return;
+  const nearby=CONDOS.filter(c=>c.status==='completed'&&c.lat>5&&c.salePsfMid>0)
+    .map(c=>({name:c.name,dist:haversineKm(s.lat,s.lng,c.lat,c.lng),psf:`RM${c.salePsfMin}-${c.salePsfMax}`,rent:`RM${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}`}))
+    .filter(c=>c.dist<=3).sort((a,b)=>a.dist-b.dist).slice(0,10);
+  const el=document.getElementById('sfCondoList');
+  if(!el)return;
+  let h=`<div class="sf-condo-section">`;
+  h+=`<div class="sf-condo-title">🏠 ${s.name}から3km以内のコンド (${nearby.length}件)</div>`;
+  if(!nearby.length){h+=`<div style="font-size:10px;color:#5f6368">近隣データなし</div>`;}
+  else{nearby.forEach(c=>{
+    h+=`<div class="sf-condo-row" onclick="sfActive=false;toggleSchoolFinder();selectCondo('${c.name.replace(/'/g,"\\'")}')">`;
+    h+=`<span style="font-weight:600">${c.name}</span>`;
+    h+=`<span style="color:#5f6368">${c.dist.toFixed(1)}km</span>`;
+    h+=`</div>`;
+  });}
+  h+=`</div>`;
+  el.innerHTML=h;
+}
 
 function parseCSV(text) {
   const lines = text.trim().split('\n');
