@@ -93,6 +93,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
   .map-legend{display:none!important}
   .tier-badge{width:12px!important;height:12px!important;line-height:12px!important;font-size:6px!important}
   .info-overlay{top:0;width:70vw;max-width:260px;max-height:100%;padding:8px 10px;font-size:10px}
+  .area-jump{top:6px;left:46px;right:6px;max-width:calc(100% - 52px);padding:4px 6px;gap:2px}
+  .area-jump button{font-size:9px;padding:2px 6px}
+  .aj-label{font-size:8px}
   .leaflet-popup-content{margin:8px 10px!important;min-width:220px}
   .popup-title{font-size:13px}
   .popup-grid{grid-template-columns:1fr 1fr;gap:4px}
@@ -107,6 +110,13 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 .rent-price{color:#1a73e8}
 .leaflet-popup-content-wrapper{background:#fff!important;color:#1a1a2e!important;border-radius:12px!important;box-shadow:0 4px 20px rgba(0,0,0,0.15)!important;border:none!important}
 .leaflet-popup-tip{background:#fff!important}
+.area-jump{position:absolute;top:8px;left:50px;z-index:1000;display:flex;align-items:center;gap:3px;background:rgba(255,255,255,0.96);padding:5px 8px;border-radius:18px;box-shadow:0 2px 8px rgba(0,0,0,0.12);border:1px solid #e0e0e0;max-width:calc(100% - 70px);overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.area-jump::-webkit-scrollbar{display:none}
+.area-jump button{background:#f1f3f4;border:1px solid #dadce0;color:#3c4043;padding:3px 9px;border-radius:12px;font-size:11px;cursor:pointer;font-weight:600;white-space:nowrap;transition:all .15s}
+.area-jump button:hover{background:#e8f0fe;color:#1a73e8;border-color:#1a73e8}
+.area-jump button.active{background:#1a73e8;color:#fff;border-color:#1a73e8}
+.aj-label{font-size:10px;color:#5f6368;font-weight:700;padding:0 2px}
+.aj-div{color:#dadce0;padding:0 3px}
 .leaflet-popup-content{margin:12px 16px!important;min-width:280px}
 .popup-title{font-size:13px;font-weight:700;color:#1a73e8;margin-bottom:2px}
 .popup-addr{font-size:10px;color:#80868b;margin-bottom:6px;font-style:italic;border-bottom:1px solid #f0f0f0;padding-bottom:4px}
@@ -155,6 +165,24 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 </div>
 <div class="main" style="position:relative">
   <div id="map"></div>
+  <div class="area-jump" id="areaJump">
+    <span class="aj-label">🏙️KL</span>
+    <button data-area="mont-kiara" onclick="jumpToArea('mont-kiara')" title="モントキアラ">Mont Kiara</button>
+    <button data-area="parkcity" onclick="jumpToArea('parkcity')" title="デサ・パークシティ">ParkCity</button>
+    <button data-area="klcc" onclick="jumpToArea('klcc')" title="KLCC/Bukit Bintang">KLCC</button>
+    <button data-area="bangsar" onclick="jumpToArea('bangsar')" title="バンサー">Bangsar</button>
+    <button data-area="damansara" onclick="jumpToArea('damansara')" title="ダマンサラ・ハイツ">Damansara H.</button>
+    <button data-area="klgcc" onclick="jumpToArea('klgcc')" title="KLGCC Resort">KLGCC</button>
+    <button data-area="ampang" onclick="jumpToArea('ampang')" title="アンパン/U-Thant">Ampang</button>
+    <button data-area="all-kl" onclick="jumpToArea('all-kl')" title="KL全体">KL全体</button>
+    <span class="aj-div">|</span>
+    <span class="aj-label">🏝️Penang</span>
+    <button data-area="gurney" onclick="jumpToArea('gurney')" title="ガーニー/プラウ・ティクス">Gurney</button>
+    <button data-area="tanjung" onclick="jumpToArea('tanjung')" title="タンジュン・トコン/ブンガ">Tanjung</button>
+    <button data-area="ferringhi" onclick="jumpToArea('ferringhi')" title="バトゥ・フェリンギ">Ferringhi</button>
+    <button data-area="bayan" onclick="jumpToArea('bayan')" title="バヤン・レパス">Bayan Lepas</button>
+    <button data-area="all-pg" onclick="jumpToArea('all-pg')" title="ペナン全体">PG全体</button>
+  </div>
   <div class="info-overlay" id="infoOverlay"><button class="info-close" onclick="closeInfo()">✕</button><div id="infoContent"></div></div>
   <button class="toggle-panel" id="toggleBtn" onclick="togglePanel()">&#9664;</button>
   <div class="panel" id="panel">
@@ -695,6 +723,32 @@ const map = L.map('map',{zoomControl:true}).setView([3.1550,101.6850],12);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
   attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19
 }).addTo(map);
+
+// ============================================================
+// AREA JUMP — quick navigation between KL/Penang neighborhoods
+// ============================================================
+const AREA_CENTERS = {
+  'mont-kiara':{lat:3.17150,lng:101.65200,zoom:15},
+  'parkcity':  {lat:3.18500,lng:101.62850,zoom:15},
+  'klcc':      {lat:3.15700,lng:101.71150,zoom:15},
+  'bangsar':   {lat:3.12810,lng:101.67900,zoom:14},
+  'damansara': {lat:3.14850,lng:101.66550,zoom:14},
+  'klgcc':     {lat:3.16650,lng:101.63850,zoom:15},
+  'ampang':    {lat:3.15450,lng:101.73950,zoom:14},
+  'all-kl':    {lat:3.15500,lng:101.68500,zoom:11},
+  'gurney':    {lat:5.43500,lng:100.31000,zoom:15},
+  'tanjung':   {lat:5.46400,lng:100.28200,zoom:14},
+  'ferringhi': {lat:5.47300,lng:100.25350,zoom:14},
+  'bayan':     {lat:5.32900,lng:100.27900,zoom:12},
+  'all-pg':    {lat:5.40000,lng:100.28000,zoom:11}
+};
+function jumpToArea(key){
+  const a=AREA_CENTERS[key];if(!a)return;
+  map.flyTo([a.lat,a.lng],a.zoom,{duration:0.8});
+  document.querySelectorAll('.area-jump button').forEach(b=>b.classList.remove('active'));
+  const btn=document.querySelector(`.area-jump button[data-area="${key}"]`);
+  if(btn)btn.classList.add('active');
+}
 
 let markers={},selectedCondo=null,currentSort='name',filtered=[...CONDOS];
 
