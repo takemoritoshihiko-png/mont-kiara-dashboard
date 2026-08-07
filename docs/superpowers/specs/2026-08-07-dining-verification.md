@@ -77,3 +77,12 @@
 - **除外 4店**: Playte(閉店) / Rakuzen / Nanda Chicken(チェーン) / Wagyu Saikou(臨時休業→保留寄り)
 - **要裁定 3店**: Two Sons / Kanbe / Ombak(小規模チェーンの扱い)
 - **なお保留 2店**: Taka Izakaya / Bait Bistro(Google実値未確定)
+
+## E. 竹森氏の追加裁定（2026-08-07夜・確定）
+
+1. **カテゴリ9分類目「カフェ・デザート」を新設する**（Cotta Cafe / Aftermeal Desserts が所属）。
+2. **小規模チェーン(2〜4店舗)は評判が良ければ採用**。→ Ombak Kitchen / Kanbe Ramen は採用対象。Two Sons Bistro は Google★4.1 で品質基準(★4.3×300件)未達のため不採用。Yarl Restaurant も Google実値★4.1のため不採用（TripAdvisor4.4との乖離は Google 側を正とする）。
+3. **飲食の拡充調査はペナンを含めない。モントキアラから車30分圏内を中心に調査する**（今後の調査スコープの恒久ルール）。
+
+### 裁定反映後の追加確定リスト（13店・D4マージ後にD6データ拡充バッチで台帳化）
+Kyomo / Kin Gyu / MT Hotpot / Vin's / Fire Izakaya(エリア=KLCC) / Cotta Cafe / Aftermeal Desserts / Jhol KL / TTDI Meat Point / Lamei Hotpot / Annalakshmi / Kanbe Ramen / Ombak Kitchen(Google実値の取得を条件とする)
