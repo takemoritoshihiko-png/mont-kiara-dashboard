@@ -4,6 +4,8 @@
 // options have to be data. Every comparator falls back to the name so the
 // order is deterministic when the primary key ties.
 
+import { diningPriceCeiling } from './filter.js';
+
 const byName = (a, b) => String(a.name).localeCompare(String(b.name));
 
 // "安い順" must not be led by records whose value is unknown (0). Treat a
@@ -28,6 +30,15 @@ export const COMPARATORS = {
   // commercial — NLA lives in sizeMin, tenant count in units
   nlaHigh:      (a, b) => hi(b.sizeMin) - hi(a.sizeMin) || byName(a, b),
   tenantsHigh:  (a, b) => hi(b.units) - hi(a.units) || byName(a, b),
+  // dining — a ★4.9 out of 12 reviews is not better than ★4.8 out of 2,237, so
+  // the review count breaks the tie before the name does.
+  ratingHigh:   (a, b) => hi(b.rating) - hi(a.rating) || hi(b.reviewCount) - hi(a.reviewCount) || byName(a, b),
+  reviewsHigh:  (a, b) => hi(b.reviewCount) - hi(a.reviewCount) || byName(a, b),
+  // Budget order runs on the SAME figure the 価格帯 filter uses
+  // (diningPriceCeiling: the dinner ceiling, or lunch when dinner is not
+  // served), so the sort and the filter can never disagree about a price.
+  budgetLow:    (a, b) => lo(diningPriceCeiling(a)) - lo(diningPriceCeiling(b)) || byName(a, b),
+  budgetHigh:   (a, b) => hi(diningPriceCeiling(b)) - hi(diningPriceCeiling(a)) || byName(a, b),
 };
 
 export const SORT_OPTIONS = {
@@ -51,6 +62,13 @@ export const SORT_OPTIONS = {
     { value: 'nlaHigh',     label: '規模 大きい順' },
     { value: 'tenantsHigh', label: '店舗数 多い順' },
     { value: 'yearNew',     label: '新しい順' },
+    { value: 'name',        label: '名前順' },
+  ],
+  dining: [
+    { value: 'ratingHigh',  label: '評価が高い順' },
+    { value: 'reviewsHigh', label: 'レビュー数 多い順' },
+    { value: 'budgetLow',   label: '予算 安い順（夜基準）' },
+    { value: 'budgetHigh',  label: '予算 高い順（夜基準）' },
     { value: 'name',        label: '名前順' },
   ],
 };

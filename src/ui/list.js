@@ -2,10 +2,13 @@
 import {
   CONDOS, filtered, setFiltered, selectedCondo, currentSort, setCurrentSort,
   activeLayer, setActiveLayer, moreOpen, setMoreOpen,
-  showAwardOnly, setShowAwardOnly,
+  showAwardOnly, setShowAwardOnly, showKidOkOnly, setShowKidOkOnly,
 } from '../state.js';
-import { TIER_COLORS } from '../data/inline.js';
-import { parseR, matchesFilters, recordLayer, LAYER_LABELS, CURRICULA } from '../domain/filter.js';
+import { TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
+import {
+  parseR, matchesFilters, recordLayer, LAYER_LABELS, CURRICULA,
+  CAT_GROUPS, MICHELIN_FILTERS, diningPriceCeiling,
+} from '../domain/filter.js';
 import { SORT_OPTIONS, comparatorFor, defaultSortFor, sortAvailable } from '../domain/sort.js';
 import { map, rebuild } from './map.js';
 import { syncUrl } from './urlState.js';
@@ -36,6 +39,13 @@ const LAYER_CONTROLS = {
   commercial: [
     ['fNla', '規模'], ['fOpenYear', '開業年'], ['fAnchor', 'アンカー'], ['fArea', 'エリア'],
   ],
+  // The dining layer has its own エリア control (fDiningArea): its areas are the
+  // ledger's curated values, not the condo areas fArea offers. See the comment
+  // in matchesFilters() for why the two must not be shared.
+  dining: [
+    ['fCatGroup', 'カテゴリ'], ['fMichelin', 'ミシュラン'], ['fPriceBand', '価格帯'],
+    ['fDiningArea', 'エリア'],
+  ],
 };
 
 /** Read every control of the active layer into the criteria object. */
@@ -60,6 +70,12 @@ export function readCriteria(){
     c.schoolAge = val('fSchoolAge') === '' ? null : parseInt(val('fSchoolAge'), 10);
     c.curriculum = val('fCurriculum');
     c.fee = parseR(val('fFee'));
+  } else if(layer === 'dining'){
+    c.catGroup = val('fCatGroup');
+    c.michelin = val('fMichelin');
+    c.priceBand = val('fPriceBand');
+    c.diningArea = val('fDiningArea');
+    c.kidOnly = showKidOkOnly;
   } else {
     c.nla = parseR(val('fNla'));
     c.openYear = parseR(val('fOpenYear'));
@@ -108,16 +124,63 @@ function populateCurriculum(){
   sel.dataset.filled = '1';
 }
 
+/**
+ * The 飲食 layer's three fixed dropdowns come from the domain constants (same
+ * reason as populateCurriculum: the options cannot drift from what the filter
+ * knows). The エリア dropdown instead comes from the DATA — 20 curated areas is
+ * too many to keep in sync by hand — ordered by how many restaurants each has,
+ * so the areas you are most likely to want are at the top.
+ *
+ * Called from syncLayerUI(), which runs again once the JSON has landed; until
+ * then there is nothing to build from and this is a no-op.
+ */
+function populateDiningFilters(){
+  const cat = $('fCatGroup');
+  if(cat && !cat.dataset.filled){
+    const keep = cat.value;
+    cat.innerHTML = '<option value="">すべて</option>' +
+      CAT_GROUPS.map(g => `<option value="${esc(g)}">${esc(g)}</option>`).join('');
+    cat.value = keep;
+    cat.dataset.filled = '1';
+  }
+  const mic = $('fMichelin');
+  if(mic && !mic.dataset.filled){
+    const keep = mic.value;
+    mic.innerHTML = '<option value="">すべて</option>' +
+      MICHELIN_FILTERS.map(o => `<option value="${o.value}">${esc(o.label)}</option>`).join('');
+    mic.value = keep;
+    mic.dataset.filled = '1';
+  }
+  const area = $('fDiningArea');
+  if(area && !area.dataset.filled){
+    const counts = new Map();
+    CONDOS.filter(c => recordLayer(c) === 'dining' && c.area)
+      .forEach(c => counts.set(c.area, (counts.get(c.area) || 0) + 1));
+    if(!counts.size) return;   // data has not arrived yet
+    const keep = area.value;
+    area.innerHTML = '<option value="">すべて</option>' +
+      [...counts.entries()]
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .map(([k, n]) => `<option value="${esc(k)}">${esc(k)} (${n})</option>`).join('');
+    area.value = keep;
+    area.dataset.filled = '1';
+  }
+}
+
 /** Show the controls of the active layer, hide the others, rebuild the sort select. */
 export function syncLayerUI(){
   populateCurriculum();
+  populateDiningFilters();
   document.querySelectorAll('.seg-btn').forEach(b => {
     const on = b.dataset.layer === activeLayer;
     b.classList.toggle('active', on);
     b.setAttribute('aria-selected', on ? 'true' : 'false');
   });
+  // `data-layer-only` takes one layer or a comma-separated list: the エリア row
+  // belongs to three layers but not to 飲食, which has its own area control.
   document.querySelectorAll('[data-layer-only]').forEach(el => {
-    el.style.display = el.dataset.layerOnly === activeLayer ? '' : 'none';
+    const owners = el.dataset.layerOnly.split(',');
+    el.style.display = owners.includes(activeLayer) ? '' : 'none';
   });
   const more = $('moreFilters');
   if(more) more.style.display = moreOpen ? '' : 'none';
@@ -136,6 +199,7 @@ export function syncLayerUI(){
     sel.value = currentSort;
   }
   syncAwardBtn();
+  syncKidOkBtn();
 }
 
 export function toggleMore(){
@@ -171,6 +235,22 @@ export function toggleAward(){
   applyFilters();
 }
 
+// 「👶 子連れ◎のみ」 is the dining layer's 受賞のみ: a one-way narrowing toggle,
+// so it follows the same pattern rather than inventing a second one.
+function syncKidOkBtn(){
+  const b = $('toggleKidOk');
+  if(!b) return;
+  b.classList.toggle('active', showKidOkOnly);
+  b.setAttribute('aria-pressed', showKidOkOnly ? 'true' : 'false');
+  b.innerHTML = (showKidOkOnly ? '✓ ' : '') + '👶 子連れ◎のみ';
+}
+
+export function toggleKidOk(){
+  setShowKidOkOnly(!showKidOkOnly);
+  syncKidOkBtn();
+  applyFilters();
+}
+
 // ============================================================
 // ACTIVE FILTER CHIPS — one per applied filter, each removable
 // ============================================================
@@ -188,6 +268,7 @@ export function activeChips(){
     chips.push({ id, label: label + ': ' + text });
   });
   if(activeLayer === 'condo' && showAwardOnly) chips.push({ id: 'toggleAward', label: '🏆 受賞のみ' });
+  if(activeLayer === 'dining' && showKidOkOnly) chips.push({ id: 'toggleKidOk', label: '👶 子連れ◎のみ' });
   return chips;
 }
 
@@ -210,6 +291,7 @@ export function renderChips(){
 
 export function removeFilter(id){
   if(id === 'toggleAward'){ setShowAwardOnly(false); syncAwardBtn(); }
+  else if(id === 'toggleKidOk'){ setShowKidOkOnly(false); syncKidOkBtn(); }
   else { const el = $(id); if(el) el.value = ''; }
   applyFilters();
 }
@@ -218,7 +300,9 @@ export function clearAllFilters(){
   const search = $('fSearch');
   if(search) search.value = '';
   setShowAwardOnly(false);
+  setShowKidOkOnly(false);
   syncAwardBtn();
+  syncKidOkBtn();
   const ids = new Set();
   Object.values(LAYER_CONTROLS).forEach(list => list.forEach(([id]) => ids.add(id)));
   ids.forEach(id => { const el = $(id); if(el) el.value = ''; });
@@ -264,11 +348,48 @@ function commercialHeroText(c){
   return parts.join(' ・ ');
 }
 
+// ---- dining ----
+/**
+ * One price range as text. `[0, 0]` means the service is not offered (or the
+ * price is unknown) and returns '' — a zero is never printed as a price.
+ * A range whose ends are equal is one figure, not 「RM 334–334」.
+ */
+export function priceRangeText(range){
+  const [lo, hi] = Array.isArray(range) ? range : [0, 0];
+  if(!(hi > 0)) return '';
+  return lo === hi ? `RM ${num(hi)}` : `RM ${num(lo)}–${num(hi)}`;
+}
+
+/**
+ * 「昼 RM 334 ・ 夜 RM 682」 — what one person pays, which is the number you
+ * choose a restaurant on.
+ *
+ * Two rules keep it honest: a service that is not offered is NAMED (「夜のみ」)
+ * rather than priced at zero, and a place that charges the same at both
+ * sittings (10 of the 50 do) says so once — printing the identical figure
+ * twice is the "same information in two places" the visual system forbids.
+ */
+function diningHeroText(c){
+  const lunch = priceRangeText(c.priceLunch);
+  const dinner = priceRangeText(c.priceDinner);
+  if(lunch && dinner) return lunch === dinner ? `昼夜 ${lunch}` : `昼 ${lunch} ・ 夜 ${dinner}`;
+  if(dinner) return `夜のみ ${dinner}`;
+  if(lunch) return `昼のみ ${lunch}`;
+  return '予算 要確認';
+}
+
+/** 「★4.8 (1,178件)」 — the rating is meaningless without its sample size. */
+export function ratingText(c){
+  if(!(c.rating > 0)) return '';
+  return `★${c.rating}` + (c.reviewCount > 0 ? ` (${num(c.reviewCount)}件)` : '');
+}
+
 /** The hero line of any record, chosen by its type. Pure. */
 export function cardHeroText(c){
   const layer = recordLayer(c);
   return layer === 'school' ? schoolHeroText(c)
     : layer === 'commercial' ? commercialHeroText(c)
+    : layer === 'dining' ? diningHeroText(c)
     : condoHeroText(c);
 }
 
@@ -336,13 +457,37 @@ function commercialCard(c){
     (meta.length ? `<div class="card-meta">${esc(meta.join(' ・ '))}</div>` : '');
 }
 
+function diningCard(c){
+  const badge = `<span class="type-badge type-dining">🍽</span>`;
+  const mb = MICHELIN_BADGES[c.michelin];
+  // The michelin standing and the category sit on their own line under the
+  // name, the same arrangement the school card uses: the name is what you are
+  // looking for and must not be cut to half a card by chips beside it.
+  const chips = [];
+  if(mb) chips.push(`<span class="card-chip chip-michelin">${esc(mb)}</span>`);
+  if(c.catGroup) chips.push(`<span class="card-chip chip-dining">${esc(c.catGroup)}</span>`);
+  const hero = diningHeroText(c);
+  const meta = [];
+  const rating = ratingText(c);
+  if(rating) meta.push(rating);
+  if(c.area) meta.push(c.area);
+  return cardHead(c, badge, '', 'card-name-wrap') +
+    (chips.length ? `<div class="card-chips">${chips.join('')}</div>` : '') +
+    `<div class="card-hero">${hero}</div>` +
+    `<div class="card-addr">${esc(c.addr)}</div>` +
+    (meta.length ? `<div class="card-meta">${esc(meta.join(' ・ '))}</div>` : '');
+}
+
 /**
  * The inside of a card, chosen by the record's type. Pure: same record in,
  * same HTML out — no DOM, no state. That is what the card tests exercise.
  */
 export function cardBodyHtml(c){
   const layer = recordLayer(c);
-  return layer === 'school' ? schoolCard(c) : layer === 'commercial' ? commercialCard(c) : condoCard(c);
+  return layer === 'school' ? schoolCard(c)
+    : layer === 'commercial' ? commercialCard(c)
+    : layer === 'dining' ? diningCard(c)
+    : condoCard(c);
 }
 
 /**
@@ -427,6 +572,14 @@ export function updateSummary(){
     const st = filtered.reduce((s, c) => s + (c.units || 0), 0);
     v3 = mf ? 'RM ' + num(mf) : TILE_EMPTY;
     v4 = st ? num(st) : TILE_EMPTY;
+  } else if(activeLayer === 'dining'){
+    l3 = '★中央値'; l4 = '予算中央値';
+    const mr = median(filtered.map(c => c.rating || 0));
+    // Same figure the 価格帯 filter and the budget sort use, so the tile can
+    // never quote a price the list does not order by.
+    const mp = median(filtered.map(diningPriceCeiling));
+    v3 = mr ? mr.toFixed(1) : TILE_EMPTY;
+    v4 = mp ? 'RM ' + num(mp) : TILE_EMPTY;
   } else {
     l3 = 'NLA中央値'; l4 = 'テナント数';
     const mn = median(filtered.map(c => c.sizeMin || 0));

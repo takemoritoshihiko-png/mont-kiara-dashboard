@@ -15,11 +15,11 @@ import {
   CONDOS, SCHOOLS_DETAIL, activeLayer, activeTab,
   setSelectedCondo, setActiveTab,
 } from '../state.js';
-import { TIER_COLORS } from '../data/inline.js';
+import { TIER_COLORS, MICHELIN_LABELS } from '../data/inline.js';
 import { recordLayer } from '../domain/filter.js';
 import { nearby, formatDistance, BUCKET_LABELS, NEARBY_BUCKETS } from '../domain/nearby.js';
 import { map, rebuild } from './map.js';
-import { renderList, setLayer, esc, jsStr, num } from './list.js';
+import { renderList, setLayer, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
 import { syncUrl, withUrlWritesSuspended } from './urlState.js';
 
 // The record the overlay is currently showing. Kept so a tab switch can
@@ -67,7 +67,13 @@ const TYPE_COLOR_VAR = {
   school: 'var(--type-school)',
   commercial: 'var(--type-commercial)',
   condo: 'var(--type-condo)',
+  dining: 'var(--type-dining)',
 };
+
+/** Google Maps deep link for a restaurant, built from its stable Place ID. */
+export function googleMapsUrl(placeId){
+  return placeId ? 'https://www.google.com/maps/place/?q=place_id:' + encodeURIComponent(placeId) : '';
+}
 
 // ============================================================
 // 詳細 TAB — the record's own data
@@ -117,6 +123,34 @@ function commercialDetail(c){
   return h;
 }
 
+function diningDetail(c){
+  // Lunch and dinner are two separate offers, so they stay two cells: a place
+  // that only serves dinner says so instead of showing a zero for lunch.
+  const lunch = priceRangeText(c.priceLunch);
+  const dinner = priceRangeText(c.priceDinner);
+  let h = kvGrid([
+    kv('ミシュラン', esc(MICHELIN_LABELS[c.michelin] || '—'), c.michelin === 'none' || !c.michelin),
+    kv('Google評価', esc(ratingText(c) || '—'), !(c.rating > 0)),
+    kv('昼 / 1人', esc(lunch || '—'), !lunch),
+    kv('夜 / 1人', esc(dinner || '—'), !dinner),
+    kv('カテゴリ', esc(c.cat || c.catGroup || '—'), !(c.cat || c.catGroup)),
+    kv('子連れ', c.kidOk === 1 ? '◎ 向いている' : '要確認', c.kidOk !== 1),
+  ]);
+  if(c.priceNote) h += section('価格の注記' + (c.priceConfidence ? `（${c.priceConfidence}）` : ''),
+    `<div class="info-sec-body">${esc(c.priceNote)}</div>`);
+  if(c.area || c.venue){
+    const place = [c.area, c.venue].filter(Boolean).join(' ・ ');
+    h += section('場所', `<div class="info-sec-body">${esc(place)}</div>`);
+  }
+  // The two halves of the reputation. Shown together and always both, because
+  // a page that prints only the praise is an advert, not a ledger.
+  const vox = c.vox || {};
+  h += section('支持される点', `<div class="info-sec-body">${esc(vox.pros || '—')}</div>`);
+  h += section('割れる点・不満', `<div class="info-sec-body">${esc(vox.cons || '—')}</div>`);
+  if(c.editorNote) h += section('編集メモ', `<div class="info-sec-body">${esc(c.editorNote)}</div>`);
+  return h;
+}
+
 function condoDetail(c){
   const upcoming = c.status === 'upcoming';
   const cells = [
@@ -161,6 +195,11 @@ function linksHtml(c){
     if(c.homepageUrl) links.push(linkBtn(c.homepageUrl, '公式サイト'));
     if(sd.fees_url) links.push(linkBtn(sd.fees_url, '学費'));
     if(sd.admissions_url) links.push(linkBtn(sd.admissions_url, '入学'));
+  } else if(c.status === 'dining'){
+    // The ledger has no homepage column; the Place ID is the stable handle, and
+    // Google Maps is where the hours, the phone number and the route live.
+    const g = googleMapsUrl(c.placeId);
+    if(g) links.push(linkBtn(g, 'Google マップ'));
   } else {
     if(c.homepageUrl) links.push(linkBtn(c.homepageUrl, '公式サイト'));
     if(c.ipropertyUrl) links.push(linkBtn(c.ipropertyUrl, 'iProperty'));
@@ -168,9 +207,15 @@ function linksHtml(c){
   return links.length ? `<div class="info-links">${links.join('')}</div>` : '';
 }
 
-function detailHtml(c){
+/**
+ * The 詳細 tab's body for any record. Pure (it reads SCHOOLS_DETAIL for schools
+ * and nothing else), so it is exported for the tests the same way cardBodyHtml
+ * is — a panel that quietly stops rendering a field is otherwise invisible.
+ */
+export function detailHtml(c){
   const body = c.status === 'school' ? schoolDetail(c)
     : c.status === 'commercial' ? commercialDetail(c)
+    : c.status === 'dining' ? diningDetail(c)
     : condoDetail(c);
   return body + linksHtml(c);
 }
@@ -178,11 +223,12 @@ function detailHtml(c){
 // ============================================================
 // 周辺 TAB — what else is within walking / driving distance
 // ============================================================
-const LAYER_ICONS = { condo: '🏠', school: '🎓', commercial: '🛒' };
-const COUNT_LABELS = { school: '学校', commercial: '商業', condo: '物件' };
-// The count line reads 「学校 2 ・ 商業 1 ・ 物件 5」 — the environment first,
-// because that is what you are asking about when you open this tab.
-const COUNT_ORDER = ['school', 'commercial', 'condo'];
+const LAYER_ICONS = { condo: '🏠', school: '🎓', commercial: '🛒', dining: '🍽' };
+const COUNT_LABELS = { school: '学校', commercial: '商業', dining: '飲食', condo: '物件' };
+// The count line reads 「学校 2 ・ 商業 1 ・ 飲食 4 ・ 物件 5」 — the environment
+// first, because that is what you are asking about when you open this tab. The
+// nearby engine itself is layer-agnostic; this is only the reading order.
+const COUNT_ORDER = ['school', 'commercial', 'dining', 'condo'];
 // Up to five per layer per bucket: enough to see the picture, short enough to
 // stay scannable in a 300px panel.
 const MAX_PER_LAYER = 5;
@@ -248,6 +294,8 @@ function headerHtml(c){
     if(c.developer) tag.push(esc(c.developer));
   } else if(layer === 'school'){
     tag.push('🎓 ' + esc(c.curriculum || c.anchorTenants || '学校'));
+  } else if(layer === 'dining'){
+    tag.push('🍽 ' + esc(c.catGroup || '飲食店'));
   } else {
     tag.push('🛒 商業施設');
   }

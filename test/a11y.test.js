@@ -115,7 +115,9 @@ describe('every control says what it is', () => {
 describe('state is announced, not only drawn', () => {
   it('marks the layer segments as a tab list with a selected tab', () => {
     expect(body).toContain('class="layer-seg" role="tablist" aria-label="表示する種別"');
-    expect(body.match(/role="tab" aria-selected="/g)).toHaveLength(3);
+    // Four since D3 added 飲食: 物件 / 学校 / 商業 / 飲食.
+    expect(body.match(/role="tab" aria-selected="/g)).toHaveLength(4);
+    expect(body).toContain('data-layer="dining"');
   });
 
   it('gives the 絞り込み disclosure an aria-expanded', () => {
@@ -124,8 +126,8 @@ describe('state is announced, not only drawn', () => {
     expect(btn.slice(0, btn.indexOf('>'))).toContain('aria-expanded="false"');
   });
 
-  it('gives the 学費くらべ and 受賞 toggles an aria-pressed', () => {
-    for(const id of ['sfToggle', 'toggleAward']){
+  it('gives the 学費くらべ, 受賞 and 子連れ toggles an aria-pressed', () => {
+    for(const id of ['sfToggle', 'toggleAward', 'toggleKidOk']){
       const btn = body.slice(body.indexOf(`id="${id}"`));
       expect(btn.slice(0, btn.indexOf('>')), `${id} has no aria-pressed`)
         .toContain('aria-pressed="false"');
@@ -299,6 +301,7 @@ describe('map markers', () => {
   it('names every marker and every cluster bubble', () => {
     expect(map).toContain('aria-label="学校 ${attrEsc(c.name)}"');
     expect(map).toContain('aria-label="商業施設 ${attrEsc(c.name)}"');
+    expect(map).toContain('aria-label="飲食店 ${attrEsc(c.name)}');
     expect(map).toContain('aria-label="${a11yLabel}"');
     expect(map).toContain('aria-label="${CLUSTER_LABELS[type]} ${n}件');
   });
@@ -361,7 +364,9 @@ describe('mobile (≤768px)', () => {
 
   it('carries every control added since B3a', () => {
     for(const sel of ['.seg-btn', '.chips', '.disclosure', '.sort-select',
-      '.sf-header', '.nb-row', '.info-tab', '.skel-card', '.fchip-x', '.info-overlay']){
+      '.sf-header', '.nb-row', '.info-tab', '.skel-card', '.fchip-x', '.info-overlay',
+      // D3: the 飲食 layer's own controls.
+      '#fCatGroup', '#fMichelin', '#fPriceBand', '#fDiningArea', '#toggleKidOk']){
       expect(mobile, `${sel} was never given a mobile rule`).toContain(sel);
     }
   });

@@ -128,3 +128,16 @@ export const YEAR_MIN = 1993, YEAR_MAX = 2026;
 export const YEAR_COLORS = ['#8d6e63','#bcaaa4','#90a4ae','#64b5f6','#1565c0']; // brown->blue
 
 export const TIER_COLORS = {S:'#7b1fa2',A:'#1565c0',B:'#2e7d32',C:'#78909c',D:'#bdbdbd'};
+
+// ============================================================
+// MICHELIN wording (dining layer)
+// The ledger stores an enum ('2star' | '1star' | 'bib' | 'sel' | 'none'); these
+// are the only two places it is turned into Japanese. They live here — the
+// shared constants file — because the card, the map marker's accessible label
+// and the detail panel all need them, and the wording must be identical in all
+// three. The long form is the guide's own vocabulary, as used in ledger v9.
+// ============================================================
+/** Short form, for a card chip and a marker label. 'none' has no badge. */
+export const MICHELIN_BADGES = {'2star':'二つ星','1star':'一つ星',bib:'ビブ',sel:'掲載店'};
+/** Long form, for the detail panel — including what 'none' means. */
+export const MICHELIN_LABELS = {'2star':'二つ星','1star':'一つ星',bib:'ビブグルマン',sel:'掲載店',none:'掲載なし'};
