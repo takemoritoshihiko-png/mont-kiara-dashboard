@@ -11,7 +11,7 @@
 特記:
 - **Molina のエリアラベル不整合**: 台帳は「Bukit Bintang」だが実所在地は THE FACE Style（1020 Jalan Sultan Ismail）= Kampung Baru 寄り（BB中心から北約1.3km）。座標は正確。エリア区分の見直しは任意（v9継承のため現状維持）。
 - GulaiNya は 2024-09 開業の新店（Little Yum Yum の拡張）。Plaza Damansara（Damansara Heights 西端）で整合。
-- street 精度 6件（Studio Restaurant / Ah Hei / Hor Poh / Hing Kee / Beta KL / Atelier Binchotan）= 番地までは特定できず通り名精度。捏造ではなく実在住所の近似。
+- restaurants.json 全体の精度実数: building 22 / venue 16 / street 12（再取得分のstreet=番地まで特定できず通り名精度。捏造ではなく実在住所の近似）。
 
 ## B. P1候補・前半11店の検証結果
 
@@ -57,3 +57,23 @@
 ### 後半10店の要点
 - 追加可=1件のみ（Aftermeal Desserts）。除外=2件（Playte閉店・Rakuzenチェーン）。残り7件は要確認/要裁定。
 - 座標は全件KL域内・エリア整合をNominatimで確認済み。同名別店の取り違えなし（YarlのTTDI店とだけ混同注意）。
+
+## D. 保留9店の追い検証（2026-08-07夜・wanderlog/top-rated + Google Maps直接確認）
+
+| 店名 | Google★/件数 | 価格RM | 判定 |
+|---|---|---|---|
+| Jhol KL | ★4.3/55件(wanderlog) | テイスティングRM310-350++・à la carteも有(公式確認) | **追加可(値確定)** |
+| Wagyu Saikou | ★4.4/29件(Maps直接・登録名「Saikou」) | 実測3名RM500+ | **保留(Google Mapsで臨時休業表示)** |
+| Kin Gyu | ★4.4/397件(Maps直接・登録名「KINGYU 金牛」) | オマカセRM180++・価格帯RM200+ | **追加可(値確定)** |
+| TTDI Meat Point | **★4.9/25,144件(Maps直接実測)** | Maps価格帯RM80-200 | **追加可(24,000件超は誤集計でなく実数と確定)** |
+| Taka Izakaya | 未取得(Maps個別リスティングにヒットせず) | 実測2名RM380.60 | **保留(閉店/改名の疑い残)** |
+| Lamei Hotpot | ★4.4/883件(wanderlog) | — | **追加可(値確定)** |
+| Bait Bistro & Oyster Bar | 未取得(Maps個別ヒットなし・正TripAdvisorは「BAIT」d4241986で4.0-4.1/57件) | — | **保留** |
+| Yarl Restaurant | ★4.1/約1,800-1,867件(2ソース近似) | — | **追加可(値確定)** |
+| Annalakshmi | ★4.5/1,868件(wanderlog) | **地下=寄付制・1階=定額ビュッフェRM18-35のハイブリッドと確定** | **追加可(値確定)** |
+
+### 検証パス最終集計（21候補）
+- **追加可(値確定) 11店**: Cotta Cafe※ / Kyomo / MT Hotpot / Vin's / Fire Izakaya(エリア=KLCC修正) / Aftermeal Desserts※ / Jhol KL / Kin Gyu / TTDI Meat Point / Lamei Hotpot / Yarl / Annalakshmi のうち11（※カフェ・デザート2店は9分類目の裁定待ち）
+- **除外 4店**: Playte(閉店) / Rakuzen / Nanda Chicken(チェーン) / Wagyu Saikou(臨時休業→保留寄り)
+- **要裁定 3店**: Two Sons / Kanbe / Ombak(小規模チェーンの扱い)
+- **なお保留 2店**: Taka Izakaya / Bait Bistro(Google実値未確定)

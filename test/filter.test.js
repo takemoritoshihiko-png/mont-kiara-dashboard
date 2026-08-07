@@ -325,6 +325,17 @@ describe('school filters', () => {
     expect(new Set(CURRICULA).size).toBe(CURRICULA.length);
   });
 
+  // A school no CURRICULA keyword matches is unreachable under the curriculum
+  // filter and nobody notices (found live: Pelita's bare "Cambridge (IGCSE)").
+  // Walk the CSV: every school must be findable through at least one option.
+  it('every school in the CSV matches at least one curriculum option', () => {
+    const rows = parseCsv(readFileSync(new URL('../schools_data.csv', import.meta.url), 'utf8'));
+    const orphans = rows.filter(
+      (r) => !CURRICULA.some((c) => (r.curriculum || '').toLowerCase().includes(c.toLowerCase()))
+    );
+    expect(orphans.map((r) => `${r.name}: ${r.curriculum}`)).toEqual([]);
+  });
+
   it('filters on the annual entry fee band', () => {
     const cheap = school({ sizeMin: 20000, sizeMax: 40000 });
     const mid = school({ sizeMin: 45000, sizeMax: 95000 });
