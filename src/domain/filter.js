@@ -125,10 +125,15 @@ export function matchesCurriculum(c, cur){
 // ============================================================
 // DINING helpers
 // ============================================================
-/** The 8 ruled category groups, in the order the plan's table lists them. */
+/**
+ * The ruled category groups, in the order the plan's table lists them.
+ * 8 groups ruled on 2026-08-07; カフェ・デザート added the same evening
+ * (ruling E-1) when the verified expansion brought its first cafés in.
+ */
 export const CAT_GROUPS = [
   'マレーシア料理', '洋食・グリル', '中華', 'インド・スリランカ',
   '鶏飯・ご飯もの', '麺・肉骨茶', '日本・その他アジア', '屋台街',
+  'カフェ・デザート',
 ];
 
 /** Michelin filter values. 'star' covers both star levels; '' is everything. */

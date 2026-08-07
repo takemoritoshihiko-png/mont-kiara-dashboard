@@ -71,9 +71,25 @@ const TYPE_COLOR_VAR = {
   dining: 'var(--type-dining)',
 };
 
-/** Google Maps deep link for a restaurant, built from its stable Place ID. */
+/**
+ * Google Maps deep link for a restaurant, built from its stable Place ID.
+ *
+ * Three id shapes exist in restaurants.json (D6 expansion):
+ *   ChIJ…               a real Place ID  → place_id deep link
+ *   cid:0x…:0x…         a Maps feature id scraped from a share URL — the part
+ *                       after the colon is the CID in hex; ?cid= wants decimal
+ *   pending:…           no id found yet → no link (the caller falls back to
+ *                       nothing rather than a link that opens the wrong shop)
+ */
 export function googleMapsUrl(placeId){
-  return placeId ? 'https://www.google.com/maps/place/?q=place_id:' + encodeURIComponent(placeId) : '';
+  if(!placeId) return '';
+  if(placeId.startsWith('pending:')) return '';
+  if(placeId.startsWith('cid:')){
+    const hex = placeId.split(':').pop();
+    try { return 'https://maps.google.com/?cid=' + BigInt(hex).toString(10); }
+    catch { return ''; }
+  }
+  return 'https://www.google.com/maps/place/?q=place_id:' + encodeURIComponent(placeId);
 }
 
 // ============================================================
@@ -135,9 +151,10 @@ function diningDetail(c){
     kv('昼 / 1人', esc(lunch || '—'), !lunch),
     kv('夜 / 1人', esc(dinner || '—'), !dinner),
     kv('カテゴリ', esc(c.cat || c.catGroup || '—'), !(c.cat || c.catGroup)),
-    // kidOk is a judged 0/1 in the ledger, not an unknown: 0 means the place
-    // suits adults (fine dining, bar counters), so say so — v9's own wording.
-    kv('子連れ', c.kidOk === 1 ? '◎ 向いている' : '大人向き', c.kidOk !== 1),
+    // kidOk: 1 = family-friendly, 0 = a judged "suits adults" (v9's wording),
+    // null = the expansion research found no evidence either way — say nothing
+    // rather than guess.
+    kv('子連れ', c.kidOk === 1 ? '◎ 向いている' : c.kidOk === 0 ? '大人向き' : '—', c.kidOk !== 1),
   ]);
   if(c.priceNote) h += section('価格の注記' + (c.priceConfidence ? `（${c.priceConfidence}）` : ''),
     `<div class="info-sec-body">${esc(c.priceNote)}</div>`);

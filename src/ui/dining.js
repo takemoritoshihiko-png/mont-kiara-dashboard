@@ -19,7 +19,7 @@
 import { CONDOS, filtered, appMode, listView } from '../state.js';
 import { recordLayer } from '../domain/filter.js';
 import {
-  ledgerScore, scoreBreakdownText, scoreBars, ratingMetaText, baselineRating,
+  ledgerScore, scoreBreakdownText, scoreBars, ratingMetaText, BASELINE_STAR,
 } from '../domain/diningScore.js';
 import { visitSummary, groupByRepeat, logMetaText } from '../domain/diningLog.js';
 import * as P from '../data/personal.js';
@@ -49,7 +49,7 @@ function diningRecords(){ return CONDOS.filter(c => recordLayer(c) === 'dining')
  */
 export function scoreOf(c){
   if(c && c.ledgerScore) return c.ledgerScore;
-  return ledgerScore(c, (c && c.ledgerBaseline) || baselineRating(diningRecords()));
+  return ledgerScore(c, (c && c.ledgerBaseline) || BASELINE_STAR);
 }
 
 export function totalOf(c){ return scoreOf(c).total; }
@@ -70,7 +70,7 @@ export function scoreBlockHtml(c){
 
 /** 「Google ★4.8 / 1,178件（母数 標準）→ 縮約後 4.44」 */
 export function ratingLineHtml(c){
-  const t = ratingMetaText(c, (c && c.ledgerBaseline) || baselineRating(diningRecords()));
+  const t = ratingMetaText(c, (c && c.ledgerBaseline) || BASELINE_STAR);
   return t ? `<div class="sc-rating">${esc(t)}</div>` : '';
 }
 

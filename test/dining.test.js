@@ -11,6 +11,7 @@ const restaurants = JSON.parse(readFileSync(join(root, 'restaurants.json'), 'utf
 const CAT_GROUPS = [
   'マレーシア料理', '洋食・グリル', '中華', 'インド・スリランカ',
   '鶏飯・ご飯もの', '麺・肉骨茶', '日本・その他アジア', '屋台街',
+  'カフェ・デザート', // ruled 2026-08-07 evening (E-1)
 ];
 const MICHELIN = ['2star', '1star', 'bib', 'sel', 'none'];
 const VENUE_TYPES = ['mall', 'hotel', 'tower', 'street', 'stall'];
@@ -59,10 +60,12 @@ describe('restaurants.json', () => {
 
   it('non-null coordinates are not duplicated across restaurants (area-centroid trap)', () => {
     // Legit shared points: Chinatown street-precision trio (block centroid),
-    // Yun House + Nadodi (both inside the Four Seasons building, venue precision).
+    // Yun House + Nadodi (both inside the Four Seasons building), and
+    // Jhol KL + Lachér Patisserie (both inside The MET, KL Metropolis).
     const allowShared = [
       'Nam Heong Chicken Rice', 'Lai Foong Lala Noodles', 'Sin Kiew Yee Beef Noodles',
       'Yun House', 'Nadodi',
+      'Jhol KL', 'Lachér Patisserie',
     ];
     const seen = new Map();
     for (const r of restaurants) {

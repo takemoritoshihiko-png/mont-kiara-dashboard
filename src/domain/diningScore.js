@@ -70,6 +70,18 @@ const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
  * @param {Array} records  dining records (rating + reviewCount)
  * @returns {number} the weighted mean, or 0 when there is nothing to average.
  */
+/**
+ * The baseline actually used, PINNED to v9's value (its original 50 stores,
+ * weighted by review count — see baselineRating below, kept for provenance).
+ *
+ * Pinned rather than recomputed because the ledger now grows: the D6 expansion
+ * alone brought one store with 25,144 reviews, which would own ~60% of a
+ * recomputed weighting and silently shift every other store's 評価点 with each
+ * batch of additions. A fixed bar keeps scores comparable across time; revise
+ * it deliberately (with a ruling), not as a side effect of adding data.
+ */
+export const BASELINE_STAR = 4.36;
+
 export function baselineRating(records){
   let num = 0, den = 0;
   for(const r of (records || [])){
@@ -193,7 +205,7 @@ export function reviewDepthLabel(reviewCount){
  */
 export function calcLedgerScores(records){
   const list = records || [];
-  const C = baselineRating(list);
+  const C = BASELINE_STAR;
   for(const r of list){
     if(!r) continue;
     r.ledgerScore = ledgerScore(r, C);

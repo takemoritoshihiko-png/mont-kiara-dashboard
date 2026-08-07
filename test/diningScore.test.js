@@ -10,7 +10,7 @@ import { readFileSync } from 'node:fs';
 import {
   PRIOR_WEIGHT, MICHELIN_POINTS, TIER_POINTS, EX_TAG_POINTS,
   AUTHORITY_MAX, EVALUATION_MAX, EV_FLOOR, EV_SPAN,
-  baselineRating, knownExTags, authorityPoints, continuityPoints,
+  baselineRating, BASELINE_STAR, knownExTags, authorityPoints, continuityPoints,
   shrunkRating, evaluationPoints, ledgerScore, scoreBreakdownText, scoreBars,
   reviewDepthLabel, ratingMetaText, calcLedgerScores,
 } from '../src/domain/diningScore.js';
@@ -18,7 +18,11 @@ import { parseRestaurants } from '../src/data/load.js';
 
 const RAW = readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8');
 const LEDGER = parseRestaurants(RAW);
-const C_REAL = baselineRating(LEDGER);
+// The baseline's provenance: v9's original 50 records (R0001-R0050). The D6
+// expansion grows the file past them, but the pinned BASELINE_STAR keeps
+// pointing at this figure — recomputing over a growing ledger would let one
+// 25k-review addition move every other store's score.
+const C_REAL = baselineRating(LEDGER.slice(0, 50));
 
 const eat = (over = {}) => ({
   name: 'Test', michelin: 'none', tier: 0, extraFlags: [],
@@ -50,10 +54,11 @@ describe('the constants are the ledger\'s, not something that drifted', () => {
 // C — the baseline
 // ============================================================
 describe('C, the ledger-wide baseline star', () => {
-  it('is 4.36 for the 50 restaurants actually in the file', () => {
+  it('is 4.36 for the 50 v9 restaurants, and BASELINE_STAR pins exactly that', () => {
     // v9 printed 4.36 in its header. Same figure, same weighting.
     expect(C_REAL).toBeCloseTo(4.36, 2);
     expect(Number(C_REAL.toFixed(4))).toBe(4.3600);
+    expect(BASELINE_STAR).toBeCloseTo(C_REAL, 2);
   });
 
   it('is weighted by review count, not a plain mean of the stars', () => {

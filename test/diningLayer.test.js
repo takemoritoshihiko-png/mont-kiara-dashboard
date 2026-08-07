@@ -153,9 +153,9 @@ describe('matchesDining', () => {
     expect(matchesDining(eat(), { catGroup: '' })).toBe(true);
   });
 
-  it('offers the eight ruled groups and nothing else', () => {
-    expect(CAT_GROUPS).toHaveLength(8);
-    expect(new Set(CAT_GROUPS).size).toBe(8);
+  it('offers the nine ruled groups and nothing else', () => {
+    expect(CAT_GROUPS).toHaveLength(9);
+    expect(new Set(CAT_GROUPS).size).toBe(9);
     expect(CAT_GROUPS).toContain('屋台街');
   });
 
@@ -334,11 +334,15 @@ describe('parseRestaurants (restaurants.json → the app record shape)', () => {
     });
   });
 
-  it('the four price bands between them cover every restaurant exactly once', () => {
+  it('the four price bands cover every priced restaurant exactly once; an unpriced one shows under all', () => {
     const BANDS = ['0-50', '50-150', '150-400', '400-'];
     recs.forEach(r => {
       const hits = BANDS.filter(b => matchesPriceBand(r, b));
-      expect(hits.length, `${r.name} matched [${hits.join(', ')}]`).toBe(1);
+      // A record with no price at all (D6 expansion: Napa Thai) is shown under
+      // every band by design — an unknown price is not a cheap one, and hiding
+      // it would silently shrink the list.
+      const expected = diningPriceCeiling(r) > 0 ? 1 : BANDS.length;
+      expect(hits.length, `${r.name} matched [${hits.join(', ')}]`).toBe(expected);
     });
   });
 

@@ -1869,5 +1869,634 @@
    "pros": "揚げ鶏の衣と飯のココナッツ感。回転は速く20分程度で着席できる。",
    "cons": "「サンバルが甘く辛くない」。駐車困難、席が密で常に人がぶつかる、注文方式が分かりにくい。"
   }
+ },
+ {
+  "id": "R0051",
+  "placeId": "ChIJFVEiF_BIzDEROJINDbdudtE",
+  "name": "Kyomo",
+  "nameJa": "キョウモ",
+  "cat": "和牛焼肉",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1461,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Desa Sri Hartamas",
+  "address": "26, Jalan 24/70A, Desa Sri Hartamas",
+  "lat": 3.1631,
+  "lng": 101.6507,
+  "geoPrecision": "street",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   120,
+   250
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "平日は17時から夜のみ、土日は12時から通し。アラカルト中心で実測は2名RM620の例あり。",
+  "editorNote": "旧Shin Nihonが改称した東京スタイル和牛焼肉。FB1,741件/推奨92%と駐在コミュニティの支持が厚い、Desa Sri Hartamas和食街の核。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0052",
+  "placeId": "pending:kin-gyu",
+  "name": "Kin Gyu",
+  "nameJa": "キンギュウ",
+  "cat": "すき焼き・和牛",
+  "michelin": "none",
+  "rating": 4.4,
+  "reviewCount": 397,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店2F（Kyomo向かい）",
+  "venueType": "street",
+  "area": "Desa Sri Hartamas",
+  "address": "1st Floor, 8, Jalan 24/70A, Desa Sri Hartamas",
+  "lat": 3.1634319,
+  "lng": 101.6509308,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   100,
+   250
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "17:30〜翌1:00の夜営業のみ。アラカルト約RM100／9品オマカセRM180++／すき焼き鍋RM250(2-3名向け)。",
+  "editorNote": "Kyomoの姉妹店。東京・日本橋スタイルの和牛すき焼き。Google登録名は「KINGYU 金牛」。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0053",
+  "placeId": "pending:mt-hotpot",
+  "name": "MT Hotpot",
+  "nameJa": "エムティーホットポット",
+  "cat": "四川火鍋",
+  "michelin": "none",
+  "rating": 4.9,
+  "reviewCount": 2687,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Solaris Mont Kiara L-01-01",
+  "venueType": "street",
+  "area": "Mont Kiara",
+  "address": "L-01-01, 2, Jalan Solaris, Solaris Mont Kiara",
+  "lat": 3.1755,
+  "lng": 101.6598,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   60,
+   150
+  ],
+  "priceDinner": [
+   60,
+   150
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "12時〜24時の通し営業で昼夜同一価格。スープベースRM36-48＋食材。個室あり。",
+  "editorNote": "★4.9×2,687件はモントキアラ日常圏で最厚の支持。家族鍋・個室needsに応える四川火鍋。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0054",
+  "placeId": "ChIJZ05BeSZJzDERlVmxJahQ1iM",
+  "name": "Vin's Restaurant",
+  "nameJa": "ヴィンズ",
+  "cat": "イタリアン",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 2756,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "TTDI",
+  "address": "6, Lorong Datuk Sulaiman 1, Taman Tun Dr Ismail",
+  "lat": 3.1481,
+  "lng": 101.6296,
+  "geoPrecision": "street",
+  "priceLunch": [
+   50,
+   100
+  ],
+  "priceDinner": [
+   50,
+   100
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "日-木12-23時／金土12-24時。ハッピーアワー12-19時。子連れ歓迎を公式に明記。",
+  "editorNote": "TTDIのインディー系イタリアン。パスタ/ピザ中心にGoogle★4.6×2,756件と裾野が広い。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0055",
+  "placeId": "ChIJd0SjxHc3zDERGJrDsdhg0LY",
+  "name": "Fire Izakaya",
+  "nameJa": "ファイヤーイザカヤ",
+  "cat": "居酒屋",
+  "michelin": "none",
+  "rating": 4.9,
+  "reviewCount": 808,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店（Avenue K向かい）",
+  "venueType": "street",
+  "area": "KLCC",
+  "address": "160, Jalan Ampang",
+  "lat": 3.1595,
+  "lng": 101.7141,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   60,
+   200
+  ],
+  "priceDinner": [
+   60,
+   200
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "11:30-23:30通し営業。接待・飲み会需要が中心。",
+  "editorNote": "駐在員の社交定番の居酒屋。所在地はJalan Ampang起点付近＝KLCC徒歩圏（Ampang地区ではない）。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0056",
+  "placeId": "cid:0x31cc49b4fb1160f5:0x5e61207dc7cc1e84",
+  "name": "Cotta",
+  "nameJa": "コッタ",
+  "cat": "カフェ",
+  "michelin": "none",
+  "rating": 4.9,
+  "reviewCount": 700,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Verve Shops 屋上6F",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "L6-1A, Verve Shops, 8, Jalan Kiara 5, Mont Kiara",
+  "lat": 3.1676,
+  "lng": 101.6468,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   50,
+   100
+  ],
+  "priceDinner": [
+   50,
+   100
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "8時〜22時の通し営業。ムスリムフレンドリー。ペット可の屋上席。件数は700+の概数（実数は要更新）。",
+  "editorNote": "モントキアラ駐妻定番の隠れ家ルーフトップカフェ。居住圏カバーの第一号枠。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "カフェ・デザート",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0057",
+  "placeId": "ChIJNSn5-YVJzDERxxHyTGitpGA",
+  "name": "Aftermeal Desserts",
+  "nameJa": "アフターミール",
+  "cat": "デザート",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 2684,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Damansara Utama",
+  "address": "52, Jalan SS 21/58, Damansara Uptown, Petaling Jaya",
+  "lat": 3.1375,
+  "lng": 101.6214,
+  "geoPrecision": "building",
+  "priceLunch": [
+   18,
+   28
+  ],
+  "priceDinner": [
+   18,
+   28
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "13時〜24時の通し営業。夜遅くまで開くデザート専門店。",
+  "editorNote": "評価は現時点のwanderlog表示値（★4.6×2,684件）。古い記事の「★4.7/160件」から母数が大きく育った人気店。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "カフェ・デザート",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0058",
+  "placeId": "ChIJFWj-fQBJzDER1UL_5FkL_Ng",
+  "name": "Jhol KL",
+  "nameJa": "ジョール",
+  "cat": "モダン・インディアン",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 55,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "THE MET Corporate Towers G-01",
+  "venueType": "tower",
+  "area": "KL Metropolis",
+  "address": "G-01, THE MET Corporate Towers, 20, Jalan Dutamas 2",
+  "lat": 3.181003,
+  "lng": 101.664727,
+  "geoPrecision": "building",
+  "priceLunch": [
+   110,
+   145
+  ],
+  "priceDinner": [
+   350,
+   410
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ランチセット12-15時 RM110(2品)/RM125(3品)。ディナーはテイスティングRM350++の1本（税サ込み換算で400超）。15-18時は休憩。",
+  "editorNote": "バンコクのミシュラン店のKL進出1号（2025年5月開業）。コースタル・インディアン。件数55件と母数はまだ薄い。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "インド・スリランカ",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0059",
+  "placeId": "ChIJ08vKCypJzDER0Q6N1s5TXwM",
+  "name": "TTDI Meat Point",
+  "nameJa": "TTDIミートポイント",
+  "cat": "ステーキ",
+  "michelin": "none",
+  "rating": 4.9,
+  "reviewCount": 25144,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "路面店（敷地内に子供用遊び場）",
+  "venueType": "street",
+  "area": "TTDI",
+  "address": "62, Jalan Burhanuddin Helmi, Taman Tun Dr Ismail",
+  "lat": 3.1521156,
+  "lng": 101.6202003,
+  "geoPrecision": "building",
+  "priceLunch": [
+   60,
+   180
+  ],
+  "priceDinner": [
+   60,
+   180
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "11時〜23時の通し営業。通常RM60-90、和牛選択時はRM180前後まで。",
+  "editorNote": "ハラルステーキハウスとしてバイラル化し★4.9×25,144件（実数確認済み）。KLステーキ業態1位表示。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0060",
+  "placeId": "ChIJ23cLNxtJzDER4WudRFZrvzY",
+  "name": "Lamei Hotpot",
+  "nameJa": "ラメイホットポット",
+  "cat": "四川火鍋",
+  "michelin": "none",
+  "rating": 4.4,
+  "reviewCount": 883,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Plaza Arkadia H-G-16",
+  "venueType": "mall",
+  "area": "Desa ParkCity",
+  "address": "H-G-16, Hutton Block, Plaza Arkadia, Desa ParkCity",
+  "lat": 3.186106,
+  "lng": 101.635277,
+  "geoPrecision": "building",
+  "priceLunch": [
+   60,
+   100
+  ],
+  "priceDinner": [
+   60,
+   100
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "11:30-24:00通し営業。単品RM6.80-29.80のセルフプレート制。VIP個室あり。",
+  "editorNote": "Desa ParkCity圏の四川火鍋。FB推奨98%(825件)とGoogle★4.4×883件の二面で裏取り。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0061",
+  "placeId": "ChIJAAAAAOxJzDERyp0riNSkJIg",
+  "name": "Annalakshmi",
+  "nameJa": "アンナラクシュミ",
+  "cat": "南インド（菜食）",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1868,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Temple of Fine Arts 内",
+  "venueType": "street",
+  "area": "Brickfields",
+  "address": "116, Jalan Berhala, Brickfields",
+  "lat": 3.127831,
+  "lng": 101.687619,
+  "geoPrecision": "building",
+  "priceLunch": [
+   18,
+   35
+  ],
+  "priceDinner": [
+   18,
+   35
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼11:30-14:30／夜18:00-21:30（日曜は16:30-20:00）。月曜定休。地下=寄付制(pay as you wish)セルフ、1階=定額ビュッフェRM18-35のハイブリッド。",
+  "editorNote": "1984年創業、芸術団体Temple of Fine Artsが運営する菜食インド。寄付制という仕組みごと体験の店。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "インド・スリランカ",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0062",
+  "placeId": "ChIJgXZ2Aj1JzDERUl0t7vOeh-Y",
+  "name": "Kanbe Ramen",
+  "nameJa": "カンベラーメン",
+  "cat": "ラーメン",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 1849,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "163 Retail Park GF-08",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "GF-08, 163 Retail Park, 8, Jalan Kiara, Mont Kiara",
+  "lat": 3.1666,
+  "lng": 101.652,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   31,
+   45
+  ],
+  "priceDinner": [
+   31,
+   45
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "11時〜21時の通し営業。ラーメンRM31.20〜。ピークは45〜120分待ちの行列あり。",
+  "editorNote": "東京シェフ直営の豚骨。163/TRX/JBの3店舗展開だが評判基準(★4.3×1,849件)をクリアし裁定E-2で採用。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0063",
+  "placeId": "ChIJ9RJ3yRRJzDERVgPr_VWX3As",
+  "name": "Ombak Kitchen",
+  "nameJa": "オンバックキッチン",
+  "cat": "マレー・シーフード",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 3134,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Bangsar",
+  "address": "12, Lorong Ara Kiri 2, Lucky Garden, Bangsar",
+  "lat": 3.1274,
+  "lng": 101.6698,
+  "geoPrecision": "building",
+  "priceLunch": [
+   170,
+   220
+  ],
+  "priceDinner": [
+   170,
+   220
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "日-水11-22時／木-土11-23時。RM170-220は初期調査値で直接の裏取りなし。セット構成により変動（要実勢確認）。",
+  "editorNote": "ハラルのルイジアナ式ボイルシーフード。★4.8×3,134件。4店舗展開だが評判基準で採用（裁定E-2）。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "マレーシア料理",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0064",
+  "placeId": "cid:0x31cc490b415a0361:0xc0da4f87c6de878f",
+  "name": "Napa Thai",
+  "nameJa": "ナパタイ",
+  "cat": "タイ",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 723,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Sri Hartamas",
+  "address": "27&29, Jalan Sri Hartamas 7, Taman Sri Hartamas",
+  "lat": 3.1648454,
+  "lng": 101.6514232,
+  "geoPrecision": "street",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼12:00-15:00／夜18:00-22:30。1人あたり実勢は未確定(中〜やや高め評)。8名以上はデポジットRM200。定休日はソースが矛盾(要現地確認)。",
+  "editorNote": "Sri Hartamasの本格タイ。84時間熟成鴨のレッドカレーが看板の要予約級人気店。子連れ可の口コミあり。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0065",
+  "placeId": "ChIJwXZnJvBIzDERP9Jn5_UryCA",
+  "name": "Marta's Kitchen",
+  "nameJa": "マルタズキッチン",
+  "cat": "スペイン",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 2013,
+  "natCode": 3,
+  "kidOk": null,
+  "venue": "The Signature 内",
+  "venueType": "street",
+  "area": "Sri Hartamas",
+  "address": "Jln Sri Hartamas 22, Desa Sri Hartamas",
+  "lat": 3.163603,
+  "lng": 101.6519453,
+  "geoPrecision": "street",
+  "priceLunch": [
+   20,
+   35
+  ],
+  "priceDinner": [
+   80,
+   100
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日11:30-23:30の通し(月休の可能性の言及あり)。タパス中心ならRM20-35、パエリア+フルで1人RM80-100超。サービス料なし。",
+  "editorNote": "スペイン政府認証(RFS)のパエリア&タパスバー。本場スペイン人夫婦の経営でパエリア4種が看板。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0066",
+  "placeId": "cid:0x31cc494fa185dac5:0xa8f80083484b6bd9",
+  "name": "Bocado",
+  "nameJa": "ボカド",
+  "cat": "スペイン",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 642,
+  "natCode": 3,
+  "kidOk": null,
+  "venue": "Bangunan ECM Libra GF",
+  "venueType": "tower",
+  "area": "Damansara Heights",
+  "address": "8, Jalan Damansara Endah, Bukit Damansara",
+  "lat": 3.1489483,
+  "lng": 101.6652962,
+  "geoPrecision": "street",
+  "priceLunch": [
+   65,
+   110
+  ],
+  "priceDinner": [
+   150,
+   220
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼12-15時／夜18-22:30(入替制18:00/20:30・フードL.O.21:45)。タパスRM32-56・パエリア2人前RM130・仔羊肩肉RM220。",
+  "editorNote": "ガリシア出身シェフ監修・ジョスパー炭火グリルが軸のICEX認証スペイン料理。Bukit Damansaraの高級店。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0067",
+  "placeId": "ChIJHas1kpJJzDERQM2T51Qux8o",
+  "name": "Lachér Patisserie",
+  "nameJa": "ラシェパティスリー",
+  "cat": "パティスリー",
+  "michelin": "none",
+  "rating": 4.4,
+  "reviewCount": 554,
+  "natCode": 3,
+  "kidOk": null,
+  "venue": "The MET LG 01-02（Jholと同棟）",
+  "venueType": "tower",
+  "area": "KL Metropolis",
+  "address": "LG 01-02, Menara The MET, 20, Jalan Dutamas 2",
+  "lat": 3.181003,
+  "lng": 101.664727,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   40,
+   60
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日9-18時(夜営業なし)。軽食+ドリンクでRM40-60目安。ホールケーキRM115.50-194.30。",
+  "editorNote": "受賞シェフのフランス菓子パティスリー。本店はPlaza Conlay(2023年開業)、The MET店は2号店。2-3店舗の小規模展開(裁定E-2で採用)。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "カフェ・デザート",
+  "tier": 0,
+  "extraFlags": []
  }
 ]
