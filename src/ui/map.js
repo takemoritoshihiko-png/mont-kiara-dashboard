@@ -8,6 +8,7 @@ import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS, MICHELIN_BADGES } from '.
 import { selectCondo, closeInfo } from './info.js';
 // Deferred-usage only (called inside functions): safe across the list.js<->map.js cycle.
 import { cardHeroText, ratingText } from './list.js';
+import { getEntry } from '../data/personal.js';
 
 // ============================================================
 // ZOOM THRESHOLDS (tune here)
@@ -431,13 +432,21 @@ function mkMarker(c, dim) {
     const mb = MICHELIN_BADGES[c.michelin];
     const border = (c.michelin === '1star' || c.michelin === '2star')
       ? MICHELIN_STAR_BORDER : MARKER_COLORS.dining.border;
+    // 訪問済みの店はピン自体に緑の✓バッジ（2026-08-07 依頼: 地図を見るだけで
+    // 「もう行った」が分かるように）。記録が変わると applyFilters→rebuild が
+    // 走るので、押した瞬間にバッジも追随する。色は再訪意向「また行く」と同じ
+    // 緑 (--rv-again) のリテラル。
+    const visited = c.id && getEntry(c.id).v === 1;
+    const badge = visited
+      ? `<span aria-hidden="true" style="position:absolute;top:-5px;right:-5px;width:13px;height:13px;border-radius:50%;background:#1D5F55;border:1.5px solid #fff;color:#fff;font-size:9px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.35)">✓</span>`
+      : '';
     const icon = L.divIcon({
       className: pinClass(c, dim),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
-      html: `<div role="button" aria-label="飲食店 ${attrEsc(c.name)}${mb ? '、' + mb : ''}" style="position:relative;width:${csz}px;height:${csz}px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+      html: `<div role="button" aria-label="飲食店 ${attrEsc(c.name)}${mb ? '、' + mb : ''}${visited ? '、訪問済み' : ''}" style="position:relative;width:${csz}px;height:${csz}px;display:flex;align-items:center;justify-content:center;cursor:pointer">
         <span aria-hidden="true" style="position:absolute;inset:0;border-radius:${MARKER_COLORS.dining.radius};background:${MARKER_COLORS.dining.bg};border:2px solid ${border};box-shadow:0 2px 6px rgba(0,0,0,0.3);transform:rotate(-45deg)"></span>
-        <span aria-hidden="true" style="position:relative;color:#fff;font-size:10px;line-height:1">🍽</span>
+        <span aria-hidden="true" style="position:relative;color:#fff;font-size:10px;line-height:1">🍽</span>${badge}
       </div>`
     });
     const m = L.marker([c.lat,c.lng],{icon,keyboard:false});

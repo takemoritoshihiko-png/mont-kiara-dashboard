@@ -184,7 +184,7 @@ describe('JS-side colours are inventoried (map.js / inline.js)', () => {
 
   it('src/ui/map.js introduces no unlisted colour', () => {
     expect(hexesOf('../src/ui/map.js')).toEqual([
-      '#112a58', '#1a3d7c', '#333', '#37474f', '#546e7a', '#666', '#78909c',
+      '#112a58', '#1D5F55', '#1a3d7c', '#333', '#37474f', '#546e7a', '#666', '#78909c',
       '#8c1145', '#b85806', '#c2185b', '#c9a227', '#e8710a', '#fff',
     ]);
   });
