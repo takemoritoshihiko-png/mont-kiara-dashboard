@@ -13,7 +13,8 @@ import {
   applyFilters, setSort, setLayer, syncLayerUI, toggleMore, toggleAward, togglePanel,
   clearSearch, removeFilter, clearAllFilters,
 } from './ui/list.js';
-import { selectCondo, closeInfo } from './ui/info.js';
+import { selectCondo, closeInfo, setInfoTab, selectNearby, applyUrlState } from './ui/info.js';
+import { readUrlState, withUrlWritesSuspended } from './ui/urlState.js';
 import { toggleSchoolFinder, renderSchoolFinder, sfSelectSchool } from './ui/schoolFinder.js';
 
 // ============================================================
@@ -37,6 +38,8 @@ window.removeFilter = removeFilter;
 window.clearAllFilters = clearAllFilters;
 window.selectCondo = selectCondo;
 window.closeInfo = closeInfo;
+window.setInfoTab = setInfoTab;
+window.selectNearby = selectNearby;
 window.toggleSchoolFinder = toggleSchoolFinder;
 window.renderSchoolFinder = renderSchoolFinder;
 window.sfSelectSchool = sfSelectSchool;
@@ -55,6 +58,16 @@ initMap();
 // Build the sort options / show the condo layer's controls before any data
 // arrives, so the panel is never in a half-wired state.
 syncLayerUI();
+
+// ============================================================
+// URL = SCREEN STATE
+// Back/forward walk the selection history. Restoration drives the same
+// functions a click would, so URL writes are suspended while it runs —
+// otherwise every popstate would push a new entry and back would never move.
+// ============================================================
+window.addEventListener('popstate', () => {
+  withUrlWritesSuspended(() => applyUrlState(readUrlState()));
+});
 
 // ============================================================
 // INIT: Fetch the data files, then render
@@ -91,6 +104,9 @@ syncLayerUI();
     setCondos([...CONDOS, ...COMMERCIALS, ...SCHOOLS]);
     setFiltered([...CONDOS]);
     applyFilters();
+
+    // A shared link only becomes reproducible once the data it names exists.
+    withUrlWritesSuspended(() => applyUrlState(readUrlState()));
 
     if (loadErrors.length > 0) {
       const warn = document.createElement('div');

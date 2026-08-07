@@ -8,13 +8,15 @@ import { TIER_COLORS } from '../data/inline.js';
 import { parseR, matchesFilters, recordLayer, LAYER_LABELS, CURRICULA } from '../domain/filter.js';
 import { SORT_OPTIONS, comparatorFor, defaultSortFor, sortAvailable } from '../domain/sort.js';
 import { map, rebuild } from './map.js';
+import { syncUrl } from './urlState.js';
 
 const $ = (id) => document.getElementById(id);
 const val = (id) => { const el = $(id); return el ? el.value : ''; };
 const num = (n) => Number(n).toLocaleString('en-US');
-const esc = (s) => String(s == null ? '' : s)
+// Shared with info.js so both renderers escape identically.
+export const esc = (s) => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-const jsStr = (s) => String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+export const jsStr = (s) => String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
 // ============================================================
 // CRITERIA — which controls belong to which layer
@@ -85,6 +87,9 @@ export function setLayer(layer){
   if(!sortAvailable(layer, currentSort)) setCurrentSort(defaultSortFor(layer));
   syncLayerUI();
   applyFilters();
+  // A layer switch refines the current view rather than navigating to a new
+  // one, so it replaces the history entry instead of stacking one.
+  syncUrl({ replace: true });
 }
 
 /**

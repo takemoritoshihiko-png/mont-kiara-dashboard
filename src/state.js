@@ -17,6 +17,9 @@ export let selectedCondo = null;
 // B3a: the active layer (物件 / 学校 / 商業) drives the list, the filters, the
 // sort options, the summary tiles and which markers are drawn at full opacity.
 export let activeLayer = 'condo';
+// B3a-2: which tab of the detail overlay is open — 'detail' or 'nearby'.
+// Part of the screen state, so it travels in the URL.
+export let activeTab = 'detail';
 export let currentSort = 'luxHigh';
 // 「絞り込み ⌄」 open/closed. In memory only — deliberately not persisted.
 export let moreOpen = false;
@@ -36,6 +39,7 @@ export function setMarkers(v) { markers = v; }
 export function setSelectedCondo(v) { selectedCondo = v; }
 export function setCurrentSort(v) { currentSort = v; }
 export function setActiveLayer(v) { activeLayer = v; }
+export function setActiveTab(v) { activeTab = v; }
 export function setMoreOpen(v) { moreOpen = v; }
 export function setShowAwardOnly(v) { showAwardOnly = v; }
 export function setLegendOpen(v) { legendOpen = v; }
