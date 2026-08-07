@@ -22,6 +22,14 @@ export let activeLayer = 'condo';
 // Part of the screen state, so it travels in the URL.
 export let activeTab = 'detail';
 export let currentSort = 'luxHigh';
+// The order you last chose ON EACH LAYER, keyed by layer name.
+//
+// Without this a detour through another layer silently threw your order away:
+// looking at 物件 in 「PSF 高い順」, tapping a 学校 on the 周辺 tab (学校 has no
+// PSF order, so it fell back to 学費 安い順) and coming back to 物件 left you in
+// 「おすすめ順」 — the list you had built was gone and nothing said so.
+// Written only through setLastSortForLayer(); read by sortOnArrival().
+export let lastSortByLayer = {};
 // 「絞り込み ⌄」 open/closed. In memory only — deliberately not persisted.
 export let moreOpen = false;
 
@@ -64,6 +72,12 @@ export function setFiltered(v) { filtered = v; }
 export function setMarkers(v) { markers = v; }
 export function setSelectedCondo(v) { selectedCondo = v; }
 export function setCurrentSort(v) { currentSort = v; }
+/** Remember `sort` as the order of `layer`. A new object, so the binding change
+ *  is visible to importers the same way every other setter's is. */
+export function setLastSortForLayer(layer, sort) {
+  if (!layer || !sort) return;
+  lastSortByLayer = { ...lastSortByLayer, [layer]: sort };
+}
 export function setActiveLayer(v) { activeLayer = v; }
 export function setActiveTab(v) { activeTab = v; }
 export function setMoreOpen(v) { moreOpen = v; }

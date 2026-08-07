@@ -18,7 +18,7 @@ import {
 import { TIER_COLORS, MICHELIN_LABELS } from '../data/inline.js';
 import { recordLayer } from '../domain/filter.js';
 import { nearby, formatDistance, BUCKET_LABELS, NEARBY_BUCKETS } from '../domain/nearby.js';
-import { map, rebuild } from './map.js';
+import { focusOnRecord, rebuild } from './map.js';
 import { renderList, setLayer, setMode, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
 import { eatoutDetailHtml } from './dining.js';
 import { syncUrl, withUrlWritesSuspended } from './urlState.js';
@@ -47,16 +47,51 @@ export function closeInfo(){
 // ============================================================
 // SHARED BUILDING BLOCKS
 // ============================================================
-/** One label/value pair of the key-stats grid. `muted` for 未定 / unknown. */
-function kv(label, value, muted){
-  return `<div><div class="kv-label">${esc(label)}</div>` +
+/**
+ * One label/value pair of the key-stats grid. `muted` for 未定 / unknown.
+ *
+ * The label is Japanese first. `opts.sub` keeps the source's own English term
+ * beside it in small type — PSF and NLA are the words iProperty and EdgeProp
+ * print, so dropping them would leave nothing to match a listing against.
+ * Replacement, not addition, is what breaks that; both together cost one line.
+ * `opts.hint` is the tooltip for a figure whose meaning is not self-evident.
+ *
+ * @param {string} label
+ * @param {string} value     already-escaped HTML (callers esc() their data)
+ * @param {boolean} [muted]
+ * @param {{sub?: string, hint?: string}} [opts]
+ */
+function kv(label, value, muted, opts = {}){
+  const sub = opts.sub ? ` <small class="kv-sub">${esc(opts.sub)}</small>` : '';
+  const hint = opts.hint ? ` title="${esc(opts.hint)}"` : '';
+  return `<div><div class="kv-label"${hint}>${esc(label)}${sub}</div>` +
     `<div class="kv-val${muted ? ' muted' : ''}">${value}</div></div>`;
 }
 const kvGrid = (cells) => `<div class="kv-grid">${cells.join('')}</div>`;
 
-/** A block of further information: hairline, caps title, content. */
-function section(title, bodyHtml){
-  return `<div class="info-sec"><div class="info-sec-title">${esc(title)}</div>${bodyHtml}</div>`;
+/**
+ * A block of further information: hairline, caps title, content.
+ * `meta` is a second, separate fact about the block (a score, a count) shown at
+ * the right of the title. It exists so a title never has to smuggle a number of
+ * its own in brackets — 「Premium Features (12/15)」 above a list of 4 items read
+ * as a broken count, because the 12 is a weighted score and the list is not.
+ */
+function section(title, bodyHtml, meta){
+  const head = meta
+    ? `<div class="info-sec-title"><span>${esc(title)}</span><span class="info-sec-meta">${esc(meta)}</span></div>`
+    : `<div class="info-sec-title">${esc(title)}</div>`;
+  return `<div class="info-sec">${head}${bodyHtml}</div>`;
+}
+
+/**
+ * A section whose body starts folded. For blocks that are long prose or a long
+ * table (a school's 教育方針 runs to a paragraph, its fee table to 14 rows):
+ * open they push everything after them off the panel, so the reader cannot see
+ * what a school entry even contains without scrolling past one essay.
+ */
+function foldedSection(title, bodyHtml){
+  return `<div class="info-sec"><details class="data-details">` +
+    `<summary>${esc(title)}</summary>${bodyHtml}</details></div>`;
 }
 
 /** External links are text buttons in the one accent colour (audit C4). */
@@ -110,7 +145,10 @@ function schoolDetail(c){
     kv('設立', c.year ? esc(c.year) + '年' : '—', !c.year),
   ]);
   if(sd.brand) h += section('運営', `<div class="info-sec-body">${esc(sd.brand)}</div>`);
-  if(sd.philosophy) h += section('教育方針', `<div class="info-sec-body">${esc(sd.philosophy)}</div>`);
+  // The two long blocks fold. Nothing is removed — 教育方針 and the full fee
+  // table are one tap away — but a reader comparing three schools sees all
+  // three panels' shape instead of scrolling through one school's prose.
+  if(sd.philosophy) h += foldedSection('教育方針', `<div class="info-sec-body">${esc(sd.philosophy)}</div>`);
   if(sd.fees){
     let t = '<table class="info-fees">';
     for(const [k, v] of Object.entries(sd.fees)){
@@ -118,7 +156,7 @@ function schoolDetail(c){
     }
     t += '</table>';
     if(sd.other_fees) t += `<div class="info-note">${esc(sd.other_fees)}</div>`;
-    h += section('学年別 年間授業料 (RM)', t);
+    h += foldedSection('学年別 年間授業料 (RM)', t);
   }
   if(sd.top_nationalities && sd.top_nationalities !== 'Not publicly disclosed'){
     let b = `<div class="info-sec-body">${esc(sd.top_nationalities)}</div>`;
@@ -131,11 +169,18 @@ function schoolDetail(c){
 }
 
 function commercialDetail(c){
-  let h = kvGrid([
+  const cells = [
     kv('テナント数', c.units > 0 ? `約 ${num(c.units)}店` : '—', !(c.units > 0)),
-    kv('NLA', c.sizeMin > 0 ? `${num(c.sizeMin)} sf` : '—', !(c.sizeMin > 0)),
+    // NLA (Net Lettable Area) is the term every Malaysian mall factsheet and
+    // REIT report uses, so it stays next to the Japanese.
+    kv('賃貸面積', c.sizeMin > 0 ? `${num(c.sizeMin)} sf` : '—', !(c.sizeMin > 0), { sub: 'NLA' }),
     kv('開業', c.year ? esc(c.year) + '年' : '—', !c.year),
-  ]);
+  ];
+  // The CSV has carried a developer/owner for all 88 malls since it was built;
+  // the panel simply never showed it. Omitted when blank rather than shown as
+  // 「—」: an unknown owner is not a fact worth a cell.
+  if(c.developer) cells.push(kv('運営 / デベロッパー', esc(c.developer)));
+  let h = kvGrid(cells);
   if(c.anchorTenants) h += section('主なテナント', `<div class="info-sec-body">${esc(c.anchorTenants)}</div>`);
   return h;
 }
@@ -179,15 +224,21 @@ function condoDetail(c){
     kv('竣工', c.year ? esc(c.year) + '年' : '—', !c.year),
     kv('総戸数', c.units > 0 ? num(c.units) : '—', !(c.units > 0)),
   ];
+  // PSF (per square foot) is the unit iProperty and EdgeProp quote, so it is
+  // kept beside 売買単価 — you need it to match a listing you found there.
+  const PSF = { sub: 'PSF' };
   if(upcoming){
-    cells.push(kv('Sale PSF', '未定', true));
+    cells.push(kv('売買単価', '未定', true, PSF));
     cells.push(kv('賃料 / 月', '未定', true));
   } else {
-    cells.push(kv('Sale PSF', c.salePsfMin > 0 ? `RM ${num(c.salePsfMin)}–${num(c.salePsfMax)}` : '—', !(c.salePsfMin > 0)));
+    cells.push(kv('売買単価', c.salePsfMin > 0 ? `RM ${num(c.salePsfMin)}–${num(c.salePsfMax)}` : '—', !(c.salePsfMin > 0), PSF));
     cells.push(kv('賃料 / 月', c.rentMin > 0 ? `RM ${num(c.rentMin)}–${num(c.rentMax)}` : '—', !(c.rentMin > 0)));
   }
   cells.push(kv('広さ', c.sizeMin > 0 ? `${num(c.sizeMin)}–${num(c.sizeMax)} sf` : '—', !(c.sizeMin > 0)));
-  cells.push(kv('Luxury スコア', c.luxScore > 0 ? `${c.luxScore} / 100` : '—', !(c.luxScore > 0)));
+  // Not a published figure: it is this app's own 100-point index, and the label
+  // has to say so or it reads as something the developer claims.
+  cells.push(kv('Luxuryスコア', c.luxScore > 0 ? `${c.luxScore} / 100` : '—', !(c.luxScore > 0),
+    { sub: '独自算出', hint: 'このアプリが独自に算出した100点満点の指標です（公表値ではありません）' }));
   let h = kvGrid(cells);
   if(c.fiabciAward){
     h += section('🏆 FIABCI Malaysia Property Award',
@@ -195,16 +246,24 @@ function condoDetail(c){
   }
   if(c.premiumScore > 0){
     const pf = [];
-    if(c.pLift) pf.push('🔑 Private Lift');
-    if(c.pConcierge) pf.push('🛎️ Concierge');
-    if(c.pLowDensity >= 3) pf.push('🏠 ≤3 units/floor');
-    else if(c.pLowDensity >= 2) pf.push('🏠 ≤5 units/floor');
-    else if(c.pLowDensity >= 1) pf.push('🏠 ≤8 units/floor');
-    if(c.pPool) pf.push('🏊 50m Pool');
-    if(c.pSkyLounge) pf.push('🌆 Sky Lounge');
-    if(c.pEV) pf.push('⚡ EV Charging');
-    h += section(`Premium Features (${c.premiumScore}/15)`,
-      `<div class="info-feature-list">${pf.join('　')}</div>`);
+    if(c.pLift) pf.push('🔑 専用エレベーター');
+    if(c.pConcierge) pf.push('🛎️ コンシェルジュ');
+    if(c.pLowDensity >= 3) pf.push('🏠 1フロア3戸以下');
+    else if(c.pLowDensity >= 2) pf.push('🏠 1フロア5戸以下');
+    else if(c.pLowDensity >= 1) pf.push('🏠 1フロア8戸以下');
+    if(c.pPool) pf.push('🏊 50mプール');
+    if(c.pSkyLounge) pf.push('🌆 スカイラウンジ');
+    if(c.pEV) pf.push('⚡ EV充電');
+    // Two facts, told as two: the list is WHICH facilities, the meta is HOW
+    // WELL EQUIPPED. They are not the same count — premium_score is weighted
+    // (private lift ×7, concierge ×2), so 「(12/15)」 printed on a heading above
+    // four items read as an error. Named separately, neither lies.
+    // One <span> per facility, not one run of text separated by spaces: Japanese
+    // breaks between any two characters, so 「1フロア3戸以下」 wrapped as 「1」 /
+    // 「フロア3戸以下」 at the panel's width. Each item now wraps as a unit.
+    h += section('主な設備',
+      `<div class="info-feature-list">${pf.map(f => `<span>${f}</span>`).join('')}</div>`,
+      `充実度 ${c.premiumScore}/15`);
   }
   return h;
 }
@@ -372,7 +431,11 @@ export function selectCondo(name, opts = {}){
   setSelectedCondo(name);
   const c=CONDOS.find(x=>x.name===name);
   if(c){
-    map.setView([c.lat, c.lng], 16);
+    // Do not move what the user just pressed: from a city-wide view the
+    // selection zooms in (you cannot see what you picked otherwise), but once
+    // you are comparing inside a neighbourhood the zoom is yours and the map
+    // only pans, and only far enough to get the pin out from under this panel.
+    focusOnRecord(c.lat, c.lng);
     // Redraw the markers so the newly selected one gets its accent ring and
     // leaves the cluster (spec 2.7 / audit D3). closeInfo() does the same on
     // the way out, which is what removes the ring again.

@@ -5,13 +5,14 @@ import {
   showAwardOnly, setShowAwardOnly, showKidOkOnly, setShowKidOkOnly,
   showWantOnly, setShowWantOnly, showUndoneOnly, setShowUndoneOnly,
   appMode, setAppMode, homeLayer, setHomeLayer, listView, setListView,
+  lastSortByLayer, setLastSortForLayer,
 } from '../state.js';
 import { TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
 import {
   parseR, matchesFilters, recordLayer, LAYER_LABELS, CURRICULA,
   CAT_GROUPS, MICHELIN_FILTERS, VENUE_TYPES, diningPriceCeiling,
 } from '../domain/filter.js';
-import { sortOptionsFor, comparatorFor, defaultSortFor, sortAvailable } from '../domain/sort.js';
+import { sortOptionsFor, comparatorFor, sortOnArrival } from '../domain/sort.js';
 import { map, rebuild } from './map.js';
 import { syncUrl } from './urlState.js';
 import {
@@ -118,6 +119,12 @@ export function doSort(){
 // ============================================================
 // LAYER CONTROL
 // ============================================================
+/**
+ * Bank the order in effect as the order of the layer we are about to leave, so
+ * coming back can restore it. Called on every path that changes the layer.
+ */
+function rememberSort(){ setLastSortForLayer(activeLayer, currentSort); }
+
 export function setLayer(layer){
   // 飲食 is not a 住まいモード layer (2026-08-07 ruling): anything that asks
   // for it there — an old ?layer=dining link, a dining row on the 周辺 tab —
@@ -130,10 +137,12 @@ export function setLayer(layer){
     return;
   }
   if(!LAYER_CONTROLS[layer] || layer === activeLayer) { syncLayerUI(); return; }
+  rememberSort();
   setActiveLayer(layer);
-  // Keep the chosen order when the new layer also offers it, otherwise fall
-  // back to that layer's default (e.g. "家賃 安い順" has no meaning for schools).
-  if(!sortAvailable(layer, currentSort, appMode)) setCurrentSort(defaultSortFor(layer, appMode));
+  // What this layer looked like last time wins; failing that the order you are
+  // carrying, when this layer offers it too; failing that the layer's default
+  // (e.g. "家賃 安い順" has no meaning for schools). See sortOnArrival().
+  setCurrentSort(sortOnArrival(layer, appMode, currentSort, lastSortByLayer));
   syncLayerUI();
   applyFilters();
   // A layer switch refines the current view rather than navigating to a new
@@ -158,18 +167,24 @@ export function setLayer(layer){
 export function setMode(mode, { silent = false } = {}){
   const next = mode === 'eatout' ? 'eatout' : 'home';
   if(next === appMode){ syncLayerUI(); return; }
+  // The mode switch is also a layer switch, so the order of the layer being
+  // left is banked here too — a trip through 外食モード must not delete the
+  // order you had built in 物件 (the same defect sortOnArrival() exists for).
+  rememberSort();
   if(next === 'eatout'){
     setHomeLayer(activeLayer);
     setAppMode('eatout');
     setActiveLayer('dining');
     setListView('ledger');
     // 台帳スコア順 is only offered here, and here it is the point of the list.
-    setCurrentSort(defaultSortFor('dining', 'eatout'));
+    // Nothing is carried across the mode boundary: 物件's order has no meaning
+    // over restaurants. Only 飲食's own remembered order can win over the default.
+    setCurrentSort(sortOnArrival('dining', 'eatout', null, lastSortByLayer));
   } else {
     setAppMode('home');
     setListView('ledger');
     setActiveLayer(homeLayer || 'condo');
-    if(!sortAvailable(activeLayer, currentSort, 'home')) setCurrentSort(defaultSortFor(activeLayer, 'home'));
+    setCurrentSort(sortOnArrival(activeLayer, 'home', currentSort, lastSortByLayer));
   }
   // The headline follows the mode — the audit flagged reading 「住まいマップ」
   // above a restaurant ledger as quiet disorientation.
@@ -344,6 +359,9 @@ export function toggleMore(){
 // ============================================================
 export function setSort(sel){
   setCurrentSort(sel.value);
+  // Choosing an order is the user stating it, so it is banked against this
+  // layer at once rather than only when the layer is left.
+  setLastSortForLayer(activeLayer, sel.value);
   doSort(); renderList();
 }
 

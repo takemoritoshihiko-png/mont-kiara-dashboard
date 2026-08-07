@@ -255,12 +255,26 @@ button,input,select{font-family:inherit}
 .info-tab-body{padding:var(--s3)}
 /* Key stats: label / value pairs on a 2-column grid */
 .kv-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3) var(--s2)}
-.kv-label{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;letter-spacing:.3px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* The key labels are Japanese now, so the caps transform is gone: it did
+   nothing to 日本語 and only stretched the few latin words (LUXURY) that still
+   have to fit a 134px column beside their source term. */
+.kv-label{font-size:var(--fs-label);color:var(--text-2);letter-spacing:.3px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* The source's own English term (PSF / NLA), kept beside the Japanese so a
+   listing on iProperty or EdgeProp can still be matched. Subordinate by weight
+   and tone, not by size — 11px is the bottom of the scale. */
+.kv-sub{font-size:var(--fs-label);font-weight:400;letter-spacing:0;opacity:.75}
 .kv-val{font-size:var(--fs-md);color:var(--text);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.2px;line-height:1.3;margin-top:1px}
 .kv-val.muted{color:var(--text-2);font-weight:500}
 /* Any further block of information: a hairline, a caps title, then the content. */
 .info-sec{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--hairline)}
-.info-sec-title{font-size:var(--fs-label);text-transform:uppercase;letter-spacing:.3px;color:var(--text-2);font-weight:700;margin-bottom:var(--s2)}
+.info-sec-title{font-size:var(--fs-label);text-transform:uppercase;letter-spacing:.3px;color:var(--text-2);font-weight:700;margin-bottom:var(--s2);display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2)}
+/* A second fact about the block (a score, a count) at the right of its title —
+   never smuggled into the title text, where a number reads as a count of what
+   is listed below it. */
+.info-sec-meta{font-weight:600;letter-spacing:0;white-space:nowrap;font-variant-numeric:tabular-nums;opacity:.9}
+/* A folded block replaces the title with its own summary, so it does not add a
+   second gap on top of the section's. */
+.info-sec>.data-details{margin-top:0}
 .info-sec-body{font-size:var(--fs-xs);color:var(--text);line-height:1.6}
 .info-fees{width:100%;font-size:var(--fs-xs);border-collapse:collapse;font-variant-numeric:tabular-nums}
 .info-fees td{padding:var(--s1) 0;border-bottom:1px solid var(--hairline)}
@@ -268,7 +282,10 @@ button,input,select{font-family:inherit}
 .info-fees td:last-child{text-align:right;font-weight:600;color:var(--text)}
 .info-fees tr:last-child td{border-bottom:none}
 .info-note{font-size:var(--fs-label);color:var(--text-2);margin-top:var(--s2);line-height:1.5}
-.info-feature-list{font-size:var(--fs-xs);color:var(--text);line-height:1.8}
+/* Each facility wraps as a unit — Japanese breaks between any two characters,
+   so a run of space-separated text split 「1フロア3戸以下」 across two lines. */
+.info-feature-list{font-size:var(--fs-xs);color:var(--text);line-height:1.6;display:flex;flex-wrap:wrap;gap:var(--s1) var(--s3)}
+.info-feature-list>span{white-space:nowrap}
 /* External links: one accent, text buttons, no filled colour blocks (audit C4) */
 .info-links{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s4);margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--hairline)}
 .info-link{font-size:var(--fs-sm);color:var(--accent);text-decoration:none;font-weight:600;white-space:nowrap}

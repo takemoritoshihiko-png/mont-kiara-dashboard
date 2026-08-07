@@ -111,6 +111,32 @@ export function sortAvailable(layer, key, mode = 'home'){
   return sortOptionsFor(layer, mode).some(o => o.value === key);
 }
 
+/**
+ * Which order to show a layer in when you arrive at it.
+ *
+ * The order matters, and it is not the obvious one:
+ *   1. what you last chose ON THAT LAYER, when that layer still offers it.
+ *      A layer you come back to looks the way you left it — otherwise a detour
+ *      (a 学校 tapped on the 周辺 tab) silently deletes the order you built,
+ *      because the detour's own fallback overwrote it on the way out.
+ *   2. otherwise the order you are carrying, when this layer offers it too
+ *      (「名前順」 means the same thing everywhere, so it travels).
+ *   3. otherwise the layer's default.
+ *
+ * Pure: the remembered map is passed in rather than read from state.
+ *
+ * @param {string} layer          the layer being switched TO
+ * @param {string} mode           'home' | 'eatout' — decides which options exist
+ * @param {string|null} carried   the sort in effect right now ('' / null = do not carry)
+ * @param {Object<string,string>} [remembered]  state.lastSortByLayer
+ */
+export function sortOnArrival(layer, mode, carried, remembered = {}){
+  const memo = remembered && remembered[layer];
+  if(memo && sortAvailable(layer, memo, mode)) return memo;
+  if(carried && sortAvailable(layer, carried, mode)) return carried;
+  return defaultSortFor(layer, mode);
+}
+
 /** Non-mutating sort, for tests and callers that need a copy. */
 export function sortRecords(list, key){
   return [...list].sort(comparatorFor(key));

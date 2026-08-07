@@ -25,6 +25,68 @@ export function labelModeForZoom(zoom) {
   return zoom >= LABEL_ZOOM ? 'permanent' : 'hover';
 }
 
+// ============================================================
+// WHAT SELECTING A RECORD DOES TO THE MAP
+// The rule is: do not move what the user just pressed.
+// Below OVERVIEW_ZOOM the map is a city and the pin you tapped is one of a
+// cluster of hundreds — there, zooming in to SELECT_ZOOM is the whole point of
+// the tap. At OVERVIEW_ZOOM and above you have already framed a neighbourhood
+// and are comparing inside it: re-centring would throw that frame away and
+// slide the pin out from under your finger. So the map only pans, and only if
+// the pin would otherwise sit under the detail overlay.
+// ============================================================
+export const OVERVIEW_ZOOM = 14;
+export const SELECT_ZOOM = 15;
+// The detail overlay is 300px wide at the map's top-left (48px below the top of
+// .main). The padding keeps the pin clear of it, plus a small margin.
+export const SELECT_PAN_PADDING = { paddingTopLeft: [320, 60], paddingBottomRight: [20, 20] };
+
+/**
+ * Pure helper: what a selection should do to the map at a given zoom.
+ * @returns {{action:'setView', zoom:number}|{action:'panInside'}}
+ */
+export function focusActionForZoom(zoom) {
+  return zoom < OVERVIEW_ZOOM ? { action: 'setView', zoom: SELECT_ZOOM } : { action: 'panInside' };
+}
+
+/**
+ * Pure helper: the padding to pan inside, given the map's pixel size.
+ *
+ * The overlay's 320px is a desktop measurement. On a 360px phone it would leave
+ * a 20px strip — and on anything narrower the padded rectangle would invert,
+ * which makes Leaflet's offset arithmetic pan the map somewhere arbitrary. So
+ * the padding never claims more than 60% of the width or 40% of the height:
+ * below that the pin may end up under the panel, which is recoverable, while a
+ * map that jumps is not.
+ *
+ * @param {{x:number,y:number}} size  map.getSize()
+ */
+export function panPaddingFor(size) {
+  const [x, y] = SELECT_PAN_PADDING.paddingTopLeft;
+  return {
+    paddingTopLeft: [
+      Math.min(x, Math.floor((size.x || 0) * 0.6)),
+      Math.min(y, Math.floor((size.y || 0) * 0.4)),
+    ],
+    paddingBottomRight: SELECT_PAN_PADDING.paddingBottomRight,
+  };
+}
+
+/**
+ * Bring a record into view without stealing the view the user built.
+ * Applies focusActionForZoom(); panInside() is Leaflet 1.9's "move the least
+ * amount that makes this point visible inside these paddings".
+ */
+export function focusOnRecord(lat, lng) {
+  if (!map) return;
+  const plan = focusActionForZoom(map.getZoom());
+  if (plan.action === 'setView') { map.setView([lat, lng], plan.zoom); return; }
+  // Guard against a CDN version without panInside: falling back to panTo still
+  // never changes the zoom, which is the part that must not be lost.
+  if (typeof map.panInside === 'function') map.panInside([lat, lng], panPaddingFor(map.getSize()));
+  else map.panTo([lat, lng]);
+}
+
 // Live binding: other modules import `map` and always see the current value.
 export let map = null;
 
