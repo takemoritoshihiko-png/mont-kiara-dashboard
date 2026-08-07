@@ -5,11 +5,12 @@ import {
   showAwardOnly, setShowAwardOnly, showKidOkOnly, setShowKidOkOnly,
   showWantOnly, setShowWantOnly, showUndoneOnly, setShowUndoneOnly,
   appMode, setAppMode, homeLayer, setHomeLayer, listView, setListView,
+  diningNear, setDiningNear, dayBudgetBasis, setDayBudgetBasis,
 } from '../state.js';
 import { TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
 import {
   parseR, matchesFilters, recordLayer, LAYER_LABELS, CURRICULA,
-  CAT_GROUPS, MICHELIN_FILTERS, VENUE_TYPES, diningPriceCeiling,
+  CAT_GROUPS, MICHELIN_FILTERS, VENUE_TYPES, diningPriceCeiling, budgetBasisOf,
 } from '../domain/filter.js';
 import { sortOptionsFor, comparatorFor, defaultSortFor, sortAvailable } from '../domain/sort.js';
 import { map, rebuild } from './map.js';
@@ -54,6 +55,15 @@ const LAYER_CONTROLS = {
   ],
 };
 
+/**
+ * 昼 or 夜 — the single basis every budget reader uses this render.
+ *
+ * The price band, the budget sort and the 予算中央値 tile all call THIS, so
+ * 「安い順に並べたのに価格帯フィルタは別の値を見ていた」 is not expressible.
+ * test/uxDining.test.js holds that invariant.
+ */
+export function currentBudgetBasis(){ return budgetBasisOf(dayBudgetBasis); }
+
 /** Read every control of the active layer into the criteria object. */
 export function readCriteria(){
   const layer = activeLayer;
@@ -80,7 +90,11 @@ export function readCriteria(){
     c.catGroup = val('fCatGroup');
     c.michelin = val('fMichelin');
     c.priceBand = val('fPriceBand');
+    c.priceBasis = currentBudgetBasis();
     c.diningArea = val('fDiningArea');
+    // 「近く: Mont Kiara」 lives in state, not in a control: it is set by the
+    // map's area jump, and the chip is what removes it again.
+    c.near = diningNear;
     c.venueType = val('fVenueType');
     c.kidOnly = showKidOkOnly;
     // The two personal conditions exist only in 外食モード, and the record map
@@ -116,7 +130,7 @@ export function applyFilters(){
 }
 
 export function doSort(){
-  filtered.sort(comparatorFor(currentSort));
+  filtered.sort(comparatorFor(currentSort, currentBudgetBasis()));
 }
 
 // ============================================================
@@ -327,12 +341,15 @@ export function syncLayerUI(){
   // only where the score is on screen.
   const sel = $('fSort');
   if(sel){
-    sel.innerHTML = sortOptionsFor(activeLayer, appMode)
+    // …and the basis, so 「予算 安い順（昼基準）」 says which sitting it ran on
+    // instead of silently meaning something else once the toggle is pressed.
+    sel.innerHTML = sortOptionsFor(activeLayer, appMode, currentBudgetBasis())
       .map(o => `<option value="${o.value}">${o.label}</option>`).join('');
     sel.value = currentSort;
   }
   syncAwardBtn();
   syncKidOkBtn();
+  syncDayBudgetBtn();
   syncWantBtn();
   syncUndoneBtn();
   renderSaveBar();
@@ -387,6 +404,30 @@ export function toggleKidOk(){
   applyFilters();
 }
 
+// 「☀ 昼の予算」 is NOT a narrowing toggle — it changes which figure 価格帯 /
+// 並び替え / 予算中央値 all read. 昼夜を2つのフィルタに割るほうは却下済み: the
+// list would then be ordered on one sitting and filtered on the other, and no
+// label on screen could explain the result.
+function syncDayBudgetBtn(){
+  const b = $('toggleDayBudget');
+  if(b){
+    b.classList.toggle('active', dayBudgetBasis);
+    b.setAttribute('aria-pressed', dayBudgetBasis ? 'true' : 'false');
+  }
+  // The 価格帯 caption carries the basis too: the dropdown's own values
+  // (「RM50-150」) are read long after the toggle was pressed.
+  const lab = $('fPriceBandLabel');
+  if(lab) lab.textContent = dayBudgetBasis ? '価格帯 (1人・昼基準)' : '価格帯 (1人・夜基準)';
+}
+
+export function toggleDayBudget(){
+  setDayBudgetBasis(!dayBudgetBasis);
+  // Through syncLayerUI(), not syncDayBudgetBtn() alone: the sort option
+  // LABELS carry the basis too and have to be rebuilt with it.
+  syncLayerUI();
+  applyFilters();
+}
+
 // 「★ 行きたい」「まだ行っていない」 — 外食モードだけの2つ。v9 held these in a
 // single-choice condition group, so 「行きたいのにまだ行っていない店」 — the one
 // question you actually open the app with — could not be asked (欠陥4). They are
@@ -436,6 +477,15 @@ export function activeChips(){
     chips.push({ id, label: label + ': ' + text });
   });
   if(activeLayer === 'condo' && showAwardOnly) chips.push({ id: 'toggleAward', label: '🏆 受賞のみ' });
+  // 「近く」 has no control of its own — the area jump sets it — so the chip is
+  // the ONLY thing that says it is on and the only way to turn it off.
+  if(activeLayer === 'dining' && diningNear){
+    chips.push({ id: 'diningNear', label: `近く: ${diningNear.label || 'この辺'}（${diningNear.km || ''}km）` });
+  }
+  // Not a narrowing filter but it changes what 価格帯 means, and the toggle
+  // that set it lives inside the folded 絞り込み — without a chip the basis is
+  // invisible from the list.
+  if(activeLayer === 'dining' && dayBudgetBasis) chips.push({ id: 'toggleDayBudget', label: '☀ 昼の予算' });
   if(activeLayer === 'dining' && showKidOkOnly) chips.push({ id: 'toggleKidOk', label: '👶 子連れ◎のみ' });
   if(eatoutActive() && showWantOnly) chips.push({ id: 'toggleWant', label: '★ 行きたい' });
   if(eatoutActive() && showUndoneOnly) chips.push({ id: 'toggleUndone', label: '未訪問' });
@@ -466,6 +516,10 @@ export function removeFilter(id){
   else if(id === 'toggleKidOk'){ setShowKidOkOnly(false); syncKidOkBtn(); }
   else if(id === 'toggleWant'){ setShowWantOnly(false); syncWantBtn(); }
   else if(id === 'toggleUndone'){ setShowUndoneOnly(false); syncUndoneBtn(); }
+  else if(id === 'diningNear'){ setDiningNear(null); }
+  // The map keeps the view it flew to — clearing the chip widens the LIST back
+  // out, it does not undo the navigation (fArea behaves the same way).
+  else if(id === 'toggleDayBudget'){ setDayBudgetBasis(false); syncLayerUI(); }
   else { const el = $(id); if(el) el.value = ''; }
   applyFilters();
 }
@@ -477,10 +531,14 @@ export function clearAllFilters(){
   setShowKidOkOnly(false);
   setShowWantOnly(false);
   setShowUndoneOnly(false);
+  setDiningNear(null);
+  setDayBudgetBasis(false);
   syncAwardBtn();
   syncKidOkBtn();
   syncWantBtn();
   syncUndoneBtn();
+  // Via syncLayerUI so the sort option labels lose 「（昼基準）」 with the basis.
+  syncLayerUI();
   const ids = new Set();
   Object.values(LAYER_CONTROLS).forEach(list => list.forEach(([id]) => ids.add(id)));
   ids.forEach(id => { const el = $(id); if(el) el.value = ''; });
@@ -789,11 +847,12 @@ export function updateSummary(){
       v3 = vis ? num(vis) : TILE_EMPTY;
       v4 = want ? num(want) : TILE_EMPTY;
     } else {
-      l3 = '★中央値'; l4 = '予算中央値';
+      l3 = '★中央値'; l4 = dayBudgetBasis ? '予算中央値(昼)' : '予算中央値';
       const mr = median(filtered.map(c => c.rating || 0));
-      // Same figure the 価格帯 filter and the budget sort use, so the tile can
-      // never quote a price the list does not order by.
-      const mp = median(filtered.map(diningPriceCeiling));
+      // Same figure AND same basis the 価格帯 filter and the budget sort use, so
+      // the tile can never quote a price the list does not order by.
+      const basis = currentBudgetBasis();
+      const mp = median(filtered.map(c => diningPriceCeiling(c, basis)));
       v3 = mr ? mr.toFixed(1) : TILE_EMPTY;
       v4 = mp ? 'RM ' + num(mp) : TILE_EMPTY;
     }

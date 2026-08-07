@@ -12,7 +12,7 @@ import { calcLedgerScores } from './domain/diningScore.js';
 import { initMap, jumpToArea, toggleLegend, togglePenangAreas, map } from './ui/map.js';
 import {
   applyFilters, applyFiltersDebounced, setSort, setLayer, setMode, setView, syncLayerUI, toggleMore, updateSummary,
-  toggleAward, toggleKidOk, toggleWantFilter, toggleUndoneFilter,
+  toggleAward, toggleKidOk, toggleDayBudget, toggleWantFilter, toggleUndoneFilter,
   togglePanel, clearSearch, removeFilter, clearAllFilters, showLoading,
 } from './ui/list.js';
 import {
@@ -48,6 +48,7 @@ window.setView = setView;
 window.toggleMore = toggleMore;
 window.toggleAward = toggleAward;
 window.toggleKidOk = toggleKidOk;
+window.toggleDayBudget = toggleDayBudget;
 window.toggleWantFilter = toggleWantFilter;
 window.toggleUndoneFilter = toggleUndoneFilter;
 // D4 外食モード: every one of these writes through src/data/personal.js and

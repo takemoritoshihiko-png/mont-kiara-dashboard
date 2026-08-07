@@ -1,8 +1,9 @@
 // Leaflet map: creation, markers, the map legend and area quick-jump.
 import {
   CONDOS, filtered, markers, setMarkers, legendOpen, setLegendOpen,
-  selectedCondo, activeLayer, appMode,
+  selectedCondo, activeLayer, appMode, setDiningNear,
 } from '../state.js';
+import { NEAR_KM } from '../domain/filter.js';
 import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
 import { selectCondo, closeInfo } from './info.js';
 
@@ -222,6 +223,9 @@ export function togglePenangAreas(){
   btn.textContent = open ? '🏝️ Penang ▾' : '🏝️ Penang ▸';
 }
 
+/** 全体 keys (KL全体 / PG全体) mean "stop narrowing", not "an area called 全体". */
+const isWholeRegion = (key) => key.startsWith('all-');
+
 export function jumpToArea(key){
   const a=AREA_CENTERS[key];if(!a)return;
   map.flyTo([a.lat,a.lng],a.zoom,{duration:0.8});
@@ -230,14 +234,27 @@ export function jumpToArea(key){
   if(btn)btn.classList.add('active');
   // The jump also FILTERS the list (audit: the map flying to Bangsar while
   // the list still said 271件 meant the two halves answered different
-  // questions). The jump keys and the fArea option values are 1:1
-  // (test/map.test.js guards it) except the parkcity spelling; 全体 keys
-  // clear the filter. The dining layer has its own area control, so its
-  // list is left alone. window.applyFilters avoids a circular import —
-  // main.js exposes it for the inline handlers anyway.
+  // questions). window.applyFilters avoids a circular import — main.js
+  // exposes it for the inline handlers anyway.
+  if(typeof window.applyFilters !== 'function') return;
+  if(activeLayer === 'dining'){
+    // 飲食 cannot use fArea: the condo area keys end in a Mont Kiara catch-all
+    // that would misfile every city-centre restaurant, and the ledger's own
+    // area labels (24 values) do not line up with the jump keys at all. So the
+    // dining half of the jump narrows by DISTANCE from the centre it just flew
+    // to — the same place the map is now showing. Before UX2 this branch did
+    // nothing, and 「MK の近くの店」 could not be asked for in one tap.
+    setDiningNear(isWholeRegion(key)
+      ? null
+      : { lat: a.lat, lng: a.lng, km: NEAR_KM, label: (btn && btn.textContent.trim()) || key });
+    window.applyFilters();
+    return;
+  }
+  // The jump keys and the fArea option values are 1:1 (test/map.test.js
+  // guards it) except the parkcity spelling.
   const fArea = document.getElementById('fArea');
-  if(fArea && activeLayer !== 'dining' && typeof window.applyFilters === 'function'){
-    fArea.value = key.startsWith('all-') ? '' : (key === 'parkcity' ? 'desa-parkcity' : key);
+  if(fArea){
+    fArea.value = isWholeRegion(key) ? '' : (key === 'parkcity' ? 'desa-parkcity' : key);
     window.applyFilters();
   }
 }

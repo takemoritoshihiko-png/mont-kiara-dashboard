@@ -52,6 +52,16 @@ export let showUndoneOnly = false;
 export let legendOpen = typeof window === 'undefined' || !window.matchMedia
   ? true : !window.matchMedia('(max-width: 768px)').matches;
 
+// UX2: 「近く: Mont Kiara」 — the dining layer's distance filter, set by the
+// area jump buttons. `{lat, lng, km, label}` or null. It is NOT the same axis
+// as fDiningArea (the ledger's own area label): the labels name a district,
+// this names a radius around where the map just flew to.
+export let diningNear = null;
+// UX2: 「昼の予算」. false = 夜基準 (the default). ONE flag, read by the price
+// band, the budget sort and the 予算中央値 tile alike — see budgetBasisOf() in
+// src/domain/filter.js for why there is no pair of 昼/夜 filters instead.
+export let dayBudgetBasis = false;
+
 export let sfActive = false;
 export let sfSelectedSchool = null;
 
@@ -75,5 +85,7 @@ export function setAppMode(v) { appMode = v; }
 export function setHomeLayer(v) { homeLayer = v; }
 export function setListView(v) { listView = v; }
 export function setLegendOpen(v) { legendOpen = v; }
+export function setDiningNear(v) { diningNear = v || null; }
+export function setDayBudgetBasis(v) { dayBudgetBasis = !!v; }
 export function setSfActive(v) { sfActive = v; }
 export function setSfSelectedSchool(v) { sfSelectedSchool = v; }

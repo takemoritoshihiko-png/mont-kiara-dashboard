@@ -118,9 +118,11 @@ describe('state is announced, not only drawn', () => {
   // (the mode switch and 外食モードの3ビュー) and a page-wide total would then
   // pass whichever control lost its markup.
   const SEGMENTS = [
-    // 3, not 4: 飲食 has no home-mode layer tab (2026-08-07 ruling) — it is
-    // reached through the 外食 mode switch instead.
-    { id: 'layerSeg', label: '表示する種別', tabs: 3, sample: 'data-layer="commercial"' },
+    // 4: 物件 / 学校 / 商業 are layers; the fourth (飲食 ↗) is an ENTRANCE — it
+    // hands over to 外食モード rather than becoming a home-mode layer (UX2).
+    // It is still a tab in the markup because it sits in, and is styled by,
+    // the same segmented control.
+    { id: 'layerSeg', label: '表示する種別', tabs: 4, sample: 'data-layer="dining"' },
     { id: 'modeSeg', label: 'モードを選ぶ', tabs: 2, sample: 'data-mode="eatout"' },
     { id: 'viewSeg', label: '外食モードの表示', tabs: 3, sample: 'data-view="log"' },
   ];

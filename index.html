@@ -535,9 +535,10 @@ button,input,select{font-family:inherit}
   /* ---- Touch targets ---- */
   .seg-btn{min-height:40px}
   .filter-group select,.filter-group input,.sort-select,.sf-age-row select{min-height:40px}
-  /* 飲食 (D3): its four dropdowns and the 子連れ toggle. The generic rules above
-     already reach them; they are named so this block visibly covers the layer. */
-  #fCatGroup,#fMichelin,#fPriceBand,#fDiningArea,#toggleKidOk{min-height:40px}
+  /* 飲食 (D3/UX2): its four dropdowns, the 子連れ toggle and the 昼の予算 basis
+     toggle. The generic rules above already reach them; they are named so this
+     block visibly covers the layer. */
+  #fCatGroup,#fMichelin,#fPriceBand,#fDiningArea,#toggleKidOk,#toggleDayBudget{min-height:40px}
   /* Two chips (michelin + category) now share the row under a dining name. */
   .card-chips .card-chip{max-width:calc(50% - var(--s1))}
 
@@ -654,13 +655,17 @@ button,input,select{font-family:inherit}
       <div class="summary-item"><div class="summary-val" id="sumStat4" aria-labelledby="sumStat4Label">–</div><div class="summary-label" id="sumStat4Label">家賃中央値</div></div>
     </div>
     <div class="filters">
-      <!-- 飲食に層タブは無い（2026-08-07 裁定: 住まいモードは 物件/学校/商業 の
-           3層、飲食店は外食モード専用）。飲食へは ヘッダーの「外食」切替で入る。
-           物件の周辺タブには飲食が出続け、そこから店を選ぶと外食モードへ移る。 -->
+      <!-- 飲食は住まいモードの「層」ではない（2026-08-07 裁定: 住まいモードは
+           物件/学校/商業 の3層、飲食店は外食モード専用）。4つ目のボタンは層では
+           なく外食モードへの入口で、押すと setLayer('dining') が setMode('eatout')
+           に読み替えられてモードごと移る（src/ui/list.js）。↗ と title は「ここから
+           出ていく」ことを見た目で言うためのもの。UX2 以前はこの入口が無く、飲食に
+           行く道はヘッダーの小さなモード切替だけだった。 -->
       <div class="layer-seg" id="layerSeg" role="tablist" aria-label="表示する種別">
         <button type="button" class="seg-btn active" data-layer="condo" role="tab" aria-selected="true" onclick="setLayer('condo')">🏠 物件</button>
         <button type="button" class="seg-btn" data-layer="school" role="tab" aria-selected="false" onclick="setLayer('school')">🎓 学校</button>
         <button type="button" class="seg-btn" data-layer="commercial" role="tab" aria-selected="false" onclick="setLayer('commercial')">🛒 商業</button>
+        <button type="button" class="seg-btn" data-layer="dining" role="tab" aria-selected="false" onclick="setLayer('dining')" title="外食モードを開く">🍽 飲食 ↗</button>
       </div>
       <!-- 外食モードでは層を選ぶ必要がない（飲食に固定）ので、同じ場所を
            台帳v9の3タブが引き継ぐ。表示の切替は syncLayerUI()。 -->
@@ -721,19 +726,31 @@ button,input,select{font-family:inherit}
           <div class="filter-group"><label for="fOpenYear">開業年</label><select id="fOpenYear" onchange="applyFilters()"><option value="">すべて</option><option value="0-2000">〜2000</option><option value="2001-2010">2001-2010</option><option value="2011-2020">2011-2020</option><option value="2021-2100">2021〜</option></select></div>
           <div class="filter-group"><label for="fAnchor">アンカー検索</label><input type="text" id="fAnchor" placeholder="例: Village Grocer" oninput="applyFilters()"></div>
         </div>
-        <!-- 飲食: the price band is judged on the TOP of the dinner range (the
-             lunch range stands in when dinner is not served) — see
-             diningPriceCeiling() in src/domain/filter.js. The エリア options are
-             built from restaurants.json, NOT from the fArea list below: the
-             condo areas end in a Mont Kiara catch-all that would misfile every
-             city-centre restaurant. -->
+        <!-- 飲食: the price band is judged on the TOP of one service's range —
+             夜 by default, 昼 while the toggle beside it is on — see
+             diningPriceCeiling() in src/domain/filter.js.
+             昼夜を「2つの絞り込み」に割るのは却下（並び替えは1つの順番しか持てず、
+             フィルタと食い違う）。基準を1つ切り替える形なので、価格帯・並び替え・
+             予算中央値は必ず同じ数字を読む。ラベルの「夜基準/昼基準」はJSが書き換える。 -->
         <div class="filter-row" data-layer-only="dining" style="display:none">
-          <div class="filter-group"><label for="fPriceBand">価格帯 (1人・夜基準)</label><select id="fPriceBand" onchange="applyFilters()"><option value="">すべて</option><option value="0-50">〜RM50</option><option value="50-150">RM50-150</option><option value="150-400">RM150-400</option><option value="400-">RM400〜</option></select></div>
+          <div class="filter-group"><label id="fPriceBandLabel" for="fPriceBand">価格帯 (1人・夜基準)</label><select id="fPriceBand" onchange="applyFilters()"><option value="">すべて</option><option value="0-50">〜RM50</option><option value="50-150">RM50-150</option><option value="150-400">RM150-400</option><option value="400-">RM400〜</option></select></div>
+          <div class="filter-group"><span class="fg-label">予算の基準</span><button type="button" class="chip-toggle" id="toggleDayBudget" aria-pressed="false" onclick="toggleDayBudget()" title="価格帯・並び替え・予算中央値を、夜ではなく昼の上限で見る">☀ 昼の予算</button></div>
+        </div>
+        <!-- エリア options are built from restaurants.json, NOT from the fArea
+             list below: the condo areas end in a Mont Kiara catch-all that would
+             misfile every city-centre restaurant. This is the ledger's own
+             district LABEL; 「近く: ○○」 (the jump bar's radius filter) is a
+             separate axis and the two combine. -->
+        <div class="filter-row" data-layer-only="dining" style="display:none">
           <div class="filter-group"><label for="fDiningArea">エリア</label><select id="fDiningArea" onchange="applyFilters()"><option value="">すべて</option></select></div>
+          <div class="filter-group"><label for="fVenueType">施設タイプ</label><select id="fVenueType" onchange="applyFilters()"><option value="">すべて</option></select></div>
         </div>
         <div class="filter-row" data-layer-only="dining" style="display:none">
-          <div class="filter-group"><label for="fVenueType">施設タイプ</label><select id="fVenueType" onchange="applyFilters()"><option value="">すべて</option></select></div>
-          <div class="filter-group"><span class="fg-label">子連れ</span><button type="button" class="chip-toggle" id="toggleKidOk" aria-pressed="false" onclick="toggleKidOk()" title="子ども連れで行きやすい店だけに絞る">👶 子連れ◎のみ</button></div>
+          <div class="filter-group"><span class="fg-label">子連れ</span>
+            <div class="fg-btns">
+              <button type="button" class="chip-toggle" id="toggleKidOk" aria-pressed="false" onclick="toggleKidOk()" title="子ども連れで行きやすい店だけに絞る">👶 子連れ◎のみ</button>
+            </div>
+          </div>
         </div>
         <!-- 外食モードだけ。2つは独立したトグルで、併用すると「行きたいのに
              まだ行っていない店」になる（台帳v9はどちらか一方しか選べなかった）。 -->
