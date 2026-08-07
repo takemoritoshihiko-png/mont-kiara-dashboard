@@ -86,3 +86,12 @@
 
 ### 裁定反映後の追加確定リスト（13店・D4マージ後にD6データ拡充バッチで台帳化）
 Kyomo / Kin Gyu / MT Hotpot / Vin's / Fire Izakaya(エリア=KLCC) / Cotta Cafe / Aftermeal Desserts / Jhol KL / TTDI Meat Point / Lamei Hotpot / Annalakshmi / Kanbe Ramen / Ombak Kitchen(Google実値の取得を条件とする)
+
+## F. P2候補15店の検証（2026-08-07夜・新スコープ=MK車30分圏/ペナン除外を適用）
+
+- **追加可(基準クリア) 4店**: Napa Thai(★4.5/723) / Marta's Kitchen(★4.3/2,013) / Bocado(★4.5/642・前回「★4.8/11件」は誤りと判明) / Lachér Patisserie(★4.4/554・2-3店舗の小規模チェーン=裁定E-2で採用可)
+- **要裁定 1店**: KUKI Vegan(★4.7/183・新店例外4.6/100は数値上クリアだが2023年11月開業=「新店」該当性に留保)
+- **基準未達で除外 5店**: Bistro Léa(242件<300) / Kenji(70件) / Baba Low(★4.0/3.8) / Peter's Pork Noodles(★4.1) / SS2 Wai Sek Kai(★3.8)
+- **チェーン除外 2店**: Paradise Dynasty(111店舗の国際チェーン) / Sushi Azabu(NY発Plan Do See系8店舗=小規模例外に非該当)
+- **閉店/圏外 1店**: Galah Gala(TTDI店閉店→KL East Mallへ移転=Cheras方面で30分圏外の可能性大)
+- **値未取得で保留 2店**: Aposto / UMI(Imperial Lexis)
