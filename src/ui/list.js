@@ -112,6 +112,10 @@ export function doSort(){
 // LAYER CONTROL
 // ============================================================
 export function setLayer(layer){
+  // 飲食 is not a 住まいモード layer (2026-08-07 ruling): anything that asks
+  // for it there — an old ?layer=dining link, a dining row on the 周辺 tab —
+  // is really asking for 外食モード, so go there instead of refusing.
+  if(layer === 'dining' && appMode !== 'eatout'){ setMode('eatout'); return; }
   if(!LAYER_CONTROLS[layer] || layer === activeLayer) { syncLayerUI(); return; }
   setActiveLayer(layer);
   // Keep the chosen order when the new layer also offers it, otherwise fall

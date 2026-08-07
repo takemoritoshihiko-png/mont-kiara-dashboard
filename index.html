@@ -624,11 +624,13 @@ button,input,select{font-family:inherit}
       <div class="summary-item"><div class="summary-val" id="sumStat4" aria-labelledby="sumStat4Label">–</div><div class="summary-label" id="sumStat4Label">Med.Rent</div></div>
     </div>
     <div class="filters">
+      <!-- 飲食に層タブは無い（2026-08-07 裁定: 住まいモードは 物件/学校/商業 の
+           3層、飲食店は外食モード専用）。飲食へは ヘッダーの「外食」切替で入る。
+           物件の周辺タブには飲食が出続け、そこから店を選ぶと外食モードへ移る。 -->
       <div class="layer-seg" id="layerSeg" role="tablist" aria-label="表示する種別">
         <button type="button" class="seg-btn active" data-layer="condo" role="tab" aria-selected="true" onclick="setLayer('condo')">🏠 物件</button>
         <button type="button" class="seg-btn" data-layer="school" role="tab" aria-selected="false" onclick="setLayer('school')">🎓 学校</button>
         <button type="button" class="seg-btn" data-layer="commercial" role="tab" aria-selected="false" onclick="setLayer('commercial')">🛒 商業</button>
-        <button type="button" class="seg-btn" data-layer="dining" role="tab" aria-selected="false" onclick="setLayer('dining')">🍽 飲食</button>
       </div>
       <!-- 外食モードでは層を選ぶ必要がない（飲食に固定）ので、同じ場所を
            台帳v9の3タブが引き継ぐ。表示の切替は syncLayerUI()。 -->

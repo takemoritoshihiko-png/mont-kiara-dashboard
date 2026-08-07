@@ -1,7 +1,7 @@
 // Leaflet map: creation, markers, the map legend and area quick-jump.
 import {
   CONDOS, filtered, markers, setMarkers, legendOpen, setLegendOpen,
-  selectedCondo, activeLayer,
+  selectedCondo, activeLayer, appMode,
 } from '../state.js';
 import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
 import { selectCondo } from './info.js';
@@ -340,6 +340,11 @@ export function rebuild(){
   const ns=new Set(filtered.map(c=>c.name));
   CONDOS.forEach(c=>{
     const type=markerType(c);
+    // Restaurants belong to 外食モード only (2026-08-07 ruling): in 住まいモード
+    // they are not a selectable layer, so their pins stay off the map too.
+    // They still appear on every record's 周辺 tab, which is where the
+    // "good food within walking distance" question actually gets asked.
+    if(type==='dining'&&appMode!=='eatout')return;
     const isActive=type===activeLayer;
     if(isActive&&!ns.has(c.name))return;
     const m=mkMarker(c,!isActive);markers[c.name]=m;

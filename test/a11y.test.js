@@ -118,7 +118,9 @@ describe('state is announced, not only drawn', () => {
   // (the mode switch and 外食モードの3ビュー) and a page-wide total would then
   // pass whichever control lost its markup.
   const SEGMENTS = [
-    { id: 'layerSeg', label: '表示する種別', tabs: 4, sample: 'data-layer="dining"' },
+    // 3, not 4: 飲食 has no home-mode layer tab (2026-08-07 ruling) — it is
+    // reached through the 外食 mode switch instead.
+    { id: 'layerSeg', label: '表示する種別', tabs: 3, sample: 'data-layer="commercial"' },
     { id: 'modeSeg', label: 'モードを選ぶ', tabs: 2, sample: 'data-mode="eatout"' },
     { id: 'viewSeg', label: '外食モードの表示', tabs: 3, sample: 'data-view="log"' },
   ];
