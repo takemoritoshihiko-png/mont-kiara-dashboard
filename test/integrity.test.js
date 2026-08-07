@@ -92,6 +92,31 @@ describe('condos: value checks', () => {
   });
 });
 
+describe('schools_detail.json: contract with schools_data.csv', () => {
+  const detail = JSON.parse(read('schools_detail.json'));
+  const csvNames = schools.map((r) => r.name);
+
+  it('every detail key matches a CSV school name exactly (app lookup key)', () => {
+    const orphans = Object.keys(detail).filter((k) => !csvNames.includes(k));
+    expect(orphans).toEqual([]);
+  });
+  it('every CSV school has a detail entry', () => {
+    const missing = csvNames.filter((n) => !detail[n]);
+    expect(missing).toEqual([]);
+  });
+  it('fees are numbers (8k-200k RM) or null', () => {
+    const bad = [];
+    for (const [name, d] of Object.entries(detail)) {
+      for (const [grade, fee] of Object.entries(d.fees ?? {})) {
+        if (fee !== null && (typeof fee !== 'number' || fee < 8000 || fee > 200000)) {
+          bad.push(`${name}/${grade}: ${fee}`);
+        }
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+});
+
 describe('commercial / schools: value checks', () => {
   it('commercial numeric fields are positive', () => {
     const bad = commercials.filter((r) => !(num(r.tenants) > 0) || !(num(r.nla_sqft) > 0));

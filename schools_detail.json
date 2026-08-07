@@ -227,5 +227,427 @@
     "top_nationalities": "Not disclosed per campus; 55+ nationalities across all Fairview campuses",
     "japanese_community": "Not specifically highlighted",
     "student_count_note": "~300-500 (estimated)"
+  },
+  "International School of Kuala Lumpur (ISKL)": {
+    "brand": "International School of Kuala Lumpur (non-profit, independent)",
+    "philosophy": "個人学習パスの重視と包含的で思いやりのある環境における個人の成長と自己指導学習を通じて、グローバル市民の育成を目指す。",
+    "fees_url": "https://www.iskl.edu.my/admissions/iskl-fees",
+    "admissions_url": "https://www.iskl.edu.my/admissions/",
+    "fees": {
+      "Prep Reception": 70200,
+      "Prep Senior": 115600,
+      "Grade 6": 130600,
+      "Grade 12": 143400
+    },
+    "other_fees": "応募手数料RM1,800(返金不可)、生徒登録料RM59,000(1回限り、Prep Senior～Grade 12対象)、入学デポジットRM4,400～RM10,200(授業料に含まれます)。SST 6%適用(年額60,000RM超の場合)",
+    "nationalities": 70,
+    "top_nationalities": "英国、カナダ、オランダ、ノルウェー、日本、オーストラリア、インドネシア、コロンビア、パキスタン国籍が主要。世界言語として日本語教育を提供。",
+    "japanese_community": "日本人を含む複数の国籍が代表されており、世界言語の一つとして日本語教育が実施されている。",
+    "student_count_note": "約1,600名（3～18歳）",
+    "source_note": "https://www.iskl.edu.my/ (2026-2027学年度)"
+  },
+  "Alice Smith School": {
+    "brand": "The Alice Smith School (非営利イギリス系インターナショナルスクール)",
+    "philosophy": "学生の個人的成長とパーパスドリブン教育を通じて、大胆な探究を促進し『より良い世界を実現する』というミッションの下、キャリアから学習への移行を支援する。",
+    "fees_url": "https://www.alice-smith.edu.my/join/tuition-and-fees",
+    "admissions_url": "https://www.alice-smith.edu.my/join/",
+    "fees": {
+      "Kindergarten 1": 53730,
+      "Grade 1": 89070,
+      "Grade 7": 112950,
+      "Grade 12": 122370
+    },
+    "other_fees": "応募手数料RM1,500(申請時支払)、入学料RM20,000(返金不可；幼稚園/Reception RM5,000+Grade 1進級時RM15,000)、会員費RM20、保護者デポジットRM15,000(幼稚園～Reception)またはRM24,000(Grade 1～13)(返金可能)。SST 6%適用(年額60,000RM超の場合)",
+    "nationalities": 50,
+    "top_nationalities": "英国、アイルランド、ニュージーランド、オーストラリア出身者が34%。他多数の国籍も代表。",
+    "japanese_community": "日本人学生が在籍。日本文化の祝賀イベント(Japan Foundation Day、天皇誕生日)や日本語教育が学校教育に統合されている。",
+    "student_count_note": "約1,500名",
+    "source_note": "https://www.alice-smith.edu.my/ (2026-2027学年度)"
+  },
+  "Garden International School (GIS)": {
+    "brand": "Garden International School (Taylor's Schools network傘下)",
+    "philosophy": "全体的でパーソナライズされたカリキュラムを通じて、勇敢で優秀で好奇心が強い若者を育成し、世界的視点と他者への成長への約束を育みながら『あなたの中にはもっとある』の校訓を実現する。",
+    "fees_url": "https://www.gardenschool.edu.my/admissions/school-fees/",
+    "admissions_url": "https://www.gardenschool.edu.my/admissions/",
+    "fees": {
+      "Nursery": 52440,
+      "Grade 1": 88170,
+      "Grade 7": 118170,
+      "Grade 12": 126870
+    },
+    "other_fees": "応募手数料RM1,590(SST 6%含む、返金不可)、登録料(幼稚園/Reception)RM10,000、登録料(Grade 1以上)RM20,000、デポジット(各学年の授業料に相当)。SST 6%適用",
+    "nationalities": 65,
+    "top_nationalities": "65以上の国籍から約2,000人の学生が在籍。マレーシア人が35%、次に英国籍が多数。",
+    "japanese_community": "未確認",
+    "student_count_note": "約2,000名",
+    "source_note": "https://www.gardenschool.edu.my/ (2026-2027学年度)"
+  },
+  "British International School of KL (BSKL)": {
+    "brand": "The British International School of Kuala Lumpur (Nord Anglia Education傘下)",
+    "philosophy": "英国国家カリキュラムに基づく個人化学習を通じて、『Be Ambitious』の理念の下、学生の幸福と野心を育成し、創意工夫と回復力を備えたグローバル市民を育てることを目指す。",
+    "fees_url": "https://www.nordangliaeducation.com/bskl-kuala-lumpur/admissions/tuition-fees",
+    "admissions_url": "https://www.nordangliaeducation.com/bskl-kuala-lumpur/admissions/",
+    "fees": {
+      "Nursery": 58935,
+      "Reception": 71245,
+      "Grade 1": 94300,
+      "Grade 9": 106790,
+      "Grade 12": 127605
+    },
+    "other_fees": "応募手数料RM1,500(返金不可)、入学料RM18,000(家族単位、返金不可ただし3ヶ月通知で部分返金可)。兄弟割引5%(3人以上在籍時)。SST 6%適用。年間払い割引あり。",
+    "nationalities": 60,
+    "top_nationalities": "60以上の国籍から学生が在籍。約70%が国際派。多様な国籍が学校コミュニティを構成。",
+    "japanese_community": "主要4言語(マンダリン、フランス語、スペイン語、バハサマレー)に加えて、日本語やドイツ語の言語学習も提供。",
+    "student_count_note": "約1,100～1,470名",
+    "source_note": "https://www.nordangliaeducation.com/bskl-kuala-lumpur/ (2026-2027学年度)"
+  },
+  "Mont Kiara International School (MKIS)": {
+    "brand": "Mont'Kiara International School (2026年8月よりNord Anglia Education傘下)",
+    "philosophy": "思いやりのある独立した責任ある世界市民の育成を目指し、個人化された学習を通じて急速に変わる世界の課題に対応できる学生の育成を実現する。",
+    "fees_url": "https://www.mkis.edu.my/school-fees-2025---2026-",
+    "admissions_url": "https://www.mkis.edu.my/admissions/",
+    "fees": {
+      "Kindergarten 1": 38920,
+      "Grade 1": 108604,
+      "Grade 6": 121074,
+      "Grade 12": 132940
+    },
+    "other_fees": "応募手数料RM1,802(1回限り)、年間再登録料RM2,400。英語能力評価料RM1,200(必要な場合)、入学料(Pre-K3/Pre-K4無料～Grade 1-12: RM28,000)。兄弟割引: 第2子2%、第3子3%、第4子以上4%。EAL集中支援RM5,000/学期またはRM2,000/学期。SST 6%適用",
+    "nationalities": 50,
+    "top_nationalities": "50以上の国籍が代表されており、真の国際的コミュニティを形成している。多様な背景の学生が共に学ぶ環境。",
+    "japanese_community": "未確認",
+    "student_count_note": "具体的な在籍者数は不明（1994年創立の歴史あり）",
+    "source_note": "https://www.mkis.edu.my/ (2026-2027学年度)"
+  },
+  "The International School @ ParkCity (ISP)": {
+    "brand": "The International School @ ParkCity",
+    "philosophy": "生徒中心の学習アプローチを通じて、創造的思考と実践を促進し、生涯学習の習慣を育成しながら、学生の幸福と安全を学習の中核に位置づける。",
+    "fees_url": "https://isp.edu.my/admissions/fees/",
+    "admissions_url": "https://isp.edu.my/admissions/",
+    "fees": {
+      "Kindergarten 1": 25800,
+      "Grade 1": 54600,
+      "Grade 7": 77400,
+      "Grade 12": 87000
+    },
+    "other_fees": "応募手数料RM1,500(返金不可)、登録料: 幼稚園/Reception RM2,000、Grade 1～11 RM20,000、Grade 12-13 RM10,000。デポジット(1学期の授業料相当)。Desa ParkCity居住者/所有者に登録料25%割引。兄弟割引: 第3子5%、第4子以上10%。SST 6%適用",
+    "nationalities": 60,
+    "top_nationalities": "60以上の国籍の学生が在籍し、約50～60の国籍が代表される国際的コミュニティを形成。",
+    "japanese_community": "未確認",
+    "student_count_note": "約1,700名",
+    "source_note": "https://isp.edu.my/ (2026-2027学年度)"
+  },
+  "IGB International School (IGBIS)": {
+    "brand": "IGB International School (IGB Berhad傘下)",
+    "philosophy": "好奇心が強く開放的で思いやりのある若者を育成し、複雑な地域・グローバル課題に対応する批判的思考能力を備えた、原則的なグローバル市民の育成を目指す。",
+    "fees_url": "https://igbis.edu.my/admissions/fee/",
+    "admissions_url": "https://igbis.edu.my/admissions/",
+    "fees": {
+      "Kindergarten 1": 50800,
+      "Grade 1": 86500,
+      "Grade 7": 102400,
+      "Grade 12": 118200
+    },
+    "other_fees": "応募手数料RM1,000(返金不可)、入学料RM7,500～RM25,000(学年による)、デポジット(返金可)RM10,000～RM20,000。IT/ソフトウェア支援RM1,300～1,400/学期。ESOLまたは学習支援RM5,000/学期。兄弟割引: 第2子5%授業料・25%入学料、第3子以上10%授業料・50%入学料。SST 6%適用",
+    "nationalities": 35,
+    "top_nationalities": "35以上の国籍の学生が在籍し、多様で国際的なコミュニティを形成。",
+    "japanese_community": "未確認",
+    "student_count_note": "具体的な在籍者数は不明",
+    "source_note": "https://igbis.edu.my/ (2026-2027学年度)"
+  },
+  "St Joseph Institution International (SJII)": {
+    "brand": "St. Joseph's Institution International School Malaysia (ラッサール修道会ネットワーク傘下)",
+    "philosophy": "300年のラッサール伝統に基づき、信仰・奉仕・コミュニティ・卓越性・尊重を重視しながら、教育を自己発見・人格形成・力づけの旅として位置づけ、人命と倫理を優先する。",
+    "fees_url": "https://www.sji-international.edu.my/admissions-information/",
+    "admissions_url": "https://www.sji-international.edu.my/admissions-information/",
+    "fees": {
+      "Kindergarten 1": 35745,
+      "Grade 1": 67491,
+      "Grade 7": 87192,
+      "Grade 12": 100911
+    },
+    "other_fees": "応募手数料RM1,500(現金または小切手)。初年度登録: 応募料・入学料・保証金RM19,000(1回限り合計)。2026-2027学年度全授業料にSST 6%適用。兄弟割引: 第2子3%授業料・20%入学料、第3子5%授業料・30%入学料、第4子以上8%授業料・40%入学料。",
+    "nationalities": 31,
+    "top_nationalities": "31ヶ国の学生が在籍し、多国籍の国際的コミュニティを形成。",
+    "japanese_community": "未確認",
+    "student_count_note": "約1,000名",
+    "source_note": "https://www.international-schools-database.com/in/kuala-lumpur/st-joseph's-institution-international-school-malaysia-kuala-lumpur/fees (2025-2026学年度)"
+  },
+  "ELC International School": {
+    "brand": "elc International School Malaysia (Zaum Sdn Bhd)",
+    "philosophy": "Learning That Matters - 東西の教育を融合し、学生が変化する世界で繁栄するために必要なスキル、価値観、自信を育成します。",
+    "fees_url": "https://www.elc.edu.my/fee-structure/",
+    "admissions_url": "https://www.elc.edu.my/admissions/",
+    "fees": {
+      "Year 1": 21000,
+      "Year 6": 36000,
+      "Year 7": 42000,
+      "Year 11": 51000,
+      "Year 12-13": 51000
+    },
+    "other_fees": "入学金RM8,000(非返金)、登録料RM1,000(非返金)、デポジット=1学期分の授業料(返金可)。年間授業料RM60,000を超える場合SST 6%適用。",
+    "nationalities": null,
+    "top_nationalities": "未確認",
+    "japanese_community": "未確認",
+    "student_count_note": "約750名(最大750名のキャップ、クラスサイズ最大20名)",
+    "source_note": "fees from https://www.elc.edu.my/fee-structure/ (2025-2026 academic year); student count from https://www.elc.edu.my/about-us/"
+  },
+  "Nexus International School": {
+    "brand": "Nexus International School Malaysia (Garden International School Sdn. Bhd傘下)",
+    "philosophy": "The Nexus Way - 関係性、包括性、イノベーション、マインドセットの4つの柱に基づき、21世紀スキルを備えた世界志向の学習者を育成します。",
+    "fees_url": "https://www.nexus.edu.my/admissions/school-fees/",
+    "admissions_url": "https://www.nexus.edu.my/admissions/",
+    "fees": {
+      "Nursery": 46050,
+      "Reception": 48960,
+      "Year 1-2": 59460,
+      "Year 7": 86040,
+      "Year 10-11": 100020,
+      "Year 12-13": 108420
+    },
+    "other_fees": "出願料RM1,300(非返金)、登録料RM10,000-RM20,000(Early Yearsと年1-13で異なる)、デポジット=1学期分の授業料。年間授業料RM60,000超の場合SST 6%適用。",
+    "nationalities": 60,
+    "top_nationalities": "15以上の国籍(マレーシア、中国、英国、韓国、インド、日本、バングラデシュを含む)。日本は国際寮生(100名以上)の約4-6%を占めます。",
+    "japanese_community": "国際寮プログラムに日本からの生徒が含まれています(約4-6%)。",
+    "student_count_note": "約100名以上の国際寮生を含む。総生徒数は記載なし。",
+    "source_note": "fees from https://www.nexus.edu.my/admissions/school-fees/ (2025-2026); demographics from school website and web search results"
+  },
+  "Lycee Francais de KL (LFKL)": {
+    "brand": "Lycée Français de Kuala Lumpur (AEFE傘下、非営利教育機関)",
+    "philosophy": "フランス教育の卓越性を多文化環境で実践し、複言語教育と国際的視点を重視した教育を提供します。",
+    "fees_url": "https://www.lfkl.edu.my/school-fees/",
+    "admissions_url": "https://www.lfkl.edu.my/admission-lfkl/",
+    "fees": {
+      "Kindergarten": 29800,
+      "Elementary": 35900,
+      "Middle School": 43400,
+      "High School": 47900
+    },
+    "other_fees": "出願料RM8,800(初年度年少・年中)またはRM13,200(その他)、デポジットRM13,000全学年共通。国際セクション補足料RM9,500/年(オプション)。記載料金は個人レート。法人レートはRM41,300-RM63,000。",
+    "nationalities": 44,
+    "top_nationalities": "44カ国の多様な国籍構成。フランス系、アジア太平洋地域からの生徒が多い。",
+    "japanese_community": "日本からの家族が在籍している(親の証言あり)。具体的な生徒数比率は不明。",
+    "student_count_note": "約680名(3-18歳)、44カ国から構成。",
+    "source_note": "fees from https://www.lfkl.edu.my/school-fees/ (2025-2026年度用); student count and nationalities from https://www.lfkl.edu.my/the-school-2/"
+  },
+  "Sunway International School": {
+    "brand": "Sunway International Schools (Sunway Education傘下)",
+    "philosophy": "Nurturing Minds, Building Character - 学業優秀性と東西の価値観を兼ね備え、団結、思いやり、正直さ、尊重、共感の時代を超えた価値を育成します。",
+    "fees_url": "未確認",
+    "admissions_url": "https://sunwayschools.edu.my/admissions",
+    "fees": {
+      "Kindergarten": 45000,
+      "Grade 1-3": 55000,
+      "Grade 4-6": 65000,
+      "Year 7-9": 70000
+    },
+    "other_fees": "登録料RM5,500-RM7,600(学年による)、返金可能なデポジットRM5,000、国際生対象の管理料RM750/学期。年間授業料RM60,000超の場合SST 6%適用。",
+    "nationalities": 50,
+    "top_nationalities": "50以上の国籍。具体的な国別構成は未公開。",
+    "japanese_community": "未確認",
+    "student_count_note": "約1,250名(収容能力2,250名)。幼稚園~第6学年、IB Diploma Programmeに対応。",
+    "source_note": "fees from search results (2026年度情報); admissions from https://sunwayschools.edu.my/admissions; enrollment from Schrole profile"
+  },
+  "Fairview International School": {
+    "brand": "Fairview International School (複数キャンパスネットワーク)",
+    "philosophy": "生涯学習者を育成し、学問的卓越性、個人の成長、社会責任、グローバル市民性に重きを置き、創造性、批判的思考、問題解決スキルを促進します。",
+    "fees_url": "https://fairview.edu.my/school-admission/school-fees/",
+    "admissions_url": "https://fairview.edu.my/school-admission/admission-information/",
+    "fees": {
+      "Reception": 25000,
+      "Year 1": 30000,
+      "Year 2": 32000,
+      "Year 5": 40000,
+      "Year 6": 40000,
+      "Year 7-9": 48000,
+      "Year 10-13": 52000
+    },
+    "other_fees": "出願料RM1,000(非返金)、登録料RM2,500(PYP)またはRM5,000(MYP/DP、非返金)。",
+    "nationalities": 65,
+    "top_nationalities": "65カ国以上を代表する多様な国際コミュニティ。マレーシア、イギリス、オーストラリア、アメリカなど。",
+    "japanese_community": "未確認",
+    "student_count_note": "KLキャンパスの詳細不明。全ネットワーク(マレーシア6キャンパス+タイ+英国)で約4,000名、65カ国以上から。",
+    "source_note": "fees from https://fairview.edu.my/school-admission/school-fees/ (2025-2026年度)"
+  },
+  "Sri KDU International School": {
+    "brand": "Sri KDU Schools (XCL Education Malaysia傘下)",
+    "philosophy": "安全で幸せで成功した学習者を育成し、MYLeaderプログラムを通じて適応力、批判的思考、コミュニケーション、協働、共感的なリーダーシップを開発します。",
+    "fees_url": "https://srikdu.edu.my/kota-damansara-international/fee-structure/",
+    "admissions_url": "https://srikdu.edu.my/kota-damansara-international/",
+    "fees": {
+      "EYFS 1-2": 25200,
+      "Year 1": 41310,
+      "Year 5-6": 59050,
+      "Year 9": 69040,
+      "Year 11": 81420,
+      "Year 12-13": 59500
+    },
+    "other_fees": "出願料RM1,500、登録料RM9,000-RM10,000、デポジットRM8,000-RM10,000。兄弟姉妹割引あり(2番目10%、3番目15%、4番目以降20%)。",
+    "nationalities": null,
+    "top_nationalities": "未確認",
+    "japanese_community": "未確認",
+    "student_count_note": "約1,000名(複数キャンパス総計)。コタダマンサラ国際キャンパス単体の数は不明。",
+    "source_note": "fees from https://srikdu.edu.my/kota-damansara-international/fee-structure/ (2026-2027年度)"
+  },
+  "Cempaka International School": {
+    "brand": "Cempaka Schools (ダマンサラハイツおよびチェラスキャンパス)",
+    "philosophy": "勤勉と規律、グローバルな適応力と弾力性、家族中心のアイデンティティの3つの柱に基づき、喜び、意味、永続性のある学習の旅を創造します。",
+    "fees_url": "https://cdh.cempaka.edu.my",
+    "admissions_url": "https://cempaka.schoolscan.xyz/enquiry/cdh",
+    "fees": {
+      "Year 1-2": 57210,
+      "Year 3-4": 61500,
+      "Year 5-6": 67410,
+      "Year 7": 73380,
+      "Year 8-9": 57300,
+      "Year 10-11": 69900
+    },
+    "other_fees": "出願料RM12,000、デポジットRM15,000。年間3学期制、RM60,000超でSST 6%適用。年3-5%の値上げが予定。兄弟姉妹デポジット割引50-75%。",
+    "nationalities": null,
+    "top_nationalities": "未確認",
+    "japanese_community": "未確認",
+    "student_count_note": "約850名-2,000名(情報源により異なる)。ダマンサラハイツキャンパス単体の正確な数字は不明。",
+    "source_note": "fees from https://cdh.cempaka.edu.my and international-schools-database.com (2025-2026年度); enrollment figures conflict between sources"
+  },
+  "Taylor's International School": {
+    "brand": "Taylor's International School (Taylor's Education Group傘下)",
+    "philosophy": "Raise Them Ready - 学業優秀さと東西の価値観を組み合わせ、関連性があり、責任感があり、弾力性のあるグローバルシティズンを育成します。",
+    "fees_url": "https://www.tis.edu.my/admissions/school-fees/",
+    "admissions_url": "https://www.tis.edu.my/admissions/admissions-overview/",
+    "fees": {
+      "Nursery": 19080,
+      "Reception": 19080,
+      "Year 1": 26400,
+      "Year 3": 31860,
+      "Year 5": 37830,
+      "Year 7": 47070,
+      "Year 9": 51480,
+      "Year 10-11": 55050
+    },
+    "other_fees": "出願料RM1,000(非返金)、登録料RM5,000-RM6,000(非返金)、デポジットRM2,000(Early Years)または1学期分授業料相当(Primary・Secondary)。3学期制。年間授業料RM60,000超の場合SST 6%適用。",
+    "nationalities": 40,
+    "top_nationalities": "約40カ国の国籍。生徒構成は約50%マレーシア人、50%国際生。中国系、マレー系、インド系が主流。",
+    "japanese_community": "未確認",
+    "student_count_note": "約1,400名以上(KLキャンパスのみ、2019年データ)。プチョン校を含むと3,000名以上。",
+    "source_note": "fees from https://www.tis.edu.my/admissions/school-fees/ (2026年度情報)"
+  },
+  "Australian International School (AISM)": {
+    "brand": "AISM / Taylor's Schools",
+    "philosophy": "教育は学問成績だけでなく、自信に満ちた好奇心旺盛で思いやりのある個人の育成に焦点を当てています。世界初のCertified Visible Learning学校として、学生の主体性と学習効果を最大化します。",
+    "fees_url": "https://aism.edu.my/admissions-overview/school-fees/",
+    "admissions_url": "https://aism.edu.my/admissions-overview/",
+    "fees": {
+      "Year 1": 62640,
+      "Year 7": 82440,
+      "Year 12": 97599
+    },
+    "other_fees": "申請料RM1,000-1,300、入学金RM10,000-20,000(Year 12直接入学は免除)、施設預金は1学期分の授業料相当。SST 6%適用(年間授業料RM60,000超)、年間先払い時3%割引あり。",
+    "nationalities": 30,
+    "top_nationalities": "オーストラリア国籍の学生とエクスパット(駐在員家族)が大多数で、30以上の国籍の多様な学生が在籍。",
+    "japanese_community": "未確認",
+    "student_count_note": "650名以上が在籍し、現在キャパシティは満員状態。1000名規模への拡張計画あり。",
+    "source_note": "2026年度費用。https://aism.edu.my/admissions-overview/school-fees/ から取得(2026年度の授業料据置を公表)"
+  },
+  "GEMS International School": {
+    "brand": "GEMS (Global Education Management Systems)",
+    "philosophy": "安全で幸福で成功した学習者の育成を目指し、学生の回復力と適応力、ならびに学問的卓越性と人格育成を重視します。",
+    "fees_url": "https://metropark.gems.edu.my/fee-structure/",
+    "admissions_url": "https://metropark.gems.edu.my/",
+    "fees": {
+      "Year 1-3": 30625,
+      "Year 7-9": 42850,
+      "Year 13": 47875
+    },
+    "other_fees": "登録料RM1,000(一回限り、返金不可)。兄弟姉妹割引: 2番目の子10%、3番目以降各15%。教科書・制服・交通・EAL特別プログラム・外部試験料等は別途。",
+    "nationalities": null,
+    "top_nationalities": "国際生25%とローカル生75%が在籍。",
+    "japanese_community": "未確認",
+    "student_count_note": "正確な生徒数は未確認。FS1からYear 13まで(年齢3-18歳)が対象。",
+    "source_note": "2025-2026年度費用。international-schools-database.com から取得(年額RM26,250-50,000範囲から具体額取得)"
+  },
+  "Tenby International School (Setia Eco Park)": {
+    "brand": "International Schools Partnership (ISP) / Tenby Schools",
+    "philosophy": "ホリスティック教育アプローチで、個々の学習者の声と選択肢を尊重し、好奇心と自信に満ちた生徒を育成することに焦点を当てています。",
+    "fees_url": "https://www.tenby.edu.my/setia-eco-park/admissions/tuition-fees",
+    "admissions_url": "https://www.tenby.edu.my/setia-eco-park/admissions",
+    "fees": {
+      "Year 1": 27750,
+      "Year 7": 56460,
+      "Year 12": 75900
+    },
+    "other_fees": "申請料RM2,000、登録料RM7,000。施設利用料RM1,500/年(3期分割払い)。すべての費用に6% SST外。",
+    "nationalities": 38,
+    "top_nationalities": "38カ国の国籍を持つ生徒が在籍。",
+    "japanese_community": "約25名の日本人生徒が国際課程1,200名中に在籍。日本人が少なめの環境を求める層に推奨されている。",
+    "student_count_note": "国際課程約1,200名、ローカル課程(Sekolah Sri Tenby)約800名。計約2,000名が3-18歳に在籍。",
+    "source_note": "2026/2027年度(3学期/年制)。https://www.tenby.edu.my/setia-eco-park/admissions/tuition-fees から取得"
+  },
+  "HELP International School": {
+    "brand": "HELP Group of Schools",
+    "philosophy": "「人生の豊かさ(Life in All Its Fullness)」をモットーに、個々の強みと必要に応じた個別化学習と8つのマスタリーを重視します。",
+    "fees_url": "https://his.edu.my/admission-fee/",
+    "admissions_url": "https://his.edu.my/how-to-apply/",
+    "fees": {
+      "Year 1": 39900,
+      "Year 7": 59109,
+      "Year 11": 66150
+    },
+    "other_fees": "申請料RM1,000(返金不可、一回限り)、登録料RM12,000(返金不可、一回限り。Year 12は別設定)。テクノロジー費・学食費・制服・教材等は別途。年間授業料RM60,000超に6% SST適用。",
+    "nationalities": 25,
+    "top_nationalities": "25カ国の国籍を持つ生徒が在籍。",
+    "japanese_community": "未確認",
+    "student_count_note": "全体1,400名が在籍。就学前からA-Levelまで対応。",
+    "source_note": "2026/2027年度費用。https://his.edu.my/admission-fee/ から取得"
+  },
+  "Japanese School of Kuala Lumpur (JSKL)": {
+    "brand": "JSKL / 日本クラブ・オブ・クアラルンプール(Japan Club of Kuala Lumpur)",
+    "philosophy": "日本の教育制度との継続性を保ちながら、海外勤務中の日本人家族のために、日本と同等の質の教育環境を提供することを使命とします。日本の学習指導要領に準拠し、日本への復学時の円滑な適応を支援します。",
+    "fees_url": "https://jskl.edu.my/",
+    "admissions_url": "https://jskl.edu.my/",
+    "fees": {
+      "Kindergarten (幼稚部)": 32496,
+      "Primary (小学部)": 32496,
+      "Junior High (中学部)": 36216
+    },
+    "other_fees": "入園金/入学金RM4,000(一回限り)、幼稚園入園金RM2,630(初回登録時のみ)。保護者会費RM8/月、学校維持費RM370/月、施設拡張費RM5,000(一回限り)。スクールバスRM397.50/月(選択可)。",
+    "nationalities": null,
+    "top_nationalities": "日本人家族向けの学校で、生徒はほぼ100%日本国籍。MEXT認定のため日本の教育基準に準拠。",
+    "japanese_community": "約777名の日本人生徒が幼稚部、小学部(1-6年生)、中学部(1-3年生)に在籍。1966年創立の老舗日本人学校。",
+    "student_count_note": "約777名が在籍。幼稚部・小学部・中学部に独立した施設を有する。",
+    "source_note": "2026/2027年度費用。月額授業料RM1,670(小学部)/RM1,890(中学部)×12ヶ月+諸費用で年額計算。https://eduswasta.my/school/the-japanese-school-of-kuala-lumpur-shah-alam/ から取得"
+  },
+  "Kingsgate International School": {
+    "brand": "Kingsgate International School(独立系)",
+    "philosophy": "各学生の潜在能力を引き出し、革新と幸福のバランスをとった教育を提供することを目指します。Industry 4.0対応の未来志向型人材育成に注力。",
+    "fees_url": "https://www.kingsgate.edu.my/kingsgate-fees/",
+    "admissions_url": "https://www.kingsgate.edu.my/admissions/",
+    "fees": {
+      "Year 1": 35700,
+      "Year 7": 57600,
+      "Year 13": 74100
+    },
+    "other_fees": "申請料RM1,000(返金不可)、登録料RM20,000(返金不可)、保証金RM9,500(返金可能)。学食費RM1,200/学期。兄弟姉妹割引: 2番目5%、3番目以降10%。年間先払い追加割引10%。",
+    "nationalities": 11,
+    "top_nationalities": "11カ国の国籍と異なる宗教信仰及び文化的背景を持つ生徒が在籍。",
+    "japanese_community": "未確認",
+    "student_count_note": "ブティック型国際学校。比較的小規模。",
+    "source_note": "2025/2026年度費用。https://www.kingsgate.edu.my/kingsgate-fees/ から取得"
+  },
+  "Peninsula International School Australia (PISA)": {
+    "brand": "Peninsula Grammar partnership / PISA(オーストラリア系)",
+    "philosophy": "バランスの取れた全人教育を提供し、個々の学習と批判的思考を重視。ビクトリア州カリキュラムの厳密さと国際的視点を両立。",
+    "fees_url": "https://peninsula.edu.my/admission/",
+    "admissions_url": "https://peninsula.edu.my/admission/",
+    "fees": {
+      "Kindergarten 3 (K3)": 35000,
+      "Grade 1": 37200,
+      "Grade 7": 65500
+    },
+    "other_fees": "申請料RM300、登録料RM1,000、施設保証金RM8,750(返金可能)。ファウンディング生向け最大35%割引(初400名)。学業・スポーツ奨学金あり(最大75-100%授業料減免)。",
+    "nationalities": null,
+    "top_nationalities": "多文化背景を持つ家族が多い。2018年開校の比較的新しい学校。",
+    "japanese_community": "未確認",
+    "student_count_note": "2018年開校(Setia Alam, Shah Alam)。Kindergarten-Year 12対応。正確な生徒数は未確認。",
+    "source_note": "2026/2027年度費用。international-schools-database.com および https://peninsula.edu.my/admission/ から取得"
   }
 }

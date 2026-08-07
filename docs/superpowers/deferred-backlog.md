@@ -10,3 +10,8 @@
 - **schools_detail.json はペナン9校のみ**: KL 24校の詳細（学費表・国籍構成等）が無い。データ精度トラックで。
 - **GitHub Pages は「静的直配信」を維持**: Viteビルドを挟むデプロイ（actions/deploy-pages）への切替は、ビルドが必要になった時点で判断。現状は不要。
 - **iproperty_url は検証していない**: 403で直接fetch不可のため。データ精度トラックで search-snippet 方式により確認。
+
+## 2026-08-07 (竹森氏裁定: データ精査トラック中止)
+
+- **コンドミニアム271件のデータ精査（フラグ再検証・homepage_url補完・iproperty_url確認）は今回スコープ外**（竹森氏 2026-08-07 明示: アプリのブラッシュアップがメイン）。将来再開する場合の手順はメモリの condo/commercial/address verification 3本に保存済み。
+- KL校23校の詳細（schools_detail.json拡充）のみ、表示格差解消のため実行（進行中）。追加のデータ調査は出さない。
