@@ -32,6 +32,12 @@ export const CURRICULA = ['American', 'IB', 'British', 'Australian', 'French', '
  * Area quick-filter test. Returns false when the record is outside the area.
  * Area keys are the same ones the map's jump buttons use, plus the historical
  * 'desa-parkcity' spelling of the dropdown.
+ *
+ * The six Penang areas must cover EVERY Penang record: a record no area claims
+ * is invisible under every area filter and nobody notices. `test/filter.test.js`
+ * walks condos_data.csv and fails when a Penang record matches none — or more
+ * than one. When it fires, add the missing neighbourhood keyword below; do not
+ * relax the test.
  */
 export function matchesArea(c, areaFilter){
   if(!areaFilter) return true;
@@ -47,7 +53,18 @@ export function matchesArea(c, areaFilter){
   const isGurney=isPenang&&(a.includes('gurney')||a.includes('pulau tikus')||a.includes('kelawei')||n.includes('gurney'));
   const isTanjung=isPenang&&(a.includes('tanjung tokong')||a.includes('tanjung bungah')||a.includes('tanjung bunga')||a.includes('tanjung pinang'));
   const isFerringhi=isPenang&&(a.includes('ferringhi')||n.includes('ferringhi'));
-  const isBayan=isPenang&&(a.includes('bayan lepas')||a.includes('bayan baru')||a.includes('bayan indah')||a.includes('bayan jambul')||a.includes('bukit jambul'));
+  const isBayan=isPenang&&(a.includes('bayan lepas')||a.includes('bayan baru')||a.includes('bayan indah')||a.includes('bayan jambul')||a.includes('bukit jambul')||a.includes('sungai ara'));
+  // Gelugor / Jelutong: the south-east corridor along the Tun Dr Lim Chong Eu
+  // expressway, between the city core and the airport road. Karpal Singh Drive
+  // is Jelutong reclaimed land; Paya Terubong is the inland valley that hangs
+  // off the same corridor (with Air Itam / Farlim next door to it). Bayan wins
+  // where the two could ever overlap.
+  const isGelugor=isPenang&&!isBayan&&(a.includes('gelugor')||a.includes('jelutong')||a.includes('karpal singh')||a.includes('paya terubong')||a.includes('air itam')||a.includes('ayer itam')||a.includes('sungai nibong')||a.includes('batu uban')||a.includes('bukit gambier')||a.includes('bukit gambir'));
+  // George Town city core. "George Town" is the whole city's administrative
+  // name, so Gurney / Pulau Tikus addresses carry it too — the core is what is
+  // LEFT once the named neighbourhoods are taken out, which is why every other
+  // Penang area is subtracted here rather than listed as a street keyword.
+  const isGeorgeTown=isPenang&&!isGurney&&!isTanjung&&!isFerringhi&&!isBayan&&!isGelugor&&a.includes('george town');
   // -- KL --
   const isKLGCC=!isPenang&&(a.includes('bukit kiara')||n.includes('klgcc'));
   const isDPC=!isPenang&&a.includes('desa parkcity');
@@ -69,6 +86,8 @@ export function matchesArea(c, areaFilter){
   if(areaFilter==='tanjung'&&!isTanjung) return false;
   if(areaFilter==='ferringhi'&&!isFerringhi) return false;
   if(areaFilter==='bayan'&&!isBayan) return false;
+  if(areaFilter==='gelugor'&&!isGelugor) return false;
+  if(areaFilter==='george-town'&&!isGeorgeTown) return false;
   return true;
 }
 

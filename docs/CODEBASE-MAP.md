@@ -47,7 +47,7 @@
 | `src/ui/schoolFinder.js` | 学費くらべ: 年齢別の全校比較リスト・学費推移チャート・選んだ学校の周辺コンド |
 | `src/ui/a11y.js` | Enter/Space で `role="button"` を起動、Escapeで詳細を閉じる。**document に委譲リスナー1つだけ** |
 
-## test/ — 12ファイル・299件
+## test/ — 12ファイル・310件
 
 | ファイル | 何を守るか |
 |---|---|

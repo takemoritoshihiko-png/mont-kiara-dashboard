@@ -3,7 +3,8 @@
 // are browser-only CDN scripts, so every call into them lives inside a
 // function and never runs at import time.
 import { describe, it, expect } from 'vitest';
-import { labelModeForZoom, LABEL_ZOOM, CLUSTER_OFF_ZOOM, pinClassName } from '../src/ui/map.js';
+import { readFileSync } from 'node:fs';
+import { labelModeForZoom, LABEL_ZOOM, CLUSTER_OFF_ZOOM, pinClassName, AREA_CENTERS } from '../src/ui/map.js';
 
 describe('labelModeForZoom', () => {
   it('hides the labels below the threshold (hover only)', () => {
@@ -51,5 +52,41 @@ describe('zoom threshold constants', () => {
   it('the thresholds sit inside Leaflet’s zoom range', () => {
     expect(LABEL_ZOOM).toBeGreaterThan(0);
     expect(LABEL_ZOOM).toBeLessThanOrEqual(19);
+  });
+});
+
+// ============================================================
+// AREA JUMP — the jump bar, the エリア dropdown and the fly-to centers all
+// speak the same set of keys. They live in three files, so nothing but a test
+// notices when one of them gains an area and the others do not.
+// ============================================================
+describe('area keys stay in sync across the jump bar, the dropdown and the map', () => {
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const buttons = [...html.matchAll(/data-area="([^"]+)"/g)].map(m => m[1]);
+  const select = html.slice(html.indexOf('id="fArea"'));
+  const options = [...select.slice(0, select.indexOf('</select>')).matchAll(/<option value="([^"]*)"/g)]
+    .map(m => m[1]).filter(Boolean);
+  // The dropdown kept the older spelling of one key when the jump bar was added.
+  const ALIAS = { 'desa-parkcity': 'parkcity' };
+
+  it('every jump button can fly somewhere', () => {
+    expect(buttons.length).toBeGreaterThan(0);
+    buttons.forEach(k => expect(AREA_CENTERS[k], `no center for "${k}"`).toBeTruthy());
+  });
+
+  it('every dropdown area is reachable from the jump bar', () => {
+    options.forEach(k => {
+      const key = ALIAS[k] || k;
+      expect(AREA_CENTERS[key], `dropdown area "${k}" has no jump target`).toBeTruthy();
+    });
+  });
+
+  it('offers both Penang areas added for the George Town / Gelugor condos', () => {
+    ['george-town', 'gelugor'].forEach(k => {
+      expect(buttons).toContain(k);
+      expect(options).toContain(k);
+      expect(AREA_CENTERS[k].lat).toBeGreaterThan(4);   // on the island
+      expect(AREA_CENTERS[k].zoom).toBeGreaterThanOrEqual(12);
+    });
   });
 });

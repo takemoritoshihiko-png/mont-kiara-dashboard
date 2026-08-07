@@ -141,7 +141,9 @@ function hexRgb(h){return{r:parseInt(h.slice(1,3),16),g:parseInt(h.slice(3,5),16
 // ============================================================
 // AREA JUMP — quick navigation between KL/Penang neighborhoods
 // ============================================================
-const AREA_CENTERS = {
+// Exported so test/map.test.js can check that every jump button, every
+// dropdown option and every center share one set of area keys.
+export const AREA_CENTERS = {
   'mont-kiara':{lat:3.17150,lng:101.65200,zoom:15},
   'parkcity':  {lat:3.18500,lng:101.62850,zoom:15},
   'klcc':      {lat:3.15700,lng:101.71150,zoom:15},
@@ -154,6 +156,11 @@ const AREA_CENTERS = {
   'tanjung':   {lat:5.46400,lng:100.28200,zoom:14},
   'ferringhi': {lat:5.47300,lng:100.25350,zoom:14},
   'bayan':     {lat:5.32900,lng:100.27900,zoom:12},
+  // Centred on the condo centroid of each area; the zoom matches areas of a
+  // similar span (George Town ~2km across like Tanjung, the Gelugor/Jelutong
+  // corridor ~5km like Bayan).
+  'george-town':{lat:5.42150,lng:100.32300,zoom:14},
+  'gelugor':   {lat:5.38760,lng:100.31300,zoom:13},
   'all-pg':    {lat:5.40000,lng:100.28000,zoom:11}
 };
 export function jumpToArea(key){

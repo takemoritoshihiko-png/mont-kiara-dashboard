@@ -1,10 +1,12 @@
 // Contract for the list filtering logic (src/domain/filter.js).
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
 import {
   parseR, matchesArea, matchesFilters, TIER_ORDER,
   recordLayer, LAYERS, LAYER_LABELS, CURRICULA,
   parseAgeRange, matchesSchoolAge, matchesCurriculum,
 } from '../src/domain/filter.js';
+import { parseCsv } from './helpers/csv.js';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -135,12 +137,90 @@ describe('matchesArea', () => {
     expect(matchesArea(at('Jalan Kiara, Mont Kiara'), 'bayan')).toBe(false);
   });
 
+  // --- Penang: the two areas added for the 26 condos no area claimed ---
+  it('matches the George Town city core', () => {
+    expect(matchesArea(pg('218 Jalan Macalister George Town 10400 Penang'), 'george-town')).toBe(true);
+    expect(matchesArea(pg('1 Gat Lebuh Leith George Town 10200 Penang'), 'george-town')).toBe(true);
+    expect(matchesArea(pg('Jalan Dato Keramat 10150 George Town Penang'), 'george-town')).toBe(true);
+  });
+
+  it('does not hand Gurney or Pulau Tikus to George Town', () => {
+    // "George Town" is the whole city's name, so it is in those addresses too.
+    // The core is what is left once the named neighbourhoods are taken out.
+    expect(matchesArea(pg('Persiaran Gurney 10250 George Town Penang'), 'george-town')).toBe(false);
+    expect(matchesArea(pg('46 Jalan Kelawei Pulau Tikus 10250 George Town Penang'), 'george-town')).toBe(false);
+    expect(matchesArea(pg('Persiaran Gurney 10250 George Town Penang'), 'gurney')).toBe(true);
+  });
+
+  it('matches the Gelugor / Jelutong corridor by its several place names', () => {
+    expect(matchesArea(pg('Jalan Pantai Sinaran Gelugor 11700 Penang'), 'gelugor')).toBe(true);
+    expect(matchesArea(pg('Jalan Jelutong 11600 Jelutong Penang'), 'gelugor')).toBe(true);
+    expect(matchesArea(pg('Persiaran Karpal Singh 2 Jelutong 11600 Penang'), 'gelugor')).toBe(true);
+    expect(matchesArea(pg('Jalan Paya Terubong 11060 Paya Terubong Penang'), 'gelugor')).toBe(true);
+    expect(matchesArea(pg('3 Jalan Bukit Gambier 11700 Gelugor Penang'), 'gelugor')).toBe(true);
+    // ...and stays out of the neighbouring areas.
+    expect(matchesArea(pg('Jalan Jelutong 11600 Jelutong Penang'), 'george-town')).toBe(false);
+    expect(matchesArea(pg('Jalan Pantai Sinaran Gelugor 11700 Penang'), 'bayan')).toBe(false);
+  });
+
+  it('gives Sungai Ara to Bayan Lepas, the town it sits next to', () => {
+    expect(matchesArea(pg('Lintang Sungai Ara 7 Sungai Ara 11900 Penang'), 'bayan')).toBe(true);
+    expect(matchesArea(pg('Lintang Sungai Ara 7 Sungai Ara 11900 Penang'), 'gelugor')).toBe(false);
+    // Bayan already claimed the ones spelled "Bayan Lepas" — unchanged.
+    expect(matchesArea(pg('Jalan Sungai Ara 10 11900 Bayan Lepas Penang'), 'bayan')).toBe(true);
+  });
+
   it('the area filter applies to every layer, not just condos', () => {
     const s = school({ addr: 'Jalan Sungai Satu Batu Ferringhi 11100 Penang', lat: 5.47 });
     expect(matchesFilters(s, fs({ areaFilter: 'ferringhi' }))).toBe(true);
     expect(matchesFilters(s, fs({ areaFilter: 'gurney' }))).toBe(false);
     const m = shop({ addr: '170 Persiaran Gurney 10250 George Town Penang', lat: 5.43 });
     expect(matchesFilters(m, fc({ areaFilter: 'gurney' }))).toBe(true);
+  });
+});
+
+// ============================================================
+// Penang coverage — the real data, not fixtures.
+//
+// A condo that no area claims is invisible under every area filter and nobody
+// notices: that is exactly how 26 Penang condos sat unreachable until the
+// George Town / Gelugor areas were added. These two checks are the tripwire.
+// When one fires, add the missing neighbourhood keyword to matchesArea — do
+// not relax the assertion.
+// ============================================================
+describe('the Penang areas cover the Penang condos', () => {
+  const PENANG_AREAS = ['gurney', 'tanjung', 'ferringhi', 'bayan', 'george-town', 'gelugor'];
+  const condos = parseCsv(readFileSync(new URL('../condos_data.csv', import.meta.url), 'utf8'));
+  // lat > 4 is the island: KL sits near 3.1, Penang near 5.4.
+  const penang = condos.filter(c => Number(c.lat) > 4);
+  const areasOf = (c) => PENANG_AREAS.filter(a => matchesArea({ ...c, lat: Number(c.lat) }, a));
+
+  it('has Penang condos to check at all', () => {
+    expect(penang.length).toBe(75);
+  });
+
+  it('puts every Penang condo in exactly one area', () => {
+    const bad = penang
+      .map(c => ({ name: c.name, addr: c.addr, areas: areasOf(c) }))
+      .filter(r => r.areas.length !== 1)
+      .map(r => `${r.name} (${r.addr}) -> [${r.areas.join(', ')}]`);
+    expect(bad).toEqual([]);
+  });
+
+  it('keeps the membership of each area where it is', () => {
+    // Snapshot of the split. The first four are unchanged by the George Town /
+    // Gelugor work except Bayan, which gained Sungai Ara (7 -> 8).
+    const counts = Object.fromEntries(
+      PENANG_AREAS.map(a => [a, penang.filter(c => areasOf(c).includes(a)).length])
+    );
+    expect(counts).toEqual({
+      gurney: 22, tanjung: 14, ferringhi: 6, bayan: 8, 'george-town': 6, gelugor: 19,
+    });
+  });
+
+  it('does not let a Penang area leak onto the KL side', () => {
+    const kl = condos.filter(c => Number(c.lat) < 4);
+    kl.forEach(c => expect(areasOf(c)).toEqual([]));
   });
 });
 
