@@ -1,0 +1,99 @@
+// Data integrity contract for restaurants.json (dining ledger, D2).
+// Source of truth: kl-dining-ledger-v9.html (converted by tools/convert-v9-dining.js).
+import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const restaurants = JSON.parse(readFileSync(join(root, 'restaurants.json'), 'utf8'));
+
+const CAT_GROUPS = [
+  'マレーシア料理', '洋食・グリル', '中華', 'インド・スリランカ',
+  '鶏飯・ご飯もの', '麺・肉骨茶', '日本・その他アジア', '屋台街',
+];
+const MICHELIN = ['2star', '1star', 'bib', 'sel', 'none'];
+const VENUE_TYPES = ['mall', 'hotel', 'tower', 'street', 'stall'];
+
+describe('restaurants.json', () => {
+  it('has at least the 50 ledger-v9 records (update deliberately when adding data)', () => {
+    expect(restaurants.length).toBeGreaterThanOrEqual(50);
+  });
+
+  it('ids are R#### format, unique, and sequential from R0001', () => {
+    restaurants.forEach((r, i) => {
+      expect(r.id).toBe('R' + String(i + 1).padStart(4, '0'));
+    });
+  });
+
+  it('names and placeIds are unique and non-empty', () => {
+    for (const key of ['name', 'placeId']) {
+      const vals = restaurants.map((r) => r[key]);
+      expect(vals.every((v) => v && v.trim() !== '')).toBe(true);
+      expect(vals.filter((v, i) => vals.indexOf(v) !== i)).toEqual([]);
+    }
+  });
+
+  it('every catGroup is one of the 8 ruled groups', () => {
+    const bad = restaurants.filter((r) => !CAT_GROUPS.includes(r.catGroup));
+    expect(bad.map((r) => `${r.name}:${r.catGroup}`)).toEqual([]);
+  });
+
+  it('michelin and venueType are valid enums', () => {
+    expect(restaurants.filter((r) => !MICHELIN.includes(r.michelin))).toEqual([]);
+    expect(restaurants.filter((r) => !VENUE_TYPES.includes(r.venueType))).toEqual([]);
+  });
+
+  it('coordinates are inside the Klang Valley, or null with geoPrecision=pending', () => {
+    for (const r of restaurants) {
+      if (r.lat === null || r.lng === null) {
+        expect(r.geoPrecision, r.name).toBe('pending');
+      } else {
+        expect(r.lat, r.name).toBeGreaterThan(2.9);
+        expect(r.lat, r.name).toBeLessThan(3.4);
+        expect(r.lng, r.name).toBeGreaterThan(101.5);
+        expect(r.lng, r.name).toBeLessThan(101.9);
+      }
+    }
+  });
+
+  it('non-null coordinates are not duplicated across restaurants (area-centroid trap)', () => {
+    // Legit shared points: Chinatown street-precision trio (block centroid),
+    // Yun House + Nadodi (both inside the Four Seasons building, venue precision).
+    const allowShared = [
+      'Nam Heong Chicken Rice', 'Lai Foong Lala Noodles', 'Sin Kiew Yee Beef Noodles',
+      'Yun House', 'Nadodi',
+    ];
+    const seen = new Map();
+    for (const r of restaurants) {
+      if (r.lat === null || allowShared.includes(r.name)) continue;
+      const key = `${r.lat},${r.lng}`;
+      expect(seen.has(key), `${r.name} shares coordinates with ${seen.get(key)}`).toBe(false);
+      seen.set(key, r.name);
+    }
+  });
+
+  it('price ranges satisfy lo <= hi (0 means not offered / unknown)', () => {
+    for (const r of restaurants) {
+      for (const [lo, hi] of [r.priceLunch, r.priceDinner]) {
+        expect(lo <= hi, `${r.name}: [${lo},${hi}]`).toBe(true);
+      }
+    }
+  });
+
+  it('rating is 0-5 and reviewCount is a non-negative integer', () => {
+    for (const r of restaurants) {
+      expect(r.rating, r.name).toBeGreaterThan(0);
+      expect(r.rating, r.name).toBeLessThanOrEqual(5);
+      expect(Number.isInteger(r.reviewCount) && r.reviewCount >= 0, r.name).toBe(true);
+    }
+  });
+
+  it('every record carries the personal-ledger prerequisites (area, address, cat)', () => {
+    for (const r of restaurants) {
+      expect(r.area, r.name).toBeTruthy();
+      expect(r.address, r.name).toBeTruthy();
+      expect(r.cat, r.name).toBeTruthy();
+    }
+  });
+});

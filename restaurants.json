@@ -1,0 +1,1873 @@
+[
+ {
+  "id": "R0001",
+  "placeId": "ChIJD5ydgbdNzDERVeakzTjfpk8",
+  "name": "Dewakan",
+  "nameJa": "デワカン",
+  "cat": "モダン・マレーシアン",
+  "catGroup": "マレーシア料理",
+  "michelin": "2star",
+  "tier": 4,
+  "extraFlags": [
+   "国際評価"
+  ],
+  "rating": 4.2,
+  "reviewCount": 548,
+  "natCode": 1,
+  "kidOk": 0,
+  "venue": "Naza Tower / Skyviews 48F",
+  "venueType": "tower",
+  "area": "KLCC",
+  "address": "Level 48, Skyviews, Naza Tower, Platinum Park, Persiaran KLCC",
+  "lat": 3.1547191,
+  "lng": 101.7185049,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   790,
+   900
+  ],
+  "priceConfidence": "公表",
+  "priceNote": "テイスティング1本のみ。ペアリングはノンアル+RM222／アルコール+RM300。個室は最低利用額RM5,000。子ども不可を明記。日曜休。",
+  "editorNote": "土着食材と自家発酵。Green Star 2年連続。Google★4.2は低評価が一定数あることを示し、縮約後も伸びない。",
+  "vox": {
+   "pros": "厨房ツアーから始まる導線と、他国では再現できない土着食材の物語性。夕景を含めた2.5時間の体験全体。",
+   "cons": "「一皿ごとに驚きはあるが、心を打つ決定打がない」という指摘が複数。サービスが台本的で温度がない、食事中に伝票を持ってこられた、冷房が寒すぎる、という声も。"
+  }
+ },
+ {
+  "id": "R0002",
+  "placeId": "ChIJ7W0aCDBJzDERLXoIAb7IIbU",
+  "name": "DC Restaurant",
+  "nameJa": "ディーシー",
+  "cat": "フレンチ",
+  "catGroup": "洋食・グリル",
+  "michelin": "1star",
+  "tier": 4,
+  "extraFlags": [],
+  "rating": 4.8,
+  "reviewCount": 2237,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店（3階建て一棟）",
+  "venueType": "street",
+  "area": "TTDI",
+  "address": "44, Persiaran Zaaba, Taman Tun Dr Ismail",
+  "lat": 3.1416632,
+  "lng": 101.627288,
+  "geoPrecision": "building",
+  "priceLunch": [
+   400,
+   510
+  ],
+  "priceDinner": [
+   510,
+   790
+  ],
+  "priceConfidence": "公表",
+  "priceNote": "コース制。ランチは金土のみ。持込ワインはRM100/本。月火休。",
+  "editorNote": "2023年の初版から4版連続の一つ星。2,237件で★4.8は縮約してもほぼ落ちない、台帳で最も堅い数字。",
+  "vox": {
+   "pros": "サービスの水準がKLで突出。ソムリエの提案、自家製パン、シェフ自ら仕入れる魚介。",
+   "cons": "「見た目は美しいがwowがない」「塩気が強い」「苦味が残る皿があった」。価格への期待値との差で減点する層が一定数いる。"
+  }
+ },
+ {
+  "id": "R0003",
+  "placeId": "ChIJlTA1sdU3zDERKbujTkG2pJc",
+  "name": "Beta KL",
+  "nameJa": "ベータ",
+  "cat": "モダン・マレーシアン",
+  "catGroup": "マレーシア料理",
+  "michelin": "1star",
+  "tier": 3,
+  "extraFlags": [
+   "Tatler Best 20"
+  ],
+  "rating": 4.7,
+  "reviewCount": 1376,
+  "natCode": 1,
+  "kidOk": 0,
+  "venue": "路面店（Lot 163）",
+  "venueType": "street",
+  "area": "KLCC",
+  "address": "Lot 163, 10, Jalan Perak",
+  "lat": 3.1521686,
+  "lng": 101.7117511,
+  "geoPrecision": "street",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   570,
+   640
+  ],
+  "priceConfidence": "公表",
+  "priceNote": "Flora of Malaysia RM490++／Tour of Malaysia RM550++。予約時にRM300/人のデポジット。7歳以上から入店可。所要2.5時間。月休。",
+  "editorNote": "北・東・中央・南を巡るコース構成。マレーシア料理の地理を一晩で把握できる。",
+  "vox": {
+   "pros": "北・東・中央・南を巡る構成と、皿ごとの土地の物語。ヴィーガン対応も柔軟。",
+   "cons": "肉料理の塩梅が甘いという指摘。入口で放置された、デポジット（RM300/人）の運用でもめた、というトラブル報告あり。"
+  }
+ },
+ {
+  "id": "R0004",
+  "placeId": "ChIJzQV-vENJzDER1u-w_fLKF6E",
+  "name": "akar",
+  "nameJa": "アカール",
+  "cat": "モダン・マレーシアン",
+  "catGroup": "マレーシア料理",
+  "michelin": "1star",
+  "tier": 1,
+  "extraFlags": [],
+  "rating": 4.8,
+  "reviewCount": 1178,
+  "natCode": 1,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "TTDI",
+  "address": "109, Jalan Aminuddin Baki, Taman Tun Dr Ismail",
+  "lat": 3.1527392,
+  "lng": 101.620807,
+  "geoPrecision": "building",
+  "priceLunch": [
+   334,
+   334
+  ],
+  "priceDinner": [
+   682,
+   682
+  ],
+  "priceConfidence": "公表",
+  "priceNote": "ランチRM288++／ディナー「Mekar」RM588++。ランチは金土のみ。月日休。",
+  "editorNote": "2026年の新規一つ星。初掲載だが1,178件で★4.8と評価の裏付けは厚い。",
+  "vox": {
+   "pros": "一つ星獲得後にコースを刷新し、以前より明確に良くなったという再訪者の評価。誕生日対応も柔軟。",
+   "cons": "「美しいが味に印象が残らない」という声。マネージャーの接客にムラがあるという指摘。"
+  }
+ },
+ {
+  "id": "R0005",
+  "placeId": "ChIJBfTsHZlJzDERjl9OeqGJWBI",
+  "name": "Terra Dining",
+  "nameJa": "テラ",
+  "cat": "モダン・マレーシアン",
+  "catGroup": "マレーシア料理",
+  "michelin": "1star",
+  "tier": 1,
+  "extraFlags": [],
+  "rating": 4.6,
+  "reviewCount": 100,
+  "natCode": 1,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "TTDI",
+  "address": "91, Jalan Aminuddin Baki, Taman Tun Dr Ismail",
+  "lat": 3.1525139,
+  "lng": 101.6201675,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   462,
+   462
+  ],
+  "priceConfidence": "公表",
+  "priceNote": "11皿のテイスティング RM398++ の1本のみ。ワインペアリング+RM238++。月日休。",
+  "editorNote": "2026年の新規一つ星。akarの徒歩圏内。件数100件と薄く、判断材料が不足。",
+  "vox": {
+   "pros": "郷愁を呼ぶ地元の味を現代的に再構成する手つき。事前のWhatsAppでのやり取りが緻密。",
+   "cons": "周辺環境が店の格と釣り合っていない、到着時の受け入れとアクセスに難がある、という指摘。"
+  }
+ },
+ {
+  "id": "R0006",
+  "placeId": "ChIJe82e0fI3zDERywfjSDUmlWs",
+  "name": "Chim by Chef Noom",
+  "nameJa": "チム",
+  "cat": "タイ",
+  "catGroup": "日本・その他アジア",
+  "michelin": "1star",
+  "tier": 2,
+  "extraFlags": [],
+  "rating": 4.8,
+  "reviewCount": 207,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "TSLAW Tower 2F",
+  "venueType": "tower",
+  "area": "Imbi",
+  "address": "L2-03, TSLAW Tower, 39, Jalan Kamuning, Imbi",
+  "lat": 3.1443284,
+  "lng": 101.7198602,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   450,
+   600
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "9皿のテイスティング1本。オフィスタワー内のため夜のみ。月休。",
+  "editorNote": "2025年に一つ星獲得。辛さの調整を相談できるので、辛味耐性が読めない同行者がいる回に向く。",
+  "vox": {
+   "pros": "9皿でタイ料理の歴史を辿る構成。辛さ調整に応じる柔軟さ。窓際の夜景。",
+   "cons": "調整してもなお全体に辛い。辛味耐性が低い人には厳しいという声。"
+  }
+ },
+ {
+  "id": "R0007",
+  "placeId": "ChIJwSUnAEVJzDERpJVtwKxn0Sk",
+  "name": "Molina",
+  "nameJa": "モリーナ",
+  "cat": "ヨーロピアン",
+  "catGroup": "洋食・グリル",
+  "michelin": "1star",
+  "tier": 2,
+  "extraFlags": [
+   "Tatler Best 20"
+  ],
+  "rating": 4.5,
+  "reviewCount": 91,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "THE FACE Style 51F",
+  "venueType": "hotel",
+  "area": "Bukit Bintang",
+  "address": "Level 51, THE FACE Style, 1020, Jalan Sultan Ismail",
+  "lat": 3.1585117,
+  "lng": 101.7038086,
+  "geoPrecision": "building",
+  "priceLunch": [
+   350,
+   500
+  ],
+  "priceDinner": [
+   550,
+   780
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "5皿と7皿の選択制。ランチは土曜のみ。専用エレベーターあり。月日休。",
+  "editorNote": "51階、ツインタワーが正面。件数91件のため縮約が強く効く。記念日向き。",
+  "vox": {
+   "pros": "専用エレベーターから始まる設えとツインタワーの眺望。牛・フォアグラの不食に個別対応。",
+   "cons": "ノンアルペアリングが重く、期待した爽快感がなかったという声。件数91件で評価が定まっていない。"
+  }
+ },
+ {
+  "id": "R0008",
+  "placeId": "ChIJTYFd_6s3zDER6OJUD9GC0TM",
+  "name": "De.Wan 1958",
+  "nameJa": "ドゥワン1958",
+  "cat": "マレー",
+  "catGroup": "マレーシア料理",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.7,
+  "reviewCount": 9878,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "The Linc KL（商業施設）",
+  "venueType": "mall",
+  "area": "Jalan Tun Razak",
+  "address": "The Linc, 360, Jalan Tun Razak, Taman U Thant",
+  "lat": 3.1593086,
+  "lng": 101.7209973,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   80,
+   150
+  ],
+  "priceDinner": [
+   80,
+   150
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "アラカルト。ポーションが大きく5〜8人でシェアする前提だと1人あたりはさらに下がる。ハラール。モール内で駐車が容易。",
+  "editorNote": "9,878件で★4.7。この母数を操作するのは非現実的で、縮約してもほぼ素点のまま通る。",
+  "vox": {
+   "pros": "圧倒的なポーションとマレー料理の直球。スタッフを名指しで褒めるレビューが際立って多い。",
+   "cons": "2人だと確実に頼みすぎる。内装が過剰という好みの分かれ。"
+  }
+ },
+ {
+  "id": "R0009",
+  "placeId": "ChIJaRpoNIw3zDERgJ3IvbGv62U",
+  "name": "Yun House",
+  "nameJa": "ユンハウス",
+  "cat": "広東・点心",
+  "catGroup": "中華",
+  "michelin": "sel",
+  "tier": 4,
+  "extraFlags": [],
+  "rating": 4.4,
+  "reviewCount": 400,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Four Seasons Hotel",
+  "venueType": "hotel",
+  "area": "KLCC",
+  "address": "145, Jalan Ampang（Four Seasons Hotel 内）",
+  "lat": 3.1580799,
+  "lng": 101.7138657,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   150,
+   220
+  ],
+  "priceDinner": [
+   300,
+   450
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼は点心中心、夜はアラカルト。窓際席はツインタワーと噴水が正面。",
+  "editorNote": "2023年から4版連続で掲載店。子連れで通せる数少ない高級中華。",
+  "vox": {
+   "pros": "点心の質と窓際席の眺望。北京ダックが最高だったという声。フォーシーズンズ水準のサービス。",
+   "cons": "マレーシアの相場からすると明確に高い。"
+  }
+ },
+ {
+  "id": "R0010",
+  "placeId": "ChIJ73SCX1RIzDERTYDlfaVsoYA",
+  "name": "Aliyaa",
+  "nameJa": "アリヤー",
+  "cat": "スリランカ",
+  "catGroup": "インド・スリランカ",
+  "michelin": "bib",
+  "tier": 4,
+  "extraFlags": [],
+  "rating": 4.4,
+  "reviewCount": 1395,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Damansara Heights",
+  "address": "48 G&M, Jalan Medan Setia 2, Bukit Damansara",
+  "lat": 3.1493435,
+  "lng": 101.6538746,
+  "geoPrecision": "building",
+  "priceLunch": [
+   120,
+   200
+  ],
+  "priceDinner": [
+   120,
+   220
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ジャファナ式カニカレーは時価。席の時間制限があるため、滞在時間を確認してから予約を。",
+  "editorNote": "2023年から4版連続ビブグルマン。蟹はスリランカから活輸入。",
+  "vox": {
+   "pros": "ジャファナ式カニカレーと無料のラッサム。19年の蓄積。",
+   "cons": "席の時間制限を電話でも到着時にも繰り返され、8時に追い立てられたという不満。魚料理に生臭さを感じたという声。"
+  }
+ },
+ {
+  "id": "R0011",
+  "placeId": "ChIJHQN-OaE3zDERRFtiJRhT11A",
+  "name": "Bar.Kar",
+  "nameJa": "バーカー",
+  "cat": "炭火・薪火",
+  "catGroup": "洋食・グリル",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [
+   "Tatler Best 20"
+  ],
+  "rating": 4.6,
+  "reviewCount": 2314,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店（Suites G-06）",
+  "venueType": "street",
+  "area": "Jalan Tun Razak",
+  "address": "No. 199, Suites G-06, Jalan Tun Razak",
+  "lat": 3.1612783,
+  "lng": 101.7197528,
+  "geoPrecision": "street",
+  "priceLunch": [
+   150,
+   250
+  ],
+  "priceDinner": [
+   250,
+   400
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "アラカルト中心。ポーションが大きく2人でちょうどという声が多い。オープンキッチンのカウンターが特等席。",
+  "editorNote": "2,314件で★4.6。Tatler勢のなかで最も評価基盤が厚い。",
+  "vox": {
+   "pros": "オープンキッチンの薪火が見える席。ポーションが大きく2人でちょうど。皿ごとの説明が丁寧。",
+   "cons": "明確に高い。特別な日向けという位置づけで、日常使いには向かない。"
+  }
+ },
+ {
+  "id": "R0012",
+  "placeId": "ChIJNRKy0u5JzDERU7WuyvGaYV4",
+  "name": "Hide",
+  "nameJa": "ハイド",
+  "cat": "モダン・マレーシアン",
+  "catGroup": "マレーシア料理",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [
+   "Tatler Best 20"
+  ],
+  "rating": 4.5,
+  "reviewCount": 106,
+  "natCode": 1,
+  "kidOk": 0,
+  "venue": "Ritz-Carlton Residences コンコース",
+  "venueType": "hotel",
+  "area": "KLCC",
+  "address": "Concourse, Ritz-Carlton Residences, 105, Jalan Ampang",
+  "lat": 3.1567108,
+  "lng": 101.7060822,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   400,
+   500
+  ],
+  "priceDinner": [
+   754,
+   754
+  ],
+  "priceConfidence": "実額",
+  "priceNote": "レビューにRM650++の記載。13席のみ。ランチは金土のみ。月日休。",
+  "editorNote": "熟成と食感の実験が主題。提供ペースが速いという指摘が複数あり、評価が割れやすい。",
+  "vox": {
+   "pros": "熟成と食感の実験。13席の親密さ。buduクラッカーなど独創性。",
+   "cons": "提供が速すぎて1〜2分で次が来る。カレーパスタなど好みが分かれる皿がある。RM650++に対する評価が割れる。"
+  }
+ },
+ {
+  "id": "R0013",
+  "placeId": "ChIJYQ3YcxpLzDERikmCeIwWzVg",
+  "name": "Atelier Binchotan",
+  "nameJa": "アトリエ備長炭",
+  "cat": "炭火・薪火",
+  "catGroup": "洋食・グリル",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [
+   "Tatler Best 20"
+  ],
+  "rating": 4.4,
+  "reviewCount": 225,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "Taman Desa Business Park",
+  "venueType": "street",
+  "area": "Taman Desa",
+  "address": "5, Jalan 1/109e, Taman Desa Business Park",
+  "lat": 3.0978161,
+  "lng": 101.6773282,
+  "geoPrecision": "street",
+  "priceLunch": [
+   250,
+   350
+  ],
+  "priceDinner": [
+   350,
+   480
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "カウンター12席＋4人卓のみ。提供に30〜45分かかる前提。月〜水休。",
+  "editorNote": "夫婦で始めた備長炭のグリル。予約難度は席数の少なさに起因。",
+  "vox": {
+   "pros": "目の前で焼く備長炭。ハンウ牛、シマアジ、ミニバーガー、カヤトースト×フォアグラ。",
+   "cons": "提供に30〜45分かかる。備長炭の違いが分からなかったという声。季節のスナックが見た目倒れという指摘。"
+  }
+ },
+ {
+  "id": "R0014",
+  "placeId": "ChIJxcotQ2c3zDER626rmPz7X3s",
+  "name": "K KL（圭）",
+  "nameJa": "ケイ",
+  "cat": "日本料理",
+  "catGroup": "日本・その他アジア",
+  "michelin": "sel",
+  "tier": 1,
+  "extraFlags": [
+   "Tatler Best-in-Class",
+   "2026 Service Award"
+  ],
+  "rating": 4.9,
+  "reviewCount": 35,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "ILHAM Tower 37F",
+  "venueType": "tower",
+  "area": "KLCC",
+  "address": "Level 37, ILHAM Tower, 8, Jalan Binjai",
+  "lat": 3.1588687,
+  "lng": 101.71884,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   700,
+   950
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "16皿前後の懐石。12〜15席で、客2人につき料理人1人という体制。月火休。",
+  "editorNote": "★4.9だが35件。縮約で全体平均近くまで引き戻される、「まだ判断できない店」の典型。",
+  "vox": {
+   "pros": "客2人に料理人1人という体制。専属フォレジャーの食材。2026年のサービス賞受賞。",
+   "cons": "件数35件で判断材料が絶対的に不足。高評価しかないこと自体が判断を難しくしている。"
+  }
+ },
+ {
+  "id": "R0015",
+  "placeId": "ChIJg3SVybo3zDERADqEe4aL-VA",
+  "name": "Congkak",
+  "nameJa": "チョンカ",
+  "cat": "マレー・ジャワ",
+  "catGroup": "マレーシア料理",
+  "michelin": "bib",
+  "tier": 4,
+  "extraFlags": [],
+  "rating": 4,
+  "reviewCount": 653,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Bukit Bintang",
+  "address": "24, Jalan Beremi, off Jalan Sultan Ismail",
+  "lat": 3.147991,
+  "lng": 101.710282,
+  "geoPrecision": "building",
+  "priceLunch": [
+   50,
+   90
+  ],
+  "priceDinner": [
+   50,
+   95
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "アラカルト。ルンダンとナシゴレンが軸。ハラール。",
+  "editorNote": "4版連続ビブグルマンだがGoogle★4.0。審査員評価と一般客評価が乖離する典型例。",
+  "vox": {
+   "pros": "ルンダンとナシゴレン。マレー・ジャワの家庭料理として誠実。提供が速い。",
+   "cons": "「素材は良いが慣れが要る味」「照明が暗く食器が清潔でなかった」「評判ほどではない」という指摘が並ぶ。"
+  }
+ },
+ {
+  "id": "R0016",
+  "placeId": "ChIJx6rAYCY2zDERWI5R13hJPgE",
+  "name": "Wong Mei Kee",
+  "nameJa": "ウォンメイキー",
+  "cat": "焼味",
+  "catGroup": "中華",
+  "michelin": "bib",
+  "tier": 4,
+  "extraFlags": [],
+  "rating": 3.8,
+  "reviewCount": 2903,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（ショップロット）",
+  "venueType": "street",
+  "area": "Pudu",
+  "address": "30, Jalan Nyonya, Pudu",
+  "lat": 3.1386895,
+  "lng": 101.7116447,
+  "geoPrecision": "building",
+  "priceLunch": [
+   22,
+   45
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "実額",
+  "priceNote": "チャーシュー飯RM19、焼豚単品RM28、2種盛りRM39。冷房なし。昼12〜15時のみ、月休。",
+  "editorNote": "4版連続ビブグルマンでありながら★3.8／2,903件。母数が厚いぶんこの数字は本物で、期待値の調整が要る。",
+  "vox": {
+   "pros": "炭の香りと皮のパリパリ感。回転は速く、行列も15分程度。",
+   "cons": "屋台構えでチャーシュー飯RM19は高い、焼豚RM28で身がパサついた、店員の大半が無関心、という不満が具体的。★3.8はこの積み重ね。"
+  }
+ },
+ {
+  "id": "R0017",
+  "placeId": "ChIJhy577zo3zDERTqZLk3L_x3M",
+  "name": "Coast by Kayra",
+  "nameJa": "コースト",
+  "cat": "インド",
+  "catGroup": "インド・スリランカ",
+  "michelin": "bib",
+  "tier": 2,
+  "extraFlags": [],
+  "rating": 4.8,
+  "reviewCount": 454,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "The Starhill（商業施設）1F",
+  "venueType": "mall",
+  "area": "Bukit Bintang",
+  "address": "Lot G03-G05, Ground Floor, The Starhill, 181, Jalan Bukit Bintang",
+  "lat": 3.1474155,
+  "lng": 101.7138213,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   150,
+   250
+  ],
+  "priceDinner": [
+   150,
+   280
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ケララ式の魚介。モール内なので雨天でもアクセスが楽。ビブグルマンとしては価格上限に近い。",
+  "editorNote": "タンドールで焼いた鯛をカレーに沈める一皿が名物。2025年の新規ビブ。",
+  "vox": {
+   "pros": "タンドールの鯛と海老カレー。ケララの味をそのまま持ってきている。",
+   "cons": "ロンドン・NY並みの価格設定。殻の破片が入っていた、牡蠣が塩辛かったという報告。"
+  }
+ },
+ {
+  "id": "R0018",
+  "placeId": "ChIJxbi0bW5JzDER4H0wI_rarnE",
+  "name": "Leen's",
+  "nameJa": "リーンズ",
+  "cat": "中東",
+  "catGroup": "日本・その他アジア",
+  "michelin": "bib",
+  "tier": 2,
+  "extraFlags": [],
+  "rating": 4.6,
+  "reviewCount": 532,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "TTDI",
+  "address": "136, Jalan Burhanuddin Helmi, Taman Tun Dr Ismail",
+  "lat": 3.1531117,
+  "lng": 101.6229826,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   100,
+   170
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "平日はランチ営業なし（土日のみ昼あり）。ワイン2本まで持込無料。",
+  "editorNote": "シリア系。スモークしたフムスが看板。価格が良心的という声が多い。",
+  "vox": {
+   "pros": "スモークフムスと羊。質に対して価格が良心的という評価が繰り返し出る。ワイン持込無料。",
+   "cons": "ミシュラン掲載店としてはサービスが行き届かない場面がある。平日はランチ営業なし。"
+  }
+ },
+ {
+  "id": "R0019",
+  "placeId": "ChIJ0_v9e-pJzDERGIeEjyz94tI",
+  "name": "MTR 1924",
+  "nameJa": "エムティーアール",
+  "cat": "南インド（菜食）",
+  "catGroup": "インド・スリランカ",
+  "michelin": "bib",
+  "tier": 2,
+  "extraFlags": [],
+  "rating": 4.3,
+  "reviewCount": 2975,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Brickfields",
+  "address": "69, Jalan Thambipillay, Brickfields",
+  "lat": 3.1315765,
+  "lng": 101.6873811,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   40
+  ],
+  "priceDinner": [
+   20,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "朝8時から夜10時半まで通し。完全菜食。ターリーセットが基本。",
+  "editorNote": "バンガロール発、1924年創業。朝食の選択肢としても機能する。",
+  "vox": {
+   "pros": "南インド菜食の本格。ドーサ、イドゥリ、ターリー。カンナダ語が通じるスタッフ。",
+   "cons": "相場より高いという指摘が複数。店内環境は簡素で快適さは期待できない。"
+  }
+ },
+ {
+  "id": "R0020",
+  "placeId": "ChIJPVvpAs83zDERFcIf7TzEo3Q",
+  "name": "ROTI by d'Tandoor",
+  "nameJa": "ロティ",
+  "cat": "北インド",
+  "catGroup": "インド・スリランカ",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.6,
+  "reviewCount": 969,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Keramat",
+  "address": "82, Jalan Damai, Kampung Datuk Keramat",
+  "lat": 3.1632492,
+  "lng": 101.7248448,
+  "geoPrecision": "building",
+  "priceLunch": [
+   40,
+   75
+  ],
+  "priceDinner": [
+   40,
+   80
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "タンドーリチキン、ビリヤニ、ナン。ハラール認証済み。",
+  "editorNote": "宗教的な制約がある同席者がいる回の安全牌。",
+  "vox": {
+   "pros": "タンドーリチキンとビリヤニ。ハラール認証。手で食べる人向けの設備も丁寧。",
+   "cons": "シェア皿のポーションが価格の割に小さい。サービスにムラ。わざわざ行くほどではないという声。"
+  }
+ },
+ {
+  "id": "R0021",
+  "placeId": "ChIJ63X5a5hJzDERQwWp6DSrZcY",
+  "name": "Sri Nirwana Maju",
+  "nameJa": "ニルワナ",
+  "cat": "バナナリーフ",
+  "catGroup": "インド・スリランカ",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.1,
+  "reviewCount": 3413,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（Bangsar Village 向かい）",
+  "venueType": "street",
+  "area": "Bangsar",
+  "address": "43, Jalan Telawi 3, Bangsar",
+  "lat": 3.1310615,
+  "lng": 101.670982,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   35
+  ],
+  "priceDinner": [
+   20,
+   35
+  ],
+  "priceConfidence": "実額",
+  "priceNote": "レビューに「7人でRM165」の記載（1人約RM24）。おかわりは無料ではない。",
+  "editorNote": "バナナの葉に直接盛る南インド式。手で食べる文化を体験する回に。",
+  "vox": {
+   "pros": "チキンビリヤニのバナナリーフとカレーの厚み。活気そのものが体験になる。",
+   "cons": "おかわりが無料でない点に、バナナリーフ文化として異議を唱える声。"
+  }
+ },
+ {
+  "id": "R0022",
+  "placeId": "ChIJW8ZV5Sk2zDEREyD1cIkbLVI",
+  "name": "Sao Nam",
+  "nameJa": "サオナム",
+  "cat": "ベトナム",
+  "catGroup": "日本・その他アジア",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.4,
+  "reviewCount": 884,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Bukit Bintang",
+  "address": "25, Tengkat Tong Shin, Bukit Bintang",
+  "lat": 3.1458101,
+  "lng": 101.7075309,
+  "geoPrecision": "building",
+  "priceLunch": [
+   60,
+   100
+  ],
+  "priceDinner": [
+   60,
+   110
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "店前に駐車可、車椅子対応。グルテンなどアレルギー対応の評判が良い。",
+  "editorNote": "マンゴスチンのサラダなど、ベトナム料理としては独自路線。",
+  "vox": {
+   "pros": "マンゴスチンのサラダ、竹筒の牛、鴨のオレンジ。セリアック対応の知識が確か。",
+   "cons": "万人受けしない独自路線。ベトナム料理の定番を期待すると外れる。"
+  }
+ },
+ {
+  "id": "R0023",
+  "placeId": "ChIJZ4S8obQ1zDERY836jot3-hk",
+  "name": "Hai Kah Lang",
+  "nameJa": "ハイカラン",
+  "cat": "魚頭麺",
+  "catGroup": "麺・肉骨茶",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.3,
+  "reviewCount": 1828,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（ショップロット）",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "44, Jalan Kaskas 2, Taman Cheras",
+  "lat": 3.1006724,
+  "lng": 101.7413094,
+  "geoPrecision": "building",
+  "priceLunch": [
+   33,
+   50
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "実額",
+  "priceNote": "レビューに「海鮮ミックス麺RM28.90＋サービス料10%＋税6%＝RM33.52」の明細。朝8時〜夕方5時。",
+  "editorNote": "揚げた魚の頭が入る白濁スープ麺。冷房あり。",
+  "vox": {
+   "pros": "揚げた魚頭の白濁スープ。冷房あり。店頭に海鮮が並ぶ。",
+   "cons": "「1年前より明らかに質が落ちた」「スープが酸っぱかった」という直近の指摘。魚の量が価格に見合わない。"
+  }
+ },
+ {
+  "id": "R0024",
+  "placeId": "ChIJQ9Le-dBJzDERoy5Tt9Oqiz0",
+  "name": "Nam Heong Chicken Rice",
+  "nameJa": "ナムヒョン海南鶏飯",
+  "cat": "海南鶏飯",
+  "catGroup": "鶏飯・ご飯もの",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.3,
+  "reviewCount": 4300,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（老舗コピティアム）",
+  "venueType": "street",
+  "area": "Chinatown",
+  "address": "56, Jalan Sultan, City Centre",
+  "lat": 3.1434705,
+  "lng": 101.6977375,
+  "geoPrecision": "street",
+  "priceLunch": [
+   23,
+   45
+  ],
+  "priceDinner": [
+   23,
+   45
+  ],
+  "priceConfidence": "実額",
+  "priceNote": "レビューに「ローストチキンライス＋もやしでRM22.95」「3品＋アイスコーヒーでRM44」の記載。国際ブランドのカード可。",
+  "editorNote": "4,300件の母数。イポー式。Petaling Street散策の起点に使いやすい。",
+  "vox": {
+   "pros": "鶏腿の柔らかさと飯の香り。ワンタンミーとコピも強い。国際カード可。",
+   "cons": "「以前と別物」「生姜ペーストが効いていない」「飯がべたつく」という劣化の指摘。肉が冷たかったという声も。"
+  }
+ },
+ {
+  "id": "R0025",
+  "placeId": "ChIJaX0Z-i42zDERvbr2pTSqE0E",
+  "name": "Ah Hei Bak Kut Teh",
+  "nameJa": "アーヘイ肉骨茶",
+  "cat": "肉骨茶",
+  "catGroup": "麺・肉骨茶",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.3,
+  "reviewCount": 1185,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（冷房2フロア）",
+  "venueType": "street",
+  "area": "Imbi",
+  "address": "33A, Medan Imbi, Imbi",
+  "lat": 3.1436928,
+  "lng": 101.7138739,
+  "geoPrecision": "street",
+  "priceLunch": [
+   35,
+   60
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "朝8時半〜午後3時半。スープのおかわり1回無料。他の肉骨茶店より高めという指摘あり。水曜休。",
+  "editorNote": "冷房完備の2フロア。肉骨茶の初回はここが最も無理がない。",
+  "vox": {
+   "pros": "冷房2フロアで朝10時なら待ちなし。薬膳感が強すぎず、肉骨茶の初回に向く。",
+   "cons": "他の肉骨茶店より明確に高い。肉団子が工場製という指摘。"
+  }
+ },
+ {
+  "id": "R0026",
+  "placeId": "ChIJeUy6YWpGzDERJuS-ujQp-rQ",
+  "name": "Hing Kee Bakuteh",
+  "nameJa": "ヒンキー肉骨茶",
+  "cat": "肉骨茶",
+  "catGroup": "麺・肉骨茶",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.1,
+  "reviewCount": 2302,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（Metro Prima 前）",
+  "venueType": "street",
+  "area": "Kepong",
+  "address": "121, Jalan Kepong, Metro Prima",
+  "lat": 3.2125814,
+  "lng": 101.643599,
+  "geoPrecision": "street",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   35,
+   65
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "午後3時から深夜2時半まで。スープのおかわり無料。乾式が本命との声。月曜休。",
+  "editorNote": "市街から距離があるので移動時間を見込むこと。",
+  "vox": {
+   "pros": "ドライが本命。スープおかわり無料。雨天時に席を移してくれる機転。",
+   "cons": "「スープが塩辛い」「肉に脂がなく淡白」「通りがかりでなければ寄る価値はない」。"
+  }
+ },
+ {
+  "id": "R0027",
+  "placeId": "ChIJAYwg4SI2zDERX-adP9Udqgk",
+  "name": "Heun Kee Claypot",
+  "nameJa": "ヒンキー土鍋鶏飯",
+  "cat": "土鍋鶏飯",
+  "catGroup": "鶏飯・ご飯もの",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.1,
+  "reviewCount": 3684,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（コピティアム裏）",
+  "venueType": "street",
+  "area": "Pudu",
+  "address": "59, Jalan Yew, Pudu",
+  "lat": 3.1327391,
+  "lng": 101.7162985,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   38
+  ],
+  "priceDinner": [
+   20,
+   38
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "支払いは現金かTouch'n GoのQRのみ。ピークは45分待ち。近隣の駐車はRM5前後。入口が分かりにくい。",
+  "editorNote": "炭火の土鍋が並ぶ光景そのものが目的地。",
+  "vox": {
+   "pros": "炭火の土鍋のおこげと香り。45分待ちでも整理券の仕組みは機能している。",
+   "cons": "「50/50で好みが分かれる」「腸詰の匂いが強い」「豚の胃のスープは冷めていた」。現金かTnGのみ。"
+  }
+ },
+ {
+  "id": "R0028",
+  "placeId": "ChIJrcysV4JIzDERMO9wiM0ZIwg",
+  "name": "Hor Poh Cuisine",
+  "nameJa": "ホーポー",
+  "cat": "客家（擂茶）",
+  "catGroup": "中華",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.3,
+  "reviewCount": 853,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（ショップロット）",
+  "venueType": "street",
+  "area": "Segambut",
+  "address": "36, Jalan 6/38d, Taman Sri Sinar",
+  "lat": 3.1891491,
+  "lng": 101.653202,
+  "geoPrecision": "street",
+  "priceLunch": [
+   30,
+   55
+  ],
+  "priceDinner": [
+   30,
+   55
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "擂茶はスープ追加が有料。餃子は2個からの注文制。火曜休。英語が通じにくいという指摘あり。",
+  "editorNote": "客家料理。日本ではまず出会えないジャンル。",
+  "vox": {
+   "pros": "擂茶の濃度が適切。客家料理の品揃え。店主が薦めてくれる。",
+   "cons": "「餃子は2個からしか作らない」と言われた、英語が通じない、トムヤム炒飯が塩辛すぎた、という強い不満も。"
+  }
+ },
+ {
+  "id": "R0029",
+  "placeId": "ChIJb3lbUzhKzDER3wZ8LN0hWaY",
+  "name": "Chee Meng",
+  "nameJa": "チーメン海南鶏飯",
+  "cat": "海南鶏飯",
+  "catGroup": "鶏飯・ご飯もの",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.2,
+  "reviewCount": 1330,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（コピティアム）",
+  "venueType": "street",
+  "area": "Old Klang Road",
+  "address": "Sub Lot A-1, Batu 4, Jalan Klang Lama",
+  "lat": 3.095376,
+  "lng": 101.675213,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   15,
+   28
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "実額",
+  "priceNote": "レビューに「1セットRM14」の記載。冷房なし、駐車は少なめ。午前10時〜午後7時。",
+  "editorNote": "ハラール認証の海南鶏飯という珍しい組み合わせ。Bukit Bintang店より空いている。",
+  "vox": {
+   "pros": "ハラール認証で人種を問わず混み合う。飯に鶏の香りが移っている。",
+   "cons": "冷凍鶏を疑う声、生姜ソースが生っぽい、RM14は割高、席が狭い。"
+  }
+ },
+ {
+  "id": "R0030",
+  "placeId": "ChIJzZ5UWiE2zDERMrzWoZxeRoU",
+  "name": "Sek Yuen",
+  "nameJa": "セックユン",
+  "cat": "広東（老舗）",
+  "catGroup": "中華",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.1,
+  "reviewCount": 3640,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（旧館＋新館）",
+  "venueType": "street",
+  "area": "Pudu",
+  "address": "313, Jalan Pudu, Pudu",
+  "lat": 3.1322208,
+  "lng": 101.7126147,
+  "geoPrecision": "building",
+  "priceLunch": [
+   60,
+   110
+  ],
+  "priceDinner": [
+   60,
+   120
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "琵琶鴨と八宝鴨は事前予約推奨。薪窯の旧館は冷房なし、隣接の新館は冷房あり。駐車が難しい。月曜休。",
+  "editorNote": "創業70年超。琵琶鴨の質が落ちたという指摘も出始めている。",
+  "vox": {
+   "pros": "琵琶鴨、八宝鴨、蝦棗。70年の広東料理をそのまま食べられる。",
+   "cons": "「琵琶鴨の身が乾いていた」「以前の質ではない」。駐車が困難で、旧館は冷房なし・騒がしい。"
+  }
+ },
+ {
+  "id": "R0031",
+  "placeId": "ChIJT9pYGcJJzDERkO9nXwauEPw",
+  "name": "Anak Baba",
+  "nameJa": "アナ・ババ",
+  "cat": "ニョニャ",
+  "catGroup": "マレーシア料理",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4,
+  "reviewCount": 838,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（NU Sentral 徒歩圏）",
+  "venueType": "street",
+  "area": "Brickfields",
+  "address": "159, Jalan Sultan Abdul Samad, Brickfields",
+  "lat": 3.1328085,
+  "lng": 101.6901846,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   38
+  ],
+  "priceDinner": [
+   20,
+   38
+  ],
+  "priceConfidence": "実額",
+  "priceNote": "レビューに「ラクサ1杯が税込RM14前後」の記載。朝7時から夜10時まで通し営業。UnionPay可。",
+  "editorNote": "KL Sentral至近。時間の融通が効く数少ないビブグルマン。",
+  "vox": {
+   "pros": "ラクサの出汁と生の血蛤。朝7時から夜10時まで通し。KL Sentral至近。",
+   "cons": "「わざわざ来るほどではない」という評価。★4.0はこの層の積み重ね。"
+  }
+ },
+ {
+  "id": "R0032",
+  "placeId": "ChIJPVGtDrxJzDERatQnLHBYARk",
+  "name": "Lai Foong Lala Noodles",
+  "nameJa": "ライフォン蛤麺",
+  "cat": "麺",
+  "catGroup": "麺・肉骨茶",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4,
+  "reviewCount": 2732,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（Petaling Street 至近）",
+  "venueType": "street",
+  "area": "Chinatown",
+  "address": "99, Jalan Sultan, City Centre",
+  "lat": 3.1434705,
+  "lng": 101.6977375,
+  "geoPrecision": "street",
+  "priceLunch": [
+   30,
+   55
+  ],
+  "priceDinner": [
+   30,
+   55
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "朝9時から夜10時まで。人気メニューは早い時間に売り切れることがある。行列あり。",
+  "editorNote": "生姜・唐辛子・紹興酒が効いた蛤のスープ麺。",
+  "vox": {
+   "pros": "生姜・唐辛子・紹興酒の蛤スープ。Petaling Streetの喧騒とセット。",
+   "cons": "行列が長い。人気メニューが早い時間に売り切れる。麺自体は標準的という声。"
+  }
+ },
+ {
+  "id": "R0033",
+  "placeId": "ChIJVcgB7CI2zDERABq-azub4QM",
+  "name": "Foong Lian",
+  "nameJa": "フォンリエン",
+  "cat": "土鍋鶏飯",
+  "catGroup": "鶏飯・ご飯もの",
+  "michelin": "bib",
+  "tier": 2,
+  "extraFlags": [],
+  "rating": 4.1,
+  "reviewCount": 481,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（半屋外）",
+  "venueType": "street",
+  "area": "Pudu",
+  "address": "55, Jalan Yew, Pudu",
+  "lat": 3.1330056,
+  "lng": 101.716458,
+  "geoPrecision": "building",
+  "priceLunch": [
+   21,
+   35
+  ],
+  "priceDinner": [
+   21,
+   35
+  ],
+  "priceConfidence": "実額",
+  "priceNote": "レビューに「1人前RM18＋塩魚RM3」の記載。冷房なし。開店直後が快適。火曜休。",
+  "editorNote": "Heun Keeの数軒隣。土鍋の香ばしさをめぐる評価は割れている。",
+  "vox": {
+   "pros": "鶏の量が多い。開店直後（11時半）は空いていて快適。",
+   "cons": "「土鍋の香りが全くない」「油っぽく塩辛い」「事前調理を土鍋で温め直しただけに見える」。"
+  }
+ },
+ {
+  "id": "R0034",
+  "placeId": "ChIJj9Grb8VHzDEROofS7kSvjZs",
+  "name": "Jalan Ipoh Claypot",
+  "nameJa": "ジャランイポー土鍋鶏飯",
+  "cat": "土鍋鶏飯",
+  "catGroup": "鶏飯・ご飯もの",
+  "michelin": "bib",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4,
+  "reviewCount": 367,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "屋台・テント（トタン屋根）",
+  "venueType": "stall",
+  "area": "Segambut",
+  "address": "Lot 1224, 7, Jalan Batu Ambar, Taman Kok Lian",
+  "lat": 3.2024905,
+  "lng": 101.6746238,
+  "geoPrecision": "street",
+  "priceLunch": [
+   18,
+   32
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼のみ（10時〜17時）。塩魚入りが定番。日中は暑い。水曜休。",
+  "editorNote": "観光客より常連比率が高い、素の一軒。",
+  "vox": {
+   "pros": "塩魚入りが定番。常連比率が高い素の一軒。羅漢果のドリンク。",
+   "cons": "テント下で日中は暑い。ピークの待ち時間が長い。小鍋は味が明確に落ちるという指摘。"
+  }
+ },
+ {
+  "id": "R0035",
+  "placeId": "ChIJ73vXAQBJzDERjh5Zzf53bNA",
+  "name": "Sin Kiew Yee Beef Noodles",
+  "nameJa": "シンキーユー牛肉麺",
+  "cat": "麺",
+  "catGroup": "麺・肉骨茶",
+  "michelin": "bib",
+  "tier": 2,
+  "extraFlags": [],
+  "rating": 4.3,
+  "reviewCount": 123,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（コピティアム）",
+  "venueType": "street",
+  "area": "Chinatown",
+  "address": "7a, Jalan Tun Tan Cheng Lock, City Centre",
+  "lat": 3.1434705,
+  "lng": 101.6977375,
+  "geoPrecision": "street",
+  "priceLunch": [
+   20,
+   38
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "豚不使用。相席前提、昼のみ（10時半〜16時半）、水曜休。並ぶ列は日向だが店内は冷房あり。",
+  "editorNote": "牛のスープに肉団子とセンマイ。2025年の新規ビブ。",
+  "vox": {
+   "pros": "牛肉の柔らかさとミンチのコク。豚不使用。注文から提供まで速い。",
+   "cons": "「ミシュランと言うほどの感動はない」「相席前提」「並ぶ列が日向」「割高」。"
+  }
+ },
+ {
+  "id": "R0036",
+  "placeId": "ChIJ8xXzvs9JzDER0MmuPrvVleE",
+  "name": "GulaiNya",
+  "nameJa": "グライニャ",
+  "cat": "ニョニャ・マレー",
+  "catGroup": "マレーシア料理",
+  "michelin": "bib",
+  "tier": 1,
+  "extraFlags": [],
+  "rating": 4.7,
+  "reviewCount": 111,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Damansara Heights",
+  "address": "44-G, Jalan Medan Setia 2, Bukit Damansara",
+  "lat": 3.1490533,
+  "lng": 101.6533357,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   50,
+   90
+  ],
+  "priceDinner": [
+   50,
+   95
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "小箱で週末は要予約。屋外席も数席あり。Aliyaaの並び。月曜休。",
+  "editorNote": "2026年の新規ビブグルマン。ナスのサンバルの評価が突出。",
+  "vox": {
+   "pros": "ナスのサンバル、gulai tumis ikan pari、パク・レマ。家庭的な内装と接客。",
+   "cons": "塩ダレのイカは半分が衣。揚げ鶏が硬く乾いていた。狭く声が響く。"
+  }
+ },
+ {
+  "id": "R0037",
+  "placeId": "ChIJfxAsVwA5zDERQFLnE8AAoyw",
+  "name": "Lama Nyonya",
+  "nameJa": "ラマ",
+  "cat": "ニョニャ",
+  "catGroup": "マレーシア料理",
+  "michelin": "bib",
+  "tier": 1,
+  "extraFlags": [],
+  "rating": 4.2,
+  "reviewCount": 184,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "Steppes @ Mont Kiara（商業施設）",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "G-1-1, 32, Jalan Kiara 3, Mont Kiara",
+  "lat": 3.1726216,
+  "lng": 101.6486139,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   60,
+   100
+  ],
+  "priceDinner": [
+   60,
+   105
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "モール内で駐車が容易。週末は要予約。子連れ導線が最も楽なニョニャ。",
+  "editorNote": "2026年の新規ビブグルマン。1980年代の家庭を思わせる内装。",
+  "vox": {
+   "pros": "kerabu pucuk pakuの完成度。子どもが完食するオムレツ。駐車が楽。",
+   "cons": "「テーブルクロスを替えず拭くだけだった」「ayam pongtehの味が薄い」「カレー魚が乾いていた」。"
+  }
+ },
+ {
+  "id": "R0038",
+  "placeId": "ChIJ43mF4C5IzDERm8u991ryZuY",
+  "name": "Limapulo",
+  "nameJa": "リマプロ",
+  "cat": "ニョニャ",
+  "catGroup": "マレーシア料理",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.3,
+  "reviewCount": 2094,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Chow Kit",
+  "address": "50, Jalan Doraisamy, Chow Kit",
+  "lat": 3.1582712,
+  "lng": 101.6995656,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   30,
+   55
+  ],
+  "priceDinner": [
+   30,
+   55
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ニョニャ・ラクサが看板。冷房が弱い席があるとの指摘。日曜休。",
+  "editorNote": "マラッカやペナンに行かずにニョニャを食べられる価値。",
+  "vox": {
+   "pros": "ニョニャ・ラクサのrempahの厚み。アイス・ニョニャコーヒー。",
+   "cons": "「トッピングが貧弱」「魚のすり身が新鮮でない」「辛さが物足りない」。冷房が届かない席がある。"
+  }
+ },
+ {
+  "id": "R0039",
+  "placeId": "ChIJacl_rtA3zDERNJiRM-i5PeM",
+  "name": "Nadodi",
+  "nameJa": "ナドディ",
+  "cat": "インド",
+  "catGroup": "インド・スリランカ",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.7,
+  "reviewCount": 933,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "Four Seasons Hotel 7A階",
+  "venueType": "hotel",
+  "area": "KLCC",
+  "address": "Level 7A, Four Seasons Hotel, Jalan Ampang",
+  "lat": 3.1580799,
+  "lng": 101.7138657,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   300,
+   420
+  ],
+  "priceDinner": [
+   450,
+   650
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "コース制。スパイスを実際に使うカクテルペアリングが評判。KLCC公園ビュー。日曜休。",
+  "editorNote": "南インド放浪民の食を辿るコース。Yun Houseと同じホテル内。",
+  "vox": {
+   "pros": "実際のスパイスを使うカクテルペアリング。KLCC公園ビュー。支配人の説明が丁寧。",
+   "cons": "価格帯に対する期待値の管理が要る。日曜休。"
+  }
+ },
+ {
+  "id": "R0040",
+  "placeId": "ChIJC6IDC5RJzDER8J9Hr0LKF7k",
+  "name": "Entier",
+  "nameJa": "アンティエ",
+  "cat": "フレンチ",
+  "catGroup": "洋食・グリル",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.4,
+  "reviewCount": 1567,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Alila Bangsar 41F",
+  "venueType": "hotel",
+  "area": "Bangsar",
+  "address": "Level 41, Alila Bangsar, 58, Jalan Ang Seng",
+  "lat": 3.1277831,
+  "lng": 101.6802883,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   180,
+   280
+  ],
+  "priceDinner": [
+   280,
+   450
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "4コースのランチセットあり。駐車は多いが有料で高め。",
+  "editorNote": "「一頭・一尾を丸ごと」が店名の由来。",
+  "vox": {
+   "pros": "ツナタルタルと海老マンゴーの前菜、デザート。41階の眺望と個室感。",
+   "cons": "「和牛とフォアグラがこの価格帯の深みに届かない」「メインが標準的」。サービスが冷たく感じる場面。駐車が高い。"
+  }
+ },
+ {
+  "id": "R0041",
+  "placeId": "ChIJH3dBsNU3zDERgTKw6354sgk",
+  "name": "Skillet KL",
+  "nameJa": "スキレット",
+  "cat": "モダン・ヨーロピアン",
+  "catGroup": "洋食・グリル",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.6,
+  "reviewCount": 1142,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Menara Hap Seng 1F",
+  "venueType": "tower",
+  "area": "KLCC",
+  "address": "Lot 1-01, Level 1, Menara Hap Seng, 3, Jalan P. Ramlee",
+  "lat": 3.1526347,
+  "lng": 101.7074638,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   150,
+   230
+  ],
+  "priceDinner": [
+   200,
+   320
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "4コース制。前菜のフォアグラは追加料金。月曜休。",
+  "editorNote": "1,142件で★4.6。掲載店のなかでは価格が現実的という声が多い。Elegant Innと同じビル。",
+  "vox": {
+   "pros": "熟成鴨の皮、アニョロッティ。質と量に対して価格が妥当という声が多い。",
+   "cons": "「リングイネのソースが甘く不自然」「貝が新鮮でなかった」というセットメニューでの失敗報告。"
+  }
+ },
+ {
+  "id": "R0042",
+  "placeId": "ChIJAQBwkc43zDER0_QEBU8lUy4",
+  "name": "Cilantro",
+  "nameJa": "シラントロ",
+  "cat": "フレンチ",
+  "catGroup": "洋食・グリル",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.3,
+  "reviewCount": 72,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "MiCasa All Suite Hotel",
+  "venueType": "hotel",
+  "area": "Jalan Tun Razak",
+  "address": "368B, MiCasa All Suite Hotel, Jalan Tun Razak, Taman U Thant",
+  "lat": 3.1568984,
+  "lng": 101.7230082,
+  "geoPrecision": "building",
+  "priceLunch": [
+   150,
+   150
+  ],
+  "priceDinner": [
+   400,
+   550
+  ],
+  "priceConfidence": "実額",
+  "priceNote": "レビューに「3コースのランチセット RM150 nett（税サ込）」の明記。ランチは金曜のみ。日曜休。",
+  "editorNote": "KLのフレンチの基準点として長く機能してきた老舗。件数72件で縮約が強く効く。",
+  "vox": {
+   "pros": "トリュフバターとパイ、カペリーニ。RM150nettの金曜ランチ。長年の安定感。",
+   "cons": "「5人で行って全滅」「フォアグラが崩れた」「魚が生臭い」という強い酷評が1件。件数72件なので1件の影響が大きい。"
+  }
+ },
+ {
+  "id": "R0043",
+  "placeId": "ChIJqbsLZNU3zDERWISdWxh0l8o",
+  "name": "Elegant Inn",
+  "nameJa": "エレガント・イン",
+  "cat": "広東・点心",
+  "catGroup": "中華",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.5,
+  "reviewCount": 1184,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Menara Hap Seng ポディウム2F",
+  "venueType": "tower",
+  "area": "KLCC",
+  "address": "2nd Floor, Podium Block, Menara Hap Seng, Jalan Tengah",
+  "lat": 3.1530191,
+  "lng": 101.7073428,
+  "geoPrecision": "building",
+  "priceLunch": [
+   100,
+   170
+  ],
+  "priceDinner": [
+   200,
+   320
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼は点心のみ。テーブルのナッツはRM18の有料なので不要なら最初に断ること。駐車は1時間RM4前後。連絡橋で隣棟から入る。",
+  "editorNote": "香港式の正統派。ポーションは小さめという指摘が複数。",
+  "vox": {
+   "pros": "海老トースト、フカヒレ餃子、ニンニクのカイラン。90年代の香港式そのまま。",
+   "cons": "「食感が詰まって重い」「明確に高い」「ポーションが小さい」「頼んでいないナッツにRM18」。"
+  }
+ },
+ {
+  "id": "R0044",
+  "placeId": "ChIJeyJQmA5JzDERMtbgq1ikNhs",
+  "name": "Ling Long",
+  "nameJa": "リンロン",
+  "cat": "中華（モダン）",
+  "catGroup": "中華",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.4,
+  "reviewCount": 36,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "The Five / Kompleks Pejabat Damansara",
+  "venueType": "tower",
+  "area": "Damansara Heights",
+  "address": "L2-04, Block E, The Five, Kompleks Pejabat Damansara, Jalan Dungun",
+  "lat": 3.1514085,
+  "lng": 101.6657944,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   400,
+   600
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "中華とフレンチの折衷コース。ロブスターは追加料金。",
+  "editorNote": "件数36件。現時点では評価が定まっていない。",
+  "vox": {
+   "pros": "フォアグラのタルト。ワインペアリングの質。皿の造形。",
+   "cons": "「見た目に対して味の深みがない」「空間が無機質」「価格に対してサービスが届かない」。"
+  }
+ },
+ {
+  "id": "R0045",
+  "placeId": "ChIJY0pAodY3zDERpLoOdZbQ0UM",
+  "name": "Marini's on 57",
+  "nameJa": "マリーニ・オン57",
+  "cat": "イタリアン",
+  "catGroup": "洋食・グリル",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [],
+  "rating": 4.5,
+  "reviewCount": 3605,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Menara 3 Petronas 57F",
+  "venueType": "tower",
+  "area": "KLCC",
+  "address": "Level 57, Menara 3 Petronas, Persiaran KLCC",
+  "lat": 3.1564081,
+  "lng": 101.7114459,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   300,
+   480
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "夕方5時から深夜2時（金土は3時）。ドレスコードあり。ライブ演奏あり。",
+  "editorNote": "ツインタワーを真正面から見る高層店。景色が評価を押し上げている可能性は割り引いて読む。",
+  "vox": {
+   "pros": "ツインタワー正面の眺望とライブ演奏。ブッラータ、ロブスターのカペリーニ、タラ。",
+   "cons": "「ほぼ全皿が塩辛い」「トリュフパスタにトリュフの香りがない」「無料のパンが一番おいしかった」。料理より場所を買う店。"
+  }
+ },
+ {
+  "id": "R0046",
+  "placeId": "ChIJW3HkBOI3zDER4p7E3lRVFTI",
+  "name": "Kappo Hiyori KL",
+  "nameJa": "割烹 日和",
+  "cat": "日本料理",
+  "catGroup": "日本・その他アジア",
+  "michelin": "sel",
+  "tier": 3,
+  "extraFlags": [
+   "屋号は要確認"
+  ],
+  "rating": 4.8,
+  "reviewCount": 160,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Naza Tower / Skyviews 48F",
+  "venueType": "tower",
+  "area": "KLCC",
+  "address": "Unit 3-48, Level 48, 10, Persiaran KLCC",
+  "lat": 3.1544528,
+  "lng": 101.7186828,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   250,
+   400
+  ],
+  "priceDinner": [
+   500,
+   750
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Dewakanと同じ48階フロア。昼夜とも営業。日曜休。TRXを望む席あり。",
+  "editorNote": "ミシュラン表記はWagyu Kappo Yoshida。屋号変更の可能性があり予約時に確認を。",
+  "vox": {
+   "pros": "和牛の質、締めのカレーライス、48階のTRXビュー。落ち着いた設え。",
+   "cons": "「和牛証明書が他の投稿と同一に見える」という疑義。「肉の香りが調味に負けている」「脂が重い」。この価格帯なら他に選択肢があるという声。"
+  }
+ },
+ {
+  "id": "R0047",
+  "placeId": "ChIJgft_mwVJzDERp9xgE9qt2z4",
+  "name": "Studio Restaurant",
+  "nameJa": "スタジオ",
+  "cat": "ボーダーレス",
+  "catGroup": "洋食・グリル",
+  "michelin": "none",
+  "tier": 0,
+  "extraFlags": [
+   "Tatler Best 20"
+  ],
+  "rating": 4.8,
+  "reviewCount": 57,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Bangsar",
+  "address": "38-1, Jalan Kemuja, Bangsar",
+  "lat": 3.1293387,
+  "lng": 101.6794228,
+  "geoPrecision": "street",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   600,
+   700
+  ],
+  "priceConfidence": "実額",
+  "priceNote": "レビューに「1人あたり約RM600」の記載。金・土のみ営業。8〜10皿のコース。",
+  "editorNote": "ミシュラン非掲載でTatler入り。豪州のナチュラルワインリストが特徴。",
+  "vox": {
+   "pros": "8〜10皿すべてが高水準。豪州ナチュラルワイン。自家製のディナーロール。",
+   "cons": "「ハリバットだけが浮いていた」。金土のみ・57件で情報が絶対的に少ない。"
+  }
+ },
+ {
+  "id": "R0048",
+  "placeId": "ChIJ68HHqsdJzDERqpqKFXOeDv0",
+  "name": "Merdeka Grill",
+  "nameJa": "ムルデカ・グリル",
+  "cat": "グリル",
+  "catGroup": "洋食・グリル",
+  "michelin": "none",
+  "tier": 0,
+  "extraFlags": [
+   "Tatler Best 20"
+  ],
+  "rating": 4.6,
+  "reviewCount": 314,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Park Hyatt / Merdeka 118 75F",
+  "venueType": "hotel",
+  "area": "Merdeka 118",
+  "address": "Level 75, Park Hyatt Kuala Lumpur, KL118, Presint Merdeka 118",
+  "lat": 3.1417171,
+  "lng": 101.7007387,
+  "geoPrecision": "building",
+  "priceLunch": [
+   230,
+   230
+  ],
+  "priceDinner": [
+   350,
+   500
+  ],
+  "priceConfidence": "実額",
+  "priceNote": "レビューに「3コースのランチセット RM198」の記載。2コースの選択も可。毎日昼夜営業。",
+  "editorNote": "ランチセットがKL屈指の費用対効果。子連れでも成立する数少ない高層ファイン。",
+  "vox": {
+   "pros": "75階の眺望とRM198の3コースランチ。スタッフの案内が丁寧で名指しの称賛が多い。",
+   "cons": "会員プログラムの勧誘が入る。ディナーは価格が跳ね上がる。"
+  }
+ },
+ {
+  "id": "R0049",
+  "placeId": "ChIJWV51lvU3zDERCyHo6Gi0cQo",
+  "name": "Jalan Alor",
+  "nameJa": "ジャランアロー",
+  "cat": "屋台街",
+  "catGroup": "屋台街",
+  "michelin": "none",
+  "tier": 0,
+  "extraFlags": [],
+  "rating": 4.4,
+  "reviewCount": 12113,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "屋台街（通り全体）",
+  "venueType": "stall",
+  "area": "Bukit Bintang",
+  "address": "64, Jalan Alor, Bukit Bintang",
+  "lat": 3.1455473,
+  "lng": 101.7084901,
+  "geoPrecision": "street",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   25,
+   60
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "14時半から深夜まで。屋台ごとに会計。海鮮を頼むと一気に上がるので単価を先に確認すること。",
+  "editorNote": "12,113件で★4.4。店ではなく通りそのものが目的地。",
+  "vox": {
+   "pros": "屋台の多様性と夜の熱量。ココナッツアイス、サテ、焼き海鮮。",
+   "cons": "客引きが強い。ドリアンの匂いが苦手だと厳しい。海鮮は時価で一気に高くなる。"
+  }
+ },
+ {
+  "id": "R0050",
+  "placeId": "ChIJIfYLMzFJzDERPG9vHZ7DqiE",
+  "name": "Village Park",
+  "nameJa": "ヴィレッジパーク",
+  "cat": "ナシレマ",
+  "catGroup": "マレーシア料理",
+  "michelin": "none",
+  "tier": 0,
+  "extraFlags": [],
+  "rating": 4.3,
+  "reviewCount": 13488,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店（ショップロット）",
+  "venueType": "street",
+  "area": "Damansara Utama",
+  "address": "5, Jalan SS21/37, Damansara Utama, Petaling Jaya",
+  "lat": 3.1378386,
+  "lng": 101.6233015,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   15,
+   28
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "朝6時半〜17時半。駐車が困難。ピークは30分待ち。カウンターで注文する方式。KL市外（PJ）。",
+  "editorNote": "13,488件で★4.3。この母数は操作不能。ミシュラン非掲載という一点だけで総合点が沈む構造の例。",
+  "vox": {
+   "pros": "揚げ鶏の衣と飯のココナッツ感。回転は速く20分程度で着席できる。",
+   "cons": "「サンバルが甘く辛くない」。駐車困難、席が密で常に人がぶつかる、注文方式が分かりにくい。"
+  }
+ }
+]
