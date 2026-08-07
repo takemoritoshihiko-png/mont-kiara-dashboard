@@ -1,0 +1,17 @@
+{
+  "name": "mont-kiara-dashboard",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "KL/Penang living map: condominiums, schools, commercial, dining",
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "hooks:install": "node tools/install-hooks.js"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "vitest": "^2.1.0"
+  }
+}

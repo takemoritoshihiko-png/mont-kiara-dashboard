@@ -1,0 +1,11 @@
+#!/bin/sh
+# Default-deny push guard (same convention as gic-order).
+# Push = production deploy on GitHub Pages, so pushes are blocked unless
+# the main agent explicitly sets GIC_ALLOW_PUSH=1 for an approved push.
+# Subagents must never set this variable.
+if [ "$GIC_ALLOW_PUSH" != "1" ]; then
+  echo "[pre-push] BLOCKED: push is default-denied in this repo (push = production deploy)."
+  echo "[pre-push] If this push is approved, run with GIC_ALLOW_PUSH=1."
+  exit 1
+fi
+exit 0
