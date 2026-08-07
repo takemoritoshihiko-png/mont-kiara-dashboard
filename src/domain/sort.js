@@ -4,7 +4,7 @@
 // options have to be data. Every comparator falls back to the name so the
 // order is deterministic when the primary key ties.
 
-import { diningPriceCeiling } from './filter.js';
+import { diningPriceCeiling, BUDGET_BASIS_NIGHT, BUDGET_BASIS_DAY } from './filter.js';
 
 const byName = (a, b) => String(a.name).localeCompare(String(b.name));
 
@@ -12,6 +12,23 @@ const byName = (a, b) => String(a.name).localeCompare(String(b.name));
 // missing/zero value as "the most expensive" so it sinks to the bottom.
 const lo = (v) => (v > 0 ? v : Infinity);
 const hi = (v) => (v > 0 ? v : 0);
+
+// Budget order runs on the SAME figure the 価格帯 filter uses
+// (diningPriceCeiling), read on the SAME basis — 夜 by default, 昼 while
+// 「昼の予算で見る」 is on. Both come from one factory so a change of basis can
+// never reach one of the two and not the other.
+// The order's own name has to say which sitting it ran on, otherwise 「予算 安い
+// 順」 quietly means two different things depending on a toggle elsewhere on
+// the panel. Same table for both bases, so the two can never drift.
+const BUDGET_LABELS = {
+  budgetLow:  { [BUDGET_BASIS_NIGHT]: '予算 安い順（夜基準）', [BUDGET_BASIS_DAY]: '予算 安い順（昼基準）' },
+  budgetHigh: { [BUDGET_BASIS_NIGHT]: '予算 高い順（夜基準）', [BUDGET_BASIS_DAY]: '予算 高い順（昼基準）' },
+};
+
+const BUDGET_FACTORIES = {
+  budgetLow:  (basis) => (a, b) => lo(diningPriceCeiling(a, basis)) - lo(diningPriceCeiling(b, basis)) || byName(a, b),
+  budgetHigh: (basis) => (a, b) => hi(diningPriceCeiling(b, basis)) - hi(diningPriceCeiling(a, basis)) || byName(a, b),
+};
 
 export const COMPARATORS = {
   name:         byName,
@@ -34,11 +51,10 @@ export const COMPARATORS = {
   // the review count breaks the tie before the name does.
   ratingHigh:   (a, b) => hi(b.rating) - hi(a.rating) || hi(b.reviewCount) - hi(a.reviewCount) || byName(a, b),
   reviewsHigh:  (a, b) => hi(b.reviewCount) - hi(a.reviewCount) || byName(a, b),
-  // Budget order runs on the SAME figure the 価格帯 filter uses
-  // (diningPriceCeiling: the dinner ceiling, or lunch when dinner is not
-  // served), so the sort and the filter can never disagree about a price.
-  budgetLow:    (a, b) => lo(diningPriceCeiling(a)) - lo(diningPriceCeiling(b)) || byName(a, b),
-  budgetHigh:   (a, b) => hi(diningPriceCeiling(b)) - hi(diningPriceCeiling(a)) || byName(a, b),
+  // The default-basis (夜) budget orders. comparatorFor() rebuilds them on the
+  // day basis when the toggle is on.
+  budgetLow:    BUDGET_FACTORIES.budgetLow(BUDGET_BASIS_NIGHT),
+  budgetHigh:   BUDGET_FACTORIES.budgetHigh(BUDGET_BASIS_NIGHT),
   // 台帳スコア順 (D4). The score is not on the record — it depends on the whole
   // ledger's baseline — so the comparator reads a value the renderer stamped on
   // (`ledgerTotal`). A record without one sorts as 0 rather than NaN, which
@@ -72,8 +88,8 @@ export const SORT_OPTIONS = {
   dining: [
     { value: 'ratingHigh',  label: '評価が高い順' },
     { value: 'reviewsHigh', label: 'レビュー数 多い順' },
-    { value: 'budgetLow',   label: '予算 安い順（夜基準）' },
-    { value: 'budgetHigh',  label: '予算 高い順（夜基準）' },
+    { value: 'budgetLow',   label: BUDGET_LABELS.budgetLow[BUDGET_BASIS_NIGHT] },
+    { value: 'budgetHigh',  label: BUDGET_LABELS.budgetHigh[BUDGET_BASIS_NIGHT] },
     { value: 'name',        label: '名前順' },
   ],
 };
@@ -89,15 +105,27 @@ export const SORT_OPTIONS = {
  */
 const LEDGER_SORT = { value: 'ledgerHigh', label: '台帳スコア順（総合点）' };
 
-/** The options a layer offers in a given mode. */
-export function sortOptionsFor(layer, mode = 'home'){
+/**
+ * The options a layer offers in a given mode.
+ *
+ * @param {string} layer
+ * @param {string} [mode]   'home' | 'eatout'
+ * @param {'night'|'day'} [basis]  which sitting the budget orders name
+ */
+export function sortOptionsFor(layer, mode = 'home', basis = BUDGET_BASIS_NIGHT){
   const base = SORT_OPTIONS[layer] || SORT_OPTIONS.condo;
-  if(layer === 'dining' && mode === 'eatout') return [LEDGER_SORT, ...base];
-  return base;
+  const opts = (layer === 'dining' && mode === 'eatout') ? [LEDGER_SORT, ...base] : base;
+  if(basis === BUDGET_BASIS_NIGHT) return opts;
+  return opts.map(o => (BUDGET_LABELS[o.value] ? { ...o, label: BUDGET_LABELS[o.value][basis] } : o));
 }
 
-/** The comparator for a sort key; unknown keys fall back to the name order. */
-export function comparatorFor(key){
+/**
+ * The comparator for a sort key; unknown keys fall back to the name order.
+ * `basis` only reaches the two budget orders — everything else ignores it.
+ */
+export function comparatorFor(key, basis = BUDGET_BASIS_NIGHT){
+  const factory = BUDGET_FACTORIES[key];
+  if(factory) return factory(basis);
   return COMPARATORS[key] || byName;
 }
 
@@ -112,6 +140,6 @@ export function sortAvailable(layer, key, mode = 'home'){
 }
 
 /** Non-mutating sort, for tests and callers that need a copy. */
-export function sortRecords(list, key){
-  return [...list].sort(comparatorFor(key));
+export function sortRecords(list, key, basis = BUDGET_BASIS_NIGHT){
+  return [...list].sort(comparatorFor(key, basis));
 }

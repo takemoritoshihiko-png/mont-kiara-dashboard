@@ -4,6 +4,8 @@
 // which records are listed at all, and each layer brings its own criteria.
 // A record never matches a layer it does not belong to.
 
+import { haversineKm } from './geo.js';
+
 export function parseR(v){if(!v)return null;const[a,b]=v.split('-').map(Number);return{min:a,max:b}}
 export const TIER_ORDER = {S:5, A:4, B:3, C:2, D:1};
 
@@ -145,19 +147,76 @@ export const MICHELIN_FILTERS = [
 ];
 
 /**
- * The one figure a price band is judged on: the TOP of the dinner range.
+ * Which sitting the budget is judged on. 夜 is the default everywhere; 昼 is
+ * the 「昼の予算で見る」 toggle. There is deliberately no third value and no
+ * "both": the price band, the budget sort and the 予算中央値 tile all read this
+ * ONE basis, so the list can never be ordered by a number the filter did not
+ * use (that split is why a 昼/夜 pair of separate filters was rejected).
+ */
+export const BUDGET_BASIS_NIGHT = 'night';
+export const BUDGET_BASIS_DAY = 'day';
+
+/** The basis a boolean 「昼の予算」 toggle means. One place, so all readers agree. */
+export function budgetBasisOf(dayFlag){
+  return dayFlag ? BUDGET_BASIS_DAY : BUDGET_BASIS_NIGHT;
+}
+
+/**
+ * The one figure a price band is judged on: the TOP of a service's range.
  *
- * Dinner leads because it is the fuller offering and the number people budget
- * against; a place that does not serve dinner carries `priceDinner: [0, 0]`,
- * and then the top of the LUNCH range stands in for it. `0` means "not offered
- * / unknown" throughout restaurants.json, never "free".
+ * Dinner leads by default because it is the fuller offering and the number
+ * people budget against; a place that does not serve dinner carries
+ * `priceDinner: [0, 0]`, and then the top of the LUNCH range stands in for it.
+ * With `basis === 'day'` the two swap round — lunch leads, dinner stands in —
+ * which is what 「昼の予算で見る」 asks for. `0` means "not offered / unknown"
+ * throughout restaurants.json, never "free", so a zero never wins the lead.
  *
+ * @param {object} c
+ * @param {'night'|'day'} [basis]
  * @returns {number} ringgit per head, or 0 when neither service has a figure.
  */
-export function diningPriceCeiling(c){
+export function diningPriceCeiling(c, basis = BUDGET_BASIS_NIGHT){
+  const lunch = (c && c.priceLunch && c.priceLunch[1]) || 0;
   const dinner = (c && c.priceDinner && c.priceDinner[1]) || 0;
-  if(dinner > 0) return dinner;
-  return (c && c.priceLunch && c.priceLunch[1]) || 0;
+  const [lead, fallback] = basis === BUDGET_BASIS_DAY ? [lunch, dinner] : [dinner, lunch];
+  return lead > 0 ? lead : fallback;
+}
+
+/**
+ * The radius 「近く」 means, in km.
+ *
+ * 3km is the walk-or-short-drive radius that matches what the jump buttons
+ * SHOW: at their zoom 14–15 a 390px phone screen spans roughly 2–5km, so the
+ * list ends up holding the restaurants the map is actually displaying. Measured
+ * against restaurants.json it returns 12–31 places for the six KL areas and 4
+ * for Desa ParkCity — enough to choose from, few enough to read. 2km empties
+ * ParkCity (1件); 5km makes every KL area bleed into its neighbour (Damansara
+ * Heights would return 39 of 67).
+ */
+export const NEAR_KM = 3;
+
+/**
+ * 「Mont Kiara の近く」 — the distance filter behind the area jump buttons.
+ *
+ * The ledger's own `area` field is a curated LABEL (24 distinct values across
+ * 67 restaurants); the jump bar's keys are map CENTRES. The two do not line up
+ * and never will, so 「この辺の店」 is answered geometrically instead of by
+ * string matching.
+ *
+ * Unlike an unknown price, a missing coordinate is NOT waved through: "within
+ * 3km of here" is a question a record with no position cannot answer, and
+ * pretending otherwise would put it on a list it is not on the map for. Today
+ * every restaurant has coordinates (src/data/load.js drops the ones that do
+ * not), so this branch is a guard, not a filter.
+ *
+ * @param {object} c
+ * @param {{lat:number,lng:number,km?:number}|null} near
+ */
+export function matchesDiningNear(c, near){
+  if(!near || !Number.isFinite(near.lat) || !Number.isFinite(near.lng)) return true;
+  if(!c || !Number.isFinite(c.lat) || !Number.isFinite(c.lng)) return false;
+  const km = near.km > 0 ? near.km : NEAR_KM;
+  return haversineKm(near.lat, near.lng, c.lat, c.lng) <= km;
 }
 
 /** The bands offered by the 価格帯 dropdown, as [min exclusive, max inclusive]. */
@@ -173,11 +232,11 @@ export const PRICE_BANDS = {
  * dropped by this filter: an unknown price is not a cheap one, and silently
  * hiding it would be exactly the "無言で件数を減らす" the repo forbids.
  */
-export function matchesPriceBand(c, band){
+export function matchesPriceBand(c, band, basis = BUDGET_BASIS_NIGHT){
   if(!band) return true;
   const range = PRICE_BANDS[band];
   if(!range) return true;
-  const v = diningPriceCeiling(c);
+  const v = diningPriceCeiling(c, basis);
   if(v <= 0) return true;      // unknown price — shown under every band
   return v > range[0] && v <= range[1];
 }
@@ -260,10 +319,15 @@ function matchesCommercial(c, f){
 export function matchesDining(c, f){
   if(f.catGroup && c.catGroup !== f.catGroup) return false;
   if(!matchesMichelin(c, f.michelin)) return false;
-  if(!matchesPriceBand(c, f.priceBand)) return false;
+  if(!matchesPriceBand(c, f.priceBand, f.priceBasis)) return false;
   // The ledger's own `area` field (KLCC / Bangsar / Chinatown …). Exact match:
   // it is a controlled value, not free text.
   if(f.diningArea && c.area !== f.diningArea) return false;
+  // 「近く: Mont Kiara」 — a SECOND, independent axis from f.diningArea above.
+  // The two coexist on purpose: the label answers "which district is this
+  // place in", the radius answers "what can we get to from here", and the
+  // ledger's labels do not tile the map finely enough to answer the second.
+  if(!matchesDiningNear(c, f.near)) return false;
   if(f.venueType && c.venueType !== f.venueType) return false;
   // kidOk is 0/1 in restaurants.json. The filter is one-way — 「子連れ◎のみ」
   // narrows, it never asks for the places that are NOT child-friendly.
@@ -289,7 +353,8 @@ export function matchesDining(c, f){
  *   condo       — tierVal, sp, rn, yr, sz, age, statusFilter, showAwardOnly, currentYear
  *   school      — schoolAge, curriculum, fee
  *   commercial  — nla, openYear, anchorQ
- *   dining      — catGroup, michelin, priceBand, diningArea, venueType, kidOnly
+ *   dining      — catGroup, michelin, priceBand, priceBasis, diningArea, near,
+ *                 venueType, kidOnly
  *                 and (外食モードのみ) wantOnly, undoneOnly + the `personal` map
  */
 export function matchesFilters(c, f){
