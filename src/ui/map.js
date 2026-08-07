@@ -436,7 +436,9 @@ function mkMarker(c, dim) {
     // 「もう行った」が分かるように）。記録が変わると applyFilters→rebuild が
     // 走るので、押した瞬間にバッジも追随する。色は再訪意向「また行く」と同じ
     // 緑 (--rv-again) のリテラル。
-    const visited = c.id && getEntry(c.id).v === 1;
+    // 外食モード限定: 住まいモードは個人記録を一切出さない契約（CLAUDE.md）
+    // なので、住まい側で飲食レイヤーを重ねてもバッジは描かない。
+    const visited = appMode === 'eatout' && c.id && getEntry(c.id).v === 1;
     const badge = visited
       ? `<span aria-hidden="true" style="position:absolute;top:-5px;right:-5px;width:13px;height:13px;border-radius:50%;background:#1D5F55;border:1.5px solid #fff;color:#fff;font-size:9px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.35)">✓</span>`
       : '';

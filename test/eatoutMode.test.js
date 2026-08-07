@@ -578,3 +578,16 @@ describe('index.html carries the mode', () => {
     expect(offScale).toEqual([]);
   });
 });
+
+// ── 住まいモードへの個人記録リーク防止（マーカーバッジ） ────────────────
+// 訪問済み✓バッジは外食モード限定。住まいモードで飲食レイヤーを重ねても
+// 個人記録（訪問済み）がピンに描かれてはならない（CLAUDE.md のモード分離契約）。
+// mkMarker は Leaflet 依存で DOM 環境が無いため、ソース契約として固定する。
+describe('visited badge stays out of home mode', () => {
+  it("map.js computes `visited` only when appMode === 'eatout'", () => {
+    const map = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8');
+    const line = map.split('\n').find(l => l.includes('const visited ='));
+    expect(line, 'visited badge line not found').toBeTruthy();
+    expect(line).toContain("appMode === 'eatout'");
+  });
+});
