@@ -134,7 +134,9 @@ function diningDetail(c){
     kv('昼 / 1人', esc(lunch || '—'), !lunch),
     kv('夜 / 1人', esc(dinner || '—'), !dinner),
     kv('カテゴリ', esc(c.cat || c.catGroup || '—'), !(c.cat || c.catGroup)),
-    kv('子連れ', c.kidOk === 1 ? '◎ 向いている' : '要確認', c.kidOk !== 1),
+    // kidOk is a judged 0/1 in the ledger, not an unknown: 0 means the place
+    // suits adults (fine dining, bar counters), so say so — v9's own wording.
+    kv('子連れ', c.kidOk === 1 ? '◎ 向いている' : '大人向き', c.kidOk !== 1),
   ]);
   if(c.priceNote) h += section('価格の注記' + (c.priceConfidence ? `（${c.priceConfidence}）` : ''),
     `<div class="info-sec-body">${esc(c.priceNote)}</div>`);

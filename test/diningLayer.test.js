@@ -381,9 +381,9 @@ describe('the dining detail panel', () => {
     expect(h).toContain('路面店');
   });
 
-  it('says 要確認 for a place that is not marked child-friendly', () => {
+  it('says 大人向き (v9 wording) for a place that is not marked child-friendly', () => {
     expect(detailHtml(eat({ kidOk: 1 }))).toContain('◎ 向いている');
-    expect(detailHtml(eat({ kidOk: 0 }))).toContain('要確認');
+    expect(detailHtml(eat({ kidOk: 0 }))).toContain('大人向き');
   });
 
   it('never shows a zero as a price', () => {
