@@ -25,18 +25,49 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 .summary-bar{padding:8px 12px;background:#f8f9fb;border-bottom:1px solid #e8eaed;display:flex;gap:6px;flex-shrink:0}
 .summary-item{flex:1;text-align:center;padding:4px;background:#fff;border-radius:6px;border:1px solid #e8eaed}
 .summary-val{font-size:13px;font-weight:700;color:#1a73e8}
-.summary-label{font-size:8px;color:#80868b;text-transform:uppercase;letter-spacing:0.3px}
+.summary-val{font-variant-numeric:tabular-nums}
+.summary-label{font-size:9px;color:#80868b;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap}
 .filters{padding:10px 12px;background:#fff;border-bottom:1px solid #e8eaed;flex-shrink:1;overflow-y:auto}
-.filters h3{font-size:11px;color:#1a73e8;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;font-weight:700}
 .filter-row{display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap}
 .filter-group{display:flex;flex-direction:column;gap:2px;flex:1;min-width:85px}
 .filter-group label{font-size:9px;color:#80868b;text-transform:uppercase;font-weight:600}
 .filter-group select,.filter-group input{background:#f8f9fb;border:1px solid #e0e0e0;color:#1a1a2e;padding:5px 6px;border-radius:6px;font-size:11px}
 .filter-group select:focus,.filter-group input:focus{border-color:#1a73e8;outline:none;box-shadow:0 0 0 2px rgba(26,115,232,0.15)}
-.sort-row{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
-.sort-btn{background:#f8f9fb;border:1px solid #e0e0e0;color:#5f6368;padding:3px 8px;border-radius:12px;font-size:10px;cursor:pointer;font-weight:500;transition:all .15s}
+.sort-row{display:flex;gap:6px;align-items:center;margin-top:8px}
+.sort-label{font-size:11px;color:#5f6368;font-weight:600;white-space:nowrap}
+.sort-select{flex:1;min-width:0;background:#f8f9fb;border:1px solid #e0e0e0;color:#1a1a2e;padding:5px 6px;border-radius:6px;font-size:12px}
+.sort-select:focus{border-color:#0A6CFF;outline:none;box-shadow:0 0 0 2px rgba(10,108,255,0.15)}
+.sort-btn{background:#f8f9fb;border:1px solid #e0e0e0;color:#5f6368;padding:3px 8px;border-radius:12px;font-size:11px;cursor:pointer;font-weight:500;transition:all .15s;white-space:nowrap}
 .sort-btn:hover{background:#e8f0fe;color:#1a73e8;border-color:#1a73e8}
 .sort-btn.active{background:#1a73e8;color:#fff;border-color:#1a73e8}
+
+/* ---- Layer segmented control (spec 2.2) ---- */
+.layer-seg{display:flex;background:#eef1f5;border-radius:9px;padding:2px;margin-bottom:8px}
+.seg-btn{flex:1;background:transparent;border:none;color:#5f6368;font-size:13px;font-weight:600;padding:6px 4px;border-radius:7px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.seg-btn:hover{color:#1a1a2e}
+.seg-btn.active{background:#fff;color:#0A6CFF;box-shadow:0 1px 3px rgba(0,0,0,0.14)}
+
+/* ---- Search with clear ---- */
+.search-wrap{position:relative;display:flex}
+.search-wrap input{flex:1;min-width:0;background:#f8f9fb;border:1px solid #e0e0e0;color:#1a1a2e;padding:6px 26px 6px 8px;border-radius:6px;font-size:12px}
+.search-wrap input:focus{border-color:#0A6CFF;outline:none;box-shadow:0 0 0 2px rgba(10,108,255,0.15)}
+.search-clear{position:absolute;right:2px;top:50%;transform:translateY(-50%);background:none;border:none;color:#9aa0a6;font-size:12px;cursor:pointer;padding:4px 6px;line-height:1}
+.search-clear:hover{color:#3c4043}
+
+/* ---- Progressive disclosure ---- */
+.disclosure{background:none;border:none;color:#0A6CFF;font-size:12px;font-weight:600;cursor:pointer;padding:4px 0;margin-top:2px}
+.disclosure:hover{text-decoration:underline}
+.chip-toggle{background:#f8f9fb;border:1px solid #e0e0e0;color:#80868b;border-radius:14px;padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
+.chip-toggle:hover{border-color:#f9a825;color:#5f6368}
+.chip-toggle.active{background:#f9a825;border-color:#f57f17;color:#fff}
+
+/* ---- Active filter chips (spec 2.3) ---- */
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.fchip{display:inline-flex;align-items:center;gap:3px;background:#e8f0fe;color:#0A4FBF;border-radius:12px;padding:2px 4px 2px 9px;font-size:11px;font-weight:600;max-width:100%}
+.fchip-x{background:none;border:none;color:#0A4FBF;font-size:10px;cursor:pointer;padding:2px 4px;line-height:1;border-radius:50%}
+.fchip-x:hover{background:rgba(10,79,191,0.15)}
+.fchip-clear{background:none;border:none;color:#5f6368;font-size:11px;font-weight:600;cursor:pointer;padding:2px 6px;text-decoration:underline}
+.fchip-clear:hover{color:#0A6CFF}
 .legend{padding:6px 12px;background:#f8f9fb;border-bottom:1px solid #e8eaed;flex-shrink:0}
 .legend-title{font-size:10px;color:#80868b;margin-bottom:3px;font-weight:600}
 .legend-bar{display:flex;height:10px;border-radius:5px;overflow:hidden}
@@ -48,19 +79,30 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 .condo-card{background:#fff;border:1px solid #e8eaed;border-radius:10px;padding:10px 12px;margin-bottom:5px;cursor:pointer;transition:all .15s;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
 .condo-card:hover{border-color:#1a73e8;box-shadow:0 2px 8px rgba(26,115,232,0.15);transform:translateY(-1px)}
 .condo-card.selected{border-color:#1a73e8;background:#e8f0fe;box-shadow:0 2px 8px rgba(26,115,232,0.2)}
-.condo-name{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:2px}
-.condo-addr{font-size:10px;color:#80868b;margin-bottom:5px;font-style:italic}
-.condo-meta{display:flex;gap:5px;flex-wrap:wrap}
-.condo-tag{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:600}
-.tag-year{background:#e6f4ea;color:#137333}
-.tag-units{background:#fce8e6;color:#c5221f}
-.tag-size{background:#e8f0fe;color:#1a73e8}
-.tag-yield{background:#fef7e0;color:#ea8600}
-.tag-lux-S{background:#7b1fa2;color:#fff}
-.tag-lux-A{background:#1565c0;color:#fff}
-.tag-lux-B{background:#2e7d32;color:#fff}
-.tag-lux-C{background:#78909c;color:#fff}
-.tag-lux-D{background:#bdbdbd;color:#fff}
+/* ---- Cards (B3a: one template per type, spec 2.5) ---- */
+.card-head{display:flex;align-items:center;gap:6px;margin-bottom:1px}
+.card-name{font-size:15px;font-weight:600;color:#1a1a2e;line-height:1.25;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-ja{font-size:12px;color:#5f6368;margin-bottom:3px}
+.card-hero{font-size:17px;font-weight:600;color:#1a1a2e;font-variant-numeric:tabular-nums;letter-spacing:-0.2px;margin:2px 0 3px}
+.card-hero-muted{color:#9aa0a6;font-weight:500}
+.card-addr{font-size:12px;color:#80868b;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-meta{font-size:12px;color:#80868b;font-variant-numeric:tabular-nums}
+.card-score{font-size:11px;color:#80868b;margin-top:3px;font-variant-numeric:tabular-nums}
+.card-award{font-size:12px;line-height:1}
+.card-chip{margin-left:auto;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600;white-space:nowrap;max-width:45%;overflow:hidden;text-overflow:ellipsis}
+.chip-school{background:#e8f0fe;color:#1a3d7c}
+.type-badge{display:inline-block;width:18px;height:18px;border-radius:50%;text-align:center;line-height:18px;font-size:10px;flex-shrink:0}
+.type-school{background:#1a3d7c}
+.type-commercial{background:#e8710a;border-radius:5px}
+
+/* ---- Empty state (spec 2.3) ---- */
+.empty-state{padding:22px 16px;text-align:center}
+.empty-title{font-size:15px;font-weight:600;color:#1a1a2e;margin-bottom:10px}
+.empty-sub{font-size:12px;color:#80868b;margin-bottom:6px}
+.empty-chips{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:12px}
+.empty-none{font-size:12px;color:#9aa0a6}
+.btn-clear-all{background:#0A6CFF;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer}
+.btn-clear-all:hover{background:#0857cc}
 
 /* Fixed info panel (replaces map popup) */
 .info-overlay{position:absolute;top:0;left:0;bottom:0;z-index:1001;background:#fff;border-radius:0 0 12px 0;box-shadow:2px 2px 12px rgba(0,0,0,0.2);padding:10px 12px;width:280px;max-height:100%;overflow-y:auto;display:none;font-size:11px}
@@ -86,12 +128,16 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
   .filter-row{gap:4px;margin-bottom:4px}
   .filter-group select,.filter-group input{font-size:10px;padding:3px 4px}
   .filter-group label{font-size:8px}
-  .sort-row{gap:2px}
-  .sort-btn{font-size:9px;padding:2px 6px}
+  .sort-row{gap:4px;margin-top:6px}
+  .sort-btn{font-size:10px;padding:2px 6px}
+  .sort-select{font-size:11px;padding:3px 4px}
+  .layer-seg{margin-bottom:6px}
+  .seg-btn{font-size:12px;padding:5px 2px}
   .condo-card{padding:8px 10px}
-  .condo-name{font-size:12px}
-  .condo-prices{gap:4px}
-  .price-col{padding:3px 4px}
+  .card-name{font-size:13px}
+  .card-hero{font-size:15px}
+  .card-ja,.card-addr,.card-meta{font-size:11px}
+  .empty-state{padding:14px 10px}
   .legend{display:none}
   .map-legend{display:none!important}
   .tier-badge{width:12px!important;height:12px!important;line-height:12px!important;font-size:6px!important}
@@ -105,12 +151,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
   .popup-cell{padding:4px 6px}
   .popup-cell-val{font-size:11px}
 }
-.condo-prices{display:flex;gap:8px;margin-top:6px;font-size:11px}
-.price-col{flex:1;background:#f8f9fb;padding:4px 6px;border-radius:6px}
-.price-label{font-size:8px;color:#80868b;text-transform:uppercase;font-weight:600}
-.price-value{font-weight:700}
-.sale-price{color:#ea4335}
-.rent-price{color:#1a73e8}
 .leaflet-popup-content-wrapper{background:#fff!important;color:#1a1a2e!important;border-radius:12px!important;box-shadow:0 4px 20px rgba(0,0,0,0.15)!important;border:none!important}
 .leaflet-popup-tip{background:#fff!important}
 .area-jump{position:absolute;top:8px;left:50px;z-index:1000;display:flex;align-items:center;gap:3px;background:rgba(255,255,255,0.96);padding:5px 8px;border-radius:18px;box-shadow:0 2px 8px rgba(0,0,0,0.12);border:1px solid #e0e0e0;max-width:calc(100% - 70px);overflow-x:auto;white-space:nowrap;scrollbar-width:none}
@@ -192,39 +232,71 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
     <div class="summary-bar">
       <div class="summary-item"><div class="summary-val" id="sumTotal">0</div><div class="summary-label">Total</div></div>
       <div class="summary-item"><div class="summary-val" id="sumFiltered">0</div><div class="summary-label">Shown</div></div>
-      <div class="summary-item"><div class="summary-val" id="sumMedianSale">-</div><div class="summary-label">Med.PSF</div></div>
-      <div class="summary-item"><div class="summary-val" id="sumMedianRent">-</div><div class="summary-label">Med.Rent</div></div>
+      <div class="summary-item"><div class="summary-val" id="sumStat3">-</div><div class="summary-label" id="sumStat3Label">Med.PSF</div></div>
+      <div class="summary-item"><div class="summary-val" id="sumStat4">-</div><div class="summary-label" id="sumStat4Label">Med.Rent</div></div>
     </div>
     <div class="filters">
-      <h3>Filters</h3>
-      <div class="filter-row">
-        <div class="filter-group" style="flex:2"><label>Search</label><input type="text" id="fSearch" placeholder="Name, address, tier (S/A/B/C)..." oninput="applyFilters()"></div>
+      <div class="layer-seg" role="tablist" aria-label="表示する種別">
+        <button type="button" class="seg-btn active" data-layer="condo" role="tab" aria-selected="true" onclick="setLayer('condo')">🏠 物件</button>
+        <button type="button" class="seg-btn" data-layer="school" role="tab" aria-selected="false" onclick="setLayer('school')">🎓 学校</button>
+        <button type="button" class="seg-btn" data-layer="commercial" role="tab" aria-selected="false" onclick="setLayer('commercial')">🛒 商業</button>
       </div>
+
       <div class="filter-row">
-        <div class="filter-group"><label>Luxury Tier</label><select id="fTier" onchange="applyFilters()"><option value="">All</option><option value="S+">S+ (Ultra Luxury)</option><option value="A+">A+ (Super Luxury &amp; above)</option><option value="B+">B+ (Luxury &amp; above)</option><option value="C+">C+ (Upper Mid &amp; above)</option><option value="S">S only</option><option value="A">A only</option><option value="B">B only</option><option value="C">C only</option><option value="D">D only</option></select></div>
-        <div class="filter-group"><label>Sale PSF</label><select id="fSalePsf" onchange="applyFilters()"><option value="">All</option><option value="0-500">&lt;500</option><option value="500-700">500-700</option><option value="700-900">700-900</option><option value="900-1100">900-1.1K</option><option value="1100-9999">&gt;1.1K</option></select></div>
-        <div class="filter-group"><label>Year</label><select id="fYear" onchange="applyFilters()"><option value="">All</option><option value="1990-2000">&lt;2000</option><option value="2000-2010">2000s</option><option value="2010-2020">2010s</option><option value="2020-2030">2020+</option></select></div>
+        <div class="filter-group" style="flex:1">
+          <label for="fSearch">検索 / Search</label>
+          <div class="search-wrap">
+            <input type="text" id="fSearch" placeholder="名前・住所で検索" oninput="applyFilters()">
+            <button type="button" class="search-clear" aria-label="検索をクリア" onclick="clearSearch()">✕</button>
+          </div>
+        </div>
       </div>
-      <div class="filter-row">
-        <div class="filter-group"><label>Rent/mo</label><select id="fRent" onchange="applyFilters()"><option value="">All</option><option value="0-3000">&lt;3K</option><option value="3000-5000">3-5K</option><option value="5000-8000">5-8K</option><option value="8000-12000">8-12K</option><option value="12000-99999">&gt;12K</option></select></div>
-        <div class="filter-group"><label>Size sqft</label><select id="fSize" onchange="applyFilters()"><option value="">All</option><option value="0-800">&lt;800</option><option value="800-1500">800-1.5K</option><option value="1500-2500">1.5-2.5K</option><option value="2500-99999">&gt;2.5K</option></select></div>
+
+      <div class="filter-row" data-layer-only="condo">
+        <div class="filter-group"><label for="fRent">家賃帯 (RM/月)</label><select id="fRent" onchange="applyFilters()"><option value="">すべて</option><option value="0-3000">&lt;3K</option><option value="3000-5000">3-5K</option><option value="5000-8000">5-8K</option><option value="8000-12000">8-12K</option><option value="12000-99999">&gt;12K</option></select></div>
+        <div class="filter-group"><label for="fTier">Tier</label><select id="fTier" onchange="applyFilters()"><option value="">すべて</option><option value="S+">S+ (Ultra Luxury)</option><option value="A+">A+ (Super Luxury &amp; above)</option><option value="B+">B+ (Luxury &amp; above)</option><option value="C+">C+ (Upper Mid &amp; above)</option><option value="S">S only</option><option value="A">A only</option><option value="B">B only</option><option value="C">C only</option><option value="D">D only</option></select></div>
       </div>
-      <div class="filter-row">
-        <div class="filter-group"><label>築年数 (Years Old)</label><select id="fAge" onchange="applyFilters()"><option value="">All</option><option value="0-5">0-5年 (2021+)</option><option value="0-10">0-10年 (2016+)</option><option value="0-15">0-15年 (2011+)</option><option value="0-20">0-20年 (2006+)</option><option value="10-20">10-20年</option><option value="20-99">20年超</option></select></div>
-        <div class="filter-group"><label>Status</label><select id="fStatus" onchange="applyFilters()"><option value="">All</option><option value="completed">Completed (既築)</option><option value="upcoming">Upcoming (今後建つ)</option><option value="commercial">Commercial (商業施設)</option><option value="residential">Residential Only</option></select></div>
-        <div class="filter-group"><label>Area</label><select id="fArea" onchange="applyFilters()"><option value="">All</option><option value="mont-kiara">Mont Kiara</option><option value="desa-parkcity">Desa ParkCity</option><option value="bangsar">Bangsar</option><option value="klgcc">KLGCC Resort</option><option value="klcc">KLCC</option><option value="ampang">Ampang/U-Thant</option><option value="damansara">Damansara Heights</option></select></div>
+      <div class="filter-row" data-layer-only="school" style="display:none">
+        <div class="filter-group"><label for="fSchoolAge">対象年齢</label><select id="fSchoolAge" onchange="applyFilters()"><option value="">すべて</option><option value="3">3歳</option><option value="4">4歳</option><option value="5">5歳</option><option value="6">6歳</option><option value="7">7歳</option><option value="8">8歳</option><option value="9">9歳</option><option value="10">10歳</option><option value="11">11歳</option><option value="12">12歳</option><option value="13">13歳</option><option value="14">14歳</option><option value="15">15歳</option><option value="16">16歳</option><option value="17">17歳</option><option value="18">18歳</option></select></div>
+        <div class="filter-group"><label for="fCurriculum">カリキュラム</label><select id="fCurriculum" onchange="applyFilters()"><!-- options are filled from CURRICULA in src/domain/filter.js --><option value="">すべて</option></select></div>
       </div>
+      <div class="filter-row" data-layer-only="commercial" style="display:none">
+        <div class="filter-group"><label for="fNla">規模 (NLA)</label><select id="fNla" onchange="applyFilters()"><option value="">すべて</option><option value="1-150000">&lt;150K sf</option><option value="150000-500000">150K-500K sf</option><option value="500000-99999999">&gt;500K sf</option></select></div>
+      </div>
+
+      <button type="button" class="disclosure" id="moreToggle" onclick="toggleMore()" aria-controls="moreFilters">絞り込み ⌄</button>
+
+      <div id="moreFilters" style="display:none">
+        <div class="filter-row" data-layer-only="condo">
+          <div class="filter-group"><label for="fSalePsf">Sale PSF</label><select id="fSalePsf" onchange="applyFilters()"><option value="">すべて</option><option value="0-500">&lt;500</option><option value="500-700">500-700</option><option value="700-900">700-900</option><option value="900-1100">900-1.1K</option><option value="1100-9999">&gt;1.1K</option></select></div>
+          <div class="filter-group"><label for="fYear">竣工年</label><select id="fYear" onchange="applyFilters()"><option value="">すべて</option><option value="1990-2000">&lt;2000</option><option value="2000-2010">2000s</option><option value="2010-2020">2010s</option><option value="2020-2030">2020+</option></select></div>
+        </div>
+        <div class="filter-row" data-layer-only="condo">
+          <div class="filter-group"><label for="fSize">広さ (sqft)</label><select id="fSize" onchange="applyFilters()"><option value="">すべて</option><option value="0-800">&lt;800</option><option value="800-1500">800-1.5K</option><option value="1500-2500">1.5-2.5K</option><option value="2500-99999">&gt;2.5K</option></select></div>
+          <div class="filter-group"><label for="fAge">築年数</label><select id="fAge" onchange="applyFilters()"><option value="">すべて</option><option value="0-5">0-5年</option><option value="0-10">0-10年</option><option value="0-15">0-15年</option><option value="0-20">0-20年</option><option value="10-20">10-20年</option><option value="20-99">20年超</option></select></div>
+        </div>
+        <div class="filter-row" data-layer-only="condo">
+          <div class="filter-group"><label for="fStatus">状態</label><select id="fStatus" onchange="applyFilters()"><option value="">すべて</option><option value="completed">Completed (既築)</option><option value="upcoming">Upcoming (今後建つ)</option></select></div>
+          <div class="filter-group"><label>受賞</label><button type="button" class="chip-toggle" id="toggleAward" aria-pressed="false" onclick="toggleAward()" title="FIABCI Malaysia Property Award 受賞物件のみ">🏆 受賞のみ</button></div>
+        </div>
+        <div class="filter-row" data-layer-only="school" style="display:none">
+          <div class="filter-group"><label for="fFee">年間学費</label><select id="fFee" onchange="applyFilters()"><option value="">すべて</option><option value="1-40000">≤40K RM</option><option value="40000-80000">40K-80K RM</option><option value="80000-120000">80K-120K RM</option><option value="120000-9999999">&gt;120K RM</option></select></div>
+        </div>
+        <div class="filter-row" data-layer-only="commercial" style="display:none">
+          <div class="filter-group"><label for="fOpenYear">開業年</label><select id="fOpenYear" onchange="applyFilters()"><option value="">すべて</option><option value="0-2000">〜2000</option><option value="2001-2010">2001-2010</option><option value="2011-2020">2011-2020</option><option value="2021-2100">2021〜</option></select></div>
+          <div class="filter-group"><label for="fAnchor">アンカー検索</label><input type="text" id="fAnchor" placeholder="例: Village Grocer" oninput="applyFilters()"></div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-group"><label for="fArea">エリア</label><select id="fArea" onchange="applyFilters()"><option value="">すべて</option><option value="mont-kiara">Mont Kiara</option><option value="desa-parkcity">Desa ParkCity</option><option value="bangsar">Bangsar</option><option value="klgcc">KLGCC Resort</option><option value="klcc">KLCC</option><option value="ampang">Ampang/U-Thant</option><option value="damansara">Damansara Heights</option><option value="gurney">Gurney / Pulau Tikus (Penang)</option><option value="tanjung">Tanjung Tokong / Bungah (Penang)</option><option value="ferringhi">Batu Ferringhi (Penang)</option><option value="bayan">Bayan Lepas (Penang)</option></select></div>
+        </div>
+      </div>
+
+      <div class="chips" id="filterChips" style="display:none"></div>
+
       <div class="sort-row">
-        <button class="sort-btn" data-sort="luxHigh" onclick="setSort(this)">Luxury ↓</button>
-        <button class="sort-btn active" data-sort="name" onclick="setSort(this)">Name</button>
-        <button class="sort-btn" data-sort="salePsfHigh" onclick="setSort(this)">PSF ↓</button>
-        <button class="sort-btn" data-sort="rentHigh" onclick="setSort(this)">Rent ↓</button>
-        <button class="sort-btn" data-sort="yearNew" onclick="setSort(this)">Newest</button>
-        <button class="sort-btn" data-sort="yearOld" onclick="setSort(this)">Oldest</button>
-        <button class="sort-btn" id="sfToggle" onclick="toggleSchoolFinder()" style="margin-left:auto;background:#e8f0fe;color:#1565c0;border-color:#1565c0" title="Penang School Finder">🎓比較</button>
-        <button class="sort-btn" id="toggleAward" onclick="toggleAward(this)" style="background:#f8f9fb;color:#999;border-color:#e0e0e0" title="FIABCI Award Winners Only">🏆</button>
-        <button class="sort-btn active" id="toggleCommercial" onclick="toggleCommercial(this)" style="background:#ff6d00;color:#fff;border-color:#e65100">🛒</button>
-        <button class="sort-btn active" id="toggleSchools" onclick="toggleSchools(this)" style="background:#1565c0;color:#fff;border-color:#0d47a1">🎓</button>
+        <label class="sort-label" for="fSort">並び替え</label>
+        <select id="fSort" class="sort-select" onchange="setSort(this)"></select>
+        <button class="sort-btn" id="sfToggle" data-layer-only="school" style="display:none;margin-left:auto;background:#e8f0fe;color:#1565c0;border-color:#1565c0" onclick="toggleSchoolFinder()" title="学費を比較する">🎓 比較</button>
       </div>
     </div>
     <div class="legend">

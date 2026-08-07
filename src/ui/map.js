@@ -1,7 +1,7 @@
 // Leaflet map: creation, markers, the map legend and area quick-jump.
 import {
   CONDOS, filtered, markers, setMarkers, legendOpen, setLegendOpen,
-  selectedCondo, showCommercial, showSchools,
+  selectedCondo, activeLayer,
 } from '../state.js';
 import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS } from '../data/inline.js';
 import { selectCondo } from './info.js';
@@ -38,6 +38,10 @@ function markerType(c) {
   return c.status === 'school' ? 'school' : c.status === 'commercial' ? 'commercial' : 'condo';
 }
 
+// B3a: the layers the user is not looking at stay on the map as context, but
+// dimmed and label-free. This is the single knob for "how faint is context".
+export const DIM_OPACITY = 0.45;
+
 // Cluster bubbles reuse the marker colours so the type stays readable when
 // several markers collapse into one.
 const CLUSTER_STYLE = {
@@ -52,11 +56,14 @@ function clusterIconFactory(type) {
     const n = cluster.getChildCount();
     const sz = n >= 25 ? 46 : n >= 10 ? 38 : 32;
     const fs = n >= 25 ? 15 : n >= 10 ? 13 : 12;
+    // Read the layer at draw time: the clusters are re-rendered on every
+    // rebuild(), so a layer switch re-dims them without any extra wiring.
+    const op = type === activeLayer ? 1 : DIM_OPACITY;
     return L.divIcon({
       className: '',
       iconSize: [sz, sz],
       iconAnchor: [sz/2, sz/2],
-      html: `<div style="width:${sz}px;height:${sz}px;border-radius:${st.radius};background:${st.bg};border:2px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer">
+      html: `<div style="opacity:${op};width:${sz}px;height:${sz}px;border-radius:${st.radius};background:${st.bg};border:2px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer">
         <span style="color:#fff;font-size:${fs}px;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,0.35)">${n}</span>
       </div>`
     });
@@ -142,19 +149,22 @@ const labelOpts = (permanent, offsetX) => ({
   permanent, direction: 'right', offset: [offsetX, 0], className: 'condo-label-tip'
 });
 
-function bindLabel(m, name, text, offsetX) {
+function bindLabel(m, name, text, offsetX, dim) {
   m._labelName = name;
   m._labelText = text;
   m._labelOffsetX = offsetX;
-  const permanent = (labelMode || 'permanent') === 'permanent' || name === selectedCondo;
+  m._dim = !!dim;
+  // Dimmed context markers never carry an always-on label (spec 2.2).
+  const permanent = !dim && ((labelMode || 'permanent') === 'permanent' || name === selectedCondo);
   m.bindTooltip(text, labelOpts(permanent, offsetX));
+  if (dim) m.setOpacity(DIM_OPACITY);
   return m;
 }
 
 /** Re-bind every marker's tooltip for the given mode ('permanent' | 'hover'). */
 function applyLabelMode(mode) {
   Object.values(markers).forEach(m => {
-    const permanent = mode === 'permanent' || m._labelName === selectedCondo;
+    const permanent = !m._dim && (mode === 'permanent' || m._labelName === selectedCondo);
     const tip = m.getTooltip();
     if (tip && !!tip.options.permanent === permanent) return;
     m.unbindTooltip();
@@ -163,7 +173,7 @@ function applyLabelMode(mode) {
 }
 
 // Custom DivIcon with tier label inside circle
-function mkMarker(c) {
+function mkMarker(c, dim) {
   const yearColor = getYearColor(c.year);
   const tierColor = TIER_COLORS[c.luxTier];
   // Circle size based on units (min 26, max 42)
@@ -186,7 +196,7 @@ function mkMarker(c) {
     });
     const m = L.marker([c.lat,c.lng],{icon});
     m.on('click',()=>selectCondo(c.name));
-    return bindLabel(m, c.name, c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), csz/2+2);
+    return bindLabel(m, c.name, c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), csz/2+2, dim);
   }
 
   if (isCommercial) {
@@ -204,7 +214,7 @@ function mkMarker(c) {
     });
     const m = L.marker([c.lat,c.lng],{icon});
     m.on('click',()=>selectCondo(c.name));
-    return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2);
+    return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2, dim);
   }
 
   const borderStyle = isUpcoming ? `3px dashed ${tierColor}` : `3px solid ${tierColor}`;
@@ -227,16 +237,12 @@ function mkMarker(c) {
   m.on('click',()=>selectCondo(c.name));
 
   // Name label (permanent when zoomed in / selected, hover-only otherwise)
-  return bindLabel(m, c.name, c.name.replace(/ Mont Kiara/g,'').replace(/ \(.*\)/,''), sz/2+2);
+  return bindLabel(m, c.name, c.name.replace(/ Mont Kiara/g,'').replace(/ \(.*\)/,''), sz/2+2, dim);
 }
 
-/** Show/hide a whole cluster group when its 🛒 / 🎓 toggle is switched. */
+/** All three cluster groups stay on the map; the layer control dims, never hides. */
 function syncGroupVisibility(){
-  const visible = { condo:true, commercial:showCommercial, school:showSchools };
-  Object.entries(clusterGroups).forEach(([type,g])=>{
-    if(visible[type]){ if(!map.hasLayer(g)) map.addLayer(g); }
-    else if(map.hasLayer(g)) map.removeLayer(g);
-  });
+  Object.values(clusterGroups).forEach(g=>{ if(!map.hasLayer(g)) map.addLayer(g); });
 }
 
 export function rebuild(){
@@ -246,14 +252,18 @@ export function rebuild(){
   Object.values(clusterGroups).forEach(g=>g.clearLayers());
   setMarkers({});
   labelMode = labelModeForZoom(map.getZoom());
+  // The active layer shows exactly what the filters left. The other two stay
+  // on the map in full, dimmed, as "what else is around here" context.
   const ns=new Set(filtered.map(c=>c.name));
   CONDOS.forEach(c=>{
-    if(!ns.has(c.name))return;
-    const m=mkMarker(c);markers[c.name]=m;
+    const type=markerType(c);
+    const isActive=type===activeLayer;
+    if(isActive&&!ns.has(c.name))return;
+    const m=mkMarker(c,!isActive);markers[c.name]=m;
     // The selected marker stays unclustered so its always-on label survives
     // at every zoom level.
     if(c.name===selectedCondo)m.addTo(map);
-    else clusterGroups[markerType(c)].addLayer(m);
+    else clusterGroups[type].addLayer(m);
   });
   syncGroupVisibility();
   updateLegend();

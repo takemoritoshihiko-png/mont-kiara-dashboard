@@ -10,7 +10,8 @@ import {
 import { calcLuxury } from './domain/luxury.js';
 import { initMap, jumpToArea, toggleLegend } from './ui/map.js';
 import {
-  applyFilters, setSort, toggleCommercial, toggleSchools, toggleAward, togglePanel,
+  applyFilters, setSort, setLayer, syncLayerUI, toggleMore, toggleAward, togglePanel,
+  clearSearch, removeFilter, clearAllFilters,
 } from './ui/list.js';
 import { selectCondo, closeInfo } from './ui/info.js';
 import { toggleSchoolFinder, renderSchoolFinder, sfSelectSchool } from './ui/schoolFinder.js';
@@ -28,9 +29,12 @@ window.toggleLegend = toggleLegend;
 window.togglePanel = togglePanel;
 window.applyFilters = applyFilters;
 window.setSort = setSort;
-window.toggleCommercial = toggleCommercial;
-window.toggleSchools = toggleSchools;
+window.setLayer = setLayer;
+window.toggleMore = toggleMore;
 window.toggleAward = toggleAward;
+window.clearSearch = clearSearch;
+window.removeFilter = removeFilter;
+window.clearAllFilters = clearAllFilters;
 window.selectCondo = selectCondo;
 window.closeInfo = closeInfo;
 window.toggleSchoolFinder = toggleSchoolFinder;
@@ -48,6 +52,9 @@ Object.defineProperty(window, 'sfActive', {
 });
 
 initMap();
+// Build the sort options / show the condo layer's controls before any data
+// arrives, so the panel is never in a half-wired state.
+syncLayerUI();
 
 // ============================================================
 // INIT: Fetch the data files, then render

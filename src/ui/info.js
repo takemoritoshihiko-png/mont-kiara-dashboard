@@ -115,5 +115,5 @@ export function selectCondo(name){
     document.getElementById('infoOverlay').classList.add('active');
   }
   renderList();
-  document.querySelectorAll('.condo-card').forEach(card=>{if(card.querySelector('.condo-name')?.textContent===name)card.scrollIntoView({behavior:'smooth',block:'nearest'});});
+  document.querySelectorAll('.condo-card').forEach(card=>{if(card.querySelector('.card-name')?.textContent===name)card.scrollIntoView({behavior:'smooth',block:'nearest'});});
 }
