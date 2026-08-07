@@ -11,7 +11,7 @@ import { calcLuxury } from './domain/luxury.js';
 import { initMap, jumpToArea, toggleLegend } from './ui/map.js';
 import {
   applyFilters, setSort, setLayer, syncLayerUI, toggleMore, toggleAward, togglePanel,
-  clearSearch, removeFilter, clearAllFilters,
+  clearSearch, removeFilter, clearAllFilters, showLoading,
 } from './ui/list.js';
 import { selectCondo, closeInfo, setInfoTab, selectNearby, applyUrlState } from './ui/info.js';
 import { readUrlState, withUrlWritesSuspended } from './ui/urlState.js';
@@ -74,7 +74,8 @@ window.addEventListener('popstate', () => {
 // ============================================================
 (async function init() {
   const listEl = document.getElementById('condoList');
-  listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#80868b">Loading data...</div>';
+  // The panel keeps its shape while the CSVs arrive (spec 2.10 / audit E3).
+  showLoading();
 
   // Partial-load failures must NEVER be silent: collect and show them.
   const loadErrors = [];
@@ -110,13 +111,14 @@ window.addEventListener('popstate', () => {
 
     if (loadErrors.length > 0) {
       const warn = document.createElement('div');
-      warn.style.cssText = 'margin:8px;padding:10px 12px;background:#fdecea;border:1px solid #ea4335;border-radius:8px;color:#b3261e;font-size:12px;line-height:1.5';
+      warn.className = 'load-warn';
       warn.innerHTML = '<b>⚠ 一部のデータを読み込めませんでした</b><br>' +
         loadErrors.map(m => '・' + m).join('<br>') +
         '<br>表示中の件数は不完全です。再読み込みで直らない場合はデータファイルを確認してください。';
       listEl.parentNode.insertBefore(warn, listEl);
     }
   } catch(e) {
-    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#ea4335">Failed to load data: ' + e.message + '<br><br><small style="color:#80868b">Check repository CSV files.</small></div>';
+    listEl.innerHTML = '<div class="load-error">データを読み込めませんでした: ' + e.message +
+      '<br><br><small>リポジトリのCSVファイルを確認してください。</small></div>';
   }
 })();

@@ -42,12 +42,23 @@ function markerType(c) {
 // dimmed and label-free. This is the single knob for "how faint is context".
 export const DIM_OPACITY = 0.45;
 
+// B3b (spec 2.9): the type colours live here, once. Markers, cluster bubbles
+// and the legend all read them, so school navy / commercial orange can never
+// drift apart again. They mirror --type-school / --type-commercial in the CSS;
+// Leaflet builds icon HTML outside the document's cascade, so the values have
+// to be literals here rather than var() references.
+export const MARKER_COLORS = {
+  condo:      { bg:'#78909c', border:'#546e7a', radius:'50%' },
+  commercial: { bg:'#e8710a', border:'#b85806', radius:'4px' },
+  school:     { bg:'#1a3d7c', border:'#112a58', radius:'50%' },
+};
+
 // Cluster bubbles reuse the marker colours so the type stays readable when
 // several markers collapse into one.
 const CLUSTER_STYLE = {
-  condo:      { bg:'#78909c', radius:'50%' },   // circle
-  commercial: { bg:'#e8710a', radius:'8px' },   // rounded square
-  school:     { bg:'#1a3d7c', radius:'50%' },   // circle
+  condo:      { bg:MARKER_COLORS.condo.bg, radius:'50%' },
+  commercial: { bg:MARKER_COLORS.commercial.bg, radius:'8px' },
+  school:     { bg:MARKER_COLORS.school.bg, radius:'50%' },
 };
 
 function clusterIconFactory(type) {
@@ -190,7 +201,7 @@ function mkMarker(c, dim) {
       className: '',
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
-      html: `<div style="width:${csz}px;height:${csz}px;border-radius:50%;background:#1565c0;border:2px solid #0d47a1;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.3);cursor:pointer">
+      html: `<div style="width:${csz}px;height:${csz}px;border-radius:50%;background:${MARKER_COLORS.school.bg};border:2px solid ${MARKER_COLORS.school.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.3);cursor:pointer">
         <span style="color:#fff;font-size:10px">🎓</span>
       </div>`
     });
@@ -208,7 +219,7 @@ function mkMarker(c, dim) {
       className: '',
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
-      html: `<div style="width:${csz}px;height:${csz}px;border-radius:4px;background:#ff6d00;border:2px solid #e65100;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer">
+      html: `<div style="width:${csz}px;height:${csz}px;border-radius:${MARKER_COLORS.commercial.radius};background:${MARKER_COLORS.commercial.bg};border:2px solid ${MARKER_COLORS.commercial.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer">
         <span style="color:#fff;font-size:${fsz}px">🛒</span>
       </div>`
     });
@@ -277,23 +288,28 @@ export function toggleLegend(e){
   if(body) body.style.display=legendOpen?'block':'none';
   if(tog) tog.textContent=legendOpen?'▼':'▶';
 }
+// B3b (audit A3): the year-colour scale used to be drawn twice — as a gradient
+// bar inside the panel AND in this legend. The panel bar is gone; this legend
+// is now the single place that explains what the marker colours mean.
 export function updateLegend(){
-  const bar=document.getElementById('legendBar');bar.innerHTML='';
-  for(let i=0;i<24;i++){const d=document.createElement('div');d.style.background=getYearColor(YEAR_MIN+i/23*(YEAR_MAX-YEAR_MIN));bar.appendChild(d);}
-  document.getElementById('legendLabels').innerHTML=`<span>${YEAR_MIN} (Oldest)</span><span>${Math.round((YEAR_MIN+YEAR_MAX)/2)}</span><span>${YEAR_MAX} (Newest)</span>`;
-
   const ml=document.getElementById('mapLegend');
-  let h=`<div class="map-legend-title" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">Legend <span id="legendToggle" style="font-size:10px">${legendOpen?'▼':'▶'}</span></div>`;
+  if(!ml)return;
+  let h=`<div class="map-legend-title" style="display:flex;justify-content:space-between;align-items:center">Legend <span id="legendToggle">${legendOpen?'▼':'▶'}</span></div>`;
   h+=`<div id="legendBody" style="display:${legendOpen?'block':'none'}">`;
-  h+=`<div class="map-legend-title" style="margin-top:2px">Year Built</div>`;
+  h+=`<div class="map-legend-title" style="margin-top:var(--s2)">Year Built (${YEAR_MIN}–${YEAR_MAX})</div>`;
   [{y:1993,l:'~1993'},{y:2001,l:'~2001'},{y:2009,l:'~2009'},{y:2017,l:'~2017'},{y:2025,l:'~2025'}].forEach(({y,l})=>{
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${getYearColor(y)}"></div>${l}</div>`;
   });
-  h+=`<div class="map-legend-section"><div class="map-legend-title">Luxury Tier</div></div>`;
+  h+=`<div class="map-legend-section"><div class="map-legend-title">Luxury Tier</div>`;
   [{t:'S',l:'Ultra Luxury (70+)'},{t:'A',l:'Super Luxury (60-69)'},{t:'B',l:'Luxury (50-59)'},{t:'C',l:'Upper Mid (40-49)'},{t:'D',l:'Standard (<40)'}].forEach(({t,l})=>{
     h+=`<div class="map-legend-item"><span class="tier-badge" style="background:${TIER_COLORS[t]}">${t}</span>${l}</div>`;
   });
-  h+=`<div class="map-legend-section"><div class="map-legend-title">Circle = Units</div></div>`;
+  h+=`</div>`;
+  h+=`<div class="map-legend-section"><div class="map-legend-title">Type</div>`;
+  h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.school.bg}"></div>学校</div>`;
+  h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.commercial.bg};border-radius:4px"></div>商業施設</div>`;
+  h+=`<div class="map-legend-item">円の大きさ = 戸数</div>`;
+  h+=`</div>`;
   h+=`</div>`;
   ml.innerHTML=h;
 }
