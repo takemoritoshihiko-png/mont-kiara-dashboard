@@ -18,11 +18,17 @@ npm run hooks:install  # pre-pushフック導入（push既定拒否・GIC_ALLOW_
 
 | パス | 役割 |
 |---|---|
-| `index.html` | アプリ本体（現状は単一ファイル。ESモジュール分割を進行中） |
+| `index.html` | CSS＋HTMLマークアップ。JSは `src/main.js` を読み込むだけ |
+| `src/main.js` | 起動処理（データ読込・初期描画）とインライン`onclick`用のグローバル公開 |
+| `src/state.js` | 画面共通の可変状態（データ・絞り込み結果・トグル） |
+| `src/data/` | `parseCsv.js`（CSVパーサ唯一の実装）／`load.js`（取得と項目マッピング）／`inline.js`（受賞・開発会社・学校の固定データ） |
+| `src/domain/` | `luxury.js`（ラグジュアリー指数）／`filter.js`（絞り込み判定）／`geo.js`（距離計算） |
+| `src/ui/` | `map.js`（地図・マーカー・凡例）／`list.js`（一覧・並び替え・サマリー）／`info.js`（詳細パネル）／`schoolFinder.js`（ペナン学校比較） |
 | `condos_data.csv` | 物件データ（28列） |
 | `commercial_data.csv` | 商業施設データ（11列） |
 | `schools_data.csv` / `schools_detail.json` | 学校データ／ペナン校の詳細 |
 | `test/integrity.test.js` | **データ整合性の契約**（CSVを変更したら必ず green を確認） |
+| `test/parseCsv` / `luxury` / `filter` `.test.js` | パーサ・指数計算・絞り込みの単体テスト |
 | `docs/superpowers/` | 設計判断ログ・deferred-backlog |
 | `archive/` | 参照されなくなったファイル（削除せず保管） |
 
