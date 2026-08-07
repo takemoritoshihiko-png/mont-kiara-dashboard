@@ -130,6 +130,10 @@ export function parseRestaurants(jsonText) {
       catGroup: r.catGroup || '',
       michelin: r.michelin || 'none',
       tier: Number(r.tier) || 0,
+      // 追加評価タグ（国際評価 / Tatler Best 20 …）. Scored as an ENUM by
+      // src/domain/diningScore.js — an unknown tag is worth nothing rather than
+      // being pattern-matched out of free text the way 台帳v9 did it.
+      extraFlags: Array.isArray(r.extraFlags) ? r.extraFlags.slice() : [],
       rating: Number(r.rating) || 0,
       reviewCount: Number(r.reviewCount) || 0,
       kidOk: Number(r.kidOk) || 0,

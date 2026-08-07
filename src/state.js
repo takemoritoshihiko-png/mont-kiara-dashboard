@@ -25,9 +25,26 @@ export let currentSort = 'luxHigh';
 // 「絞り込み ⌄」 open/closed. In memory only — deliberately not persisted.
 export let moreOpen = false;
 
+// D4: which of the two apps this is right now.
+//   'home'   住まいモード — the published dashboard. No personal records, ever.
+//   'eatout' 外食モード   — the layer is pinned to 飲食 and the private ledger
+//                          (訪問済み・行きたい・実額・感想) appears.
+// One codebase, two modes, because they answer two different questions with the
+// same 50 restaurants. See docs/superpowers/specs/2026-08-07-dining-d4-plan.md.
+export let appMode = 'home';
+// The layer to come back to when 外食モード is left again.
+export let homeLayer = 'condo';
+// 外食モード's three views (v9's three tabs): 台帳 / 行った店 / データ.
+export let listView = 'ledger';
+
 export let showAwardOnly = false;
 // 「👶 子連れ◎のみ」 — the dining layer's counterpart to showAwardOnly.
 export let showKidOkOnly = false;
+// D4: 「行きたい」「未訪問」are INDEPENDENT toggles, not one radio group — v9
+// let you pick only one condition flag at a time (欠陥4), so "行きたいのに
+// まだ行っていない店" could not be asked for at all.
+export let showWantOnly = false;
+export let showUndoneOnly = false;
 export let legendOpen = false;
 
 export let sfActive = false;
@@ -47,6 +64,11 @@ export function setActiveTab(v) { activeTab = v; }
 export function setMoreOpen(v) { moreOpen = v; }
 export function setShowAwardOnly(v) { showAwardOnly = v; }
 export function setShowKidOkOnly(v) { showKidOkOnly = v; }
+export function setShowWantOnly(v) { showWantOnly = v; }
+export function setShowUndoneOnly(v) { showUndoneOnly = v; }
+export function setAppMode(v) { appMode = v; }
+export function setHomeLayer(v) { homeLayer = v; }
+export function setListView(v) { listView = v; }
 export function setLegendOpen(v) { legendOpen = v; }
 export function setSfActive(v) { sfActive = v; }
 export function setSfSelectedSchool(v) { sfSelectedSchool = v; }

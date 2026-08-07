@@ -8,11 +8,18 @@ import {
   fetchText, parseCondosCsv, parseCommercialCsv, parseSchoolsCsv, parseRestaurants,
 } from './data/load.js';
 import { calcLuxury } from './domain/luxury.js';
+import { calcLedgerScores } from './domain/diningScore.js';
 import { initMap, jumpToArea, toggleLegend } from './ui/map.js';
 import {
-  applyFilters, setSort, setLayer, syncLayerUI, toggleMore, toggleAward, toggleKidOk,
+  applyFilters, setSort, setLayer, setMode, setView, syncLayerUI, toggleMore,
+  toggleAward, toggleKidOk, toggleWantFilter, toggleUndoneFilter,
   togglePanel, clearSearch, removeFilter, clearAllFilters, showLoading,
 } from './ui/list.js';
+import {
+  setOnPersonalChange, dineVisit, dineWant, dineRepeat, dineAmount, dineMemo,
+  dineImport, dineClearAll, dineDownload, dineSelectExport, renderSaveBar, toast,
+} from './ui/dining.js';
+import { initPersonal, flush, onPersonalChange } from './data/personal.js';
 import { selectCondo, closeInfo, setInfoTab, selectNearby, applyUrlState } from './ui/info.js';
 import { initA11y } from './ui/a11y.js';
 import { readUrlState, withUrlWritesSuspended } from './ui/urlState.js';
@@ -34,9 +41,25 @@ window.togglePanel = togglePanel;
 window.applyFilters = applyFilters;
 window.setSort = setSort;
 window.setLayer = setLayer;
+window.setMode = setMode;
+window.setView = setView;
 window.toggleMore = toggleMore;
 window.toggleAward = toggleAward;
 window.toggleKidOk = toggleKidOk;
+window.toggleWantFilter = toggleWantFilter;
+window.toggleUndoneFilter = toggleUndoneFilter;
+// D4 外食モード: every one of these writes through src/data/personal.js and
+// nothing else. They exist on window for the same reason the rest do — the
+// generated card markup uses inline on* attributes.
+window.dineVisit = dineVisit;
+window.dineWant = dineWant;
+window.dineRepeat = dineRepeat;
+window.dineAmount = dineAmount;
+window.dineMemo = dineMemo;
+window.dineImport = dineImport;
+window.dineClearAll = dineClearAll;
+window.dineDownload = dineDownload;
+window.dineSelectExport = dineSelectExport;
 window.clearSearch = clearSearch;
 window.removeFilter = removeFilter;
 window.clearAllFilters = clearAllFilters;
@@ -55,6 +78,25 @@ window.sfSelectSchool = sfSelectSchool;
 window.sfSelectCondo = sfSelectCondo;
 
 initMap();
+
+// ============================================================
+// 個人記録 (D4)
+// The storage is probed BEFORE anything can be typed into it, so a browser
+// that reads but refuses writes (private mode, a full quota) says so on the
+// save bar instead of losing the first evening's notes in silence.
+// ============================================================
+const personal = initPersonal();
+setOnPersonalChange(() => { applyFilters(); });
+onPersonalChange(() => renderSaveBar());
+if(!personal.writable && personal.error){
+  // The save bar carries it permanently; the toast makes sure it is seen once.
+  setTimeout(() => toast('⚠ ' + personal.error), 400);
+}
+// Nothing is lost on the way out: typed fields save on a 250ms debounce, and
+// closing the tab can beat it.
+['pagehide', 'beforeunload'].forEach(ev => window.addEventListener(ev, () => flush()));
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden') flush(); });
+
 // Build the sort options / show the condo layer's controls before any data
 // arrives, so the panel is never in a half-wired state.
 syncLayerUI();
@@ -107,6 +149,9 @@ window.addEventListener('popstate', () => {
     // Load restaurants (dining layer, D3)
     try {
       setRestaurants(parseRestaurants(await fetchText(RESTAURANTS_URL)));
+      // 台帳スコアは台帳全体の平均★を必要とするので、全件そろってから一度だけ
+      // 計算してレコードに焼き付ける（calcLuxury と同じやり方）。
+      calcLedgerScores(RESTAURANTS);
     } catch(e) { setRestaurants([]); loadErrors.push('飲食店データ (restaurants.json): ' + e.message); }
 
     // Merge for display

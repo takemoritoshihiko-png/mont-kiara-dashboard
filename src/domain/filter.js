@@ -174,6 +174,15 @@ export function matchesPriceBand(c, band){
   return v > range[0] && v <= range[1];
 }
 
+/** 施設タイプ — where the restaurant physically is. The ledger's own column. */
+export const VENUE_TYPES = [
+  { value: 'mall', label: 'モール内' },
+  { value: 'hotel', label: 'ホテル内' },
+  { value: 'tower', label: 'オフィス・タワー内' },
+  { value: 'street', label: '路面店' },
+  { value: 'stall', label: '屋台・フードコート' },
+];
+
 /** 'star' means one star OR two; every other value is an exact michelin match. */
 export function matchesMichelin(c, m){
   if(!m) return true;
@@ -245,9 +254,21 @@ export function matchesDining(c, f){
   // The ledger's own `area` field (KLCC / Bangsar / Chinatown …). Exact match:
   // it is a controlled value, not free text.
   if(f.diningArea && c.area !== f.diningArea) return false;
+  if(f.venueType && c.venueType !== f.venueType) return false;
   // kidOk is 0/1 in restaurants.json. The filter is one-way — 「子連れ◎のみ」
   // narrows, it never asks for the places that are NOT child-friendly.
   if(f.kidOnly && c.kidOk !== 1) return false;
+  // D4: the two personal conditions. They are INDEPENDENT toggles that combine
+  // (v9 could only hold one condition at a time — 欠陥4 — so 「行きたいのにまだ
+  // 行っていない店」, the single most useful question, could not be asked).
+  // `f.personal` is the record map from src/data/personal.js; this function
+  // stays pure by being handed it rather than reading storage itself. Absent
+  // (住まいモード) it is undefined and both toggles are simply off.
+  if(f.wantOnly || f.undoneOnly){
+    const p = (f.personal && f.personal[c.id]) || null;
+    if(f.wantOnly && !(p && p.w === 1)) return false;
+    if(f.undoneOnly && p && p.v === 1) return false;
+  }
   return true;
 }
 
@@ -258,7 +279,8 @@ export function matchesDining(c, f){
  *   condo       — tierVal, sp, rn, yr, sz, age, statusFilter, showAwardOnly, currentYear
  *   school      — schoolAge, curriculum, fee
  *   commercial  — nla, openYear, anchorQ
- *   dining      — catGroup, michelin, priceBand, diningArea, kidOnly
+ *   dining      — catGroup, michelin, priceBand, diningArea, venueType, kidOnly
+ *                 and (外食モードのみ) wantOnly, undoneOnly + the `personal` map
  */
 export function matchesFilters(c, f){
   const layer=f.layer||'condo';

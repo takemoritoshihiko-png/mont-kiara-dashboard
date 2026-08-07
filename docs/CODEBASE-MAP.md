@@ -15,7 +15,7 @@
 | ファイル | 役割 |
 |---|---|
 | `src/main.js` | 起動: 地図生成 → UI初期化 → CSV/JSON読込 → 初回描画 → URL状態の復元。インライン`onclick`用に関数を`window`へ公開 |
-| `src/state.js` | 共有する可変状態（データ・絞り込み結果・選択中・アクティブ層/タブ・各トグル）。書き込みは全てセッター経由 |
+| `src/state.js` | 共有する可変状態（データ・絞り込み結果・選択中・アクティブ層/タブ・**モード(住まい/外食)**・**外食の3ビュー**・各トグル）。書き込みは全てセッター経由 |
 
 ### data/ — 読み込みと固定データ
 
@@ -24,6 +24,7 @@
 | `src/data/parseCsv.js` | CSVパーサ（引用符・改行対応）。**唯一の実装** |
 | `src/data/load.js` | ファイルURL定義・fetch・CSV/JSON列 → アプリのレコード形へのマッピング（飲食は `parseRestaurants`） |
 | `src/data/inline.js` | コードに埋めた固定データ: FIABCI受賞・開発会社・Tier色・年色スケール・ペナン9校の学費カーブ・ミシュランの表記 |
+| `src/data/personal.js` | **個人記録の唯一の書き込み口**（外食モード）。localStorage `mkd_dining_personal_v1`・6項目(w/v/vd/rv/m/amt)・ローカル日付・起動時の書込テスト・書き出し / 読み込み(v9のplaceIdキーを変換) / 全消去 |
 
 ### domain/ — 純粋なロジック（DOMを触らない）
 
@@ -35,6 +36,8 @@
 | `src/domain/geo.js` | 2点間の距離（haversine） |
 | `src/domain/nearby.js` | 「周辺」= 距離バケット（800m/2km/6km）へ種別ごとに仕分け＋距離の表記。層は `LAYERS` から自動で増える |
 | `src/domain/fees.js` | 年齢 → 学年 → 年間学費。学年ラベルの解析。**補間せず**近い公表学年の実額を返す |
+| `src/domain/diningScore.js` | 台帳スコア（100点）。権威au / 継続性ct / 評価ev・ベイズ縮約★(M=800)・レビュー母数の厚み・exタグはENUM。`calcLedgerScores()` が全件に焼き付ける |
+| `src/domain/diningLog.js` | 行った店の集計とグループ分け。**母集団は訪問済みのみ**（台帳v9の食い違いの解消）。4タイル・再訪意向グループ・行のメタ文 |
 
 ### ui/ — 画面の描画と操作
 
@@ -43,11 +46,12 @@
 | `src/ui/map.js` | Leaflet地図・マーカー生成（種別別の見た目）・クラスタ・ラベルのズーム連動・エリアジャンプ・凡例 |
 | `src/ui/list.js` | 層セグメント・層別フィルタ・適用中チップ・並び替え・種別別カード・サマリー4枠・スケルトン・パネル開閉 |
 | `src/ui/info.js` | 詳細オーバーレイ（dialog）: ヘッダー／「詳細」「周辺」タブ／外部リンク／選択の遷移 |
-| `src/ui/urlState.js` | URL ⇄ 画面状態（`?layer=&sel=&tab=`）。履歴の積み方（push/replace）もここ |
+| `src/ui/urlState.js` | URL ⇄ 画面状態（`?mode=&layer=&sel=&tab=`）。`mode=eatout` のときだけ書かれる（住まいは既定＝省略）。履歴の積み方（push/replace）もここ |
 | `src/ui/schoolFinder.js` | 学費くらべ: 年齢別の全校比較リスト・学費推移チャート・選んだ学校の周辺コンド |
+| `src/ui/dining.js` | **外食モードの画面**。台帳スコアの表示・記録欄(visitbox)・行った店ビュー・データビュー・toast・保存バー。書き込みは全部 `data/personal.js` 経由 |
 | `src/ui/a11y.js` | Enter/Space で `role="button"` を起動、Escapeで詳細を閉じる。**document に委譲リスナー1つだけ** |
 
-## test/ — 14ファイル・378件
+## test/ — 18ファイル・531件
 
 | ファイル | 何を守るか |
 |---|---|
@@ -65,6 +69,10 @@
 | `test/a11y.test.js` | ランドマーク・全コントロールの名前・状態のaria・フォーカス可視・モバイルブロック・OGP |
 | `test/dining.test.js` | **飲食データの契約**: 50件・id/placeId一意・座標域・価格 lo≤hi・8分類・ミシュランenum |
 | `test/diningLayer.test.js` | 飲食層: 絞り込み5軸・価格帯の判定基準・カード/ヒーロー文字列・並び替え・詳細パネル・読み込み |
+| `test/diningScore.test.js` | **台帳スコア**: 定数・exタグENUMと実データの照合・C=4.3600・手計算フィクスチャ・内訳が総合点と一致すること |
+| `test/personal.test.js` | **個人記録**: ローカル日付・読み取りが書き込まないこと・保存可否の起動テスト・デバウンス保存・v9形式の読み込み変換・書き出し往復 |
+| `test/diningLog.test.js` | 行った店: 母集団＝訪問済みのみ・平均実額の分母・グループの固定順と並び |
+| `test/eatoutMode.test.js` | 外食モード: **住まいモードに記録UIが出ないこと**・記録欄・カード構造・3ビュー・独立トグル・台帳スコア順・markup契約 |
 
 ## データファイル
 

@@ -19,7 +19,8 @@ import { TIER_COLORS, MICHELIN_LABELS } from '../data/inline.js';
 import { recordLayer } from '../domain/filter.js';
 import { nearby, formatDistance, BUCKET_LABELS, NEARBY_BUCKETS } from '../domain/nearby.js';
 import { map, rebuild } from './map.js';
-import { renderList, setLayer, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
+import { renderList, setLayer, setMode, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
+import { eatoutDetailHtml } from './dining.js';
 import { syncUrl, withUrlWritesSuspended } from './urlState.js';
 
 // The record the overlay is currently showing. Kept so a tab switch can
@@ -150,6 +151,8 @@ function diningDetail(c){
   h += section('支持される点', `<div class="info-sec-body">${esc(vox.pros || '—')}</div>`);
   h += section('割れる点・不満', `<div class="info-sec-body">${esc(vox.cons || '—')}</div>`);
   if(c.editorNote) h += section('編集メモ', `<div class="info-sec-body">${esc(c.editorNote)}</div>`);
+  // 外食モードだけ: 台帳スコアと自分の記録。住まいモードでは空文字＝一切出ない。
+  h += eatoutDetailHtml(c);
   return h;
 }
 
@@ -368,6 +371,9 @@ export function selectCondo(name, opts = {}){
  * creates history of its own.
  */
 export function applyUrlState(s){
+  // Mode first: 外食モード pins the layer, so restoring the layer before the
+  // mode would set it twice and leave the sort on the wrong default.
+  if(s.mode) setMode(s.mode, { silent: true });
   if(s.layer && s.layer !== activeLayer) setLayer(s.layer);
   // An unknown name (renamed or removed record) is ignored rather than shown as
   // an error — a stale bookmark should still open a usable map.

@@ -15,7 +15,7 @@ KLとペナンの**コンドミニアム271・学校33・商業施設88・飲食
 ```bash
 npm install
 npm run dev            # http://localhost:5173
-npm test               # 378件
+npm test               # 531件
 npm run hooks:install  # pre-push フックを .git/hooks へ
 ```
 
@@ -40,6 +40,16 @@ npm run hooks:install  # pre-push フックを .git/hooks へ
 
 **スコープ外として保留した課題は、完了報告の前に必ず deferred-backlog.md に追記する。**
 
+## 2つのモード
+
+ヘッダーの「🏠 住まい / 🍽 外食」で、同じ地図の上に2つのアプリが乗っている。
+
+- **住まいモード**（既定・公開サイトの姿）: 物件・学校・商業・飲食を見くらべる。**個人記録は一切出さない**
+- **外食モード**（`?mode=eatout`）: 層を飲食に固定し、台帳スコアと**自分の記録**（訪問済み・行きたい・再訪意向・実額・感想）が出る。台帳 / 行った店 / データ の3ビュー
+
+記録は `localStorage` の `mkd_dining_personal_v1` にだけ入る。書き込み口は `src/data/personal.js` **1本だけ**で、他のどこからも直接 localStorage を触らない。
+**この分離は公開サイトの前提**: 住まいモードに記録が1つでも漏れたら、それは公開されたのと同じ。`test/eatoutMode.test.js` が両側から検査する。
+
 ## データの契約（破ると静かに壊れる）
 
 - **premium_score は加重式**: `private_lift×7 + concierge×2 + low_density + pool + sky_lounge + ev_charging`（最大15）。単純合計ではない。`test/integrity.test.js` が強制する
@@ -54,5 +64,5 @@ npm run hooks:install  # pre-push フックを .git/hooks へ
 - `index.html` の `:root` に**デザイントークン**がある。色・サイズ・余白の直書き（リテラルのhex/px）は禁止。フォントサイズは `var(--fs-*)` のみ（テストが検査する）
 - カード・行・凡例のようなクリックできる要素は `role="button" tabindex="0" aria-label` を付ける。Enter/Space の処理は `src/ui/a11y.js` の**委譲ハンドラ1つ**が担う（要素ごとに listener を足さない）
 - 表示テキストを組み立てる関数（例: `cardHeroText`）は**1つの実装を共有**する。同じ数字を2箇所で組み立てない
-- 状態の書き込みは `src/state.js` のセッター経由のみ
+- 状態の書き込みは `src/state.js` のセッター経由のみ。**個人記録は `src/data/personal.js` のセッター経由のみ**（読み取り用の `getEntry()` は絶対に書かない — 描画しただけで空レコードが生えた台帳v9の事故）
 - モバイルは `index.html` 末尾の `@media(max-width:768px)` ブロック。**新しいUI要素を足したら、このブロックにも入れる**（タップ標的40px）

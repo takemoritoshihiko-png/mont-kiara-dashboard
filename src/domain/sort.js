@@ -39,6 +39,11 @@ export const COMPARATORS = {
   // served), so the sort and the filter can never disagree about a price.
   budgetLow:    (a, b) => lo(diningPriceCeiling(a)) - lo(diningPriceCeiling(b)) || byName(a, b),
   budgetHigh:   (a, b) => hi(diningPriceCeiling(b)) - hi(diningPriceCeiling(a)) || byName(a, b),
+  // 台帳スコア順 (D4). The score is not on the record — it depends on the whole
+  // ledger's baseline — so the comparator reads a value the renderer stamped on
+  // (`ledgerTotal`). A record without one sorts as 0 rather than NaN, which
+  // would make the whole sort unstable.
+  ledgerHigh:   (a, b) => hi(b.ledgerTotal) - hi(a.ledgerTotal) || hi(b.rating) - hi(a.rating) || byName(a, b),
 };
 
 export const SORT_OPTIONS = {
@@ -73,20 +78,37 @@ export const SORT_OPTIONS = {
   ],
 };
 
+/**
+ * 台帳スコア順 is offered in 外食モード only, and there it leads.
+ *
+ * It is deliberately NOT in the base list: the score is only *shown* in 外食
+ * モード, and an order you cannot see the key of is a list in an arbitrary
+ * sequence. In 住まいモード the 飲食 layer answers "what is around this condo",
+ * where the raw Google rating is the honest lead. See the mode note in
+ * src/state.js.
+ */
+const LEDGER_SORT = { value: 'ledgerHigh', label: '台帳スコア順（総合点）' };
+
+/** The options a layer offers in a given mode. */
+export function sortOptionsFor(layer, mode = 'home'){
+  const base = SORT_OPTIONS[layer] || SORT_OPTIONS.condo;
+  if(layer === 'dining' && mode === 'eatout') return [LEDGER_SORT, ...base];
+  return base;
+}
+
 /** The comparator for a sort key; unknown keys fall back to the name order. */
 export function comparatorFor(key){
   return COMPARATORS[key] || byName;
 }
 
 /** First option of the layer = its default order. */
-export function defaultSortFor(layer){
-  const opts = SORT_OPTIONS[layer] || SORT_OPTIONS.condo;
-  return opts[0].value;
+export function defaultSortFor(layer, mode = 'home'){
+  return sortOptionsFor(layer, mode)[0].value;
 }
 
-/** True when `key` is offered by that layer's select. */
-export function sortAvailable(layer, key){
-  return (SORT_OPTIONS[layer] || []).some(o => o.value === key);
+/** True when `key` is offered by that layer's select in that mode. */
+export function sortAvailable(layer, key, mode = 'home'){
+  return sortOptionsFor(layer, mode).some(o => o.value === key);
 }
 
 /** Non-mutating sort, for tests and callers that need a copy. */
