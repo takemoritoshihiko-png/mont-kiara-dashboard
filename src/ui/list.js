@@ -224,8 +224,10 @@ export function clearAllFilters(){
 // CARDS — one template per type (spec 2.5)
 // A value that is missing or zero for its type is omitted, never printed as 0.
 // ============================================================
-function cardHead(c, badge, trailing){
-  return `<div class="card-head">${badge}<span class="card-name">${esc(c.name)}</span>${trailing || ''}</div>` +
+function cardHead(c, badge, trailing, nameClass){
+  return `<div class="card-head">${badge}` +
+    `<span class="card-name${nameClass ? ' ' + nameClass : ''}">${esc(c.name)}</span>` +
+    `${trailing || ''}</div>` +
     (c.nameJa ? `<div class="card-ja">${esc(c.nameJa)}</div>` : '');
 }
 
@@ -253,7 +255,11 @@ function condoCard(c){
 function schoolCard(c){
   const badge = `<span class="type-badge type-school">🎓</span>`;
   const cur = c.curriculum || '';
-  const chip = cur ? `<span class="card-chip chip-school">${esc(cur)}</span>` : '';
+  // The chip sits on its own line under the name. Sharing the line cost the
+  // name 45% of the card and truncated 「Prince of Wales Island International
+  // School (POWIIS) Tanjung Bungah」 to nothing useful; the school's identity
+  // matters more than its curriculum.
+  const chip = cur ? `<div class="card-chips"><span class="card-chip chip-school">${esc(cur)}</span></div>` : '';
   let hero = '';
   if(c.sizeMin > 0 && c.sizeMax > 0) hero = `学費 RM ${num(c.sizeMin)}–${num(c.sizeMax)}/年`;
   else if(c.sizeMin > 0) hero = `学費 RM ${num(c.sizeMin)}〜/年`;
@@ -262,7 +268,10 @@ function schoolCard(c){
   if(c.year) meta.push(`${c.year}年設立`);
   if(c.units > 0) meta.push(`生徒数 ${num(c.units)}名`);
   if(c.ageRange) meta.push(`${c.ageRange}歳`);
-  return cardHead(c, badge, chip) +
+  // School names run long (「Prince of Wales Island International School (POWIIS)
+  // Tanjung Bungah」) and there is no shorter form that still identifies the
+  // campus, so they wrap to a second line instead of ending in an ellipsis.
+  return cardHead(c, badge, '', 'card-name-wrap') + chip +
     `<div class="card-hero">${hero}</div>` +
     `<div class="card-addr">${esc(c.addr)}</div>` +
     (meta.length ? `<div class="card-meta">${esc(meta.join(' ・ '))}</div>` : '');

@@ -1,7 +1,7 @@
 // Entry point: boots the map, exposes the inline-handler globals and loads data.
 import {
-  CONDOS, COMMERCIALS, SCHOOLS, sfActive,
-  setCondos, setCommercials, setSchools, setSchoolsDetail, setFiltered, setSfActive,
+  CONDOS, COMMERCIALS, SCHOOLS,
+  setCondos, setCommercials, setSchools, setSchoolsDetail, setFiltered,
 } from './state.js';
 import {
   CONDOS_CSV_URL, COMMERCIAL_CSV_URL, SCHOOLS_CSV_URL, SCHOOLS_DETAIL_URL,
@@ -15,7 +15,9 @@ import {
 } from './ui/list.js';
 import { selectCondo, closeInfo, setInfoTab, selectNearby, applyUrlState } from './ui/info.js';
 import { readUrlState, withUrlWritesSuspended } from './ui/urlState.js';
-import { toggleSchoolFinder, renderSchoolFinder, sfSelectSchool } from './ui/schoolFinder.js';
+import {
+  toggleSchoolFinder, closeSchoolFinder, renderSchoolFinder, sfSelectSchool, sfSelectCondo,
+} from './ui/schoolFinder.js';
 
 // ============================================================
 // GLOBALS FOR INLINE HANDLERS
@@ -41,18 +43,14 @@ window.closeInfo = closeInfo;
 window.setInfoTab = setInfoTab;
 window.selectNearby = selectNearby;
 window.toggleSchoolFinder = toggleSchoolFinder;
+window.closeSchoolFinder = closeSchoolFinder;
 window.renderSchoolFinder = renderSchoolFinder;
 window.sfSelectSchool = sfSelectSchool;
-
-// One inline handler *assigns* a global: the School Finder's nearby-condo rows
-// run `sfActive=false;toggleSchoolFinder();selectCondo(...)`. In the original
-// single <script> that assignment hit the top-level `let sfActive`; this
-// accessor reproduces the same behaviour from module scope.
-Object.defineProperty(window, 'sfActive', {
-  configurable: true,
-  get: () => sfActive,
-  set: (v) => setSfActive(v),
-});
+// B3c: the nearby-condo rows used to run `sfActive=false;toggleSchoolFinder()`
+// inline, which needed a writable window.sfActive accessor here — and flipped
+// the flag the wrong way round (audit E2). They call this function now, so the
+// accessor is gone: state is written through state.js and nowhere else.
+window.sfSelectCondo = sfSelectCondo;
 
 initMap();
 // Build the sort options / show the condo layer's controls before any data

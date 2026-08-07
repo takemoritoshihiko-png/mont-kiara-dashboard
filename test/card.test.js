@@ -91,6 +91,19 @@ describe('school card (audit finding C1: it used to be drawn as a condo)', () =>
     expect(h).toContain('3-18歳');
   });
 
+  it('gives the name the whole line and puts the curriculum chip below it (B3c)', () => {
+    const long = school({ name: 'Prince of Wales Island International School (POWIIS) Tanjung Bungah' });
+    const h = cardBodyHtml(long);
+    // The chip is out of the name row, so nothing competes with the name.
+    expect(h).toContain('<div class="card-chips">');
+    expect(h.indexOf('card-name')).toBeLessThan(h.indexOf('card-chips'));
+    expect(h.slice(h.indexOf('card-head'), h.indexOf('card-chips'))).not.toContain('card-chip"');
+  });
+
+  it('omits the chip row entirely when the curriculum is unknown', () => {
+    expect(cardBodyHtml(school({ curriculum: '' }))).not.toContain('card-chips');
+  });
+
   it('says 要問合せ rather than RM 0 when the fee is unknown', () => {
     const h = cardBodyHtml(school({ sizeMin: 0, sizeMax: 0 }));
     expect(h).toContain('学費 要問合せ');

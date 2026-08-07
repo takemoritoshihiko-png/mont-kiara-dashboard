@@ -183,6 +183,20 @@ function applyLabelMode(mode) {
   });
 }
 
+// ============================================================
+// SELECTED MARKER (spec 2.7 / audit D3)
+// The selected pin gets an accent ring and grows slightly. It is done with a
+// class on the divIcon rather than inline style because Leaflet owns the icon
+// element's own `transform` (that is how it positions markers): the ring and
+// the scale are applied to the pin INSIDE it, via `.mk-pin-sel > div` in the
+// stylesheet. See index.html.
+// ============================================================
+/** Pure: the divIcon className for a pin, given whether it is the selected one. */
+export function pinClassName(isSelected) {
+  return isSelected ? 'mk-pin mk-pin-sel' : 'mk-pin';
+}
+const pinClass = (c) => pinClassName(c.name === selectedCondo);
+
 // Custom DivIcon with tier label inside circle
 function mkMarker(c, dim) {
   const yearColor = getYearColor(c.year);
@@ -198,7 +212,7 @@ function mkMarker(c, dim) {
   if (isSchool) {
     const csz = 20;
     const icon = L.divIcon({
-      className: '',
+      className: pinClass(c),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
       html: `<div style="width:${csz}px;height:${csz}px;border-radius:50%;background:${MARKER_COLORS.school.bg};border:2px solid ${MARKER_COLORS.school.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.3);cursor:pointer">
@@ -216,7 +230,7 @@ function mkMarker(c, dim) {
     const csz = nla >= 200000 ? 28 : nla >= 50000 ? 22 : 16;
     const fsz = nla >= 200000 ? 13 : nla >= 50000 ? 11 : 9;
     const icon = L.divIcon({
-      className: '',
+      className: pinClass(c),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
       html: `<div style="width:${csz}px;height:${csz}px;border-radius:${MARKER_COLORS.commercial.radius};background:${MARKER_COLORS.commercial.bg};border:2px solid ${MARKER_COLORS.commercial.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer">
@@ -235,7 +249,7 @@ function mkMarker(c, dim) {
   const label2 = "'" + yr2;
 
   const icon = L.divIcon({
-    className: '',
+    className: pinClass(c),
     iconSize: [sz, sz],
     iconAnchor: [sz/2, sz/2],
     html: `<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${bgColor};border:${borderStyle};display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;line-height:1.1">
