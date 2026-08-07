@@ -10,14 +10,17 @@ export const TIER_ORDER = {S:5, A:4, B:3, C:2, D:1};
 // ============================================================
 // LAYERS
 // ============================================================
-export const LAYERS = ['condo', 'school', 'commercial'];
+export const LAYERS = ['condo', 'school', 'commercial', 'dining'];
 
 /** Japanese label used in headings and the empty-result message. */
-export const LAYER_LABELS = { condo: '物件', school: '学校', commercial: '商業施設' };
+export const LAYER_LABELS = { condo: '物件', school: '学校', commercial: '商業施設', dining: '飲食' };
 
 /** Which layer a record belongs to. `status` is the discriminator in the data. */
 export function recordLayer(c){
-  return c.status === 'school' ? 'school' : c.status === 'commercial' ? 'commercial' : 'condo';
+  return c.status === 'school' ? 'school'
+    : c.status === 'commercial' ? 'commercial'
+    : c.status === 'dining' ? 'dining'
+    : 'condo';
 }
 
 // Distinct curriculum substrings across schools_data.csv. Matching is by
@@ -117,6 +120,68 @@ export function matchesCurriculum(c, cur){
 }
 
 // ============================================================
+// DINING helpers
+// ============================================================
+/** The 8 ruled category groups, in the order the plan's table lists them. */
+export const CAT_GROUPS = [
+  'マレーシア料理', '洋食・グリル', '中華', 'インド・スリランカ',
+  '鶏飯・ご飯もの', '麺・肉骨茶', '日本・その他アジア', '屋台街',
+];
+
+/** Michelin filter values. 'star' covers both star levels; '' is everything. */
+export const MICHELIN_FILTERS = [
+  { value: 'star', label: '星付き（★1・★2）' },
+  { value: 'bib',  label: 'ビブグルマン' },
+  { value: 'sel',  label: '掲載店（セレクテッド）' },
+  { value: 'none', label: '掲載なし' },
+];
+
+/**
+ * The one figure a price band is judged on: the TOP of the dinner range.
+ *
+ * Dinner leads because it is the fuller offering and the number people budget
+ * against; a place that does not serve dinner carries `priceDinner: [0, 0]`,
+ * and then the top of the LUNCH range stands in for it. `0` means "not offered
+ * / unknown" throughout restaurants.json, never "free".
+ *
+ * @returns {number} ringgit per head, or 0 when neither service has a figure.
+ */
+export function diningPriceCeiling(c){
+  const dinner = (c && c.priceDinner && c.priceDinner[1]) || 0;
+  if(dinner > 0) return dinner;
+  return (c && c.priceLunch && c.priceLunch[1]) || 0;
+}
+
+/** The bands offered by the 価格帯 dropdown, as [min exclusive, max inclusive]. */
+export const PRICE_BANDS = {
+  '0-50':    [0, 50],
+  '50-150':  [50, 150],
+  '150-400': [150, 400],
+  '400-':    [400, Infinity],
+};
+
+/**
+ * Price-band test. A restaurant whose two services are BOTH unpriced is never
+ * dropped by this filter: an unknown price is not a cheap one, and silently
+ * hiding it would be exactly the "無言で件数を減らす" the repo forbids.
+ */
+export function matchesPriceBand(c, band){
+  if(!band) return true;
+  const range = PRICE_BANDS[band];
+  if(!range) return true;
+  const v = diningPriceCeiling(c);
+  if(v <= 0) return true;      // unknown price — shown under every band
+  return v > range[0] && v <= range[1];
+}
+
+/** 'star' means one star OR two; every other value is an exact michelin match. */
+export function matchesMichelin(c, m){
+  if(!m) return true;
+  if(m === 'star') return c.michelin === '1star' || c.michelin === '2star';
+  return c.michelin === m;
+}
+
+// ============================================================
 // SEARCH
 // ============================================================
 function matchesQuery(c, q, layer){
@@ -124,6 +189,7 @@ function matchesQuery(c, q, layer){
   if(layer==='condo') hay.push(c.luxTier||'');
   if(layer==='school') hay.push(c.curriculum||'');
   if(layer==='commercial') hay.push(c.anchorTenants||'');
+  if(layer==='dining') hay.push(c.cat||'', c.catGroup||'', c.area||'', c.venue||'');
   return hay.some(v=>String(v).toLowerCase().includes(q));
 }
 
@@ -168,17 +234,44 @@ function matchesCommercial(c, f){
 }
 
 /**
- * @param {object} c  a condo / commercial / school record
+ * The dining layer's own criteria. Note what is NOT here: the 8-way category,
+ * the michelin tier and the price band all come from the ledger's own columns,
+ * so none of them needs a keyword heuristic.
+ */
+export function matchesDining(c, f){
+  if(f.catGroup && c.catGroup !== f.catGroup) return false;
+  if(!matchesMichelin(c, f.michelin)) return false;
+  if(!matchesPriceBand(c, f.priceBand)) return false;
+  // The ledger's own `area` field (KLCC / Bangsar / Chinatown …). Exact match:
+  // it is a controlled value, not free text.
+  if(f.diningArea && c.area !== f.diningArea) return false;
+  // kidOk is 0/1 in restaurants.json. The filter is one-way — 「子連れ◎のみ」
+  // narrows, it never asks for the places that are NOT child-friendly.
+  if(f.kidOnly && c.kidOk !== 1) return false;
+  return true;
+}
+
+/**
+ * @param {object} c  a condo / commercial / school / dining record
  * @param {object} f  criteria:
  *   common      — layer, q, areaFilter
  *   condo       — tierVal, sp, rn, yr, sz, age, statusFilter, showAwardOnly, currentYear
  *   school      — schoolAge, curriculum, fee
  *   commercial  — nla, openYear, anchorQ
+ *   dining      — catGroup, michelin, priceBand, diningArea, kidOnly
  */
 export function matchesFilters(c, f){
   const layer=f.layer||'condo';
   if(recordLayer(c)!==layer) return false;
   if(f.q&&!matchesQuery(c,f.q,layer)) return false;
+  // The dining layer deliberately does NOT go through matchesArea(). That
+  // function's KL half ends in a catch-all — anything on the KL side that is
+  // not one of the seven named neighbourhoods is called "Mont Kiara" — which is
+  // harmless for condos (they are all IN those areas) and badly wrong for
+  // restaurants: Chinatown, Pudu, Imbi and Chow Kit would every one of them be
+  // filed under Mont Kiara. The ledger already carries a curated `area` per
+  // restaurant, so the dining layer filters on that instead (f.diningArea).
+  if(layer==='dining') return matchesDining(c,f);
   if(f.areaFilter&&!matchesArea(c,f.areaFilter)) return false;
   if(layer==='school') return matchesSchool(c,f);
   if(layer==='commercial') return matchesCommercial(c,f);

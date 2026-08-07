@@ -9,6 +9,7 @@ export let CONDOS = [];
 export let COMMERCIALS = [];
 export let SCHOOLS = [];
 export let SCHOOLS_DETAIL = {};
+export let RESTAURANTS = [];
 
 export let filtered = [];
 export let markers = {};
@@ -25,6 +26,8 @@ export let currentSort = 'luxHigh';
 export let moreOpen = false;
 
 export let showAwardOnly = false;
+// 「👶 子連れ◎のみ」 — the dining layer's counterpart to showAwardOnly.
+export let showKidOkOnly = false;
 export let legendOpen = false;
 
 export let sfActive = false;
@@ -34,6 +37,7 @@ export function setCondos(v) { CONDOS = v; }
 export function setCommercials(v) { COMMERCIALS = v; }
 export function setSchools(v) { SCHOOLS = v; }
 export function setSchoolsDetail(v) { SCHOOLS_DETAIL = v; }
+export function setRestaurants(v) { RESTAURANTS = v; }
 export function setFiltered(v) { filtered = v; }
 export function setMarkers(v) { markers = v; }
 export function setSelectedCondo(v) { selectedCondo = v; }
@@ -42,6 +46,7 @@ export function setActiveLayer(v) { activeLayer = v; }
 export function setActiveTab(v) { activeTab = v; }
 export function setMoreOpen(v) { moreOpen = v; }
 export function setShowAwardOnly(v) { showAwardOnly = v; }
+export function setShowKidOkOnly(v) { showKidOkOnly = v; }
 export function setLegendOpen(v) { legendOpen = v; }
 export function setSfActive(v) { sfActive = v; }
 export function setSfSelectedSchool(v) { sfSelectedSchool = v; }

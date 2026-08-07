@@ -22,18 +22,18 @@
 | ファイル | 役割 |
 |---|---|
 | `src/data/parseCsv.js` | CSVパーサ（引用符・改行対応）。**唯一の実装** |
-| `src/data/load.js` | ファイルURL定義・fetch・CSV列 → アプリのレコード形へのマッピング |
-| `src/data/inline.js` | コードに埋めた固定データ: FIABCI受賞・開発会社・Tier色・年色スケール・ペナン9校の学費カーブ |
+| `src/data/load.js` | ファイルURL定義・fetch・CSV/JSON列 → アプリのレコード形へのマッピング（飲食は `parseRestaurants`） |
+| `src/data/inline.js` | コードに埋めた固定データ: FIABCI受賞・開発会社・Tier色・年色スケール・ペナン9校の学費カーブ・ミシュランの表記 |
 
 ### domain/ — 純粋なロジック（DOMを触らない）
 
 | ファイル | 役割 |
 |---|---|
 | `src/domain/luxury.js` | ラグジュアリー指数とTier（S/A/B/C/D）の算出。premium_score を15点満点で正規化して加算 |
-| `src/domain/filter.js` | 層の判定（`recordLayer`）・全絞り込み条件の判定・カリキュラム一覧・帯レンジのパース |
+| `src/domain/filter.js` | 層の判定（`recordLayer`）・全絞り込み条件の判定・カリキュラム一覧・帯レンジのパース・飲食の8分類/ミシュラン/価格帯（`diningPriceCeiling`） |
 | `src/domain/sort.js` | 層ごとの並び替え選択肢と比較関数。層を切り替えたとき使えない順序の扱いも |
 | `src/domain/geo.js` | 2点間の距離（haversine） |
-| `src/domain/nearby.js` | 「周辺」= 距離バケット（800m/2km/6km）へ種別ごとに仕分け＋距離の表記 |
+| `src/domain/nearby.js` | 「周辺」= 距離バケット（800m/2km/6km）へ種別ごとに仕分け＋距離の表記。層は `LAYERS` から自動で増える |
 | `src/domain/fees.js` | 年齢 → 学年 → 年間学費。学年ラベルの解析。**補間せず**近い公表学年の実額を返す |
 
 ### ui/ — 画面の描画と操作
@@ -47,7 +47,7 @@
 | `src/ui/schoolFinder.js` | 学費くらべ: 年齢別の全校比較リスト・学費推移チャート・選んだ学校の周辺コンド |
 | `src/ui/a11y.js` | Enter/Space で `role="button"` を起動、Escapeで詳細を閉じる。**document に委譲リスナー1つだけ** |
 
-## test/ — 12ファイル・310件
+## test/ — 14ファイル・378件
 
 | ファイル | 何を守るか |
 |---|---|
@@ -63,6 +63,8 @@
 | `test/urlState.test.js` | URLの読み書きと履歴 |
 | `test/visualSystem.test.js` | ページの識別・デザイントークン・情報の二重表示禁止・数値書式 |
 | `test/a11y.test.js` | ランドマーク・全コントロールの名前・状態のaria・フォーカス可視・モバイルブロック・OGP |
+| `test/dining.test.js` | **飲食データの契約**: 50件・id/placeId一意・座標域・価格 lo≤hi・8分類・ミシュランenum |
+| `test/diningLayer.test.js` | 飲食層: 絞り込み5軸・価格帯の判定基準・カード/ヒーロー文字列・並び替え・詳細パネル・読み込み |
 
 ## データファイル
 
@@ -72,6 +74,7 @@
 | `commercial_data.csv` | 商業施設88件・11列 |
 | `schools_data.csv` | 学校33件（地図と一覧の基本情報） |
 | `schools_detail.json` | 学校の詳細。**キーは schools_data.csv の name と完全一致** |
+| `restaurants.json` | 飲食店50件（台帳v9から移植）。住所の列名だけ他層と違い `address`（読み込み時に `addr` へ） |
 
 ## その他
 

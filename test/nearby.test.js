@@ -91,7 +91,9 @@ describe('grouping and ordering', () => {
 
   it('splits each bucket by layer', () => {
     const [walk] = nearby(ORIGIN, records);
-    expect(walk.counts).toEqual({ school: 2, commercial: 1, condo: 1 });
+    // Every layer gets a key, including the ones with nothing in them: the
+    // counts object is built from LAYERS so a new layer cannot go uncounted.
+    expect(walk.counts).toEqual({ school: 2, commercial: 1, dining: 0, condo: 1 });
     expect(walk.total).toBe(4);
   });
 
@@ -107,8 +109,23 @@ describe('grouping and ordering', () => {
 
   it('keeps the layers separate across buckets', () => {
     const [, drive5] = nearby(ORIGIN, records);
-    expect(drive5.counts).toEqual({ school: 1, commercial: 0, condo: 0 });
+    expect(drive5.counts).toEqual({ school: 1, commercial: 0, dining: 0, condo: 0 });
     expect(names(drive5, 'school')).toEqual(['Drive School']);
+  });
+
+  // D3: the engine is layer-agnostic — a restaurant lands in the same buckets
+  // as anything else, and a restaurant as the origin sees the other layers.
+  it('places restaurants in the 飲食 bucket alongside the other layers', () => {
+    const [walk] = nearby(ORIGIN, [...records, at(200, { name: 'Dewakan', status: 'dining' })]);
+    expect(names(walk, 'dining')).toEqual(['Dewakan']);
+    expect(walk.counts.dining).toBe(1);
+    expect(walk.total).toBe(5);
+  });
+
+  it('shows the other layers around a restaurant', () => {
+    const eatery = { name: 'Dewakan', status: 'dining', lat: 3.15, lng: 101.65 };
+    const [walk] = nearby(eatery, records);
+    expect(walk.counts).toEqual({ school: 2, commercial: 1, dining: 0, condo: 1 });
   });
 });
 

@@ -58,7 +58,15 @@ describe('readUrlState', () => {
   });
 
   it('rejects a layer the app has no controls for', () => {
-    expect(readUrlState('?layer=dining').layer).toBe(null);
+    // 'dining' used to be the example here; it is a real layer since D3, so the
+    // assertion moved to a value that still has no controls behind it.
+    expect(readUrlState('?layer=hotels').layer).toBe(null);
+  });
+
+  it('accepts the 飲食 layer, so ?layer=dining is a shareable link', () => {
+    expect(readUrlState('?layer=dining').layer).toBe('dining');
+    expect(readUrlState('?layer=dining&sel=Dewakan&tab=nearby'))
+      .toEqual({ layer: 'dining', sel: 'Dewakan', tab: 'nearby' });
   });
 
   it('rejects an unknown tab', () => {

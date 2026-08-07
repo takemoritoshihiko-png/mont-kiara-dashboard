@@ -3,7 +3,7 @@ import {
   CONDOS, filtered, markers, setMarkers, legendOpen, setLegendOpen,
   selectedCondo, activeLayer,
 } from '../state.js';
-import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS } from '../data/inline.js';
+import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
 import { selectCondo } from './info.js';
 
 // ============================================================
@@ -33,9 +33,12 @@ let clusterGroups = null;
 // when a zoom change crosses the threshold, never on every zoom step.
 let labelMode = null;
 
-/** condo | commercial | school — the visual language each marker follows. */
+/** condo | commercial | school | dining — the visual language each marker follows. */
 function markerType(c) {
-  return c.status === 'school' ? 'school' : c.status === 'commercial' ? 'commercial' : 'condo';
+  return c.status === 'school' ? 'school'
+    : c.status === 'commercial' ? 'commercial'
+    : c.status === 'dining' ? 'dining'
+    : 'condo';
 }
 
 /**
@@ -53,14 +56,20 @@ export const DIM_OPACITY = 0.45;
 
 // B3b (spec 2.9): the type colours live here, once. Markers, cluster bubbles
 // and the legend all read them, so school navy / commercial orange can never
-// drift apart again. They mirror --type-school / --type-commercial in the CSS;
-// Leaflet builds icon HTML outside the document's cascade, so the values have
-// to be literals here rather than var() references.
+// drift apart again. They mirror --type-school / --type-commercial /
+// --type-dining in the CSS; Leaflet builds icon HTML outside the document's
+// cascade, so the values have to be literals here rather than var()
+// references. Change one and change the token next to it.
 export const MARKER_COLORS = {
   condo:      { bg:'#78909c', border:'#546e7a', radius:'50%' },
   commercial: { bg:'#e8710a', border:'#b85806', radius:'4px' },
   school:     { bg:'#1a3d7c', border:'#112a58', radius:'50%' },
+  dining:     { bg:'#c2185b', border:'#8c1145', radius:'50% 50% 50% 0' },
 };
+
+// A michelin-starred restaurant keeps the dining colour but is ringed in gold,
+// so "there is a starred place here" is readable without opening anything.
+export const MICHELIN_STAR_BORDER = '#c9a227';
 
 // Cluster bubbles reuse the marker colours so the type stays readable when
 // several markers collapse into one.
@@ -68,10 +77,11 @@ const CLUSTER_STYLE = {
   condo:      { bg:MARKER_COLORS.condo.bg, radius:'50%' },
   commercial: { bg:MARKER_COLORS.commercial.bg, radius:'8px' },
   school:     { bg:MARKER_COLORS.school.bg, radius:'50%' },
+  dining:     { bg:MARKER_COLORS.dining.bg, radius:'50%' },
 };
 
 /** What a cluster bubble is a cluster OF — read out instead of a bare number. */
-const CLUSTER_LABELS = { condo: '物件', commercial: '商業施設', school: '学校' };
+const CLUSTER_LABELS = { condo: '物件', commercial: '商業施設', school: '学校', dining: '飲食店' };
 
 function clusterIconFactory(type) {
   const st = CLUSTER_STYLE[type];
@@ -101,7 +111,7 @@ function makeClusterGroups() {
     showCoverageOnHover: false,
     iconCreateFunction: clusterIconFactory(type),
   });
-  return { condo: mk('condo'), commercial: mk('commercial'), school: mk('school') };
+  return { condo: mk('condo'), commercial: mk('commercial'), school: mk('school'), dining: mk('dining') };
 }
 
 /** Create the Leaflet map and inject the marker-tooltip style. */
@@ -243,6 +253,30 @@ function mkMarker(c, dim) {
     return bindLabel(m, c.name, c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), csz/2+2, dim);
   }
 
+  if (c.status === 'dining') {
+    // B2 shape language: 物件=circle, 学校=circle+cap, 商業=rounded square,
+    // 飲食=map pin. The teardrop is drawn on an INNER element so the outer div
+    // — the one `.mk-pin-sel>div` scales when the record is selected — keeps a
+    // transform of its own. Sharing one element would make the selection ring
+    // silently un-rotate the pin.
+    const csz = 22;
+    const mb = MICHELIN_BADGES[c.michelin];
+    const border = (c.michelin === '1star' || c.michelin === '2star')
+      ? MICHELIN_STAR_BORDER : MARKER_COLORS.dining.border;
+    const icon = L.divIcon({
+      className: pinClass(c),
+      iconSize: [csz, csz],
+      iconAnchor: [csz/2, csz/2],
+      html: `<div role="button" aria-label="飲食店 ${attrEsc(c.name)}${mb ? '、' + mb : ''}" style="position:relative;width:${csz}px;height:${csz}px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+        <span aria-hidden="true" style="position:absolute;inset:0;border-radius:${MARKER_COLORS.dining.radius};background:${MARKER_COLORS.dining.bg};border:2px solid ${border};box-shadow:0 2px 6px rgba(0,0,0,0.3);transform:rotate(-45deg)"></span>
+        <span aria-hidden="true" style="position:relative;color:#fff;font-size:10px;line-height:1">🍽</span>
+      </div>`
+    });
+    const m = L.marker([c.lat,c.lng],{icon});
+    m.on('click',()=>selectCondo(c.name));
+    return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2, dim);
+  }
+
   if (isCommercial) {
     // Size based on NLA: large(>200K)=28, medium(50K-200K)=22, small(<50K)=16
     const nla = c.sizeMin || 0;
@@ -349,6 +383,8 @@ export function updateLegend(){
   h+=`<div class="map-legend-section"><div class="map-legend-title">Type</div>`;
   h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.school.bg}"></div>学校</div>`;
   h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.commercial.bg};border-radius:4px"></div>商業施設</div>`;
+  h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>飲食店</div>`;
+  h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-color:${MICHELIN_STAR_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>飲食店（星付き）</div>`;
   h+=`<div class="map-legend-item">円の大きさ = 戸数</div>`;
   h+=`</div>`;
   h+=`</div>`;

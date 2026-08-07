@@ -1,17 +1,17 @@
 // Entry point: boots the map, exposes the inline-handler globals and loads data.
 import {
-  CONDOS, COMMERCIALS, SCHOOLS,
-  setCondos, setCommercials, setSchools, setSchoolsDetail, setFiltered,
+  CONDOS, COMMERCIALS, SCHOOLS, RESTAURANTS,
+  setCondos, setCommercials, setSchools, setSchoolsDetail, setRestaurants, setFiltered,
 } from './state.js';
 import {
-  CONDOS_CSV_URL, COMMERCIAL_CSV_URL, SCHOOLS_CSV_URL, SCHOOLS_DETAIL_URL,
-  fetchText, parseCondosCsv, parseCommercialCsv, parseSchoolsCsv,
+  CONDOS_CSV_URL, COMMERCIAL_CSV_URL, SCHOOLS_CSV_URL, SCHOOLS_DETAIL_URL, RESTAURANTS_URL,
+  fetchText, parseCondosCsv, parseCommercialCsv, parseSchoolsCsv, parseRestaurants,
 } from './data/load.js';
 import { calcLuxury } from './domain/luxury.js';
 import { initMap, jumpToArea, toggleLegend } from './ui/map.js';
 import {
-  applyFilters, setSort, setLayer, syncLayerUI, toggleMore, toggleAward, togglePanel,
-  clearSearch, removeFilter, clearAllFilters, showLoading,
+  applyFilters, setSort, setLayer, syncLayerUI, toggleMore, toggleAward, toggleKidOk,
+  togglePanel, clearSearch, removeFilter, clearAllFilters, showLoading,
 } from './ui/list.js';
 import { selectCondo, closeInfo, setInfoTab, selectNearby, applyUrlState } from './ui/info.js';
 import { initA11y } from './ui/a11y.js';
@@ -36,6 +36,7 @@ window.setSort = setSort;
 window.setLayer = setLayer;
 window.toggleMore = toggleMore;
 window.toggleAward = toggleAward;
+window.toggleKidOk = toggleKidOk;
 window.clearSearch = clearSearch;
 window.removeFilter = removeFilter;
 window.clearAllFilters = clearAllFilters;
@@ -103,9 +104,17 @@ window.addEventListener('popstate', () => {
       setSchoolsDetail(JSON.parse(await fetchText(SCHOOLS_DETAIL_URL)));
     } catch(e) { setSchoolsDetail({}); loadErrors.push('学校詳細 (schools_detail.json): ' + e.message); }
 
+    // Load restaurants (dining layer, D3)
+    try {
+      setRestaurants(parseRestaurants(await fetchText(RESTAURANTS_URL)));
+    } catch(e) { setRestaurants([]); loadErrors.push('飲食店データ (restaurants.json): ' + e.message); }
+
     // Merge for display
-    setCondos([...CONDOS, ...COMMERCIALS, ...SCHOOLS]);
+    setCondos([...CONDOS, ...COMMERCIALS, ...SCHOOLS, ...RESTAURANTS]);
     setFiltered([...CONDOS]);
+    // The 飲食 layer's エリア dropdown is built from the data that just landed,
+    // so the controls are re-synced once before the first render.
+    syncLayerUI();
     applyFilters();
 
     // A shared link only becomes reproducible once the data it names exists.

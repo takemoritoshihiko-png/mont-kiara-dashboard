@@ -11,6 +11,7 @@ export const CONDOS_CSV_URL = 'condos_data.csv';
 export const COMMERCIAL_CSV_URL = 'commercial_data.csv';
 export const SCHOOLS_CSV_URL = 'schools_data.csv';
 export const SCHOOLS_DETAIL_URL = 'schools_detail.json';
+export const RESTAURANTS_URL = 'restaurants.json';
 
 /**
  * Fetch a data file as text. Throws on HTTP errors and on HTML error pages
@@ -84,6 +85,71 @@ export function parseCommercialCsv(text) {
       anchorTenants: obj.anchor_tenants || ''
     };
   }).filter(c => c.name && c.lat > 1);
+}
+
+/**
+ * restaurants.json (the dining ledger, D2) → the app's record shape.
+ *
+ * The common columns are filled exactly the way the other optional layers fill
+ * them, so a restaurant can travel through the same list, map, sort and 周辺
+ * code as a condo. Everything a restaurant has and the others do not (the
+ * michelin tier, the two price ranges, the reputation figures, the vox
+ * excerpts) is kept alongside under its own name.
+ *
+ * `status: 'dining'` is the discriminator recordLayer() reads.
+ */
+export function parseRestaurants(jsonText) {
+  const rows = JSON.parse(jsonText);
+  if (!Array.isArray(rows)) throw new Error('restaurants.json is not an array');
+  return rows.map(r => {
+    return {
+      // -- common shape --
+      name: r.name || '',
+      // The ledger calls it `address`; every other layer calls it `addr`, and
+      // so do the card, the detail header and the search haystack.
+      addr: r.address || '',
+      year: 0,
+      units: 0,
+      sizeMin: 0, sizeMax: 0, rentMin: 0, rentMax: 0, salePsfMin: 0, salePsfMax: 0,
+      sizeMid: 0, salePsfMid: 0, rentMid: 0, yield: 0, rentPsfMid: 0,
+      estPriceMax: 0, luxScore: 0, luxTier: 'D', density: 0, buildingAge: 0,
+      blocks: 1, floors: 0, tenure: 'FH', brandScore: 0,
+      lat: parseFloat(r.lat),
+      lng: parseFloat(r.lng),
+      developer: '',
+      ipropertyUrl: '',
+      homepageUrl: '',
+      status: 'dining',
+      nameJa: r.nameJa || '',
+      brandScoreCSV: 0,
+      anchorTenants: '',
+      // -- dining-only --
+      id: r.id || '',
+      placeId: r.placeId || '',
+      cat: r.cat || '',
+      catGroup: r.catGroup || '',
+      michelin: r.michelin || 'none',
+      tier: Number(r.tier) || 0,
+      rating: Number(r.rating) || 0,
+      reviewCount: Number(r.reviewCount) || 0,
+      kidOk: Number(r.kidOk) || 0,
+      natCode: Number(r.natCode) || 0,
+      venue: r.venue || '',
+      venueType: r.venueType || '',
+      area: r.area || '',
+      priceLunch: Array.isArray(r.priceLunch) ? r.priceLunch : [0, 0],
+      priceDinner: Array.isArray(r.priceDinner) ? r.priceDinner : [0, 0],
+      priceConfidence: r.priceConfidence || '',
+      priceNote: r.priceNote || '',
+      editorNote: r.editorNote || '',
+      vox: r.vox || { pros: '', cons: '' },
+    };
+  // A record with no coordinates cannot be placed on the map. D2 allows
+  // `lat: null` with geoPrecision 'pending' for a店 that could not be
+  // geocoded; today there are none. If any ever appear they are dropped HERE
+  // and only here — see docs/superpowers/deferred-backlog.md, which carries the
+  // "list them instead of dropping them" item.
+  }).filter(c => c.name && Number.isFinite(c.lat) && c.lat > 1);
 }
 
 export function parseSchoolsCsv(text) {

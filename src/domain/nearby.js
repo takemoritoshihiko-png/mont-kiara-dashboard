@@ -33,15 +33,17 @@ export function formatDistance(m) {
  * @param {object[]} records  every record on the map (all three layers)
  * @param {{buckets?: number[]}} [opts]  radii in metres, ascending
  * @returns {{maxM:number,total:number,counts:object,byLayer:object}[]}
- *   one entry per bucket, in the same order as `buckets`. `byLayer[layer]` is
- *   `{record, distanceM}[]` sorted nearest-first.
+ *   one entry per bucket, in the same order as `buckets`. `counts` and
+ *   `byLayer` are keyed by every layer in LAYERS — built from that constant
+ *   rather than written out, so a new layer (dining) is counted the day it is
+ *   added instead of falling into an undefined bucket.
  */
 export function nearby(origin, records, { buckets = NEARBY_BUCKETS } = {}) {
   const out = buckets.map(maxM => ({
     maxM,
     total: 0,
-    counts: { condo: 0, school: 0, commercial: 0 },
-    byLayer: { condo: [], school: [], commercial: [] },
+    counts: Object.fromEntries(LAYERS.map(k => [k, 0])),
+    byLayer: Object.fromEntries(LAYERS.map(k => [k, []])),
   }));
   if (!origin || !Number.isFinite(origin.lat) || !Number.isFinite(origin.lng)) return out;
 

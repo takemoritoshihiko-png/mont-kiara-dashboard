@@ -12,12 +12,12 @@
      picture of something that is not this app. Platforms fall back to their
      own no-image card, which is honest.
      ============================================================ -->
-<meta name="description" content="クアラルンプールとペナンのコンドミニアム・インターナショナルスクール・商業施設を1枚の地図で比べられる、日本人向けの住まい探しダッシュボードです。">
+<meta name="description" content="クアラルンプールとペナンのコンドミニアム・インターナショナルスクール・商業施設・飲食店を1枚の地図で比べられる、日本人向けの住まい探しダッシュボードです。">
 <meta name="theme-color" content="#f5f5f7">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KL・ペナン 住まいマップ">
 <meta property="og:title" content="KL・ペナン 住まいマップ | KL &amp; Penang Living Map">
-<meta property="og:description" content="クアラルンプールとペナンのコンドミニアム・インターナショナルスクール・商業施設を1枚の地図で比べられる、日本人向けの住まい探しダッシュボードです。">
+<meta property="og:description" content="クアラルンプールとペナンのコンドミニアム・インターナショナルスクール・商業施設・飲食店を1枚の地図で比べられる、日本人向けの住まい探しダッシュボードです。">
 <meta property="og:url" content="https://takemoritoshihiko-png.github.io/mont-kiara-dashboard/">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary">
@@ -66,6 +66,9 @@
   --type-condo:var(--accent);
   --type-school:#1a3d7c;
   --type-commercial:#e8710a;
+  /* 飲食 — mirrored as MARKER_COLORS.dining in src/ui/map.js, because Leaflet
+     builds marker HTML outside this stylesheet's cascade. Change both. */
+  --type-dining:#c2185b;
 
   /* Spacing — 8px grid */
   --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
@@ -174,11 +177,17 @@ button,input,select{font-family:inherit}
 /* School cards give the name the whole line and drop the chip underneath, so a
    long school name is not cut to 55% of the card. */
 .card-chips{margin:2px 0 var(--s1)}
-.card-chips .card-chip{display:inline-block;margin-left:0;max-width:100%}
+.card-chips .card-chip{display:inline-block;margin-left:0;margin-right:var(--s1);max-width:100%}
 .chip-school{background:var(--accent-soft);color:var(--type-school)}
+/* 飲食: the michelin standing is the stronger signal, so it is the filled chip
+   and the category is the quiet outline next to it. */
+.chip-michelin{background:var(--type-dining);color:var(--surface)}
+.chip-dining{background:var(--bg);color:var(--text-2);border:1px solid var(--hairline)}
 .type-badge{display:inline-block;width:18px;height:18px;border-radius:50%;text-align:center;line-height:18px;font-size:var(--fs-label);flex-shrink:0}
 .type-school{background:var(--type-school)}
 .type-commercial{background:var(--type-commercial);border-radius:5px}
+/* The card badge repeats the map pin's teardrop, so the two read as one thing. */
+.type-dining{background:var(--type-dining);border-radius:50% 50% 50% 2px}
 .tier-badge{display:inline-block;width:18px;height:18px;border-radius:50%;text-align:center;line-height:18px;font-size:var(--fs-label);font-weight:800;color:var(--surface);flex-shrink:0}
 
 /* ---- Loading skeleton (spec 2.10 / audit E3) ---- */
@@ -376,10 +385,18 @@ button,input,select{font-family:inherit}
   .filter-row{gap:var(--s1);margin-bottom:var(--s1)}
   .sort-row{gap:var(--s1);margin-top:var(--s1)}
   .layer-seg{margin-bottom:var(--s2)}
+  /* Four segments share the row since the 飲食 layer landed, so they give up
+     their side padding before they give up their label. */
+  .seg-btn{padding:6px 2px;font-size:var(--fs-xs)}
 
   /* ---- Touch targets ---- */
   .seg-btn{min-height:40px}
   .filter-group select,.filter-group input,.sort-select,.sf-age-row select{min-height:40px}
+  /* 飲食 (D3): its four dropdowns and the 子連れ toggle. The generic rules above
+     already reach them; they are named so this block visibly covers the layer. */
+  #fCatGroup,#fMichelin,#fPriceBand,#fDiningArea,#toggleKidOk{min-height:40px}
+  /* Two chips (michelin + category) now share the row under a dining name. */
+  .card-chips .card-chip{max-width:calc(50% - var(--s1))}
   .disclosure{min-height:40px;padding:var(--s2) 0}
   .chip-toggle,.sort-btn,.sf-back,.fchip-clear,.btn-clear-all{min-height:40px}
   .search-clear{min-width:40px;min-height:40px;display:flex;align-items:center;justify-content:center;padding:0}
@@ -424,7 +441,7 @@ button,input,select{font-family:inherit}
   <h1>KL・ペナン 住まいマップ<span class="en">KL &amp; Penang Living Map</span></h1>
 </header>
 <main class="main" style="position:relative">
-  <div id="map" role="application" aria-label="地図。物件・学校・商業施設のマーカーを表示します。キーボードでは右の一覧から選んでください。"></div>
+  <div id="map" role="application" aria-label="地図。物件・学校・商業施設・飲食店のマーカーを表示します。キーボードでは右の一覧から選んでください。"></div>
   <div class="area-jump" id="areaJump" role="group" aria-label="エリアへ移動">
     <span class="aj-label">🏙️KL</span>
     <button data-area="mont-kiara" onclick="jumpToArea('mont-kiara')" title="モントキアラ">Mont Kiara</button>
@@ -465,6 +482,7 @@ button,input,select{font-family:inherit}
         <button type="button" class="seg-btn active" data-layer="condo" role="tab" aria-selected="true" onclick="setLayer('condo')">🏠 物件</button>
         <button type="button" class="seg-btn" data-layer="school" role="tab" aria-selected="false" onclick="setLayer('school')">🎓 学校</button>
         <button type="button" class="seg-btn" data-layer="commercial" role="tab" aria-selected="false" onclick="setLayer('commercial')">🛒 商業</button>
+        <button type="button" class="seg-btn" data-layer="dining" role="tab" aria-selected="false" onclick="setLayer('dining')">🍽 飲食</button>
       </div>
 
       <div class="filter-row">
@@ -487,6 +505,13 @@ button,input,select{font-family:inherit}
       </div>
       <div class="filter-row" data-layer-only="commercial" style="display:none">
         <div class="filter-group"><label for="fNla">規模 (NLA)</label><select id="fNla" onchange="applyFilters()"><option value="">すべて</option><option value="1-150000">&lt;150K sf</option><option value="150000-500000">150K-500K sf</option><option value="500000-99999999">&gt;500K sf</option></select></div>
+      </div>
+      <!-- 飲食: カテゴリ options come from CAT_GROUPS and ミシュラン from
+           MICHELIN_FILTERS (src/domain/filter.js), so a dropdown can never
+           offer a value the filter does not understand. -->
+      <div class="filter-row" data-layer-only="dining" style="display:none">
+        <div class="filter-group"><label for="fCatGroup">カテゴリ</label><select id="fCatGroup" onchange="applyFilters()"><option value="">すべて</option></select></div>
+        <div class="filter-group"><label for="fMichelin">ミシュラン</label><select id="fMichelin" onchange="applyFilters()"><option value="">すべて</option></select></div>
       </div>
 
       <button type="button" class="disclosure" id="moreToggle" onclick="toggleMore()" aria-controls="moreFilters" aria-expanded="false">絞り込み ⌄</button>
@@ -511,7 +536,21 @@ button,input,select{font-family:inherit}
           <div class="filter-group"><label for="fOpenYear">開業年</label><select id="fOpenYear" onchange="applyFilters()"><option value="">すべて</option><option value="0-2000">〜2000</option><option value="2001-2010">2001-2010</option><option value="2011-2020">2011-2020</option><option value="2021-2100">2021〜</option></select></div>
           <div class="filter-group"><label for="fAnchor">アンカー検索</label><input type="text" id="fAnchor" placeholder="例: Village Grocer" oninput="applyFilters()"></div>
         </div>
-        <div class="filter-row">
+        <!-- 飲食: the price band is judged on the TOP of the dinner range (the
+             lunch range stands in when dinner is not served) — see
+             diningPriceCeiling() in src/domain/filter.js. The エリア options are
+             built from restaurants.json, NOT from the fArea list below: the
+             condo areas end in a Mont Kiara catch-all that would misfile every
+             city-centre restaurant. -->
+        <div class="filter-row" data-layer-only="dining" style="display:none">
+          <div class="filter-group"><label for="fPriceBand">価格帯 (1人・夜基準)</label><select id="fPriceBand" onchange="applyFilters()"><option value="">すべて</option><option value="0-50">〜RM50</option><option value="50-150">RM50-150</option><option value="150-400">RM150-400</option><option value="400-">RM400〜</option></select></div>
+          <div class="filter-group"><label for="fDiningArea">エリア</label><select id="fDiningArea" onchange="applyFilters()"><option value="">すべて</option></select></div>
+        </div>
+        <div class="filter-row" data-layer-only="dining" style="display:none">
+          <div class="filter-group"><span class="fg-label">子連れ</span><button type="button" class="chip-toggle" id="toggleKidOk" aria-pressed="false" onclick="toggleKidOk()" title="子ども連れで行きやすい店だけに絞る">👶 子連れ◎のみ</button></div>
+        </div>
+        <!-- Every layer except 飲食, which filters on its own curated areas. -->
+        <div class="filter-row" data-layer-only="condo,school,commercial">
           <div class="filter-group"><label for="fArea">エリア</label><select id="fArea" onchange="applyFilters()"><option value="">すべて</option><option value="mont-kiara">Mont Kiara</option><option value="desa-parkcity">Desa ParkCity</option><option value="bangsar">Bangsar</option><option value="klgcc">KLGCC Resort</option><option value="klcc">KLCC</option><option value="ampang">Ampang/U-Thant</option><option value="damansara">Damansara Heights</option><option value="gurney">Gurney / Pulau Tikus (Penang)</option><option value="tanjung">Tanjung Tokong / Bungah (Penang)</option><option value="ferringhi">Batu Ferringhi (Penang)</option><option value="bayan">Bayan Lepas (Penang)</option><option value="george-town">George Town (Penang)</option><option value="gelugor">Gelugor / Jelutong (Penang)</option></select></div>
         </div>
       </div>
