@@ -73,7 +73,10 @@ export function matchesArea(c, areaFilter){
   const isDPC=!isPenang&&a.includes('desa parkcity');
   const isBangsar=!isPenang&&a.includes('bangsar');
   const isKLCC=!isPenang&&(a.includes('klcc')||a.includes('bukit bintang')||a.includes('jalan conlay')||a.includes('jalan imbi')||a.includes('jalan pinang')||a.includes('kl sentral')||n.includes('klcc'));
-  const isAmpang=!isPenang&&(a.includes('u-thant')||a.includes('ampang hilir')||a.includes('embassy row')||a.includes('kia peng')||a.includes('persiaran stonor')||a.includes('lorong kuda'));
+  // KLCC wins where the two could overlap: Kia Peng / Stonor towers that carry
+  // "KLCC" in the address or name are KLCC, not Ampang — a record must belong
+  // to exactly one KL area, same as the Penang rule above.
+  const isAmpang=!isPenang&&!isKLCC&&(a.includes('u-thant')||a.includes('ampang hilir')||a.includes('embassy row')||a.includes('kia peng')||a.includes('persiaran stonor')||a.includes('lorong kuda'));
   const isDH=!isPenang&&(a.includes('damansara heights')||a.includes('jalan batai')||a.includes('changkat semantan'));
   // Mont Kiara is the KL catch-all: anything on the KL side that is not one of
   // the other named areas. Penang records are never Mont Kiara.
@@ -205,8 +208,10 @@ function matchesCondo(c, f){
       if(TIER_ORDER[c.luxTier] < TIER_ORDER[minTier]) return false;
     } else if(c.luxTier !== f.tierVal) return false;
   }
-  if(f.sp&&(c.salePsfMid<f.sp.min||c.salePsfMid>f.sp.max))return false;
-  if(f.rn&&(c.rentMid<f.rn.min||c.rentMid>f.rn.max))return false;
+  // A null mid means the price is not published (upcoming towers): an unknown
+  // price matches no price band — it must never pass as "mid-market".
+  if(f.sp&&(c.salePsfMid==null||c.salePsfMid<f.sp.min||c.salePsfMid>f.sp.max))return false;
+  if(f.rn&&(c.rentMid==null||c.rentMid<f.rn.min||c.rentMid>f.rn.max))return false;
   if(f.yr&&(c.year<f.yr.min||c.year>f.yr.max))return false;
   if(f.sz&&(c.sizeMid<f.sz.min||c.sizeMid>f.sz.max))return false;
   // Age filter (skip for upcoming — an unbuilt project has no age)

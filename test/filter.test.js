@@ -188,6 +188,24 @@ describe('matchesArea', () => {
 // When one fires, add the missing neighbourhood keyword to matchesArea — do
 // not relax the assertion.
 // ============================================================
+// The same exactly-one rule on the KL side. Mont Kiara is the catch-all, so a
+// KL condo always matches at least one area; the failure mode here is TWO
+// (found live: four Kia Peng / Stonor towers sat in both klcc and ampang).
+describe('the KL areas claim each KL condo exactly once', () => {
+  const KL_AREAS = ['mont-kiara', 'parkcity', 'bangsar', 'klgcc', 'klcc', 'ampang', 'damansara'];
+  const condos = parseCsv(readFileSync(new URL('../condos_data.csv', import.meta.url), 'utf8'));
+  const kl = condos.filter(c => Number(c.lat) > 1 && Number(c.lat) < 4);
+  const areasOf = (c) => KL_AREAS.filter(a => matchesArea({ ...c, lat: Number(c.lat) }, a));
+
+  it('puts every KL condo in exactly one area', () => {
+    const bad = kl
+      .map(c => ({ name: c.name, areas: areasOf(c) }))
+      .filter(r => r.areas.length !== 1)
+      .map(r => `${r.name} -> [${r.areas.join(', ')}]`);
+    expect(bad).toEqual([]);
+  });
+});
+
 describe('the Penang areas cover the Penang condos', () => {
   const PENANG_AREAS = ['gurney', 'tanjung', 'ferringhi', 'bayan', 'george-town', 'gelugor'];
   const condos = parseCsv(readFileSync(new URL('../condos_data.csv', import.meta.url), 'utf8'));
@@ -232,6 +250,14 @@ describe('matchesFilters: condo numeric ranges', () => {
     expect(matchesFilters(rec({ salePsfMid: 600 }), f({ sp }))).toBe(true);
     expect(matchesFilters(rec({ salePsfMid: 700 }), f({ sp }))).toBe(true);
     expect(matchesFilters(rec({ salePsfMid: 701 }), f({ sp }))).toBe(false);
+  });
+
+  // An unpublished price (null mid — mostly upcoming towers) must match NO
+  // price band. Before this, load.js invented rent 2000-5000 / PSF 500-700 for
+  // blank cells and 13 priceless records answered to 「RM3,000–4,000」.
+  it('never matches a price band when the price is not published', () => {
+    expect(matchesFilters(rec({ rentMid: null }), f({ rn: parseR('3000-5000') }))).toBe(false);
+    expect(matchesFilters(rec({ salePsfMid: null }), f({ sp: parseR('500-700') }))).toBe(false);
   });
 
   it('filters on rent, year and size the same way', () => {

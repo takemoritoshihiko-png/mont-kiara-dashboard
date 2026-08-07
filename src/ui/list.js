@@ -559,11 +559,13 @@ export function updateSummary(){
 
   let l3 = 'Med.PSF', l4 = 'Med.Rent', v3 = TILE_EMPTY, v4 = TILE_EMPTY;
   if(activeLayer === 'condo'){
-    const ms = median(filtered.map(c => c.salePsfMid || 0));
+    // Median over PUBLISHED prices only — a null (unpublished) mid in the
+    // population would drag the median toward zero for no real reason.
+    const ms = median(filtered.map(c => c.salePsfMid).filter(v => v > 0));
     // MED.RENT is the median monthly rent in ringgit. It used to show the
     // median rent *per square foot* (「RM 2.75」) under a label that promised
     // the rent — a number nobody could interpret (audit C5).
-    const mr = median(filtered.map(c => c.rentMid || 0));
+    const mr = median(filtered.map(c => c.rentMid).filter(v => v > 0));
     v3 = ms ? 'RM ' + num(Math.round(ms)) : TILE_EMPTY;
     v4 = mr ? 'RM ' + num(Math.round(mr)) : TILE_EMPTY;
   } else if(activeLayer === 'school'){

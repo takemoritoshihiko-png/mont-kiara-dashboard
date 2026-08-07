@@ -19,14 +19,18 @@ export function calcLuxury(condos) {
   condos.forEach(c => {
     c.sizeMid = (c.sizeMin + c.sizeMax) / 2;
     c.sizeComposite = (c.sizeMin * 0.6) + (c.sizeMid * 0.4);
-    c.salePsfMid = (c.salePsfMin + c.salePsfMax) / 2;
-    c.rentMid = (c.rentMin + c.rentMax) / 2;
-    c.yield = c.salePsfMid * c.sizeMid > 0 ? (c.rentMid * 12) / (c.salePsfMid * c.sizeMid) * 100 : 0;
-    c.estPriceMax = c.salePsfMax * c.sizeMax;
+    // Unpublished rent/PSF arrives as null (see load.js) and every derived
+    // figure stays null with it — a mid computed from an invented default
+    // would leak into filters, sorts and the luxury score.
+    c.salePsfMid = c.salePsfMin != null && c.salePsfMax != null ? (c.salePsfMin + c.salePsfMax) / 2 : null;
+    c.rentMid = c.rentMin != null && c.rentMax != null ? (c.rentMin + c.rentMax) / 2 : null;
+    c.yield = c.rentMid != null && c.salePsfMid > 0 && c.sizeMid > 0
+      ? (c.rentMid * 12) / (c.salePsfMid * c.sizeMid) * 100 : 0;
+    c.estPriceMax = c.salePsfMax != null ? c.salePsfMax * c.sizeMax : null;
     c.devInfo = DEVELOPERS[c.developer] || DEVELOPERS['Other'];
     c.brandScore = c.brandScoreCSV > 0 ? c.brandScoreCSV : c.devInfo.score;
 
-    c.rentPsfMid = c.sizeMid > 0 ? c.rentMid / c.sizeMid : 0;
+    c.rentPsfMid = c.rentMid != null && c.sizeMid > 0 ? c.rentMid / c.sizeMid : null;
     c.density = (c.blocks && c.blocks > 0) ? c.units / c.blocks : c.units;
     c.buildingAge = currentYear - c.year;
     c.premiumScore = parseInt(c.premiumScoreCSV) || 0;
@@ -51,9 +55,11 @@ export function calcLuxury(condos) {
   condos.forEach((c, i) => {
     const nSzAvg  = normFixed(c.sizeComposite, REF.sizeComp.min, REF.sizeComp.max);
     const nSzMax  = normFixed(c.sizeMax, REF.sizeMax.min, REF.sizeMax.max);
-    const nPsf    = normFixed(c.salePsfMid, REF.psfMid.min, REF.psfMid.max);
-    const nRentPsf= normFixed(c.rentPsfMid, REF.rentPsf.min, REF.rentPsf.max);
-    const nPrice  = normFixed(c.estPriceMax, REF.priceMax.min, REF.priceMax.max);
+    // Unpublished price components score 0 — the record earns points only for
+    // what is actually known about it, not for a market-average stand-in.
+    const nPsf    = c.salePsfMid  != null ? normFixed(c.salePsfMid, REF.psfMid.min, REF.psfMid.max) : 0;
+    const nRentPsf= c.rentPsfMid  != null ? normFixed(c.rentPsfMid, REF.rentPsf.min, REF.rentPsf.max) : 0;
+    const nPrice  = c.estPriceMax != null ? normFixed(c.estPriceMax, REF.priceMax.min, REF.priceMax.max) : 0;
     const nExcl   = normFixed(c.units, REF.units.min, REF.units.max, true);
     const nDensity= normFixed(c.density, REF.density.min, REF.density.max, true);
     const nAge    = calcNAge(c.buildingAge);

@@ -26,6 +26,12 @@ export async function fetchText(url) {
   return text;
 }
 
+/** Positive integer, or null when the cell is blank / 0 / unparsable. */
+const numOrNull = (v) => {
+  const n = parseInt(v);
+  return Number.isFinite(n) && n > 0 ? n : null;
+};
+
 export function parseCondosCsv(text) {
   return parseCsv(text).map(obj => {
     return {
@@ -35,10 +41,14 @@ export function parseCondosCsv(text) {
       units: parseInt(obj.units) || 100,
       sizeMin: parseInt(obj.sizeMin) || 500,
       sizeMax: parseInt(obj.sizeMax) || 1500,
-      rentMin: parseInt(obj.rentMin) || 2000,
-      rentMax: parseInt(obj.rentMax) || 5000,
-      salePsfMin: parseInt(obj.salePsfMin) || 500,
-      salePsfMax: parseInt(obj.salePsfMax) || 700,
+      // A blank (or 0) rent/PSF cell means the price is NOT PUBLISHED — mostly
+      // upcoming towers. It must stay null: inventing a default here would let
+      // a priceless record match price filters, sort as mid-market and earn
+      // luxury-score points for a number nobody quoted.
+      rentMin: numOrNull(obj.rentMin),
+      rentMax: numOrNull(obj.rentMax),
+      salePsfMin: numOrNull(obj.salePsfMin),
+      salePsfMax: numOrNull(obj.salePsfMax),
       lat: parseFloat(obj.lat) || 3.170,
       lng: parseFloat(obj.lng) || 101.652,
       developer: obj.developer || 'Other',
