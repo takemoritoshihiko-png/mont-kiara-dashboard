@@ -13,6 +13,7 @@ const COORD_MD = path.join(ROOT, 'docs/superpowers/specs/2026-08-07-dining-d1-co
 const OUT = path.join(ROOT, 'restaurants.json');
 
 // 裁定1（2026-08-07確定）: 33種の cat → 8大分類。未知の cat が来たら失敗させる（無言で落とさない）
+// 裁定E-1（2026-08-07夜）: 9分類目「カフェ・デザート」を新設（拡充分のカフェ/デザート店が所属）
 const CAT_GROUP = {
   'モダン・マレーシアン': 'マレーシア料理', 'ニョニャ': 'マレーシア料理', 'ニョニャ・マレー': 'マレーシア料理',
   'マレー・ジャワ': 'マレーシア料理', 'マレー': 'マレーシア料理', 'ナシレマ': 'マレーシア料理',
@@ -25,49 +26,78 @@ const CAT_GROUP = {
   '麺': '麺・肉骨茶', '肉骨茶': '麺・肉骨茶', '魚頭麺': '麺・肉骨茶',
   '日本料理': '日本・その他アジア', 'タイ': '日本・その他アジア', 'ベトナム': '日本・その他アジア', '中東': '日本・その他アジア',
   '屋台街': '屋台街',
+  // 拡充分（2026-08-07 D6）で使う cat
+  '和牛焼肉': '日本・その他アジア', 'すき焼き・和牛': '日本・その他アジア', '居酒屋': '日本・その他アジア',
+  'ラーメン': '日本・その他アジア', '四川火鍋': '中華', 'ステーキ': '洋食・グリル',
+  'モダン・インディアン': 'インド・スリランカ', 'マレー・シーフード': 'マレーシア料理',
+  'カフェ': 'カフェ・デザート', 'デザート': 'カフェ・デザート',
 };
 
-const html = fs.readFileSync(V9_PATH, 'utf8');
+// ベース50件のソースは2系統:
+//  (a) v9原本HTMLがあれば D/VOX を抽出して変換（初回移植の経路）
+//  (b) 無ければ、コミット済み restaurants.json の R0001〜R0050 をそのまま使う。
+//     2026-08-07夜にデスクトップ整理で v9原本が移動/消失したが、全項目は既に
+//     restaurants.json へ無損失で移植済みのため、以後は (b) が通常経路。
+let out;
+if (fs.existsSync(V9_PATH)) {
+  const html = fs.readFileSync(V9_PATH, 'utf8');
+  const dSrc = html.slice(html.indexOf('const D=['), html.indexOf('];', html.indexOf('const D=[')) + 2);
+  const voxSrc = html.slice(html.indexOf('const VOX={'), html.indexOf('\n};', html.indexOf('const VOX={')) + 3);
+  const sandbox = {};
+  vm.createContext(sandbox);
+  vm.runInContext(dSrc.replace('const D=', 'this.D=') , sandbox);
+  vm.runInContext(voxSrc.replace('const VOX=', 'this.VOX='), sandbox);
+  const D = sandbox.D, VOX = sandbox.VOX;
+  if (!Array.isArray(D) || D.length !== 50) throw new Error(`D length ${D && D.length} != 50`);
 
-// D と VOX を sandbox で評価（自分の台帳ファイル＝信頼できるソース）
-const dSrc = html.slice(html.indexOf('const D=['), html.indexOf('];', html.indexOf('const D=[')) + 2);
-const voxSrc = html.slice(html.indexOf('const VOX={'), html.indexOf('\n};', html.indexOf('const VOX={')) + 3);
-const sandbox = {};
-vm.createContext(sandbox);
-vm.runInContext(dSrc.replace('const D=', 'this.D=') , sandbox);
-vm.runInContext(voxSrc.replace('const VOX=', 'this.VOX='), sandbox);
-const D = sandbox.D, VOX = sandbox.VOX;
-if (!Array.isArray(D) || D.length !== 50) throw new Error(`D length ${D && D.length} != 50`);
+  // D1座標表の ✅ 行を読む
+  const coordRows = fs.readFileSync(COORD_MD, 'utf8').split('\n')
+    .filter(l => l.startsWith('|') && !l.startsWith('|---') && !l.startsWith('| Name'))
+    .map(l => l.split('|').map(c => c.trim()))
+    .map(c => ({ name: c[1], lat: c[3], lng: c[4], precision: c[5], verdict: c[6] }));
+  // v9側の「K KL（圭）」のような括弧付き表記を正規化して突合
+  const norm = s => s.replace(/（[^）]*）/g, '').trim();
+  const coordByName = new Map(coordRows.map(r => [norm(r.name), r]));
 
-// D1座標表の ✅ 行を読む
-const coordRows = fs.readFileSync(COORD_MD, 'utf8').split('\n')
-  .filter(l => l.startsWith('|') && !l.startsWith('|---') && !l.startsWith('| Name'))
-  .map(l => l.split('|').map(c => c.trim()))
-  .map(c => ({ name: c[1], lat: c[3], lng: c[4], precision: c[5], verdict: c[6] }));
-// v9側の「K KL（圭）」のような括弧付き表記を正規化して突合
-const norm = s => s.replace(/（[^）]*）/g, '').trim();
-const coordByName = new Map(coordRows.map(r => [norm(r.name), r]));
+  out = D.map((d, idx) => {
+    const group = CAT_GROUP[d.cat];
+    if (!group) throw new Error(`unknown cat "${d.cat}" (${d.n})`);
+    const co = coordByName.get(norm(d.n));
+    if (!co) throw new Error(`no coordinate row for "${d.n}"`);
+    const ok = co.verdict.startsWith('✅');
+    return {
+      id: 'R' + String(idx + 1).padStart(4, '0'),
+      placeId: d.i, name: d.n, nameJa: d.j,
+      cat: d.cat, catGroup: group,
+      michelin: d.m, tier: d.t, extraFlags: d.ex,
+      rating: d.r, reviewCount: d.c, natCode: d.nat, kidOk: d.kid,
+      venue: d.v, venueType: d.vt, area: d.ar, address: d.ad,
+      lat: ok ? Number(co.lat) : null, lng: ok ? Number(co.lng) : null,
+      geoPrecision: ok ? co.precision : 'pending',
+      priceLunch: [d.lL, d.lH], priceDinner: [d.dL, d.dH],
+      priceConfidence: d.pc, priceNote: d.pn, editorNote: d.note,
+      vox: VOX[d.i] ? { pros: VOX[d.i].p || '', cons: VOX[d.i].c || '' } : { pros: '', cons: '' },
+    };
+  });
+} else {
+  out = JSON.parse(fs.readFileSync(OUT, 'utf8')).slice(0, 50);
+  if (out.length !== 50 || out[0].id !== 'R0001') throw new Error('restaurants.json base is not the expected 50 v9 records');
+  console.log('v9原本なし → 既存 restaurants.json の R0001-R0050 をベースに再生成');
+}
 
-const out = D.map((d, idx) => {
-  const group = CAT_GROUP[d.cat];
-  if (!group) throw new Error(`unknown cat "${d.cat}" (${d.n})`);
-  const co = coordByName.get(norm(d.n));
-  if (!co) throw new Error(`no coordinate row for "${d.n}"`);
-  const ok = co.verdict.startsWith('✅');
-  return {
-    id: 'R' + String(idx + 1).padStart(4, '0'),
-    placeId: d.i, name: d.n, nameJa: d.j,
-    cat: d.cat, catGroup: group,
-    michelin: d.m, tier: d.t, extraFlags: d.ex,
-    rating: d.r, reviewCount: d.c, natCode: d.nat, kidOk: d.kid,
-    venue: d.v, venueType: d.vt, area: d.ar, address: d.ad,
-    lat: ok ? Number(co.lat) : null, lng: ok ? Number(co.lng) : null,
-    geoPrecision: ok ? co.precision : 'pending',
-    priceLunch: [d.lL, d.lH], priceDinner: [d.dL, d.dH],
-    priceConfidence: d.pc, priceNote: d.pn, editorNote: d.note,
-    vox: VOX[d.i] ? { pros: VOX[d.i].p || '', cons: VOX[d.i].c || '' } : { pros: '', cons: '' },
-  };
-});
+// D6 拡充分（検証パス通過店）: tools/dining-additions.json があれば R0051〜 として追記。
+// 各レコードは v9由来と同じスキーマを名乗る（検証済みの実値のみ・捏造禁止は追加ファイル側の責務）。
+const ADDITIONS = path.join(ROOT, 'tools/dining-additions.json');
+if (fs.existsSync(ADDITIONS)) {
+  const adds = JSON.parse(fs.readFileSync(ADDITIONS, 'utf8'));
+  const required = ['placeId','name','nameJa','cat','michelin','rating','reviewCount','natCode','kidOk','venue','venueType','area','address','lat','lng','geoPrecision','priceLunch','priceDinner','priceConfidence','priceNote','editorNote','vox'];
+  for (const a of adds) {
+    for (const k of required) if (!(k in a)) throw new Error(`addition "${a.name}" missing ${k}`);
+    const group = CAT_GROUP[a.cat];
+    if (!group) throw new Error(`unknown cat "${a.cat}" (${a.name})`);
+    out.push({ id: 'R' + String(out.length + 1).padStart(4, '0'), ...a, catGroup: group, tier: a.tier ?? 0, extraFlags: a.extraFlags ?? [] });
+  }
+}
 
 fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
 const geo = out.filter(r => r.lat !== null).length;
