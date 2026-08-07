@@ -2498,5 +2498,975 @@
   "catGroup": "カフェ・デザート",
   "tier": 0,
   "extraFlags": []
+ },
+ {
+  "id": "R0068",
+  "placeId": "ChIJ64XGCZhJzDERQdq7nRddfuU",
+  "name": "Antipodean Cafe",
+  "nameJa": "アンティポディアン・カフェ",
+  "cat": "カフェ・ブランチ",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 4281,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Bangsar",
+  "address": "20, Jalan Telawi 2, Bangsar",
+  "lat": 3.131981,
+  "lng": 101.671867,
+  "geoPrecision": "building",
+  "priceLunch": [
+   40,
+   60
+  ],
+  "priceDinner": [
+   40,
+   60
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日7:00-22:00通し。ブランチ中心でRM40-60/人目安（実測未取得の概算）。",
+  "editorNote": "欧風ビッグブレックファストで知られるバンサーの老舗ブランチカフェ。キッズプレイエリアあり。KL3-4店+ペナン1店の小規模チェーンの旗艦。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "カフェ・デザート",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0069",
+  "placeId": "ChIJ1dfEh6hJzDERrXgCs7couWg",
+  "name": "WTF Restaurant",
+  "nameJa": "ダブリューティーエフ",
+  "cat": "北インド（菜食）",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 4168,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Bangsar",
+  "address": "Lorong Maarof, Bangsar",
+  "lat": 3.13246,
+  "lng": 101.673102,
+  "geoPrecision": "street",
+  "priceLunch": [
+   35,
+   55
+  ],
+  "priceDinner": [
+   35,
+   55
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "終日同一メニュー。Paneer Butter Masala RM24.90・Dal Makhani RM20.40・ナンRM7.10等の積算(注文サイト実価格)。",
+  "editorNote": "北インド/インド中華の完全菜食（卵不使用ケーキも）専門店。菜食業態で★4.6×4,168件は異例の支持率。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "インド・スリランカ",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0070",
+  "placeId": "ChIJw9z919E3zDERJQtm_navO_s",
+  "name": "Fuego at Troika Sky Dining",
+  "nameJa": "フエゴ（トロイカ・スカイダイニング）",
+  "cat": "南米グリル",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 3382,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "The Troika",
+  "venueType": "tower",
+  "area": "KLCC",
+  "address": "Level 23a, The Troika, Persiaran KLCC",
+  "lat": 3.158464,
+  "lng": 101.718192,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   150,
+   250
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日18:00-24:00の夜のみ・要予約。串焼RM18-38・セビーチェRM36-58・シェア用ステーキRM200-250(公式メニューPDF実価格・税サ別)。",
+  "editorNote": "KLCC至近の超高層屋上で南米タパス・グリル×ツインタワー絶景。屋上業態で★4.7×3,382件は突出。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0071",
+  "placeId": "ChIJ29zYrKxJzDERP_CAMG4HNOQ",
+  "name": "Nipah (EQ Kuala Lumpur)",
+  "nameJa": "ニパ（EQホテル）",
+  "cat": "ビュッフェ（マレー・多国籍）",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 3066,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "EQ Kuala Lumpur",
+  "venueType": "hotel",
+  "area": "KLCC",
+  "address": "Equatorial Plaza, Jalan Sultan Ismail",
+  "lat": 3.152864,
+  "lng": 101.709709,
+  "geoPrecision": "building",
+  "priceLunch": [
+   158,
+   158
+  ],
+  "priceDinner": [
+   178,
+   198
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼ビュッフェ毎日12:00-15:00 RM158+/大人・RM79+/子供。夜BBQビュッフェ木-日18:30-22:30 RM178-198+/大人。",
+  "editorNote": "EQホテル1Fのローカル+パンアジアン+洋食統合ビュッフェ。子供料金設定ありでファミリー対応。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "マレーシア料理",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0072",
+  "placeId": "ChIJhUW7pNVJzDERrVLuwiGu_N4",
+  "name": "Bijan Bar & Restaurant",
+  "nameJa": "ビジャン",
+  "cat": "マレー",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 3003,
+  "natCode": 1,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Bukit Bintang",
+  "address": "3, Jalan Ceylon, Bukit Ceylon",
+  "lat": 3.148486,
+  "lng": 101.705923,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   150,
+   175
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日16:30-23:00の夜のみ。実測は2名で総額RM350程度の例あり。",
+  "editorNote": "2003年開業、洗練空間で味わう本格マレー高級料理の草分け。複数の群衆ランキングで重複ヒット。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "マレーシア料理",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0073",
+  "placeId": "ChIJKTxLJNVJzDERs_iwRo6PCgc",
+  "name": "Manja KL",
+  "nameJa": "マンジャKL",
+  "cat": "モダン・マレーシアン",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1076,
+  "natCode": 1,
+  "kidOk": 0,
+  "venue": "Old Malaya",
+  "venueType": "street",
+  "area": "Bukit Bintang",
+  "address": "Old Malaya, Lorong Raja Chulan",
+  "lat": 3.150652,
+  "lng": 101.704237,
+  "geoPrecision": "building",
+  "priceLunch": [
+   50,
+   80
+  ],
+  "priceDinner": [
+   70,
+   110
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "日-木12:00-23:00、金土祝前-24:00。Burpple実レビューで1人平均RM80。ロブスタースライダーRM46等の実価格。",
+  "editorNote": "築100年の植民地建築「Old Malaya」で楽しむモダン・ローカル創作料理。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "マレーシア料理",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0074",
+  "placeId": "ChIJcwlvHmBJzDER3ZqTUKb44QU",
+  "name": "Heritage Pizza KL",
+  "nameJa": "ヘリテージ・ピザ",
+  "cat": "ピザ",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 3297,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Chow Kit",
+  "address": "Jalan Doraisamy, Chow Kit",
+  "lat": 3.157541,
+  "lng": 101.699669,
+  "geoPrecision": "building",
+  "priceLunch": [
+   40,
+   65
+  ],
+  "priceDinner": [
+   40,
+   65
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日18:00-22:15、金-日は昼12:15-15:00も。ピザ単価RM30(マルゲリータ)-62、ブラータ系RM88。",
+  "editorNote": "ミラノ出身オーナーがヴェロネーゼ窯で焼く本格薪窯ピザ専門店。★4.7×3,297件でKLピザ群の頂点。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0075",
+  "placeId": "ChIJZy_2kg1JzDERAvoqASU0JSI",
+  "name": "Positano Risto",
+  "nameJa": "ポジターノ・リスト",
+  "cat": "イタリアン",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 3143,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Publika",
+  "venueType": "mall",
+  "area": "KL Metropolis",
+  "address": "Publika Shopping Gallery, Solaris Dutamas",
+  "lat": 3.171582,
+  "lng": 101.664525,
+  "geoPrecision": "building",
+  "priceLunch": [
+   50,
+   90
+  ],
+  "priceDinner": [
+   50,
+   90
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "11:00-22:00(金土-23:00)終日同一メニュー。実食2名合計RM81の例。ピザRM39-73・パスタRM79前後。",
+  "editorNote": "ムスリムオーナー経営のハラール&ノンアルコール本格イタリアン。Publikaエリアで群衆バーを唯一クリア。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0076",
+  "placeId": "ChIJsfUxqztJzDERNSiW6AxnvL8",
+  "name": "Common Man Coffee Roasters",
+  "nameJa": "コモンマン・コーヒー・ロースターズ",
+  "cat": "カフェ・ブランチ",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 3911,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "TTDI",
+  "address": "Jalan Tun Mohd Fuad, TTDI",
+  "lat": 3.139536,
+  "lng": 101.629998,
+  "geoPrecision": "building",
+  "priceLunch": [
+   45,
+   65
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月-金8:00-17:00、土日-18:00の朝〜夕方のみ。パンケーキRM49・トーストRM43+コーヒーRM11-22(公式メニューPDF)。",
+  "editorNote": "シンガポール発の自家焙煎スペシャルティコーヒー×ブランチ。マレーシア国内は2店の小規模展開。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "カフェ・デザート",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0077",
+  "placeId": "ChIJiQxLd7VJzDERkAMAvprE_DY",
+  "name": "Brasserie Léon",
+  "nameJa": "ブラッスリー・レオン",
+  "cat": "フレンチ",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1631,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "タワー1F",
+  "venueType": "tower",
+  "area": "Damansara Heights",
+  "address": "Bukit Damansara",
+  "lat": 3.151298,
+  "lng": 101.663339,
+  "geoPrecision": "building",
+  "priceLunch": [
+   80,
+   120
+  ],
+  "priceDinner": [
+   150,
+   300
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼はAligot-Saucisse RM78等。夜は前菜RM36-68+メインRM72-136、ステーキRM218-521(公式メニュー全価格)。火曜定休の情報あり。",
+  "editorNote": "パリの老舗ブラッスリーを再現したフレンチステーキ&シャルキュトリの店。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0078",
+  "placeId": "pending:nero-nero-damansara-city",
+  "name": "Nero Nero",
+  "nameJa": "ネロネロ",
+  "cat": "イタリアン",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1075,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "DC Mall",
+  "venueType": "mall",
+  "area": "Damansara Heights",
+  "address": "DC Mall, Damansara City",
+  "lat": 3.146074,
+  "lng": 101.661937,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   90,
+   160
+  ],
+  "priceDinner": [
+   90,
+   160
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日12:00-15:00/17:30-22:00。USD20-35/人表記のRM換算概算（RM90-160）。",
+  "editorNote": "ダマンサラシティで南イタリア料理をカジュアルに。KL+ペナンの2拠点。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0079",
+  "placeId": "pending:vantador-sri-hartamas",
+  "name": "Vantador | The Dry Aged Steak Boutique",
+  "nameJa": "ヴァンタドール",
+  "cat": "ステーキ",
+  "michelin": "sel",
+  "rating": 4.5,
+  "reviewCount": 1321,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Desa Sri Hartamas",
+  "address": "Desa Sri Hartamas",
+  "lat": 3.16254,
+  "lng": 101.65012,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   250,
+   450
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "18:00-24:00の夜のみ。前菜RM65-75+熟成肉RM130-150/100g・メインRM198-205(実メニュー)。",
+  "editorNote": "熟成肉専門の高級ステーキブティック。ミシュランSelected 2025・2026連続掲載をGoogle★4.5×1,321件の群衆実証が裏付け。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0080",
+  "placeId": "pending:der-backmeister-ttdi",
+  "name": "Der Backmeister",
+  "nameJa": "デア・バックマイスター",
+  "cat": "ベーカリー",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1553,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "TTDI",
+  "address": "TTDI",
+  "lat": 3.14171,
+  "lng": 101.62742,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   45
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月-金8:00-19:00、土日8:00-17:30。パンRM3.50-9.00+軽食・ケーキの積算。",
+  "editorNote": "ドイツ人経営の本格ドイツパン&ケーキのベーカリーカフェ。TTDI本店+Ampangの2店。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "カフェ・デザート",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0081",
+  "placeId": "pending:foo-foo-classic-desserts",
+  "name": "Foo Foo Classic Desserts",
+  "nameJa": "フーフー・クラシック・デザーツ",
+  "cat": "デザート",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1002,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "TTDI",
+  "address": "TTDI",
+  "lat": 3.15217,
+  "lng": 101.62092,
+  "geoPrecision": "building",
+  "priceLunch": [
+   25,
+   45
+  ],
+  "priceDinner": [
+   25,
+   45
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "15:00-23:30、水曜定休。デザートRM22-30+ドリンクRM10-11の実例。",
+  "editorNote": "ル・コルドン・ブルー出身シェフによるプレーテッドデザート専門店。2016年創業の単独店。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "カフェ・デザート",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0082",
+  "placeId": "pending:niko-neko-matcha-bangsar",
+  "name": "Niko Neko Matcha",
+  "nameJa": "ニコネコ抹茶",
+  "cat": "抹茶",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 2044,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Bangsar",
+  "address": "Jalan Telawi, Bangsar",
+  "lat": 3.13081,
+  "lng": 101.67338,
+  "geoPrecision": "street",
+  "priceLunch": [
+   15,
+   18
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼〜夕方営業（閉店18-19時・水休情報あり）。ドリンクRM15-18。",
+  "editorNote": "抹茶専門のコンテンポラリーカフェ。KLの多くのカフェへ抹茶粉を卸す本家。2-3店の小規模展開。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "カフェ・デザート",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0083",
+  "placeId": "pending:dancing-fish-bsc",
+  "name": "Dancing Fish",
+  "nameJa": "ダンシング・フィッシュ",
+  "cat": "インドネシア",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 2231,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Bangsar Shopping Centre",
+  "venueType": "mall",
+  "area": "Bangsar",
+  "address": "Bangsar Shopping Centre, Jalan Maarof",
+  "lat": 3.1431,
+  "lng": 101.66734,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   60,
+   100
+  ],
+  "priceDinner": [
+   60,
+   100
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "11:30-22:00通し。サテRM32.90・アヤムパンガン半羽RM54・BBQビーフリブRM89.90を数品シェアの積算。",
+  "editorNote": "2010年創業、西ジャワ（スンダ）料理をファインダイニング水準に昇華。ファミリー利用の言及あり。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "マレーシア料理",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0084",
+  "placeId": "pending:miyatake-sanuki-udon-mont-kiara",
+  "name": "Miyatake Sanuki Udon",
+  "nameJa": "宮武讃岐うどん",
+  "cat": "うどん",
+  "michelin": "none",
+  "rating": 4.4,
+  "reviewCount": 433,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Mont Kiara",
+  "address": "Mont Kiara",
+  "lat": 3.16999,
+  "lng": 101.65215,
+  "geoPrecision": "street",
+  "priceLunch": [
+   20,
+   30
+  ],
+  "priceDinner": [
+   20,
+   30
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "21:00閉店。牛肉うどんRM23前後の例。★値はRestaurant Guru/Kuraberu 4.4×433のプロキシ（Google実値要確認）。",
+  "editorNote": "職人が毎日手打ち・出汁を仕込む本格讃岐うどん。1 Utama伊勢丹から移転しMont Kiara+TRXの2店。MK核心部の日本人定番。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0085",
+  "placeId": "ChIJt33vEgBJzDER3o_IKFxILNk",
+  "name": "Bidou",
+  "nameJa": "ビドゥ",
+  "cat": "フレンチ",
+  "michelin": "sel",
+  "rating": 4.5,
+  "reviewCount": 73,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Damansara Heights",
+  "address": "Bukit Damansara",
+  "lat": 3.1531,
+  "lng": 101.6492,
+  "geoPrecision": "street",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   377,
+   377
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "日休・月-土18-23時(土は昼11-14:30も)。4皿プリフィックスRM377の実例(eatdrinkkl)。",
+  "editorNote": "Dewakan創業者Darren Teoh氏10年ぶりの新店。1960年代フランス料理巨匠に着想したクラシックフレンチ。ミシュランSelected 2026新規+Opening of the Year。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0086",
+  "placeId": "pending:restaurant-jie-damansara-heights",
+  "name": "Restaurant Jie",
+  "nameJa": "ジエ",
+  "cat": "中華（モダン）",
+  "michelin": "sel",
+  "rating": null,
+  "reviewCount": 0,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Damansara Heights",
+  "address": "Bukit Damansara",
+  "lat": 3.1537,
+  "lng": 101.6563,
+  "geoPrecision": "street",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   338,
+   388
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "火-土18-23時の夜のみ。JIEコースRM338-388++/SHIコースRM278-298++、ペアリング+RM150-180++(The Star実例)。",
+  "editorNote": "客家・広東・台湾・マレーを横断するボーダーレス中華。2025年1月開業でGoogle評価は未集計(新店につき評価欄は空)。ミシュランSelected 2026新規。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0087",
+  "placeId": "ChIJbSUGr5FJzDERLU7zjcMbaos",
+  "name": "Kazu",
+  "nameJa": "カズ",
+  "cat": "寿司",
+  "michelin": "sel",
+  "rating": 4.6,
+  "reviewCount": 273,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Pavilion At The Five",
+  "venueType": "tower",
+  "area": "Damansara Heights",
+  "address": "Pavilion At The Five, Bukit Damansara",
+  "lat": 3.1518,
+  "lng": 101.6654,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   258,
+   478
+  ],
+  "priceDinner": [
+   488,
+   598
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月休・火-日12-15時/19-22:30。昼おまかせRM258-478、夜割烹RM488-598。",
+  "editorNote": "江戸前寿司と宮崎和牛割烹の2カウンター制+併設ウイスキーバー。ミシュランSelected 2026新規。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0088",
+  "placeId": "pending:restaurant-shu-menara-imc",
+  "name": "Restaurant Shu",
+  "nameJa": "シュー",
+  "cat": "中華（モダン）",
+  "michelin": "sel",
+  "rating": null,
+  "reviewCount": 0,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "Menara IMC",
+  "venueType": "tower",
+  "area": "Bukit Bintang",
+  "address": "Menara IMC, Jalan Sultan Ismail",
+  "lat": 3.1553,
+  "lng": 101.7067,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "火-土18-23時の夜のみ・日月祝休。単一テイスティングコース制(額非公開)。Google評価は未集計(新店につき評価欄は空)。",
+  "editorNote": "中華ディアスポラ料理を欧州技法で再解釈、亡き母の名を冠する店。ミシュランSelected 2026新規+Young Chef Award。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0089",
+  "placeId": "ChIJNTh0WnZJzDERr1-yhKOUqRY",
+  "name": "KUKI Vegan",
+  "nameJa": "クウキ・ヴィーガン",
+  "cat": "精進（ヴィーガン）",
+  "michelin": "sel",
+  "rating": 4.7,
+  "reviewCount": 183,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Menara KEN TTDI",
+  "venueType": "tower",
+  "area": "TTDI",
+  "address": "Menara KEN, TTDI",
+  "lat": 3.1523,
+  "lng": 101.6227,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月休・火-日11-15時/17-22時。$$$帯・RM実例未取得。",
+  "editorNote": "シーフード不使用の精進寿司+ノンアル創作カクテル。Kusaチームの姉妹ブランド。ミシュランSelected 2026新規。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": []
+ },
+ {
+  "id": "R0090",
+  "placeId": "ChIJgX-_3O5HzDEResd9A2B6FGY",
+  "name": "Potager",
+  "nameJa": "ポタジェ",
+  "cat": "フレンチ",
+  "michelin": "sel",
+  "rating": 4.4,
+  "reviewCount": 144,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Bamboo Hills",
+  "venueType": "street",
+  "area": "Bamboo Hills",
+  "address": "Bamboo Hills, Jalan Ipoh",
+  "lat": 3.1938,
+  "lng": 101.6743,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   395,
+   770
+  ],
+  "priceDinner": [
+   395,
+   770
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼はRM395(5皿)/RM770(9皿)。メインホールは6歳以上、6歳未満は個室予約時のみ可。",
+  "editorNote": "堀内政志シェフ。地元食材×和の感性×仏修業の菜園コンセプト。ミシュランSelected 2025+Tatler Best 20を2025/2026連続+TimeOut選出の四重署名。",
+  "extraFlags": [
+   "Tatler Best 20"
+  ],
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0
+ },
+ {
+  "id": "R0091",
+  "placeId": "ChIJtUFt9m9LzDERgnXGrZfhCoc",
+  "name": "Chipta 11a",
+  "nameJa": "チプタ・イレブンエー",
+  "cat": "おまかせフュージョン",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 180,
+  "natCode": 1,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Sea Park (PJ)",
+  "address": "11a, Jalan 20/16, Sea Park, PJ",
+  "lat": 3.11,
+  "lng": 101.62,
+  "geoPrecision": "street",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月休。水-土12:30-14:30/18-22時、日火は夜のみ。ノーメニューおまかせ・RM実例未取得。",
+  "editorNote": "マレーシア食材×和食のBeyond Omakase。Tatler Best 20を2025/2026連続選出(件数180は少なめだが権威二重署名を優先採用)。",
+  "extraFlags": [
+   "Tatler Best 20"
+  ],
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0
+ },
+ {
+  "id": "R0092",
+  "placeId": "ChIJYectmzdJzDERBg2jCkYYcfk",
+  "name": "Table & Apron",
+  "nameJa": "テーブル・アンド・エプロン",
+  "cat": "洋食ビストロ",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1786,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Damansara Kim (PJ)",
+  "address": "23, Jalan SS20/11, Damansara Kim, PJ",
+  "lat": 3.1348,
+  "lng": 101.6271,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月-木は夜のみ17:30-21:30、金-日は昼11:30-14:30も。シェアプレート業態・RM実例未取得。",
+  "editorNote": "2014年創業のネイバーフッド洋食の代表格。Tatler Best 20 2025+TimeOut選出、★4.5×1,786件の群衆実証も両立。隣にベーカリー併設。",
+  "extraFlags": [
+   "Tatler Best 20"
+  ],
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0
+ },
+ {
+  "id": "R0093",
+  "placeId": "ChIJv8xrTcFJzDERpQTzoH-VBEs",
+  "name": "Sushi Taka",
+  "nameJa": "鮨たか",
+  "cat": "寿司",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 290,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "St. Regis KL",
+  "venueType": "hotel",
+  "area": "KL Sentral",
+  "address": "The St. Regis, 6 Jalan Stesen Sentral 2",
+  "lat": 3.1336,
+  "lng": 101.6862,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "火休。おまかせ主体の$$$$帯・RM実例未取得。",
+  "editorNote": "東京三ツ星「鮨さいとう」系譜のカウンター。Tatler Best 20 2025選出。件数290は閾値300線上だが系譜+権威で採用。",
+  "extraFlags": [
+   "Tatler Best 20"
+  ],
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0
  }
 ]

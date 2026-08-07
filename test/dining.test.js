@@ -84,8 +84,14 @@ describe('restaurants.json', () => {
     }
   });
 
-  it('rating is 0-5 and reviewCount is a non-negative integer', () => {
+  it('rating is 0-5 (or null for an unrated new store with 0 reviews)', () => {
     for (const r of restaurants) {
+      if (r.rating === null) {
+        // 開業直後でGoogle評価が未集計の店だけが null を名乗れる。
+        // スコアは shrunkRating が基準線(C)に落とすので中立、表示は空欄になる。
+        expect(r.reviewCount, r.name).toBe(0);
+        continue;
+      }
       expect(r.rating, r.name).toBeGreaterThan(0);
       expect(r.rating, r.name).toBeLessThanOrEqual(5);
       expect(Number.isInteger(r.reviewCount) && r.reviewCount >= 0, r.name).toBe(true);

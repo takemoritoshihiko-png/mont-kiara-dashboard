@@ -2,7 +2,7 @@
 
 ## これは何か
 
-KLとペナンの**コンドミニアム271・学校33・商業施設88・飲食店67**を1枚の地図で見くらべる、日本人向けの住まい探しダッシュボード。
+KLとペナンの**コンドミニアム271・学校33・商業施設88・飲食店93**を1枚の地図で見くらべる、日本人向けの住まい探しダッシュボード。
 公開サイト: https://takemoritoshihiko-png.github.io/mont-kiara-dashboard/
 
 ## 技術構成
@@ -15,7 +15,7 @@ KLとペナンの**コンドミニアム271・学校33・商業施設88・飲食
 ```bash
 npm install
 npm run dev            # http://localhost:5173
-npm test               # 595件
+npm test               # 635件
 npm run hooks:install  # pre-push フックを .git/hooks へ
 ```
 

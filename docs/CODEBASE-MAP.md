@@ -67,7 +67,7 @@
 | `test/urlState.test.js` | URLの読み書きと履歴 |
 | `test/visualSystem.test.js` | ページの識別・デザイントークン・情報の二重表示禁止・数値書式 |
 | `test/a11y.test.js` | ランドマーク・全コントロールの名前・状態のaria・フォーカス可視・モバイルブロック・OGP |
-| `test/dining.test.js` | **飲食データの契約**: 67件(v9系50+拡充17)・id/placeId一意・座標域・価格 lo≤hi・9分類・ミシュランenum |
+| `test/dining.test.js` | **飲食データの契約**: 93件(v9系50+拡充43)・id/placeId一意・座標域・価格 lo≤hi・9分類・ミシュランenum |
 | `test/diningLayer.test.js` | 飲食層: 絞り込み5軸・価格帯の判定基準・カード/ヒーロー文字列・並び替え・詳細パネル・読み込み |
 | `test/diningScore.test.js` | **台帳スコア**: 定数・exタグENUMと実データの照合・C=4.3600・手計算フィクスチャ・内訳が総合点と一致すること |
 | `test/personal.test.js` | **個人記録**: ローカル日付・読み取りが書き込まないこと・保存可否の起動テスト・デバウンス保存・v9形式の読み込み変換・書き出し往復 |
