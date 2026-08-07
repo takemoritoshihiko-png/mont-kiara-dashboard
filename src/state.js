@@ -13,10 +13,14 @@ export let SCHOOLS_DETAIL = {};
 export let filtered = [];
 export let markers = {};
 export let selectedCondo = null;
-export let currentSort = 'name';
 
-export let showCommercial = true;
-export let showSchools = true;
+// B3a: the active layer (物件 / 学校 / 商業) drives the list, the filters, the
+// sort options, the summary tiles and which markers are drawn at full opacity.
+export let activeLayer = 'condo';
+export let currentSort = 'luxHigh';
+// 「絞り込み ⌄」 open/closed. In memory only — deliberately not persisted.
+export let moreOpen = false;
+
 export let showAwardOnly = false;
 export let legendOpen = false;
 
@@ -31,8 +35,8 @@ export function setFiltered(v) { filtered = v; }
 export function setMarkers(v) { markers = v; }
 export function setSelectedCondo(v) { selectedCondo = v; }
 export function setCurrentSort(v) { currentSort = v; }
-export function setShowCommercial(v) { showCommercial = v; }
-export function setShowSchools(v) { showSchools = v; }
+export function setActiveLayer(v) { activeLayer = v; }
+export function setMoreOpen(v) { moreOpen = v; }
 export function setShowAwardOnly(v) { showAwardOnly = v; }
 export function setLegendOpen(v) { legendOpen = v; }
 export function setSfActive(v) { sfActive = v; }
