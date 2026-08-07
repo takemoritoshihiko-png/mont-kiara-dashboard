@@ -19,7 +19,7 @@ import { TIER_COLORS, MICHELIN_LABELS } from '../data/inline.js';
 import { recordLayer } from '../domain/filter.js';
 import { nearby, formatDistance, BUCKET_LABELS, NEARBY_BUCKETS } from '../domain/nearby.js';
 import { map, rebuild } from './map.js';
-import { renderList, setLayer, setMode, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
+import { renderList, setLayer, setMode, applyFilters, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
 import { eatoutDetailHtml } from './dining.js';
 import { syncUrl, withUrlWritesSuspended, applyFilterParam } from './urlState.js';
 
@@ -400,6 +400,10 @@ export function applyUrlState(s){
   // mode would set it twice and leave the sort on the wrong default.
   if(s.mode) setMode(s.mode, { silent: true });
   if(s.layer && s.layer !== activeLayer) setLayer(s.layer);
+  // Filters travel in the URL too (?f=fRent:0-20000|...): write them into
+  // the controls, then re-run the filters so the shared link shows what the
+  // sender saw.
+  if(s.f && applyFilterParam(s.f) > 0) applyFilters();
   // An unknown name (renamed or removed record) is ignored rather than shown as
   // an error — a stale bookmark should still open a usable map.
   if(s.sel && CONDOS.some(x => x.name === s.sel)) selectCondo(s.sel, { tab: s.tab || 'detail' });
