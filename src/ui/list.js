@@ -3,15 +3,21 @@ import {
   CONDOS, filtered, setFiltered, selectedCondo, currentSort, setCurrentSort,
   activeLayer, setActiveLayer, moreOpen, setMoreOpen,
   showAwardOnly, setShowAwardOnly, showKidOkOnly, setShowKidOkOnly,
+  showWantOnly, setShowWantOnly, showUndoneOnly, setShowUndoneOnly,
+  appMode, setAppMode, homeLayer, setHomeLayer, listView, setListView,
 } from '../state.js';
 import { TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
 import {
   parseR, matchesFilters, recordLayer, LAYER_LABELS, CURRICULA,
-  CAT_GROUPS, MICHELIN_FILTERS, diningPriceCeiling,
+  CAT_GROUPS, MICHELIN_FILTERS, VENUE_TYPES, diningPriceCeiling,
 } from '../domain/filter.js';
-import { SORT_OPTIONS, comparatorFor, defaultSortFor, sortAvailable } from '../domain/sort.js';
+import { sortOptionsFor, comparatorFor, defaultSortFor, sortAvailable } from '../domain/sort.js';
 import { map, rebuild } from './map.js';
 import { syncUrl } from './urlState.js';
+import {
+  eatoutActive, eatoutCardExtraHtml, eatoutCardScoreHtml, eatoutListHtml,
+  isVisited, personalMap, renderSaveBar,
+} from './dining.js';
 
 const $ = (id) => document.getElementById(id);
 const val = (id) => { const el = $(id); return el ? el.value : ''; };
@@ -44,7 +50,7 @@ const LAYER_CONTROLS = {
   // in matchesFilters() for why the two must not be shared.
   dining: [
     ['fCatGroup', 'カテゴリ'], ['fMichelin', 'ミシュラン'], ['fPriceBand', '価格帯'],
-    ['fDiningArea', 'エリア'],
+    ['fDiningArea', 'エリア'], ['fVenueType', '施設'],
   ],
 };
 
@@ -75,7 +81,15 @@ export function readCriteria(){
     c.michelin = val('fMichelin');
     c.priceBand = val('fPriceBand');
     c.diningArea = val('fDiningArea');
+    c.venueType = val('fVenueType');
     c.kidOnly = showKidOkOnly;
+    // The two personal conditions exist only in 外食モード, and the record map
+    // is handed to the (pure) filter rather than read inside it.
+    if(eatoutActive()){
+      c.wantOnly = showWantOnly;
+      c.undoneOnly = showUndoneOnly;
+      if(showWantOnly || showUndoneOnly) c.personal = personalMap();
+    }
   } else {
     c.nla = parseR(val('fNla'));
     c.openYear = parseR(val('fOpenYear'));
@@ -87,7 +101,7 @@ export function readCriteria(){
 export function applyFilters(){
   const crit = readCriteria();
   setFiltered(CONDOS.filter(c => matchesFilters(c, crit)));
-  doSort(); rebuild(); renderList(); updateSummary(); renderChips();
+  doSort(); rebuild(); renderList(); updateSummary(); renderChips(); renderSaveBar();
 }
 
 export function doSort(){
@@ -102,12 +116,59 @@ export function setLayer(layer){
   setActiveLayer(layer);
   // Keep the chosen order when the new layer also offers it, otherwise fall
   // back to that layer's default (e.g. "家賃 安い順" has no meaning for schools).
-  if(!sortAvailable(layer, currentSort)) setCurrentSort(defaultSortFor(layer));
+  if(!sortAvailable(layer, currentSort, appMode)) setCurrentSort(defaultSortFor(layer, appMode));
   syncLayerUI();
   applyFilters();
   // A layer switch refines the current view rather than navigating to a new
   // one, so it replaces the history entry instead of stacking one.
   syncUrl({ replace: true });
+}
+
+// ============================================================
+// MODE — 住まい / 外食 (D4)
+// ============================================================
+/**
+ * Switch the whole app between the two modes.
+ *
+ * 外食モード pins the layer to 飲食 (that is what the mode IS) and remembers the
+ * layer you came from, so leaving it puts you back where you were rather than
+ * on an arbitrary default. The personal record UI appears and disappears with
+ * the mode and nowhere else — 住まいモード never shows it.
+ *
+ * @param {string} mode  'home' | 'eatout'
+ * @param {{silent?: boolean}} [opts]  skip the URL write (restoring from a URL)
+ */
+export function setMode(mode, { silent = false } = {}){
+  const next = mode === 'eatout' ? 'eatout' : 'home';
+  if(next === appMode){ syncLayerUI(); return; }
+  if(next === 'eatout'){
+    setHomeLayer(activeLayer);
+    setAppMode('eatout');
+    setActiveLayer('dining');
+    setListView('ledger');
+    // 台帳スコア順 is only offered here, and here it is the point of the list.
+    setCurrentSort(defaultSortFor('dining', 'eatout'));
+  } else {
+    setAppMode('home');
+    setListView('ledger');
+    setActiveLayer(homeLayer || 'condo');
+    if(!sortAvailable(activeLayer, currentSort, 'home')) setCurrentSort(defaultSortFor(activeLayer, 'home'));
+  }
+  syncLayerUI();
+  applyFilters();
+  if(!silent) syncUrl({ replace: true });
+}
+
+/** 台帳 / 行った店 / データ — the three views of 外食モード. */
+export function setView(view){
+  const next = ['ledger', 'log', 'data'].includes(view) ? view : 'ledger';
+  if(next === listView){ syncLayerUI(); return; }
+  setListView(next);
+  syncLayerUI();
+  // 行った店 and データ read the records rather than the filters, but the map
+  // and the summary still follow the 台帳's result set, so nothing is stale
+  // when you come back.
+  applyFilters();
 }
 
 /**
@@ -151,6 +212,14 @@ function populateDiningFilters(){
     mic.value = keep;
     mic.dataset.filled = '1';
   }
+  const vt = $('fVenueType');
+  if(vt && !vt.dataset.filled){
+    const keep = vt.value;
+    vt.innerHTML = '<option value="">すべて</option>' +
+      VENUE_TYPES.map(o => `<option value="${o.value}">${esc(o.label)}</option>`).join('');
+    vt.value = keep;
+    vt.dataset.filled = '1';
+  }
   const area = $('fDiningArea');
   if(area && !area.dataset.filled){
     const counts = new Map();
@@ -167,39 +236,81 @@ function populateDiningFilters(){
   }
 }
 
+/**
+ * True when the panel is showing a LIST of records — always in 住まいモード, and
+ * in 外食モード only on the 台帳 view. The search box, the filters, the sort, the
+ * chips and the summary tiles all belong to a list and are hidden without one.
+ */
+export function isLedgerView(){ return !eatoutActive() || listView === 'ledger'; }
+
+/** A segmented control: one button carries `active` + aria-selected. */
+function syncSeg(selector, dataKey, current){
+  document.querySelectorAll(selector).forEach(b => {
+    const on = b.dataset[dataKey] === current;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+}
+
 /** Show the controls of the active layer, hide the others, rebuild the sort select. */
 export function syncLayerUI(){
   populateCurriculum();
   populateDiningFilters();
-  document.querySelectorAll('.seg-btn').forEach(b => {
-    const on = b.dataset.layer === activeLayer;
-    b.classList.toggle('active', on);
-    b.setAttribute('aria-selected', on ? 'true' : 'false');
-  });
+  const eatout = eatoutActive();
+  // 台帳 view is the only one that lists records; the other two read the
+  // records directly and have no use for a filter, a sort or a summary.
+  const ledgerView = isLedgerView();
+
+  syncSeg('.mode-btn', 'mode', appMode);
+  syncSeg('.seg-btn', 'layer', activeLayer);
+  syncSeg('.view-btn', 'view', listView);
+  // The two segmented controls share one slot: 外食モード has no layers to
+  // choose (it IS the 飲食 layer), so its three views take the row instead.
+  const layerSeg = $('layerSeg'), viewSeg = $('viewSeg');
+  if(layerSeg) layerSeg.style.display = eatout ? 'none' : '';
+  if(viewSeg) viewSeg.style.display = eatout ? '' : 'none';
+
   // `data-layer-only` takes one layer or a comma-separated list: the エリア row
   // belongs to three layers but not to 飲食, which has its own area control.
   document.querySelectorAll('[data-layer-only]').forEach(el => {
     const owners = el.dataset.layerOnly.split(',');
-    el.style.display = owners.includes(activeLayer) ? '' : 'none';
+    el.style.display = (ledgerView && owners.includes(activeLayer)) ? '' : 'none';
   });
+  // 外食モード-only rows (the personal condition toggles) never appear on the
+  // public dashboard, whatever the layer.
+  document.querySelectorAll('[data-mode-only]').forEach(el => {
+    el.style.display = (ledgerView && el.dataset.modeOnly === appMode) ? '' : 'none';
+  });
+  const searchRow = $('searchRow');
+  if(searchRow) searchRow.style.display = ledgerView ? '' : 'none';
+  const sortRow = $('sortRow');
+  if(sortRow) sortRow.style.display = ledgerView ? '' : 'none';
+  const summary = $('summaryBar');
+  if(summary) summary.style.display = ledgerView ? '' : 'none';
+
   const more = $('moreFilters');
-  if(more) more.style.display = moreOpen ? '' : 'none';
+  if(more) more.style.display = (moreOpen && ledgerView) ? '' : 'none';
   const mt = $('moreToggle');
   if(mt){
+    mt.style.display = ledgerView ? '' : 'none';
     mt.innerHTML = '絞り込み ' + (moreOpen ? '⌃' : '⌄');
     // The chevron says "open" to a sighted user; aria-expanded says it to
     // everyone else. They are set together so they cannot disagree.
     mt.setAttribute('aria-expanded', moreOpen ? 'true' : 'false');
   }
-  // Sort options follow the layer
+  // Sort options follow the layer — and the mode, because 台帳スコア順 exists
+  // only where the score is on screen.
   const sel = $('fSort');
   if(sel){
-    sel.innerHTML = SORT_OPTIONS[activeLayer]
+    sel.innerHTML = sortOptionsFor(activeLayer, appMode)
       .map(o => `<option value="${o.value}">${o.label}</option>`).join('');
     sel.value = currentSort;
   }
   syncAwardBtn();
   syncKidOkBtn();
+  syncWantBtn();
+  syncUndoneBtn();
+  renderSaveBar();
 }
 
 export function toggleMore(){
@@ -251,6 +362,38 @@ export function toggleKidOk(){
   applyFilters();
 }
 
+// 「★ 行きたい」「まだ行っていない」 — 外食モードだけの2つ。v9 held these in a
+// single-choice condition group, so 「行きたいのにまだ行っていない店」 — the one
+// question you actually open the app with — could not be asked (欠陥4). They are
+// two independent toggles here and they combine.
+function syncWantBtn(){
+  const b = $('toggleWant');
+  if(!b) return;
+  b.classList.toggle('active', showWantOnly);
+  b.setAttribute('aria-pressed', showWantOnly ? 'true' : 'false');
+  b.innerHTML = (showWantOnly ? '✓ ' : '') + '★ 行きたい';
+}
+
+export function toggleWantFilter(){
+  setShowWantOnly(!showWantOnly);
+  syncWantBtn();
+  applyFilters();
+}
+
+function syncUndoneBtn(){
+  const b = $('toggleUndone');
+  if(!b) return;
+  b.classList.toggle('active', showUndoneOnly);
+  b.setAttribute('aria-pressed', showUndoneOnly ? 'true' : 'false');
+  b.innerHTML = (showUndoneOnly ? '✓ ' : '') + '未訪問';
+}
+
+export function toggleUndoneFilter(){
+  setShowUndoneOnly(!showUndoneOnly);
+  syncUndoneBtn();
+  applyFilters();
+}
+
 // ============================================================
 // ACTIVE FILTER CHIPS — one per applied filter, each removable
 // ============================================================
@@ -269,6 +412,8 @@ export function activeChips(){
   });
   if(activeLayer === 'condo' && showAwardOnly) chips.push({ id: 'toggleAward', label: '🏆 受賞のみ' });
   if(activeLayer === 'dining' && showKidOkOnly) chips.push({ id: 'toggleKidOk', label: '👶 子連れ◎のみ' });
+  if(eatoutActive() && showWantOnly) chips.push({ id: 'toggleWant', label: '★ 行きたい' });
+  if(eatoutActive() && showUndoneOnly) chips.push({ id: 'toggleUndone', label: '未訪問' });
   return chips;
 }
 
@@ -286,12 +431,16 @@ export function renderChips(){
   if(!el) return;
   const chips = activeChips();
   el.innerHTML = chipsHtml(chips);
-  el.style.display = chips.length ? '' : 'none';
+  // 行った店 / データ は絞り込みの結果ではないので、そこにチップを出すと
+  // 「いま何で絞られているか」を嘘で説明することになる。
+  el.style.display = (chips.length && isLedgerView()) ? '' : 'none';
 }
 
 export function removeFilter(id){
   if(id === 'toggleAward'){ setShowAwardOnly(false); syncAwardBtn(); }
   else if(id === 'toggleKidOk'){ setShowKidOkOnly(false); syncKidOkBtn(); }
+  else if(id === 'toggleWant'){ setShowWantOnly(false); syncWantBtn(); }
+  else if(id === 'toggleUndone'){ setShowUndoneOnly(false); syncUndoneBtn(); }
   else { const el = $(id); if(el) el.value = ''; }
   applyFilters();
 }
@@ -301,8 +450,12 @@ export function clearAllFilters(){
   if(search) search.value = '';
   setShowAwardOnly(false);
   setShowKidOkOnly(false);
+  setShowWantOnly(false);
+  setShowUndoneOnly(false);
   syncAwardBtn();
   syncKidOkBtn();
+  syncWantBtn();
+  syncUndoneBtn();
   const ids = new Set();
   Object.values(LAYER_CONTROLS).forEach(list => list.forEach(([id]) => ids.add(id)));
   ids.forEach(id => { const el = $(id); if(el) el.value = ''; });
@@ -468,10 +621,14 @@ function diningCard(c){
   if(c.catGroup) chips.push(`<span class="card-chip chip-dining">${esc(c.catGroup)}</span>`);
   const hero = diningHeroText(c);
   const meta = [];
-  const rating = ratingText(c);
+  // 外食モード prints the star with its sample size and its shrunk value on its
+  // own line (ratingLineHtml), so repeating 「★4.8 (1,178件)」 here would be the
+  // same information twice.
+  const rating = eatoutActive() ? '' : ratingText(c);
   if(rating) meta.push(rating);
   if(c.area) meta.push(c.area);
-  return cardHead(c, badge, '', 'card-name-wrap') +
+  return eatoutCardScoreHtml(c) +
+    cardHead(c, badge, '', 'card-name-wrap') +
     (chips.length ? `<div class="card-chips">${chips.join('')}</div>` : '') +
     `<div class="card-hero">${hero}</div>` +
     `<div class="card-addr">${esc(c.addr)}</div>` +
@@ -497,8 +654,18 @@ export function cardBodyHtml(c){
  * resets — role + tabindex buys the same semantics with none of that.
  */
 export function cardHtml(c){
-  return `<div class="condo-card ${selectedCondo === c.name ? 'selected' : ''}" role="button" tabindex="0"` +
+  const sel = selectedCondo === c.name ? ' selected' : '';
+  // 外食モード hangs the record controls under the card. They must NOT sit
+  // inside the role="button" element — a button containing buttons is not
+  // operable by keyboard or screen reader — so the openable part becomes an
+  // inner .card-main and the controls are its sibling.
+  const extra = eatoutCardExtraHtml(c);
+  const opener = `<div class="${extra ? 'card-main' : 'condo-card' + sel}" role="button" tabindex="0"` +
     ` aria-label="${esc(cardAriaLabel(c))}" onclick="selectCondo('${jsStr(c.name)}')">${cardBodyHtml(c)}</div>`;
+  if(!extra) return opener;
+  // 訪問済みの店は一覧で沈む（v9の .visited）。It dims the LISTING only: the
+  // controls under it are what you came back to edit.
+  return `<div class="condo-card record-card${sel}${isVisited(c) ? ' visited' : ''}">${opener}${extra}</div>`;
 }
 
 function emptyStateHtml(){
@@ -514,6 +681,10 @@ function emptyStateHtml(){
 export function renderList(){
   const el = $('condoList');
   if(!el) return;
+  // 外食モードの「行った店」「データ」は一覧ではないので、カードの代わりに
+  // そのビューを描く。null が返れば通常のカード一覧（＝台帳／住まいモード）。
+  const alt = eatoutListHtml();
+  if(alt != null){ el.innerHTML = alt; return; }
   el.innerHTML = filtered.length ? filtered.map(cardHtml).join('') : emptyStateHtml();
 }
 
@@ -575,13 +746,26 @@ export function updateSummary(){
     v3 = mf ? 'RM ' + num(mf) : TILE_EMPTY;
     v4 = st ? num(st) : TILE_EMPTY;
   } else if(activeLayer === 'dining'){
-    l3 = '★中央値'; l4 = '予算中央値';
-    const mr = median(filtered.map(c => c.rating || 0));
-    // Same figure the 価格帯 filter and the budget sort use, so the tile can
-    // never quote a price the list does not order by.
-    const mp = median(filtered.map(diningPriceCeiling));
-    v3 = mr ? mr.toFixed(1) : TILE_EMPTY;
-    v4 = mp ? 'RM ' + num(mp) : TILE_EMPTY;
+    if(eatoutActive()){
+      // 外食モードの台帳ビューは「まだ行っていない店を探す」画面なので、
+      // タイルは自分の記録の進み具合を出す。金額の集計は 行った店 ビューに
+      // 一本化してある（母集団＝訪問済みのみ・v9の欠陥3の解消）ので、ここには
+      // 出さない＝同じ数字を2箇所で組み立てない。
+      l3 = '訪問済み'; l4 = '行きたい';
+      const p = personalMap();
+      const vis = filtered.filter(c => p[c.id] && p[c.id].v === 1).length;
+      const want = filtered.filter(c => p[c.id] && p[c.id].w === 1).length;
+      v3 = vis ? num(vis) : TILE_EMPTY;
+      v4 = want ? num(want) : TILE_EMPTY;
+    } else {
+      l3 = '★中央値'; l4 = '予算中央値';
+      const mr = median(filtered.map(c => c.rating || 0));
+      // Same figure the 価格帯 filter and the budget sort use, so the tile can
+      // never quote a price the list does not order by.
+      const mp = median(filtered.map(diningPriceCeiling));
+      v3 = mr ? mr.toFixed(1) : TILE_EMPTY;
+      v4 = mp ? 'RM ' + num(mp) : TILE_EMPTY;
+    }
   } else {
     l3 = 'NLA中央値'; l4 = 'テナント数';
     const mn = median(filtered.map(c => c.sizeMin || 0));

@@ -7,9 +7,12 @@
 // Only writeUrlState() touches history; everything above it is pure and tested
 // in test/urlState.test.js.
 import { LAYERS } from '../domain/filter.js';
-import { activeLayer, selectedCondo, activeTab } from '../state.js';
+import { activeLayer, selectedCondo, activeTab, appMode } from '../state.js';
 
 export const TABS = ['detail', 'nearby'];
+/** D4: the two modes. 住まい is the default and is left out of the URL. */
+export const MODES = ['home', 'eatout'];
+export const DEFAULT_MODE = 'home';
 
 // Re-entrancy guard. Restoring a state from the URL drives the same functions
 // the user's clicks do, and those functions write the URL — without this flag a
@@ -23,9 +26,16 @@ export function withUrlWritesSuspended(fn) {
   try { return fn(); } finally { suspended = prev; }
 }
 
-/** @returns {string} the query string (no leading '?') for a screen state. */
-export function buildQuery({ layer, sel, tab } = {}) {
+/**
+ * @returns {string} the query string (no leading '?') for a screen state.
+ *
+ * `mode` comes first because it is the coarsest thing about the screen, and it
+ * is omitted when it is 住まい: the published dashboard's links must keep the
+ * shape they already have.
+ */
+export function buildQuery({ mode, layer, sel, tab } = {}) {
   const p = new URLSearchParams();
+  if (mode && mode !== DEFAULT_MODE && MODES.includes(mode)) p.set('mode', mode);
   if (layer) p.set('layer', layer);
   if (sel) p.set('sel', sel);
   if (tab) p.set('tab', tab);
@@ -44,7 +54,11 @@ export function readUrlState(search) {
   const p = new URLSearchParams(s);
   const layer = p.get('layer');
   const tab = p.get('tab');
+  const mode = p.get('mode');
   return {
+    // An unknown mode is dropped, not trusted: 外食モード shows a private
+    // ledger, and only the literal string 'eatout' may turn it on.
+    mode: MODES.includes(mode) ? mode : null,
     layer: LAYERS.includes(layer) ? layer : null,
     sel: p.get('sel') || null,
     tab: TABS.includes(tab) ? tab : null,
@@ -77,6 +91,7 @@ export function writeUrlState(state, { replace = false } = {}) {
 /** Write the state the app is actually in right now. */
 export function syncUrl({ replace = false } = {}) {
   return writeUrlState({
+    mode: appMode,
     layer: activeLayer,
     sel: selectedCondo || null,
     // The tab only means something while something is selected.

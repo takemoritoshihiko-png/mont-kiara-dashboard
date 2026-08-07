@@ -113,11 +113,33 @@ describe('every control says what it is', () => {
 });
 
 describe('state is announced, not only drawn', () => {
-  it('marks the layer segments as a tab list with a selected tab', () => {
-    expect(body).toContain('class="layer-seg" role="tablist" aria-label="表示する種別"');
-    // Four since D3 added 飲食: 物件 / 学校 / 商業 / 飲食.
-    expect(body.match(/role="tab" aria-selected="/g)).toHaveLength(4);
-    expect(body).toContain('data-layer="dining"');
+  // Every segmented control on the page: what names it and how many tabs it
+  // has. Counted per control rather than page-wide, because D4 added two more
+  // (the mode switch and 外食モードの3ビュー) and a page-wide total would then
+  // pass whichever control lost its markup.
+  const SEGMENTS = [
+    { id: 'layerSeg', label: '表示する種別', tabs: 4, sample: 'data-layer="dining"' },
+    { id: 'modeSeg', label: 'モードを選ぶ', tabs: 2, sample: 'data-mode="eatout"' },
+    { id: 'viewSeg', label: '外食モードの表示', tabs: 3, sample: 'data-view="log"' },
+  ];
+
+  it('marks every segmented control as a tab list with a selected tab', () => {
+    for(const seg of SEGMENTS){
+      const i = body.indexOf(`id="${seg.id}"`);
+      expect(i, `${seg.id} is gone`).toBeGreaterThan(-1);
+      // A segment holds only <button>s, so the first </div> after it closes it.
+      const block = body.slice(i, body.indexOf('</div>', i));
+      const open = body.slice(i, body.indexOf('>', i));
+      expect(open, `${seg.id} is not a tablist`).toContain('role="tablist"');
+      expect(open, `${seg.id} has no name`).toContain(`aria-label="${seg.label}"`);
+      expect(block, `${seg.id} lost a control`).toContain(seg.sample);
+    }
+  });
+
+  it('gives each segmented control the number of tabs it is supposed to have', () => {
+    // 4 layers + 2 modes + 3 外食ビュー.
+    expect(body.match(/role="tab" aria-selected="/g))
+      .toHaveLength(SEGMENTS.reduce((s, x) => s + x.tabs, 0));
   });
 
   it('gives the 絞り込み disclosure an aria-expanded', () => {
@@ -126,8 +148,9 @@ describe('state is announced, not only drawn', () => {
     expect(btn.slice(0, btn.indexOf('>'))).toContain('aria-expanded="false"');
   });
 
-  it('gives the 学費くらべ, 受賞 and 子連れ toggles an aria-pressed', () => {
-    for(const id of ['sfToggle', 'toggleAward', 'toggleKidOk']){
+  it('gives every narrowing toggle an aria-pressed', () => {
+    // D4 added 行きたい / 未訪問, which are toggles of exactly the same kind.
+    for(const id of ['sfToggle', 'toggleAward', 'toggleKidOk', 'toggleWant', 'toggleUndone']){
       const btn = body.slice(body.indexOf(`id="${id}"`));
       expect(btn.slice(0, btn.indexOf('>')), `${id} has no aria-pressed`)
         .toContain('aria-pressed="false"');
@@ -366,7 +389,12 @@ describe('mobile (≤768px)', () => {
     for(const sel of ['.seg-btn', '.chips', '.disclosure', '.sort-select',
       '.sf-header', '.nb-row', '.info-tab', '.skel-card', '.fchip-x', '.info-overlay',
       // D3: the 飲食 layer's own controls.
-      '#fCatGroup', '#fMichelin', '#fPriceBand', '#fDiningArea', '#toggleKidOk']){
+      '#fCatGroup', '#fMichelin', '#fPriceBand', '#fDiningArea', '#toggleKidOk',
+      // D4: 外食モード — the mode switch, the three views, the extra filters and
+      // every control inside a record box.
+      '.mode-btn', '.view-btn', '#fVenueType', '#toggleWant', '#toggleUndone',
+      '.vb-toggle', '.vb-rv-btn', '.vb-amt', '.vb-memo', '.data-btn', '.data-area',
+      '.card-main', '.visitbox', '.log-name', '.log-tiles', '.savebar', '.toast']){
       expect(mobile, `${sel} was never given a mobile rule`).toContain(sel);
     }
   });
@@ -385,6 +413,12 @@ describe('mobile (≤768px)', () => {
       expect(mobile).toContain(sel);
     }
     expect(mobile).toContain('.search-clear{min-width:40px;min-height:40px');
+    // D4: the record controls. 再訪意向 is the smallest thing on the screen —
+    // three buttons sharing one row — so it is named explicitly.
+    expect(mobile).toContain('.vb-toggle,.vb-rv-btn,.vb-amt,.data-btn{min-height:40px}');
+    expect(mobile).toContain('.mode-btn{min-height:40px');
+    expect(mobile).toContain('.view-btn{min-height:40px');
+    expect(mobile).toContain('#fVenueType,#toggleWant,#toggleUndone{min-height:40px}');
     // The chip ✕ grows its hit area, not its glyph — a 40px ✕ is not a pill.
     const x = mobile.slice(mobile.indexOf('.fchip-x::after{'));
     expect(x.slice(0, x.indexOf('}'))).toContain('width:40px;height:40px');

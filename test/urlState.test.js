@@ -7,11 +7,15 @@ import {
 } from '../src/ui/urlState.js';
 
 const roundTrip = (state) => readUrlState('?' + buildQuery(state));
+// D4 added `mode` to the screen state. 住まいモード is the default and is left
+// OUT of the query string, so it comes back as null — a link written before D4
+// still reproduces exactly the screen it did.
+const HOME = { mode: null };
 
 describe('round trip', () => {
   it('preserves a plain condo selection', () => {
     const s = { layer: 'condo', sel: 'Seni Mont Kiara', tab: 'detail' };
-    expect(roundTrip(s)).toEqual(s);
+    expect(roundTrip(s)).toEqual({ ...HOME, ...s });
   });
 
   it('preserves spaces in a name', () => {
@@ -54,7 +58,7 @@ describe('buildQuery', () => {
 
 describe('readUrlState', () => {
   it('reads an empty query as an empty state', () => {
-    expect(readUrlState('')).toEqual({ layer: null, sel: null, tab: null });
+    expect(readUrlState('')).toEqual({ mode: null, layer: null, sel: null, tab: null });
   });
 
   it('rejects a layer the app has no controls for', () => {
@@ -66,7 +70,7 @@ describe('readUrlState', () => {
   it('accepts the 飲食 layer, so ?layer=dining is a shareable link', () => {
     expect(readUrlState('?layer=dining').layer).toBe('dining');
     expect(readUrlState('?layer=dining&sel=Dewakan&tab=nearby'))
-      .toEqual({ layer: 'dining', sel: 'Dewakan', tab: 'nearby' });
+      .toEqual({ mode: null, layer: 'dining', sel: 'Dewakan', tab: 'nearby' });
   });
 
   it('rejects an unknown tab', () => {
@@ -75,11 +79,44 @@ describe('readUrlState', () => {
 
   it('keeps a valid selection even when the layer is junk', () => {
     const s = readUrlState('?layer=nope&sel=Vipod%20Residences');
-    expect(s).toEqual({ layer: null, sel: 'Vipod Residences', tab: null });
+    expect(s).toEqual({ mode: null, layer: null, sel: 'Vipod Residences', tab: null });
   });
 
   it('accepts a query string with or without the leading ?', () => {
     expect(readUrlState('layer=school').layer).toBe('school');
+  });
+});
+
+// ============================================================
+// D4: ?mode=eatout
+// 外食モード shows a private ledger, so the URL may only turn it on with the
+// literal string — and 住まい, being the default, never appears in the query.
+// ============================================================
+describe('mode (D4)', () => {
+  it('leaves 住まいモード out of the query entirely', () => {
+    expect(buildQuery({ mode: 'home', layer: 'condo' })).toBe('layer=condo');
+    expect(buildQuery({ layer: 'condo' })).toBe('layer=condo');
+  });
+
+  it('writes 外食モード first, so the coarsest thing is read first', () => {
+    expect(buildQuery({ mode: 'eatout', layer: 'dining', sel: 'akar', tab: 'detail' }))
+      .toBe('mode=eatout&layer=dining&sel=akar&tab=detail');
+  });
+
+  it('reads it back', () => {
+    expect(readUrlState('?mode=eatout').mode).toBe('eatout');
+    expect(roundTrip({ mode: 'eatout', layer: 'dining', sel: 'akar', tab: 'detail' }))
+      .toEqual({ mode: 'eatout', layer: 'dining', sel: 'akar', tab: 'detail' });
+  });
+
+  it('drops anything that is not one of the two modes', () => {
+    for(const bad of ['dining', 'EATOUT', 'private', '1', '']){
+      expect(readUrlState('?mode=' + bad).mode, bad).toBe(null);
+    }
+  });
+
+  it('defaults to 住まい when the parameter is absent', () => {
+    expect(readUrlState('?layer=dining').mode).toBe(null);
   });
 });
 

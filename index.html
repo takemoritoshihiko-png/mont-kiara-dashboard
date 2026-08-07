@@ -68,6 +68,18 @@
   --type-condo:var(--accent);
   --type-school:#1a3d7c;
   --type-commercial:#e8710a;
+  /* 外食モード (D4). Inherited from 台帳v9 so a screenshot of the old ledger and
+     this app read as the same thing. They live here, not in the JS, because
+     nothing in this repo may write a literal hex outside :root.
+     再訪意向 — the one place a colour carries meaning rather than type. */
+  --rv-again:#1d5f55;   /* また行く */
+  --rv-maybe:#c4901f;   /* 機会があれば */
+  --rv-never:#a94a38;   /* もういい */
+  --rv-none:#8a968f;    /* 未回答 */
+  /* 台帳スコアの3本バー: 権威 / 継続性 / 評価 */
+  --bar-au:#a94a38; --bar-ct:#123b35; --bar-ev:#c4901f;
+  /* 訪問済みのカードが一覧で沈む度合い（v9 の .visited）。 */
+  --visited-dim:.55;
   /* 飲食 — mirrored as MARKER_COLORS.dining in src/ui/map.js, because Leaflet
      builds marker HTML outside this stylesheet's cascade. Change both. */
   --type-dining:#c2185b;
@@ -117,6 +129,9 @@ button,input,select{font-family:inherit}
 /* .fg-label is the same caption for a group whose control is a button, not a
    form field: a <label> with nothing to point at is a dangling label. */
 .filter-group label,.filter-group .fg-label{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;font-weight:600;letter-spacing:.2px}
+/* Two toggles under one caption (外食モードの「自分の記録」). A second caption
+   would be a <span> with nothing to say — the buttons name themselves. */
+.fg-btns{display:flex;gap:var(--s2);flex-wrap:wrap}
 .filter-group select,.filter-group input{background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:6px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm);min-width:0}
 .filter-group select:focus,.filter-group input:focus,.sort-select:focus,.search-wrap input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(10,108,255,.16)}
 .sort-row{display:flex;gap:var(--s2);align-items:center;margin-top:var(--s2)}
@@ -335,6 +350,101 @@ button,input,select{font-family:inherit}
 .load-error{padding:var(--s5) var(--s4);text-align:center;color:#b3261e;font-size:var(--fs-sm)}
 
 /* ============================================================
+   外食モード (D4) — the private half of the app
+   Nothing in this block is reachable in 住まいモード: the markup that carries
+   these classes is only generated when appMode === 'eatout' (src/ui/dining.js).
+   ============================================================ */
+/* ---- Mode switch, in the header ---- */
+.mode-seg{display:flex;margin-left:auto;background:var(--bg);border-radius:var(--r-pill);padding:2px;flex-shrink:0}
+.mode-btn{background:transparent;border:none;color:var(--text-2);font-size:var(--fs-xs);font-weight:600;padding:6px var(--s3);border-radius:var(--r-pill);cursor:pointer;white-space:nowrap;transition:all var(--dur) var(--ease)}
+.mode-btn:hover{color:var(--text)}
+.mode-btn.active{background:var(--surface);color:var(--accent);box-shadow:var(--shadow-1)}
+
+/* ---- The card splits in two: an openable half and the record controls ---- */
+.record-card{padding:0}
+.card-main{padding:var(--s3);cursor:pointer;border-radius:var(--r-card) var(--r-card) 0 0}
+/* 訪問済みは一覧で沈む。沈むのは「店の説明」だけで、下の記録欄は編集するための
+   ものなので薄くしない。 */
+.record-card.visited .card-main{opacity:var(--visited-dim)}
+.record-card.visited:hover .card-main,.record-card.visited:focus-within .card-main{opacity:1}
+
+/* ---- 台帳スコア ---- */
+.scorebox{display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s2);padding-bottom:var(--s2);border-bottom:1px solid var(--hairline)}
+.sc-total{display:flex;align-items:baseline;gap:2px;flex-shrink:0}
+.sc-num{font-size:var(--fs-xl);font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-1px}
+.sc-unit{font-size:var(--fs-label);color:var(--text-2)}
+.sc-break{font-size:var(--fs-label);color:var(--text-2);font-variant-numeric:tabular-nums;flex-shrink:0}
+.sc-bars{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.sc-bar{display:flex;align-items:center;gap:var(--s1)}
+.sc-bar-label{font-size:var(--fs-label);color:var(--text-2);width:3.4em;flex-shrink:0}
+.sc-bar-track{flex:1;min-width:0;height:4px;background:var(--hairline);border-radius:2px;overflow:hidden}
+.sc-bar-fill{display:block;height:100%;border-radius:2px}
+.sc-au{background:var(--bar-au)}.sc-ct{background:var(--bar-ct)}.sc-ev{background:var(--bar-ev)}
+.sc-rating{font-size:var(--fs-xs);color:var(--text-2);font-variant-numeric:tabular-nums;padding:0 var(--s3) var(--s2)}
+
+/* ---- 記録欄 (visitbox) ---- */
+.visitbox{padding:var(--s2) var(--s3) var(--s3);border-top:1px solid var(--hairline);background:var(--bg);border-radius:0 0 var(--r-card) var(--r-card)}
+.vb-head{display:flex;gap:var(--s2);flex-wrap:wrap}
+.vb-toggle{flex:1;min-width:0;background:var(--surface);border:1px solid var(--hairline);color:var(--text-2);border-radius:var(--r-pill);padding:6px var(--s2);font-size:var(--fs-xs);font-weight:600;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
+.vb-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.vb-visit.on{background:var(--rv-again);border-color:var(--rv-again);color:var(--surface)}
+.vb-want.on{background:var(--rv-maybe);border-color:var(--rv-maybe);color:var(--surface)}
+.vb-date{font-size:var(--fs-label);color:var(--text-2);font-variant-numeric:tabular-nums;margin-top:var(--s2)}
+.vb-q{font-size:var(--fs-xs);color:var(--text);font-weight:600;margin-top:var(--s2)}
+.vb-hint{font-size:var(--fs-label);color:var(--text-2);font-weight:400}
+.vb-rv{display:flex;gap:var(--s1);margin-top:var(--s1)}
+.vb-rv-btn{flex:1;min-width:0;background:var(--surface);border:1px solid var(--hairline);color:var(--text-2);border-radius:var(--r-control);padding:6px 2px;font-size:var(--fs-label);font-weight:600;cursor:pointer;transition:all var(--dur) var(--ease)}
+.vb-rv-btn.rv-a.on{background:var(--rv-again);border-color:var(--rv-again);color:var(--surface)}
+.vb-rv-btn.rv-m.on{background:var(--rv-maybe);border-color:var(--rv-maybe);color:var(--surface)}
+.vb-rv-btn.rv-n.on{background:var(--rv-never);border-color:var(--rv-never);color:var(--surface)}
+.vb-field{display:flex;flex-direction:column;gap:2px;margin-top:var(--s2)}
+.vb-flabel{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;font-weight:600;letter-spacing:.2px}
+.vb-amt,.vb-memo{background:var(--surface);border:1px solid var(--hairline);color:var(--text);border-radius:var(--r-control);padding:6px var(--s2);font-size:var(--fs-sm);font-family:var(--font);width:100%}
+.vb-amt{font-variant-numeric:tabular-nums}
+.vb-memo{resize:vertical;line-height:1.5}
+.vb-amt:focus,.vb-memo:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(10,108,255,.16)}
+.vb-privacy{font-size:var(--fs-label);color:var(--text-2);margin-top:var(--s2);line-height:1.5}
+
+/* ---- 行った店 ---- */
+.log-tiles{display:flex;gap:var(--s1);margin-bottom:var(--s3)}
+.log-tile{flex:1;min-width:0;text-align:center;padding:var(--s2) 2px;background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-control)}
+.log-tile-val{font-size:var(--fs-md);font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.4px}
+.log-tile-label{font-size:var(--fs-label);color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log-group{margin-bottom:var(--s4)}
+.log-group-head{font-size:var(--fs-xs);font-weight:700;color:var(--text);border-left:4px solid var(--rv-none);padding-left:var(--s2);margin-bottom:var(--s2)}
+.log-group-n{color:var(--text-2);font-weight:400;font-variant-numeric:tabular-nums}
+.log-row{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-card);margin-bottom:var(--s2);box-shadow:var(--shadow-1)}
+.log-row-head{padding:var(--s3) var(--s3) 0}
+.log-name{font-size:var(--fs-md);font-weight:600;color:var(--text);cursor:pointer;line-height:1.3;display:inline-block}
+.log-name:hover{color:var(--accent)}
+.log-sub{font-size:var(--fs-xs);color:var(--text-2);padding:0 var(--s3)}
+.log-meta{font-size:var(--fs-xs);color:var(--text-2);font-variant-numeric:tabular-nums;padding:var(--s1) var(--s3) 0}
+.log-memo{font-size:var(--fs-sm);color:var(--text);line-height:1.6;white-space:pre-wrap;border-left:3px solid var(--rv-maybe);margin:var(--s2) var(--s3) 0;padding-left:var(--s2)}
+
+/* ---- データ ---- */
+.dataview{padding-bottom:var(--s4)}
+.data-sec{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-card);padding:var(--s3);margin-bottom:var(--s2)}
+.data-h{font-size:var(--fs-sm);font-weight:700;color:var(--text);margin-bottom:var(--s2)}
+.data-line{font-size:var(--fs-xs);color:var(--text);font-variant-numeric:tabular-nums;margin-bottom:2px}
+.data-note{font-size:var(--fs-label);color:var(--text-2);line-height:1.6;margin:var(--s1) 0 var(--s2)}
+.data-warn{font-size:var(--fs-xs);color:var(--rv-never);border:1px solid var(--rv-never);border-radius:var(--r-control);padding:var(--s2);margin-bottom:var(--s2);line-height:1.5}
+.data-btns{display:flex;gap:var(--s2);flex-wrap:wrap;margin:var(--s2) 0}
+.data-btn{background:var(--surface);border:1px solid var(--hairline);color:var(--text);border-radius:var(--r-control);padding:var(--s2) var(--s3);font-size:var(--fs-xs);font-weight:600;cursor:pointer;transition:all var(--dur) var(--ease)}
+.data-btn:hover{border-color:var(--accent);color:var(--accent)}
+.data-btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.data-btn.danger{color:var(--rv-never);border-color:var(--rv-never)}
+.data-btn.danger:hover{background:var(--rv-never);color:var(--surface)}
+.data-area{width:100%;background:var(--bg);border:1px solid var(--hairline);color:var(--text);border-radius:var(--r-control);padding:var(--s2);font-size:var(--fs-xs);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;resize:vertical}
+.data-result{font-size:var(--fs-xs);color:var(--text);line-height:1.5;margin-top:var(--s1)}
+.data-result.bad{color:var(--rv-never)}
+
+/* ---- 保存バー / toast ---- */
+.savebar{font-size:var(--fs-label);color:var(--text-2);background:var(--surface);border-top:1px solid var(--hairline);padding:var(--s1) var(--s2);line-height:1.4;flex-shrink:0}
+.savebar.bad{color:var(--surface);background:var(--rv-never)}
+.toast{position:fixed;left:50%;bottom:var(--s5);transform:translateX(-50%) translateY(8px);background:var(--text);color:var(--surface);font-size:var(--fs-xs);padding:var(--s2) var(--s4);border-radius:var(--r-pill);box-shadow:var(--shadow-2);opacity:0;pointer-events:none;z-index:2000;transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease);max-width:80vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ============================================================
    KEYBOARD FOCUS (B4 a11y)
    Everything you can operate has to say so when you reach it with Tab. This
    block sits last on purpose: the :focus rules further up kill the outline in
@@ -348,7 +458,7 @@ button,input,select{font-family:inherit}
 .sf-age-row select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 /* Rows and cards are flush with their container, so the ring goes inside. */
 .condo-card:focus-visible,.nb-row:focus-visible,.sf-row:focus-visible,
-.sf-condo-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.sf-condo-row:focus-visible,.card-main:focus-visible,.log-name:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 /* The markers are Leaflet's elements; the ring goes on the pin inside, the same
    place the selected-marker ring lives (see .mk-pin-sel above). */
 .mk-pin:focus-visible{outline:none}
@@ -399,6 +509,28 @@ button,input,select{font-family:inherit}
   #fCatGroup,#fMichelin,#fPriceBand,#fDiningArea,#toggleKidOk{min-height:40px}
   /* Two chips (michelin + category) now share the row under a dining name. */
   .card-chips .card-chip{max-width:calc(50% - var(--s1))}
+
+  /* ---- 外食モード (D4) ---- */
+  /* The header is 44px here and the h1 already fills it, so the mode switch
+     drops its emoji-plus-word to the word and keeps a 40px tap target. */
+  .mode-seg{margin-left:var(--s2)}
+  .mode-btn{min-height:40px;padding:0 var(--s2);font-size:var(--fs-label)}
+  .view-btn{min-height:40px;padding:6px 2px;font-size:var(--fs-xs)}
+  #fVenueType,#toggleWant,#toggleUndone{min-height:40px}
+  /* Every control inside a record box, including the three 再訪意向 buttons
+     which are the smallest thing on the screen. */
+  .vb-toggle,.vb-rv-btn,.vb-amt,.data-btn{min-height:40px}
+  .vb-memo{min-height:72px}
+  .vb-rv{gap:2px}
+  .card-main{padding:var(--s2) var(--s3)}
+  .visitbox{padding:var(--s2)}
+  .log-name{min-height:40px;display:flex;align-items:center}
+  .log-tiles{gap:2px}
+  .log-tile-val{font-size:var(--fs-sm)}
+  .data-area{font-size:var(--fs-label)}
+  /* The bar is the last thing above the footer; it must not eat the list. */
+  .savebar{max-height:3.2em;overflow:hidden}
+  .toast{bottom:var(--s4);max-width:90vw}
   .disclosure{min-height:40px;padding:var(--s2) 0}
   .chip-toggle,.sort-btn,.sf-back,.fchip-clear,.btn-clear-all{min-height:40px}
   .search-clear{min-width:40px;min-height:40px;display:flex;align-items:center;justify-content:center;padding:0}
@@ -441,6 +573,12 @@ button,input,select{font-family:inherit}
 <body>
 <header class="header">
   <h1>KL・ペナン 住まいマップ<span class="en">KL &amp; Penang Living Map</span></h1>
+  <!-- D4: 住まい / 外食 — two apps over the same map. 外食 pins the layer to
+       飲食 and reveals the private record UI; 住まい never shows any of it. -->
+  <div class="mode-seg" id="modeSeg" role="tablist" aria-label="モードを選ぶ">
+    <button type="button" class="mode-btn active" data-mode="home" role="tab" aria-selected="true" onclick="setMode('home')" title="物件・学校・商業・飲食を見くらべる">🏠 住まい</button>
+    <button type="button" class="mode-btn" data-mode="eatout" role="tab" aria-selected="false" onclick="setMode('eatout')" title="飲食店の台帳と、自分の訪問記録">🍽 外食</button>
+  </div>
 </header>
 <main class="main" style="position:relative">
   <div id="map" role="application" aria-label="地図。物件・学校・商業施設・飲食店のマーカーを表示します。キーボードでは右の一覧から選んでください。"></div>
@@ -473,21 +611,28 @@ button,input,select{font-family:inherit}
     <!-- Each figure is tied to its caption with aria-labelledby: on its own,
          「271」 tells a screen-reader user nothing. Shown is a live region so a
          filter change announces the new count instead of changing in silence. -->
-    <div class="summary-bar">
+    <div class="summary-bar" id="summaryBar">
       <div class="summary-item"><div class="summary-val" id="sumTotal" aria-labelledby="sumTotalLabel">–</div><div class="summary-label" id="sumTotalLabel">Total</div></div>
       <div class="summary-item"><div class="summary-val" id="sumFiltered" aria-labelledby="sumFilteredLabel" aria-live="polite" aria-atomic="true">–</div><div class="summary-label" id="sumFilteredLabel">Shown</div></div>
       <div class="summary-item"><div class="summary-val" id="sumStat3" aria-labelledby="sumStat3Label">–</div><div class="summary-label" id="sumStat3Label">Med.PSF</div></div>
       <div class="summary-item"><div class="summary-val" id="sumStat4" aria-labelledby="sumStat4Label">–</div><div class="summary-label" id="sumStat4Label">Med.Rent</div></div>
     </div>
     <div class="filters">
-      <div class="layer-seg" role="tablist" aria-label="表示する種別">
+      <div class="layer-seg" id="layerSeg" role="tablist" aria-label="表示する種別">
         <button type="button" class="seg-btn active" data-layer="condo" role="tab" aria-selected="true" onclick="setLayer('condo')">🏠 物件</button>
         <button type="button" class="seg-btn" data-layer="school" role="tab" aria-selected="false" onclick="setLayer('school')">🎓 学校</button>
         <button type="button" class="seg-btn" data-layer="commercial" role="tab" aria-selected="false" onclick="setLayer('commercial')">🛒 商業</button>
         <button type="button" class="seg-btn" data-layer="dining" role="tab" aria-selected="false" onclick="setLayer('dining')">🍽 飲食</button>
       </div>
+      <!-- 外食モードでは層を選ぶ必要がない（飲食に固定）ので、同じ場所を
+           台帳v9の3タブが引き継ぐ。表示の切替は syncLayerUI()。 -->
+      <div class="layer-seg" id="viewSeg" role="tablist" aria-label="外食モードの表示" style="display:none">
+        <button type="button" class="view-btn seg-btn active" data-view="ledger" role="tab" aria-selected="true" onclick="setView('ledger')">📖 台帳</button>
+        <button type="button" class="view-btn seg-btn" data-view="log" role="tab" aria-selected="false" onclick="setView('log')">✓ 行った店</button>
+        <button type="button" class="view-btn seg-btn" data-view="data" role="tab" aria-selected="false" onclick="setView('data')">💾 データ</button>
+      </div>
 
-      <div class="filter-row">
+      <div class="filter-row" id="searchRow">
         <div class="filter-group" style="flex:1">
           <label for="fSearch">検索 / Search</label>
           <div class="search-wrap">
@@ -549,7 +694,18 @@ button,input,select{font-family:inherit}
           <div class="filter-group"><label for="fDiningArea">エリア</label><select id="fDiningArea" onchange="applyFilters()"><option value="">すべて</option></select></div>
         </div>
         <div class="filter-row" data-layer-only="dining" style="display:none">
+          <div class="filter-group"><label for="fVenueType">施設タイプ</label><select id="fVenueType" onchange="applyFilters()"><option value="">すべて</option></select></div>
           <div class="filter-group"><span class="fg-label">子連れ</span><button type="button" class="chip-toggle" id="toggleKidOk" aria-pressed="false" onclick="toggleKidOk()" title="子ども連れで行きやすい店だけに絞る">👶 子連れ◎のみ</button></div>
+        </div>
+        <!-- 外食モードだけ。2つは独立したトグルで、併用すると「行きたいのに
+             まだ行っていない店」になる（台帳v9はどちらか一方しか選べなかった）。 -->
+        <div class="filter-row" data-mode-only="eatout" style="display:none">
+          <div class="filter-group"><span class="fg-label">自分の記録</span>
+            <div class="fg-btns">
+              <button type="button" class="chip-toggle" id="toggleWant" aria-pressed="false" onclick="toggleWantFilter()" title="「行きたい」に入れた店だけに絞る">★ 行きたい</button>
+              <button type="button" class="chip-toggle" id="toggleUndone" aria-pressed="false" onclick="toggleUndoneFilter()" title="まだ訪問記録がない店だけに絞る">未訪問</button>
+            </div>
+          </div>
         </div>
         <!-- Every layer except 飲食, which filters on its own curated areas. -->
         <div class="filter-row" data-layer-only="condo,school,commercial">
@@ -559,7 +715,7 @@ button,input,select{font-family:inherit}
 
       <div class="chips" id="filterChips" style="display:none"></div>
 
-      <div class="sort-row">
+      <div class="sort-row" id="sortRow">
         <label class="sort-label" for="fSort">並び替え</label>
         <select id="fSort" class="sort-select" onchange="setSort(this)"></select>
         <button class="sort-btn" id="sfToggle" data-layer-only="school" style="display:none;margin-left:auto" aria-pressed="false" onclick="toggleSchoolFinder()" title="年齢を選んでKL・ペナン全校の年間学費を比べる">🎓 学費くらべ</button>
@@ -589,10 +745,13 @@ button,input,select{font-family:inherit}
       <div class="sf-body" id="sfContent"></div>
     </div>
     <div class="condo-list" id="condoList" aria-label="検索結果の一覧"></div>
+    <!-- 外食モードのみ。保存できたか・いつ保存したか・保存できない設定なら赤。 -->
+    <div class="savebar" id="saveBar" role="status" aria-live="polite" style="display:none"></div>
     <div class="panel-footer">出典: iProperty / PropertyGuru / EdgeProp (2025-2026), MICHELIN Guide, 各公式サイト</div>
   </aside>
   <div class="map-legend" id="mapLegend" style="cursor:pointer" role="button" tabindex="0" aria-expanded="false" aria-label="凡例を開閉" onclick="toggleLegend()"></div>
 </main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script type="module" src="./src/main.js"></script>
 </body>
