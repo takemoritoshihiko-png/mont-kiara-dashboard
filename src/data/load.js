@@ -49,8 +49,10 @@ export function parseCondosCsv(text) {
       rentMax: numOrNull(obj.rentMax),
       salePsfMin: numOrNull(obj.salePsfMin),
       salePsfMax: numOrNull(obj.salePsfMax),
-      lat: parseFloat(obj.lat) || 3.170,
-      lng: parseFloat(obj.lng) || 101.652,
+      // NO coordinate fallback: a record with a blank lat/lng must be dropped
+      // by the `c.lat > 1` filter below, not silently planted in Mont Kiara.
+      lat: parseFloat(obj.lat) || 0,
+      lng: parseFloat(obj.lng) || 0,
       developer: obj.developer || 'Other',
       ipropertyUrl: obj.iproperty_url || '',
       homepageUrl: obj.homepage_url || '',
