@@ -347,15 +347,15 @@ describe('住まいモードの層タブに飲食への入口がある', () => {
   });
 
   it('says on its face that it LEAVES this mode', () => {
-    const btn = seg.slice(seg.indexOf('data-layer="dining"'));
-    const tag = btn.slice(0, btn.indexOf('</button>'));
-    expect(tag).toContain('title="外食モードを開く"');
-    expect(tag).toContain('↗');
+    // The layer chips (UX3): the dining chip's NAME button is the door out.
+    const chip = seg.slice(seg.indexOf('data-layer="dining"'));
+    expect(chip).toContain('title="外食モードを開く"');
+    expect(chip).toContain('↗');
   });
 
-  it('is not marked as the selected layer — it never becomes one', () => {
-    const btn = seg.slice(seg.indexOf('data-layer="dining"'));
-    expect(btn.slice(0, btn.indexOf('>'))).toContain('aria-selected="false"');
+  it('is never the current layer of the home list', () => {
+    const chip = seg.slice(seg.indexOf('data-layer="dining"'));
+    expect(chip.slice(0, chip.indexOf('</div>'))).toContain('aria-current="false"');
   });
 
   it('keeps setLayer(dining) as the hand-over to 外食モード, not a home layer', () => {

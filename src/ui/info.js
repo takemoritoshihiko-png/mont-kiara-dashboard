@@ -424,7 +424,10 @@ export function selectCondo(name, opts = {}){
   // old layer — two "current things" on one screen (audit C). 外食モード pins
   // its layer, so there the detail simply opens.
   const rec = CONDOS.find(x => x.name === name);
-  if(rec && appMode === 'home' && recordLayer(rec) !== activeLayer){
+  // Dining pins can be checked onto the home map now: peeking at one opens
+  // its detail but must NOT yank the app into 外食モード (setLayer('dining')
+  // would). The 外食 door stays the chip name / the mode switch.
+  if(rec && appMode === 'home' && recordLayer(rec) !== activeLayer && recordLayer(rec) !== 'dining'){
     withUrlWritesSuspended(() => setLayer(recordLayer(rec)));
   }
   setActiveTab(opts.tab === 'nearby' ? 'nearby' : 'detail');

@@ -117,15 +117,24 @@ describe('state is announced, not only drawn', () => {
   // has. Counted per control rather than page-wide, because D4 added two more
   // (the mode switch and 外食モードの3ビュー) and a page-wide total would then
   // pass whichever control lost its markup.
+  // layerSeg stopped being a tablist in UX3: the layers became check-boxes
+  // (one, two or all four shown at once), so it is a role="group" of paired
+  // buttons — asserted separately below.
   const SEGMENTS = [
-    // 4: 物件 / 学校 / 商業 are layers; the fourth (飲食 ↗) is an ENTRANCE — it
-    // hands over to 外食モード rather than becoming a home-mode layer (UX2).
-    // It is still a tab in the markup because it sits in, and is styled by,
-    // the same segmented control.
-    { id: 'layerSeg', label: '表示する種別', tabs: 4, sample: 'data-layer="dining"' },
     { id: 'modeSeg', label: 'モードを選ぶ', tabs: 2, sample: 'data-mode="eatout"' },
     { id: 'viewSeg', label: '外食モードの表示', tabs: 3, sample: 'data-view="log"' },
   ];
+
+  it('the layer group carries 4 chips, each a visibility toggle + a name', () => {
+    const i = body.indexOf('id="layerSeg"');
+    expect(i).toBeGreaterThan(-1);
+    const block = body.slice(i, body.indexOf('id="viewSeg"'));
+    const open = body.slice(i, body.indexOf('>', i));
+    expect(open).toContain('role="group"');
+    expect(open).toContain('aria-label="表示する種別"');
+    expect((block.match(/class="chip-vis" aria-pressed=/g) || []).length).toBe(4);
+    expect((block.match(/class="chip-name" aria-current=/g) || []).length).toBe(4);
+  });
 
   it('marks every segmented control as a tab list with a selected tab', () => {
     for(const seg of SEGMENTS){

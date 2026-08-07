@@ -18,6 +18,9 @@ export let selectedCondo = null;
 // B3a: the active layer (物件 / 学校 / 商業) drives the list, the filters, the
 // sort options, the summary tiles and which markers are drawn at full opacity.
 export let activeLayer = 'condo';
+// 2026-08-07 裁定: 層は単一選択タブでなくチェックボックス=複数を同時に地図表示。
+// アクティブ層(一覧・フィルタが従う層)は常に表示に含まれる。
+export let visibleLayers = { condo: true, school: false, commercial: false, dining: false };
 // B3a-2: which tab of the detail overlay is open — 'detail' or 'nearby'.
 // Part of the screen state, so it travels in the URL.
 export let activeTab = 'detail';
@@ -88,7 +91,8 @@ export function setLastSortForLayer(layer, sort) {
   if (!layer || !sort) return;
   lastSortByLayer = { ...lastSortByLayer, [layer]: sort };
 }
-export function setActiveLayer(v) { activeLayer = v; }
+export function setActiveLayer(v) { activeLayer = v; if(visibleLayers[v] === false) visibleLayers = { ...visibleLayers, [v]: true }; }
+export function setLayerVisible(layer, on) { if(layer in visibleLayers) visibleLayers = { ...visibleLayers, [layer]: !!on }; }
 export function setActiveTab(v) { activeTab = v; }
 export function setMoreOpen(v) { moreOpen = v; }
 export function setShowAwardOnly(v) { showAwardOnly = v; }

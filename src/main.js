@@ -11,7 +11,7 @@ import { calcLuxury } from './domain/luxury.js';
 import { calcLedgerScores } from './domain/diningScore.js';
 import { initMap, jumpToArea, toggleLegend, togglePenangAreas, map } from './ui/map.js';
 import {
-  applyFilters, applyFiltersDebounced, setSort, setLayer, setMode, setView, syncLayerUI, toggleMore, updateSummary,
+  applyFilters, applyFiltersDebounced, setSort, setLayer, setMode, setView, syncLayerUI, toggleMore, updateSummary, toggleLayerVisible,
   toggleAward, toggleKidOk, toggleDayBudget, toggleWantFilter, toggleUndoneFilter,
   togglePanel, clearSearch, removeFilter, clearAllFilters, showLoading,
 } from './ui/list.js';
@@ -43,6 +43,7 @@ window.applyFilters = applyFilters;
 window.applyFiltersDebounced = applyFiltersDebounced;
 window.setSort = setSort;
 window.setLayer = setLayer;
+window.toggleLayerVisible = toggleLayerVisible;
 window.setMode = setMode;
 window.setView = setView;
 window.toggleMore = toggleMore;

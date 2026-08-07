@@ -6,6 +6,7 @@ import {
   showWantOnly, setShowWantOnly, showUndoneOnly, setShowUndoneOnly,
   appMode, setAppMode, homeLayer, setHomeLayer, listView, setListView,
   diningNear, setDiningNear, dayBudgetBasis, setDayBudgetBasis,
+  visibleLayers, setLayerVisible,
   lastSortByLayer, setLastSortForLayer,
 } from '../state.js';
 import { TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
@@ -128,6 +129,18 @@ export function applyFilters(){
   // link reproduces the narrowed view (replace — a filter tweak refines the
   // current view, it is not navigation).
   syncUrl({ replace: true });
+}
+
+/** ☑の切替: 地図にその層を出す/消す。アクティブ層(一覧が従う層)は消せない。 */
+export function toggleLayerVisible(layer){
+  if(layer === activeLayer && visibleLayers[layer] && appMode === 'home'){
+    toast('一覧に表示中の種別は地図から消せません（先に別の種別へ切り替えてください）');
+    syncLayerUI();
+    return;
+  }
+  setLayerVisible(layer, !visibleLayers[layer]);
+  syncLayerUI();
+  rebuild();
 }
 
 export function doSort(){
@@ -317,6 +330,15 @@ export function syncLayerUI(){
 
   syncSeg('.mode-btn', 'mode', appMode);
   syncSeg('.seg-btn', 'layer', activeLayer);
+  // Layer chips: ☑ = drawn on the map, highlighted name = the list's layer.
+  document.querySelectorAll('#layerSeg .layer-chip').forEach(ch => {
+    const ly = ch.dataset.layer;
+    ch.classList.toggle('active', ly === activeLayer && appMode === 'home');
+    const vis = ch.querySelector('.chip-vis');
+    if(vis) vis.setAttribute('aria-pressed', visibleLayers[ly] ? 'true' : 'false');
+    const nm = ch.querySelector('.chip-name');
+    if(nm) nm.setAttribute('aria-current', (ly === activeLayer && appMode === 'home') ? 'true' : 'false');
+  });
   syncSeg('.view-btn', 'view', listView);
   // The two segmented controls share one slot: 外食モード has no layers to
   // choose (it IS the 飲食 layer), so its three views take the row instead.

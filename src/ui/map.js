@@ -1,11 +1,13 @@
 // Leaflet map: creation, markers, the map legend and area quick-jump.
 import {
   CONDOS, filtered, markers, setMarkers, legendOpen, setLegendOpen,
-  selectedCondo, activeLayer, appMode, setDiningNear,
+  selectedCondo, activeLayer, appMode, setDiningNear, visibleLayers,
 } from '../state.js';
 import { NEAR_KM } from '../domain/filter.js';
 import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
 import { selectCondo, closeInfo } from './info.js';
+// Deferred-usage only (called inside functions): safe across the list.js<->map.js cycle.
+import { cardHeroText, ratingText } from './list.js';
 
 // ============================================================
 // ZOOM THRESHOLDS (tune here)
@@ -152,16 +154,12 @@ function clusterIconFactory(type) {
   const st = CLUSTER_STYLE[type];
   return (cluster) => {
     const n = cluster.getChildCount();
-    // Read the layer at draw time: the clusters are re-rendered on every
-    // rebuild(), so a layer switch re-dims them without any extra wiring.
-    const active = type === activeLayer;
-    // Background clusters are context, not content: opacity alone was not
-    // enough (a 46px saturated-orange square at 45% still out-shouts the
-    // active layer), so they also drop a full size tier.
-    const sz0 = n >= 25 ? 46 : n >= 10 ? 38 : 32;
-    const sz = active ? sz0 : sz0 - 10;
-    const fs = (n >= 25 ? 15 : n >= 10 ? 13 : 12) - (active ? 0 : 2);
-    const mute = active ? '' : 'filter:grayscale(.85) saturate(.3) opacity(.55);';
+    // Checked layers are all first-class (visibility is opt-in via the layer
+    // check-boxes), so the old 主役/背景 ghosting went away with the forced
+    // display it was softening.
+    const sz = n >= 25 ? 46 : n >= 10 ? 38 : 32;
+    const fs = n >= 25 ? 15 : n >= 10 ? 13 : 12;
+    const mute = '';
     return L.divIcon({
       className: '',
       iconSize: [sz, sz],
@@ -322,22 +320,46 @@ export function jumpToArea(key){
 }
 
 // ============================================================
-// LABELS — zoom-dependent tooltips
-// The selected marker keeps its always-on label at any zoom.
+// LABELS & HOVER CARD — zoom-dependent tooltips
+// Always-on mode (zoom >= LABEL_ZOOM, and the selected marker at any zoom)
+// shows the short NAME beside the pin. Hover mode shows a compact PREVIEW
+// CARD instead — pointing at a pin answers "what is this?" without a click,
+// and moving off it clears the answer (PC-first ruling, 2026-08-07). The
+// card reuses the list's own text builders, so the map can never quote a
+// different number than the card list does.
 // ============================================================
-const labelOpts = (permanent, offsetX) => ({
-  permanent, direction: 'right', offset: [offsetX, 0], className: 'condo-label-tip'
-});
+const labelOpts = (permanent, offsetX) => permanent
+  ? { permanent: true, direction: 'right', offset: [offsetX, 0], className: 'condo-label-tip' }
+  : { permanent: false, direction: 'top', offset: [0, -12], className: 'map-hover-card', opacity: 1 };
+
+/** The hover preview: name, the record's one deciding line, a short sub. */
+function hoverCardHtml(c){
+  const e = attrEsc;
+  const t = markerType(c);
+  const rows = [`<div class="mhc-name">${e(c.name)}</div>`];
+  if (c.nameJa) rows.push(`<div class="mhc-ja">${e(c.nameJa)}</div>`);
+  const hero = cardHeroText(c);
+  if (hero) rows.push(`<div class="mhc-hero">${e(hero)}</div>`);
+  let sub = '';
+  if (t === 'condo') sub = [c.luxTier ? `Tier ${c.luxTier}` : null, c.year ? `${c.year}年` : null, c.units > 0 ? `${c.units}戸` : null].filter(Boolean).join(' ・ ');
+  else if (t === 'school') sub = [c.curriculum, c.ageRange ? `${c.ageRange}歳` : null].filter(Boolean).join(' ・ ');
+  else if (t === 'commercial') sub = [c.year ? `${c.year}年開業` : null, c.anchorTenants ? String(c.anchorTenants).split(';')[0].trim() : null].filter(Boolean).join(' ・ ');
+  else if (t === 'dining') sub = [c.catGroup, MICHELIN_BADGES[c.michelin] || null, ratingText(c)].filter(Boolean).join(' ・ ');
+  if (sub) rows.push(`<div class="mhc-sub">${e(sub)}</div>`);
+  return `<div class="mhc">${rows.join('')}</div>`;
+}
 
 function bindLabel(m, name, text, offsetX, dim) {
   m._labelName = name;
   m._labelText = text;
   m._labelOffsetX = offsetX;
   m._dim = !!dim;
-  // Dimmed context markers never carry an always-on label (spec 2.2).
+  m._hoverHtml = null; // built lazily on first hover-mode bind
+  // Dimmed context markers never carry an always-on label (spec 2.2), but
+  // they DO answer to a hover — context you can point at is context you can
+  // read. (Their fade comes from the .mk-dim class; no marker opacity here.)
   const permanent = !dim && ((labelMode || 'permanent') === 'permanent' || name === selectedCondo);
-  m.bindTooltip(text, labelOpts(permanent, offsetX));
-  if (dim) m.setOpacity(DIM_OPACITY);
+  m.bindTooltip(permanent ? text : (m._hoverHtml = m._hoverHtml || hoverCardHtml(m._rec)), labelOpts(permanent, offsetX));
   return m;
 }
 
@@ -348,7 +370,9 @@ function applyLabelMode(mode) {
     const tip = m.getTooltip();
     if (tip && !!tip.options.permanent === permanent) return;
     m.unbindTooltip();
-    m.bindTooltip(m._labelText, labelOpts(permanent, m._labelOffsetX));
+    m.bindTooltip(
+      permanent ? m._labelText : (m._hoverHtml = m._hoverHtml || hoverCardHtml(m._rec)),
+      labelOpts(permanent, m._labelOffsetX));
   });
 }
 
@@ -392,6 +416,7 @@ function mkMarker(c, dim) {
       </div>`
     });
     const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
+    m._rec = c;
     m.on('click',()=>selectCondo(c.name));
     return bindLabel(m, c.name, c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), csz/2+2, dim);
   }
@@ -416,6 +441,7 @@ function mkMarker(c, dim) {
       </div>`
     });
     const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
+    m._rec = c;
     m.on('click',()=>selectCondo(c.name));
     return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2, dim);
   }
@@ -437,6 +463,7 @@ function mkMarker(c, dim) {
       </div>`
     });
     const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
+    m._rec = c;
     m.on('click',()=>selectCondo(c.name));
     return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2, dim);
   }
@@ -463,6 +490,7 @@ function mkMarker(c, dim) {
   });
 
   const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
+    m._rec = c;
   m.on('click',()=>selectCondo(c.name));
 
   // Name label (permanent when zoomed in / selected, hover-only otherwise)
@@ -486,15 +514,15 @@ export function rebuild(){
   const ns=new Set(filtered.map(c=>c.name));
   CONDOS.forEach(c=>{
     const type=markerType(c);
-    // Each mode draws only its own layers (2026-08-07 ruling + audit):
-    // 住まいモード has no dining pins, and 外食モード has no condo/school/mall
-    // pins — a page about restaurants showing 271 grey condo clusters was
-    // pure noise. The 周辺 tab still crosses modes where it matters.
-    if(type==='dining'&&appMode!=='eatout')return;
-    if(type!=='dining'&&appMode==='eatout')return;
+    // 外食モード draws restaurants only. 住まいモード draws exactly the layers
+    // whose checkbox is on (2026-08-07 ruling: the layer tabs became
+    // check-boxes — one, two or all four at once). What is checked is shown
+    // at full strength: opt-in context does not need ghosting.
+    if(appMode==='eatout'){ if(type!=='dining') return; }
+    else if(!visibleLayers[type]) return;
     const isActive=type===activeLayer;
     if(isActive&&!ns.has(c.name))return;
-    const m=mkMarker(c,!isActive);markers[c.name]=m;
+    const m=mkMarker(c,false);markers[c.name]=m;
     // The selected marker stays unclustered so its always-on label survives
     // at every zoom level.
     if(c.name===selectedCondo)m.addTo(map);

@@ -143,6 +143,15 @@ button,input,select{font-family:inherit}
 
 /* ---- Layer segmented control (spec 2.2) ---- */
 .layer-seg{display:flex;background:var(--bg);border-radius:var(--r-control);padding:2px;margin-bottom:var(--s3)}
+/* 層チップ = ☑(表示) + 名前(一覧の切替)。アクティブ層は名前が濃く下線 */
+.layer-chip{display:flex;flex:1;align-items:stretch;border-radius:var(--r-control);overflow:hidden}
+.chip-vis{border:none;background:transparent;color:var(--text-2);cursor:pointer;padding:0 var(--s1) 0 var(--s2);font-size:var(--fs-xs);opacity:.35}
+.chip-vis[aria-pressed="true"]{color:var(--accent);opacity:1}
+.chip-vis:hover{opacity:1}
+.chip-name{flex:1;border:none;background:transparent;cursor:pointer;padding:6px var(--s1);font-size:var(--fs-xs);font-weight:600;color:var(--text-2);border-radius:var(--r-control);white-space:nowrap}
+.chip-name:hover{color:var(--text)}
+.layer-chip.active{background:var(--surface);box-shadow:var(--shadow-1)}
+.layer-chip.active .chip-name{color:var(--accent)}
 .seg-btn{flex:1;background:transparent;border:none;color:var(--text-2);font-size:var(--fs-sm);font-weight:600;padding:6px var(--s1);border-radius:6px;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
 .seg-btn:hover{color:var(--text)}
 .seg-btn.active{background:var(--surface);color:var(--accent);box-shadow:var(--shadow-1)}
@@ -521,6 +530,15 @@ button,input,select{font-family:inherit}
 .data-details>summary{font-size:var(--fs-xs);font-weight:600;color:var(--accent);cursor:pointer;padding:var(--s1) 0}
 .data-details[open]>summary{margin-bottom:var(--s1)}
 
+/* ホバー情報カード: マーカーを指すだけで要点が出る（PC前提・2026-08-07裁定）。
+   地図を妨げない幅に留め、ポインタは奪わない（外すと即消える） */
+.map-hover-card{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-card);box-shadow:var(--shadow-2);padding:var(--s2) var(--s3);width:max-content;max-width:250px;pointer-events:none;white-space:normal}
+.map-hover-card:before{border-top-color:var(--surface)}
+.mhc-name{font-size:var(--fs-sm);font-weight:700;color:var(--text);line-height:1.25}
+.mhc-ja{font-size:var(--fs-label);color:var(--text-2)}
+.mhc-hero{font-size:var(--fs-sm);font-weight:600;color:var(--text);margin-top:2px}
+.mhc-sub{font-size:var(--fs-label);color:var(--text-2);margin-top:1px}
+
 /* 押下感: タッチにはhoverが無いので、押した瞬間の反応をここで一括付与 */
 .condo-card:active,.seg-btn:active,.mode-btn:active,.chip-toggle:active,.vb-toggle:active,.vb-rv-btn:active,.data-btn:active,.area-jump button:active,.nb-row:active,.sf-row:active,.sort-btn:active,.aj-penang-toggle:active{transform:scale(.98);opacity:.85}
 /* 記録カード: 押せるのは .card-main だけ。それ以外にポインタと持ち上げを出さない */
@@ -583,6 +601,7 @@ button,input,select{font-family:inherit}
   .disclosure{min-height:40px;padding:var(--s2) 0}
   .chip-toggle,.sort-btn,.sf-back,.fchip-clear,.btn-clear-all{min-height:40px}
   .search-clear{min-width:40px;min-height:40px;display:flex;align-items:center;justify-content:center;padding:0}
+  .chip-vis,.chip-name{min-height:40px}
   .data-details>summary{min-height:40px;display:flex;align-items:center}
   .info-tab{min-height:40px}
   .nb-row,.sf-row,.sf-condo-row{min-height:40px}
@@ -678,11 +697,26 @@ button,input,select{font-family:inherit}
            に読み替えられてモードごと移る（src/ui/list.js）。↗ と title は「ここから
            出ていく」ことを見た目で言うためのもの。UX2 以前はこの入口が無く、飲食に
            行く道はヘッダーの小さなモード切替だけだった。 -->
-      <div class="layer-seg" id="layerSeg" role="tablist" aria-label="表示する種別">
-        <button type="button" class="seg-btn active" data-layer="condo" role="tab" aria-selected="true" onclick="setLayer('condo')">🏠 物件</button>
-        <button type="button" class="seg-btn" data-layer="school" role="tab" aria-selected="false" onclick="setLayer('school')">🎓 学校</button>
-        <button type="button" class="seg-btn" data-layer="commercial" role="tab" aria-selected="false" onclick="setLayer('commercial')">🛒 商業</button>
-        <button type="button" class="seg-btn" data-layer="dining" role="tab" aria-selected="false" onclick="setLayer('dining')" title="外食モードを開く">🍽 飲食 ↗</button>
+      <!-- 層はチェックボックス（2026-08-07 裁定: 1つ・2つ・全部と複数を同時に
+           地図表示できる）。各チップ = ☑（地図に出す/消す）＋名前（一覧をその層に
+           切り替える。アクティブ層は常に表示に含まれる）。 -->
+      <div class="layer-seg" id="layerSeg" role="group" aria-label="表示する種別">
+        <div class="layer-chip active" data-layer="condo">
+          <button type="button" class="chip-vis" aria-pressed="true" aria-label="物件を地図に表示" onclick="toggleLayerVisible('condo')">✓</button>
+          <button type="button" class="chip-name" aria-current="true" onclick="setLayer('condo')">🏠 物件</button>
+        </div>
+        <div class="layer-chip" data-layer="school">
+          <button type="button" class="chip-vis" aria-pressed="false" aria-label="学校を地図に表示" onclick="toggleLayerVisible('school')">✓</button>
+          <button type="button" class="chip-name" aria-current="false" onclick="setLayer('school')">🎓 学校</button>
+        </div>
+        <div class="layer-chip" data-layer="commercial">
+          <button type="button" class="chip-vis" aria-pressed="false" aria-label="商業施設を地図に表示" onclick="toggleLayerVisible('commercial')">✓</button>
+          <button type="button" class="chip-name" aria-current="false" onclick="setLayer('commercial')">🛒 商業</button>
+        </div>
+        <div class="layer-chip" data-layer="dining">
+          <button type="button" class="chip-vis" aria-pressed="false" aria-label="飲食店を地図に表示" onclick="toggleLayerVisible('dining')">✓</button>
+          <button type="button" class="chip-name" aria-current="false" onclick="setLayer('dining')" title="外食モードを開く">🍽 飲食 ↗</button>
+        </div>
       </div>
       <!-- 外食モードでは層を選ぶ必要がない（飲食に固定）ので、同じ場所を
            台帳v9の3タブが引き継ぐ。表示の切替は syncLayerUI()。 -->
