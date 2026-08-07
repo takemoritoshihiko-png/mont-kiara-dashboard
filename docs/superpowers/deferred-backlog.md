@@ -161,3 +161,18 @@
 - **Sushi Taka / KUKI等 G1権威系の裁定** — G1収集完了後に判定を追記
 
 - 【現況注記 2026-08-07深夜】上記B3a保留の「屋台街は8分類のまま」の母数は現在9分類(カフェ・デザート新設後)。屋台街=1件を独立分類のままにするかの論点自体は引き続き未裁定
+
+## 2026-08-08未明 夜間リファクタ+監査で保留にした課題
+**裁定が要るもの(夜間の独断で触らなかった):**
+- **tier(継続性)の付与ルール**: 拡充43店は全てtier=0で継続性0点。Bijan(2003年)ですら0扱いで、新規店が構造的にスコア下位に沈む(新26店平均39.4 vs 旧67店53.9)。「tierはv9の50店専用」と明文化するか、創業年からの付与規則を作るか
+- **vox空欄の表示**: 43/93店でvox(支持/不満)が空→詳細に「—」セクション2つ。現仕様「両方常時表示」は明示テストで固定された意図的契約のため夜間では覆さず。推奨=両方空なら節ごと非表示(片方だけ表示は引き続き禁止)
+- **--type-condoの正**: CSSトークン(=accent青)とJS(MARKER_COLORS.condo=スレート#78909c)が乖離。物件色は3系統(帯/クラスタ/ピン)ありどれを正とするかは設計裁定
+- **トグルUIの表駆動化(S1)**: 1トグル=最大11箇所編集の現状をTOGGLES表1行に。挙動同一だがDOM配線のテストが無いため夜間見送り
+- **層レジストリ化(S10)**: 層の知識が11テーブルに分散(第5の層を足すと20箇所)。LAYER_SPEC一本化はnearby.jsの方式を一般化する設計仕事
+**小粒の残債(次の区切りで):**
+- schoolFinderの物件tooltipにupcoming/価格ガードなし(現データでは発火しない潜在。cardHeroText共用が筋)
+- Niko Neko Bangsarの通り(住所=Jalan Telawi vs 座標=Lorong Maarof)の実地裏取り
+- エリア名の(PJ)表記ゆれ(Damansara Utamaだけ無印)・Positanoの「KL Metropolis」vs実体Publika
+- natCodeは読み込むだけの死列(描画なし)。使うか消すか
+- pending placeId 9件(Nero Nero/Vantador/Der Backmeister/Foo Foo/Niko Neko/Dancing Fish/宮武/Jie/Shu)
+- list.js(928行)の分割候補: format.js抽出は完了。次はcards.js(約225行・純関数)とsummary.js
