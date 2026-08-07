@@ -109,6 +109,10 @@ export function applyFilters(){
   const crit = readCriteria();
   setFiltered(CONDOS.filter(c => matchesFilters(c, crit)));
   doSort(); rebuild(); renderList(); updateSummary(); renderChips(); renderSaveBar();
+  // Filters are screen state too: keep the address bar in sync so a shared
+  // link reproduces the narrowed view (replace — a filter tweak refines the
+  // current view, it is not navigation).
+  syncUrl({ replace: true });
 }
 
 export function doSort(){
@@ -745,8 +749,14 @@ const median = (arr) => {
 export const TILE_EMPTY = '–';
 
 export function updateSummary(){
-  const total = CONDOS.filter(c => recordLayer(c) === activeLayer).length;
-  $('sumTotal').textContent = num(total);
+  // 「画面内」— what the map actually shows right now. The old tile said
+  // 全件271 while 28% of the records sat off-screen at the initial view, and
+  // before any filtering it just duplicated 表示中. main.js refreshes this on
+  // every map moveend.
+  const inView = (map && map.getBounds)
+    ? filtered.filter(c => map.getBounds().contains([c.lat, c.lng])).length
+    : filtered.length;
+  $('sumTotal').textContent = num(inView);
   $('sumFiltered').textContent = num(filtered.length);
 
   let l3 = 'PSF中央値', l4 = '家賃中央値', v3 = TILE_EMPTY, v4 = TILE_EMPTY;

@@ -33,13 +33,68 @@ export function withUrlWritesSuspended(fn) {
  * is omitted when it is 住まい: the published dashboard's links must keep the
  * shape they already have.
  */
-export function buildQuery({ mode, layer, sel, tab } = {}) {
+export function buildQuery({ mode, layer, sel, tab, f } = {}) {
   const p = new URLSearchParams();
   if (mode && mode !== DEFAULT_MODE && MODES.includes(mode)) p.set('mode', mode);
   if (layer) p.set('layer', layer);
   if (sel) p.set('sel', sel);
   if (tab) p.set('tab', tab);
+  if (f) p.set('f', f);
   return p.toString();
+}
+
+// ============================================================
+// FILTERS IN THE URL
+// 「学費8万以下・IB」まで絞ったリンクを家族に送っても、受け手には全件が
+// 出ていた（タスク検証で確認）。案内資料・公開サイトの用途には絞り込みも
+// 画面状態の一部なので、選択系コントロールの値を `f` に載せる。
+// 形式: "fRent:0-20000|fArea:mont-kiara|fSearch:vista"（値はencode済み）。
+// トグル（受賞のみ等）は対象外 — 下の許可リストが受け口のすべて。
+// ============================================================
+const FILTER_IDS = [
+  'fSearch', 'fArea', 'fRent', 'fTier', 'fSalePsf', 'fYear', 'fAge', 'fSize',
+  'fStatus', 'fSchoolAge', 'fCurriculum', 'fFee', 'fNla', 'fOpenYear',
+  'fAnchor', 'fCatGroup', 'fMichelin', 'fPriceBand', 'fDiningArea', 'fVenueType',
+];
+
+/** The non-empty filter controls, serialized. '' when nothing is set. */
+export function currentFilterParam(doc) {
+  const d = doc || (typeof document !== 'undefined' ? document : null);
+  if (!d) return '';
+  const parts = [];
+  for (const id of FILTER_IDS) {
+    const el = d.getElementById(id);
+    if (el && el.value) parts.push(id + ':' + encodeURIComponent(el.value));
+  }
+  return parts.join('|');
+}
+
+/**
+ * Parse the `f` param back into [id, value] pairs. Unknown ids are dropped —
+ * a hand-edited URL must not reach elements this module never wrote.
+ */
+export function parseFilterParam(f) {
+  if (!f) return [];
+  return f.split('|').map((pair) => {
+    const i = pair.indexOf(':');
+    if (i < 1) return null;
+    const id = pair.slice(0, i);
+    if (!FILTER_IDS.includes(id)) return null;
+    try { return [id, decodeURIComponent(pair.slice(i + 1))]; }
+    catch { return null; }
+  }).filter(Boolean);
+}
+
+/** Write parsed filter pairs into the controls. Returns how many applied. */
+export function applyFilterParam(f, doc) {
+  const d = doc || (typeof document !== 'undefined' ? document : null);
+  if (!d) return 0;
+  let n = 0;
+  for (const [id, value] of parseFilterParam(f)) {
+    const el = d.getElementById(id);
+    if (el) { el.value = value; n++; }
+  }
+  return n;
 }
 
 /**
@@ -62,6 +117,7 @@ export function readUrlState(search) {
     layer: LAYERS.includes(layer) ? layer : null,
     sel: p.get('sel') || null,
     tab: TABS.includes(tab) ? tab : null,
+    f: p.get('f') || null,
   };
 }
 
@@ -96,5 +152,6 @@ export function syncUrl({ replace = false } = {}) {
     sel: selectedCondo || null,
     // The tab only means something while something is selected.
     tab: selectedCondo ? activeTab : null,
+    f: currentFilterParam(),
   }, { replace });
 }

@@ -9,9 +9,9 @@ import {
 } from './data/load.js';
 import { calcLuxury } from './domain/luxury.js';
 import { calcLedgerScores } from './domain/diningScore.js';
-import { initMap, jumpToArea, toggleLegend, togglePenangAreas } from './ui/map.js';
+import { initMap, jumpToArea, toggleLegend, togglePenangAreas, map } from './ui/map.js';
 import {
-  applyFilters, applyFiltersDebounced, setSort, setLayer, setMode, setView, syncLayerUI, toggleMore,
+  applyFilters, applyFiltersDebounced, setSort, setLayer, setMode, setView, syncLayerUI, toggleMore, updateSummary,
   toggleAward, toggleKidOk, toggleWantFilter, toggleUndoneFilter,
   togglePanel, clearSearch, removeFilter, clearAllFilters, showLoading,
 } from './ui/list.js';
@@ -80,6 +80,9 @@ window.sfSelectSchool = sfSelectSchool;
 window.sfSelectCondo = sfSelectCondo;
 
 initMap();
+// 「画面内」タイルは地図が動くたびに数え直す（300ms合流）。
+let moveTimer = null;
+map.on('moveend', () => { clearTimeout(moveTimer); moveTimer = setTimeout(updateSummary, 300); });
 
 // ============================================================
 // 個人記録 (D4)
@@ -162,10 +165,14 @@ window.addEventListener('popstate', () => {
     // The 飲食 layer's エリア dropdown is built from the data that just landed,
     // so the controls are re-synced once before the first render.
     syncLayerUI();
-    applyFilters();
+    // Capture the URL BEFORE the first applyFilters: applyFilters now writes
+    // the (empty) filter state to the address bar, which would erase the very
+    // ?sel=&f= parameters we are about to restore.
+    const initialState = readUrlState();
+    withUrlWritesSuspended(() => applyFilters());
 
     // A shared link only becomes reproducible once the data it names exists.
-    withUrlWritesSuspended(() => applyUrlState(readUrlState()));
+    withUrlWritesSuspended(() => applyUrlState(initialState));
 
     if (loadErrors.length > 0) {
       const warn = document.createElement('div');

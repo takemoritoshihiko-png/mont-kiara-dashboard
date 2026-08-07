@@ -10,7 +10,7 @@ const roundTrip = (state) => readUrlState('?' + buildQuery(state));
 // D4 added `mode` to the screen state. 住まいモード is the default and is left
 // OUT of the query string, so it comes back as null — a link written before D4
 // still reproduces exactly the screen it did.
-const HOME = { mode: null };
+const HOME = { mode: null, f: null };
 
 describe('round trip', () => {
   it('preserves a plain condo selection', () => {
@@ -58,7 +58,7 @@ describe('buildQuery', () => {
 
 describe('readUrlState', () => {
   it('reads an empty query as an empty state', () => {
-    expect(readUrlState('')).toEqual({ mode: null, layer: null, sel: null, tab: null });
+    expect(readUrlState('')).toEqual({ mode: null, layer: null, sel: null, tab: null, f: null });
   });
 
   it('rejects a layer the app has no controls for', () => {
@@ -70,7 +70,7 @@ describe('readUrlState', () => {
   it('accepts the 飲食 layer, so ?layer=dining is a shareable link', () => {
     expect(readUrlState('?layer=dining').layer).toBe('dining');
     expect(readUrlState('?layer=dining&sel=Dewakan&tab=nearby'))
-      .toEqual({ mode: null, layer: 'dining', sel: 'Dewakan', tab: 'nearby' });
+      .toEqual({ mode: null, layer: 'dining', sel: 'Dewakan', tab: 'nearby', f: null });
   });
 
   it('rejects an unknown tab', () => {
@@ -79,7 +79,7 @@ describe('readUrlState', () => {
 
   it('keeps a valid selection even when the layer is junk', () => {
     const s = readUrlState('?layer=nope&sel=Vipod%20Residences');
-    expect(s).toEqual({ mode: null, layer: null, sel: 'Vipod Residences', tab: null });
+    expect(s).toEqual({ mode: null, layer: null, sel: 'Vipod Residences', tab: null, f: null });
   });
 
   it('accepts a query string with or without the leading ?', () => {
@@ -106,7 +106,7 @@ describe('mode (D4)', () => {
   it('reads it back', () => {
     expect(readUrlState('?mode=eatout').mode).toBe('eatout');
     expect(roundTrip({ mode: 'eatout', layer: 'dining', sel: 'akar', tab: 'detail' }))
-      .toEqual({ mode: 'eatout', layer: 'dining', sel: 'akar', tab: 'detail' });
+      .toEqual({ mode: 'eatout', layer: 'dining', sel: 'akar', tab: 'detail', f: null });
   });
 
   it('drops anything that is not one of the two modes', () => {

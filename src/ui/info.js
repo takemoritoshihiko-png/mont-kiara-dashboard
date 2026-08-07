@@ -21,7 +21,7 @@ import { nearby, formatDistance, BUCKET_LABELS, NEARBY_BUCKETS } from '../domain
 import { map, rebuild } from './map.js';
 import { renderList, setLayer, setMode, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
 import { eatoutDetailHtml } from './dining.js';
-import { syncUrl, withUrlWritesSuspended } from './urlState.js';
+import { syncUrl, withUrlWritesSuspended, applyFilterParam } from './urlState.js';
 
 // The record the overlay is currently showing. Kept so a tab switch can
 // re-render without going through the whole selection flow again.

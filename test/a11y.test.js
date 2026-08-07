@@ -377,10 +377,12 @@ describe('mobile (≤768px)', () => {
     expect(mobile).toContain('#map{flex:1 1 auto');
   });
 
-  it('caps the detail overlay at 60vh and lets it scroll', () => {
+  it('caps the detail overlay inside the map area (55% split) and lets it scroll', () => {
     const rule = mobile.slice(mobile.indexOf('.info-overlay{'));
     const decl = rule.slice(0, rule.indexOf('}'));
-    expect(decl).toContain('max-height:60vh');
+    // 60vh overflowed the 55% map area by ~57px on a 667px phone and sat on
+    // top of the list panel; the cap is now relative to the split itself.
+    expect(decl).toContain('max-height:calc(55% - var(--s2))');
     expect(decl).toContain('overflow-y:auto');
     // The base rule stretches top-to-bottom; max-height only bites once that
     // stretch is released.

@@ -97,7 +97,7 @@
   --shadow-1:0 1px 2px rgba(0,0,0,.05);
   --shadow-2:0 4px 16px rgba(0,0,0,.10);
   /* The one "you are here" ring: selected map marker, 40% accent (spec 2.7). */
-  --ring-accent:0 0 0 3px rgba(10,108,255,.4);
+  --ring-accent:0 0 0 2px var(--surface), 0 0 0 4.5px var(--accent);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -590,7 +590,7 @@ button,input,select{font-family:inherit}
   /* ---- Detail overlay: a sheet over the map, not a full-height column.
      bottom:auto releases the base rule's top/bottom stretch so max-height can
      actually cap it; the header inside stays sticky and the body scrolls. ---- */
-  .info-overlay{top:0;bottom:auto;width:78vw;max-width:280px;max-height:60vh;overflow-y:auto}
+  .info-overlay{top:0;bottom:auto;left:var(--s2);right:var(--s2);width:auto;max-width:none;max-height:calc(55% - var(--s2));overflow-y:auto;border-radius:var(--r-card)}
   .info-name{font-size:var(--fs-md)}
 
   /* ---- 学費くらべ ---- */
@@ -648,7 +648,7 @@ button,input,select{font-family:inherit}
          「271」 tells a screen-reader user nothing. Shown is a live region so a
          filter change announces the new count instead of changing in silence. -->
     <div class="summary-bar" id="summaryBar">
-      <div class="summary-item"><div class="summary-val" id="sumTotal" aria-labelledby="sumTotalLabel">–</div><div class="summary-label" id="sumTotalLabel">全件</div></div>
+      <div class="summary-item"><div class="summary-val" id="sumTotal" aria-labelledby="sumTotalLabel">–</div><div class="summary-label" id="sumTotalLabel">画面内</div></div>
       <div class="summary-item"><div class="summary-val" id="sumFiltered" aria-labelledby="sumFilteredLabel" aria-live="polite" aria-atomic="true">–</div><div class="summary-label" id="sumFilteredLabel">表示中</div></div>
       <div class="summary-item"><div class="summary-val" id="sumStat3" aria-labelledby="sumStat3Label">–</div><div class="summary-label" id="sumStat3Label">PSF中央値</div></div>
       <div class="summary-item"><div class="summary-val" id="sumStat4" aria-labelledby="sumStat4Label">–</div><div class="summary-label" id="sumStat4Label">家賃中央値</div></div>
@@ -681,7 +681,7 @@ button,input,select{font-family:inherit}
       </div>
 
       <div class="filter-row" data-layer-only="condo">
-        <div class="filter-group"><label for="fRent">家賃帯 (RM/月)</label><select id="fRent" onchange="applyFilters()"><option value="">すべて</option><option value="0-3000">&lt;3K</option><option value="3000-5000">3-5K</option><option value="5000-8000">5-8K</option><option value="8000-12000">8-12K</option><option value="12000-99999">&gt;12K</option></select></div>
+        <div class="filter-group"><label for="fRent">家賃帯 (RM/月)</label><select id="fRent" onchange="applyFilters()"><option value="">すべて</option><option value="0-3000">RM3,000以下</option><option value="0-5000">RM5,000以下</option><option value="0-8000">RM8,000以下</option><option value="0-12000">RM12,000以下</option><option value="0-20000">RM20,000以下</option></select></div>
         <div class="filter-group"><label for="fTier">Tier</label><select id="fTier" onchange="applyFilters()"><option value="">すべて</option><option value="S+">S+ (Ultra Luxury)</option><option value="A+">A+ (Super Luxury &amp; above)</option><option value="B+">B+ (Luxury &amp; above)</option><option value="C+">C+ (Upper Mid &amp; above)</option><option value="S">S only</option><option value="A">A only</option><option value="B">B only</option><option value="C">C only</option><option value="D">D only</option></select></div>
       </div>
       <div class="filter-row" data-layer-only="school" style="display:none">
@@ -715,7 +715,7 @@ button,input,select{font-family:inherit}
           <div class="filter-group"><span class="fg-label">受賞</span><button type="button" class="chip-toggle" id="toggleAward" aria-pressed="false" onclick="toggleAward()" title="FIABCI Malaysia Property Award 受賞物件のみ">🏆 受賞のみ</button></div>
         </div>
         <div class="filter-row" data-layer-only="school" style="display:none">
-          <div class="filter-group"><label for="fFee">年間学費</label><select id="fFee" onchange="applyFilters()"><option value="">すべて</option><option value="1-40000">≤40K RM</option><option value="40000-80000">40K-80K RM</option><option value="80000-120000">80K-120K RM</option><option value="120000-9999999">&gt;120K RM</option></select></div>
+          <div class="filter-group"><label for="fFee">年間学費</label><select id="fFee" onchange="applyFilters()"><option value="">すべて</option><option value="0-40000">RM4万以下/年</option><option value="0-80000">RM8万以下/年</option><option value="0-120000">RM12万以下/年</option></select></div>
         </div>
         <div class="filter-row" data-layer-only="commercial" style="display:none">
           <div class="filter-group"><label for="fOpenYear">開業年</label><select id="fOpenYear" onchange="applyFilters()"><option value="">すべて</option><option value="0-2000">〜2000</option><option value="2001-2010">2001-2010</option><option value="2011-2020">2011-2020</option><option value="2021-2100">2021〜</option></select></div>

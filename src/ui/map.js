@@ -141,7 +141,10 @@ function makeClusterGroups() {
 
 /** Create the Leaflet map and inject the marker-tooltip style. */
 export function initMap() {
-  map = L.map('map',{zoomControl:false}).setView([3.1550,101.6850],12);
+  // First screen = a readable neighbourhood, not 30 anonymous cluster bubbles:
+  // every ruled use case (housing hunt, guest guide, family ledger) orbits
+  // Mont Kiara, so that is where the map wakes up. KL全体/Penang are one tap.
+  map = L.map('map',{zoomControl:false}).setView([3.1710,101.6520],15);
   L.control.zoom({ position: 'bottomright' }).addTo(map);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
     attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19
@@ -166,7 +169,7 @@ export function initMap() {
 
   // Add tooltip style dynamically
   const tipStyle = document.createElement('style');
-  tipStyle.textContent = `.condo-label-tip{background:transparent!important;border:none!important;box-shadow:none!important;color:#37474f;font-size:8px;font-weight:500;padding:0 1px!important;text-shadow:1px 1px 1px #fff,-1px -1px 1px #fff,1px -1px 1px #fff,-1px 1px 1px #fff,0 0 3px #fff}`;
+  tipStyle.textContent = `.condo-label-tip{background:transparent!important;border:none!important;box-shadow:none!important;color:#37474f;font-size:var(--fs-label);font-weight:500;padding:0 1px!important;text-shadow:1px 1px 1px #fff,-1px -1px 1px #fff,1px -1px 1px #fff,-1px 1px 1px #fff,0 0 3px #fff}`;
   document.head.appendChild(tipStyle);
 }
 
@@ -436,27 +439,46 @@ export function toggleLegend(e){
 // B3b (audit A3): the year-colour scale used to be drawn twice — as a gradient
 // bar inside the panel AND in this legend. The panel bar is gone; this legend
 // is now the single place that explains what the marker colours mean.
+/**
+ * The legend explains ONLY the symbols currently on the map (audit: the old
+ * version described the condo year-gradient and tier ring even in 外食モード,
+ * where neither exists — a manual for a different map). Everything is in
+ * Japanese: this is the app's one instruction sheet and its readers are
+ * Japanese families, so English-only labels here defeated its purpose.
+ */
 export function updateLegend(){
   const ml=document.getElementById('mapLegend');
   if(!ml)return;
-  let h=`<div class="map-legend-title" style="display:flex;justify-content:space-between;align-items:center">Legend <span id="legendToggle" aria-hidden="true">${legendOpen?'▼':'▶'}</span></div>`;
+  const eatout = appMode === 'eatout';
+  let h=`<div class="map-legend-title" style="display:flex;justify-content:space-between;align-items:center">凡例 <span id="legendToggle" aria-hidden="true">${legendOpen?'▼':'▶'}</span></div>`;
   h+=`<div id="legendBody" style="display:${legendOpen?'block':'none'}">`;
-  h+=`<div class="map-legend-title" style="margin-top:var(--s2)">Year Built (${YEAR_MIN}–${YEAR_MAX})</div>`;
-  [{y:1993,l:'~1993'},{y:2001,l:'~2001'},{y:2009,l:'~2009'},{y:2017,l:'~2017'},{y:2025,l:'~2025'}].forEach(({y,l})=>{
-    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${getYearColor(y)}"></div>${l}</div>`;
-  });
-  h+=`<div class="map-legend-section"><div class="map-legend-title">Luxury Tier</div>`;
-  [{t:'S',l:'Ultra Luxury (70+)'},{t:'A',l:'Super Luxury (60-69)'},{t:'B',l:'Luxury (50-59)'},{t:'C',l:'Upper Mid (40-49)'},{t:'D',l:'Standard (<40)'}].forEach(({t,l})=>{
-    h+=`<div class="map-legend-item"><span class="tier-badge" style="background:${TIER_COLORS[t]}">${t}</span>${l}</div>`;
-  });
-  h+=`</div>`;
-  h+=`<div class="map-legend-section"><div class="map-legend-title">Type</div>`;
-  h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.school.bg}"></div>学校</div>`;
-  h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.commercial.bg};border-radius:4px"></div>商業施設</div>`;
-  h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>飲食店</div>`;
-  h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-color:${MICHELIN_STAR_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>飲食店（星付き）</div>`;
-  h+=`<div class="map-legend-item">円の大きさ = 戸数</div>`;
-  h+=`</div>`;
+  if(eatout){
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>飲食店</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-color:${MICHELIN_STAR_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ミシュラン星付き（金の縁）</div>`;
+    h+=`<div class="map-legend-item">数字の丸 = 重なった店。押すと開きます</div>`;
+  } else {
+    // The condo pin carries year (fill) + tier (letter/ring): explain both
+    // only while the condo layer is active — school/commercial mode needs
+    // neither.
+    if(activeLayer === 'condo'){
+      h+=`<div class="map-legend-title" style="margin-top:var(--s2)">塗り = 竣工年（${YEAR_MIN}–${YEAR_MAX}）</div>`;
+      [{y:1993,l:'〜1993年'},{y:2001,l:'〜2001年'},{y:2009,l:'〜2009年'},{y:2017,l:'〜2017年'},{y:2025,l:'〜2025年'}].forEach(({y,l})=>{
+        h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${getYearColor(y)}"></div>${l}</div>`;
+      });
+      h+=`<div class="map-legend-section"><div class="map-legend-title">文字と枠 = Luxuryティア</div>`;
+      [{t:'S',l:'最上位（70点以上）'},{t:'A',l:'60〜69点'},{t:'B',l:'50〜59点'},{t:'C',l:'40〜49点'},{t:'D',l:'40点未満'}].forEach(({t,l})=>{
+        h+=`<div class="map-legend-item"><span class="tier-badge" style="background:${TIER_COLORS[t]}">${t}</span>${l}</div>`;
+      });
+      h+=`<div class="map-legend-item">ピンの「'08」= 竣工年の下2桁 ・ 円の大きさ = 戸数</div>`;
+      h+=`</div>`;
+    }
+    h+=`<div class="map-legend-section"><div class="map-legend-title">種別</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.condo.bg}"></div>物件</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.school.bg}"></div>学校</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.commercial.bg};border-radius:4px"></div>商業施設</div>`;
+    h+=`<div class="map-legend-item">数字の丸 = まとまり。押すと開きます</div>`;
+    h+=`</div>`;
+  }
   h+=`</div>`;
   ml.innerHTML=h;
 }

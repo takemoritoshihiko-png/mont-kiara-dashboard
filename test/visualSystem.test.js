@@ -125,7 +125,10 @@ describe('B3c: 学費くらべ, the selected marker and the sticky header', () =
   });
 
   it('rings the selected marker in the accent colour and scales it (spec 2.7 / D3)', () => {
-    expect(css).toContain('--ring-accent:0 0 0 3px rgba(10,108,255,.4)');
+    // Solid ring: the old 40%-alpha accent measured 1.64:1 against the map
+    // tiles - below WCAG 1.4.11's 3:1 for non-text UI. White inner + solid
+    // accent outer clears it on every marker colour.
+    expect(css).toContain('--ring-accent:0 0 0 2px var(--surface), 0 0 0 4.5px var(--accent)');
     const rule = css.slice(css.indexOf('.mk-pin-sel>div{'));
     const body = rule.slice(0, rule.indexOf('}'));
     expect(body).toContain('transform:scale(1.25)');
@@ -163,5 +166,34 @@ describe('loading state (audit E3 / spec 2.10)', () => {
   it('blanks the summary tiles with an en dash rather than a fake 0', () => {
     expect(TILE_EMPTY).toBe('–');
     expect(html).not.toContain('<div class="summary-val" id="sumTotal">0</div>');
+  });
+});
+
+// ============================================================
+// The map's colours live in JS (Leaflet builds icon HTML outside the CSS
+// cascade), which put them outside this file's checks — and sure enough,
+// colours this test bans from the CSS (#1565c0, #2e7d32, #e65100) turned out
+// to be alive in inline.js. This snapshot is the tripwire: a NEW colour in
+// either file fails here and must be added deliberately, next to the token
+// it mirrors. Shrinking the list is always welcome.
+// ============================================================
+describe('JS-side colours are inventoried (map.js / inline.js)', () => {
+  const hexesOf = (rel) => [...new Set(
+    (readFileSync(new URL(rel, import.meta.url), 'utf8').match(/#[0-9a-fA-F]{3,6}\b/g) || [])
+  )].sort();
+
+  it('src/ui/map.js introduces no unlisted colour', () => {
+    expect(hexesOf('../src/ui/map.js')).toEqual([
+      '#112a58', '#1a3d7c', '#333', '#37474f', '#546e7a', '#666', '#78909c',
+      '#8c1145', '#8f4a05', '#c2185b', '#c2600a', '#c9a227', '#fff',
+    ]);
+  });
+
+  it('src/data/inline.js introduces no unlisted colour (legacy blues/greens are grandfathered pending the marker redesign)', () => {
+    expect(hexesOf('../src/data/inline.js')).toEqual([
+      '#00838f', '#1565c0', '#2e7d32', '#64b5f6', '#78909c', '#7b1fa2',
+      '#8d6e63', '#90a4ae', '#bcaaa4', '#bdbdbd', '#bf360c', '#c62828',
+      '#e65100', '#f57f17',
+    ]);
   });
 });
