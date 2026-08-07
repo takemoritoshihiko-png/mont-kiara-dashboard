@@ -15,3 +15,9 @@
 
 - **コンドミニアム271件のデータ精査（フラグ再検証・homepage_url補完・iproperty_url確認）は今回スコープ外**（竹森氏 2026-08-07 明示: アプリのブラッシュアップがメイン）。将来再開する場合の手順はメモリの condo/commercial/address verification 3本に保存済み。
 - KL校23校の詳細（schools_detail.json拡充）のみ、表示格差解消のため実行（進行中）。追加のデータ調査は出さない。
+
+## 2026-08-07 (B1 モジュール分割で発見された既存バグ・意図的に未修正)
+
+- **STATUSフィルタ「Residential Only」が常に0件**: 商業/学校は自分の分岐で落ち、condoは `status !== 'residential'` で全滅する既存バグ。B3で status フィルタから residential/commercial 選択肢自体を撤去予定（層タブが代替）のため、いま直さない。test/filter.test.js に KNOWN BUG として文書化済み。
+- **School Finder の近隣物件クリックの挙動が不自然**: `sfActive=false; toggleSchoolFinder()` が反転して panel が開いたままになり、一度ペナン全景に飛んでから物件へ。B3の周辺エンジン刷新で解消予定。
+- B1のUIモジュールは使い捨て等価性ハーネス（1,250万バイトのHTML出力一致・15.7万ケースのフィルタ一致）で検証したが、恒久のDOMレベル回帰テストは未整備。B2以降で必要になれば jsdom 導入を検討。
