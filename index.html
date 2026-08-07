@@ -282,7 +282,13 @@ button,input,select{font-family:inherit}
 .nb-empty{font-size:var(--fs-xs);color:var(--text-2);padding:var(--s3) 2px;text-align:center}
 
 /* ---- Map furniture ---- */
-.area-jump{position:absolute;top:var(--s2);left:50px;z-index:1000;display:flex;align-items:center;gap:var(--s1);background:rgba(255,255,255,.96);padding:5px var(--s2);border-radius:var(--r-pill);box-shadow:var(--shadow-2);border:1px solid var(--hairline);max-width:calc(100% - 70px);overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+/* The bar floats over the MAP only: its max-width stops 352px short of the
+   right edge (336px list panel + its fold button), because before this it
+   spanned .main's full width and buried the panel's summary tiles
+   (TOTAL / SHOWN) under itself. When the panel is folded away it reclaims
+   that width. 50px on the left keeps it clear of the zoom control. */
+.area-jump{position:absolute;top:var(--s2);left:50px;z-index:1000;display:flex;align-items:center;gap:var(--s1);background:rgba(255,255,255,.96);padding:5px var(--s2);border-radius:var(--r-pill);box-shadow:var(--shadow-2);border:1px solid var(--hairline);max-width:calc(100% - 402px);overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.main:has(#panel.collapsed) .area-jump{max-width:calc(100% - 120px)}
 .area-jump::-webkit-scrollbar{display:none}
 .area-jump button{background:var(--bg);border:1px solid var(--hairline);color:var(--text);padding:3px var(--s3);border-radius:var(--r-pill);font-size:var(--fs-xs);cursor:pointer;font-weight:600;white-space:nowrap;transition:all var(--dur) var(--ease)}
 .area-jump button:hover{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
