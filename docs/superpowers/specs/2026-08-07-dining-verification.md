@@ -13,6 +13,32 @@
 - GulaiNya は 2024-09 開業の新店（Little Yum Yum の拡張）。Plaza Damansara（Damansara Heights 西端）で整合。
 - street 精度 6件（Studio Restaurant / Ah Hei / Hor Poh / Hing Kee / Beta KL / Atelier Binchotan）= 番地までは特定できず通り名精度。捏造ではなく実在住所の近似。
 
+## B. P1候補・前半11店の検証結果
+
+出典注記: Google Maps は直接取得不可のため、wanderlog / top-rated.online（Google値のスクレイプサイト）を代理ソースとし、可能な限り2ソースでクロスチェック。
+
+| 店名 | 営業 | 評価(裏取り後) | 所在地 | lat | lng | 価格帯RM | チェーン | 判定 |
+|---|---|---|---|---|---|---|---|---|
+| Cotta Cafe | 営業中 | ★4.9/700+（複数ブログ引用・中〜高信頼） | Verve Shops L6屋上, Mont Kiara | 3.1676 | 101.6468 | 50-100 | 単店舗 | **追加可**(※カテゴリ=カフェ/デザートは8分類外→要裁定) |
+| Jhol KL | 営業中(2025/5開業) | **★4.3/約55件（候補表★5.0/100+は過大）** | THE MET, KL Metropolis | 3.1808 | 101.6647 | **RM310-350++/人（候補表80-160は大幅過小）** | 単店舗 | **要確認**(数値大幅乖離) |
+| Wagyu Saikou | 営業中と推定 | 実数不明(TripAdvisor★5.0だがレビュー僅少疑い) | Solaris Dutamas A4-1 | 3.1712 | 101.6659 | 160+ 未確認 | 単店舗 | **要確認** |
+| Kyomo | 営業中(旧Shin Nihon改称) | ★4.5/約1,400-1,500件(2ソース一致)・FB1,741/92% | 26, Jalan 24/70A, Desa Sri Hartamas | 3.1631 | 101.6507 | 120-200 | 単店舗 | **追加可**(件数は概数) |
+| Kin Gyu | 営業中(Kyomo姉妹店) | 実数不明 | 8 Jalan 24/70A, Desa Sri Hartamas | 3.1631 | 101.6507 | 実際は約RM100-250(候補表より上) | 単店舗 | **要確認** |
+| Fire Izakaya | 営業中 | ★4.9/808件(候補表と一致) | 160 Jalan Ampang（**実際はKLCC徒歩圏・Ampang地区ではない→エリア修正必須**） | 3.1595 | 101.7141 | 60-200 | 単店舗 | **追加可**(エリア=KLCCに修正の上で) |
+| Nanda Chicken | 営業中 | ★4.5/64件(候補表★5.0/100+は過大) | Solaris Mont Kiara | 3.1755 | 101.6598 | 30-60 | **韓国発チェーン確定** | **除外(チェーン裁定3)** |
+| MT Hotpot | 営業中 | ★4.9/2,687件 | L-01-01, Solaris Mont Kiara | 3.1755 | 101.6598 | 60-150 | 単店舗と推定 | **追加可** |
+| Two Sons Bistro | 営業中 | ★4.1/1,189件(Publika店) | Publika A4-G2-8 | 3.1712 | 101.6658 | 50-130 | **3店舗展開(Publika/KLCC/TRX)** | **要裁定(チェーン抵触)** |
+| Kanbe Ramen | 営業中 | ★4.3/1,849件(163店) | GF-08, 163 Retail Park, Mont Kiara | 3.1666 | 101.6520 | 31-45 | **3店舗以上(163/TRX/JB)** | **要裁定(チェーン抵触)** |
+| Vin's Restaurant | 営業中 | ★4.6/2,756件=Google値（候補表★4.7/511はTripAdvisor値の混同） | 6 Lorong Datuk Sulaiman 1, TTDI | 3.1481 | 101.6296 | 50-100 | 単店舗 | **追加可** |
+
+## C. 検証パス全体のまとめ（21店の内訳）
+
+- **追加可（値の裏取り済み）7店**: Cotta Cafe※ / Kyomo / MT Hotpot / Vin's / Fire Izakaya(エリア修正) / Aftermeal Desserts※ / （※2店はカテゴリ「カフェ・デザート」が裁定済み8分類に無い→9分類目の追加が要裁定）
+- **除外 4店**: Playte(閉店) / Rakuzen(21店舗チェーン) / Nanda Chicken(チェーン) / — 
+- **要裁定（小規模チェーン2-4店舗）3店**: Two Sons Bistro / Kanbe Ramen / Ombak Kitchen — 「チェーン店は加味しない」裁定3の適用範囲（全国チェーンのみか、複数店舗すべてか）
+- **要確認（値が裏取りできず保留）7店**: Jhol KL / Wagyu Saikou / Kin Gyu / TTDI Meat Point / Taka Izakaya / Lamei Hotpot / Bait Bistro / Yarl / Annalakshmi のうち該当
+- haiku候補表の教訓: ★・件数の過大表示が複数（Jhol★5.0→実4.3、Nanda★5.0→実4.5、TTDI Meat Point 24,000件→実561件）。**検証パスなしの台帳追加は不可**を再確認。
+
 ## A. P1候補・後半10店の検証結果
 
 | 店名 | 営業 | 評価(裏取り後) | 所在地 | lat | lng | 価格帯RM | チェーン | 判定 |
