@@ -1,10 +1,78 @@
 // Leaflet map: creation, markers, the map legend and area quick-jump.
-import { CONDOS, filtered, markers, setMarkers, legendOpen, setLegendOpen } from '../state.js';
+import {
+  CONDOS, filtered, markers, setMarkers, legendOpen, setLegendOpen,
+  selectedCondo, showCommercial, showSchools,
+} from '../state.js';
 import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS } from '../data/inline.js';
 import { selectCondo } from './info.js';
 
+// ============================================================
+// ZOOM THRESHOLDS (tune here)
+// Below CLUSTER_OFF_ZOOM markers are grouped into per-type clusters; at or
+// above it every marker is drawn individually. LABEL_ZOOM does the same for
+// the name labels: hover-only when zoomed out, always-on when zoomed in.
+// ============================================================
+export const CLUSTER_OFF_ZOOM = 15;
+export const LABEL_ZOOM = 15;
+
+/**
+ * Pure helper: the tooltip mode that applies at a given zoom level.
+ * 'permanent' = label always shown, 'hover' = label only on mouseover.
+ */
+export function labelModeForZoom(zoom) {
+  return zoom >= LABEL_ZOOM ? 'permanent' : 'hover';
+}
+
 // Live binding: other modules import `map` and always see the current value.
 export let map = null;
+
+// Marker cluster groups, one per marker type. Created lazily in initMap()
+// because Leaflet.markercluster is a browser-only CDN script.
+let clusterGroups = null;
+// The label mode currently bound to the markers; tooltips are only re-bound
+// when a zoom change crosses the threshold, never on every zoom step.
+let labelMode = null;
+
+/** condo | commercial | school — the visual language each marker follows. */
+function markerType(c) {
+  return c.status === 'school' ? 'school' : c.status === 'commercial' ? 'commercial' : 'condo';
+}
+
+// Cluster bubbles reuse the marker colours so the type stays readable when
+// several markers collapse into one.
+const CLUSTER_STYLE = {
+  condo:      { bg:'#78909c', radius:'50%' },   // circle
+  commercial: { bg:'#e8710a', radius:'8px' },   // rounded square
+  school:     { bg:'#1a3d7c', radius:'50%' },   // circle
+};
+
+function clusterIconFactory(type) {
+  const st = CLUSTER_STYLE[type];
+  return (cluster) => {
+    const n = cluster.getChildCount();
+    const sz = n >= 25 ? 46 : n >= 10 ? 38 : 32;
+    const fs = n >= 25 ? 15 : n >= 10 ? 13 : 12;
+    return L.divIcon({
+      className: '',
+      iconSize: [sz, sz],
+      iconAnchor: [sz/2, sz/2],
+      html: `<div style="width:${sz}px;height:${sz}px;border-radius:${st.radius};background:${st.bg};border:2px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer">
+        <span style="color:#fff;font-size:${fs}px;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,0.35)">${n}</span>
+      </div>`
+    });
+  };
+}
+
+function makeClusterGroups() {
+  const mk = (type) => L.markerClusterGroup({
+    maxClusterRadius: 45,
+    disableClusteringAtZoom: CLUSTER_OFF_ZOOM,
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false,
+    iconCreateFunction: clusterIconFactory(type),
+  });
+  return { condo: mk('condo'), commercial: mk('commercial'), school: mk('school') };
+}
 
 /** Create the Leaflet map and inject the marker-tooltip style. */
 export function initMap() {
@@ -12,6 +80,18 @@ export function initMap() {
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
     attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19
   }).addTo(map);
+
+  clusterGroups = makeClusterGroups();
+  Object.values(clusterGroups).forEach(g=>map.addLayer(g));
+  labelMode = labelModeForZoom(map.getZoom());
+
+  // Re-bind the labels only when the zoom crosses the threshold.
+  map.on('zoomend', () => {
+    const mode = labelModeForZoom(map.getZoom());
+    if (mode === labelMode) return;
+    labelMode = mode;
+    applyLabelMode(mode);
+  });
 
   // Add tooltip style dynamically
   const tipStyle = document.createElement('style');
@@ -54,6 +134,34 @@ export function jumpToArea(key){
   if(btn)btn.classList.add('active');
 }
 
+// ============================================================
+// LABELS — zoom-dependent tooltips
+// The selected marker keeps its always-on label at any zoom.
+// ============================================================
+const labelOpts = (permanent, offsetX) => ({
+  permanent, direction: 'right', offset: [offsetX, 0], className: 'condo-label-tip'
+});
+
+function bindLabel(m, name, text, offsetX) {
+  m._labelName = name;
+  m._labelText = text;
+  m._labelOffsetX = offsetX;
+  const permanent = (labelMode || 'permanent') === 'permanent' || name === selectedCondo;
+  m.bindTooltip(text, labelOpts(permanent, offsetX));
+  return m;
+}
+
+/** Re-bind every marker's tooltip for the given mode ('permanent' | 'hover'). */
+function applyLabelMode(mode) {
+  Object.values(markers).forEach(m => {
+    const permanent = mode === 'permanent' || m._labelName === selectedCondo;
+    const tip = m.getTooltip();
+    if (tip && !!tip.options.permanent === permanent) return;
+    m.unbindTooltip();
+    m.bindTooltip(m._labelText, labelOpts(permanent, m._labelOffsetX));
+  });
+}
+
 // Custom DivIcon with tier label inside circle
 function mkMarker(c) {
   const yearColor = getYearColor(c.year);
@@ -78,8 +186,7 @@ function mkMarker(c) {
     });
     const m = L.marker([c.lat,c.lng],{icon});
     m.on('click',()=>selectCondo(c.name));
-    m.bindTooltip(c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), {permanent:true,direction:'right',offset:[csz/2+2,0],className:'condo-label-tip'});
-    return m;
+    return bindLabel(m, c.name, c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), csz/2+2);
   }
 
   if (isCommercial) {
@@ -97,8 +204,7 @@ function mkMarker(c) {
     });
     const m = L.marker([c.lat,c.lng],{icon});
     m.on('click',()=>selectCondo(c.name));
-    m.bindTooltip(c.name.replace(/ \(.*\)/,''), {permanent:true,direction:'right',offset:[csz/2+2,0],className:'condo-label-tip'});
-    return m;
+    return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2);
   }
 
   const borderStyle = isUpcoming ? `3px dashed ${tierColor}` : `3px solid ${tierColor}`;
@@ -120,19 +226,36 @@ function mkMarker(c) {
   const m = L.marker([c.lat,c.lng],{icon});
   m.on('click',()=>selectCondo(c.name));
 
-  // Permanent label
-  m.bindTooltip(c.name.replace(/ Mont Kiara/g,'').replace(/ \(.*\)/,''), {
-    permanent: true, direction: 'right', offset: [sz/2+2, 0],
-    className: 'condo-label-tip'
-  });
+  // Name label (permanent when zoomed in / selected, hover-only otherwise)
+  return bindLabel(m, c.name, c.name.replace(/ Mont Kiara/g,'').replace(/ \(.*\)/,''), sz/2+2);
+}
 
-  return m;
+/** Show/hide a whole cluster group when its 🛒 / 🎓 toggle is switched. */
+function syncGroupVisibility(){
+  const visible = { condo:true, commercial:showCommercial, school:showSchools };
+  Object.entries(clusterGroups).forEach(([type,g])=>{
+    if(visible[type]){ if(!map.hasLayer(g)) map.addLayer(g); }
+    else if(map.hasLayer(g)) map.removeLayer(g);
+  });
 }
 
 export function rebuild(){
-  Object.values(markers).forEach(m=>map.removeLayer(m));setMarkers({});
+  // Drop the previous markers: clustered ones via their group, the selected
+  // one (kept outside the clusters, see below) directly off the map.
+  Object.values(markers).forEach(m=>map.removeLayer(m));
+  Object.values(clusterGroups).forEach(g=>g.clearLayers());
+  setMarkers({});
+  labelMode = labelModeForZoom(map.getZoom());
   const ns=new Set(filtered.map(c=>c.name));
-  CONDOS.forEach(c=>{if(ns.has(c.name)){markers[c.name]=mkMarker(c);markers[c.name].addTo(map);}});
+  CONDOS.forEach(c=>{
+    if(!ns.has(c.name))return;
+    const m=mkMarker(c);markers[c.name]=m;
+    // The selected marker stays unclustered so its always-on label survives
+    // at every zoom level.
+    if(c.name===selectedCondo)m.addTo(map);
+    else clusterGroups[markerType(c)].addLayer(m);
+  });
+  syncGroupVisibility();
   updateLegend();
 }
 
