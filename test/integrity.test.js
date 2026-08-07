@@ -128,3 +128,25 @@ describe('commercial / schools: value checks', () => {
     expect(bad.map((r) => r.name)).toEqual([]);
   });
 });
+
+// Two different buildings on the exact same point means one of them was
+// geocoded by copy-paste — the nearby tab then reports the neighbour at
+// "0m" (found live: Casa Kiara 1/2, Menara/Alfa Bangsar, Muze/Senze).
+// Cross-dataset sharing is fine (Plaza Arkadia is one complex that is both
+// a condo and a mall); within one dataset it never is.
+describe.each([
+  ['condos', () => condos],
+  ['commercial', () => commercials],
+  ['schools', () => schools],
+])('%s: no two records share exact coordinates', (label, rows) => {
+  it('every coordinate pair is unique within the dataset', () => {
+    const seen = new Map();
+    const clashes = [];
+    for (const r of rows()) {
+      const key = `${r.lat},${r.lng}`;
+      if (seen.has(key)) clashes.push(`${r.name} = ${seen.get(key)} @ ${key}`);
+      else seen.set(key, r.name);
+    }
+    expect(clashes).toEqual([]);
+  });
+});
