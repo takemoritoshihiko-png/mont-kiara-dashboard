@@ -51,7 +51,7 @@
 | `src/ui/dining.js` | **外食モードの画面**。台帳スコアの表示・記録欄(visitbox)・行った店ビュー・データビュー・toast・保存バー。書き込みは全部 `data/personal.js` 経由 |
 | `src/ui/a11y.js` | Enter/Space で `role="button"` を起動、Escapeで詳細を閉じる。**document に委譲リスナー1つだけ** |
 
-## test/ — 19ファイル・595件
+## test/ — 20ファイル・636件
 
 | ファイル | 何を守るか |
 |---|---|
@@ -73,7 +73,8 @@
 | `test/personal.test.js` | **個人記録**: ローカル日付・読み取りが書き込まないこと・保存可否の起動テスト・デバウンス保存・v9形式の読み込み変換・書き出し往復 |
 | `test/diningLog.test.js` | 行った店: 母集団＝訪問済みのみ・平均実額の分母・グループの固定順と並び |
 | `test/uxDining.test.js` | UX2: 飲食のエリア連動（距離フィルタ・3kmの妥当性・ジャンプ配線）と昼夜基準（`diningPriceCeiling`/価格帯/並び替えが**同じ数字を読む**invariant）・層タブの飲食入口・トグルのmarkup契約 |
-| `test/eatoutMode.test.js` | 外食モード: **住まいモードに記録UIが出ないこと**・記録欄・カード構造・3ビュー・独立トグル・台帳スコア順・markup契約 |
+| `test/eatoutMode.test.js` | 外食モード: **住まいモードに記録UIが出ないこと**（訪問済み✓バッジ含む）・記録欄・カード構造・3ビュー・独立トグル・台帳スコア順・markup契約 |
+| `test/infoPanel.test.js` | 詳細パネルの表現契約: 物件=出典語併記(PSF)/未定表示・商業=運営者/NLA/エスケープ・学校=長文ブロックの既定折りたたみ(畳んでも情報は落とさない) |
 
 ## データファイル
 
@@ -83,7 +84,7 @@
 | `commercial_data.csv` | 商業施設88件・11列 |
 | `schools_data.csv` | 学校33件（地図と一覧の基本情報） |
 | `schools_detail.json` | 学校の詳細。**キーは schools_data.csv の name と完全一致** |
-| `restaurants.json` | 飲食店50件（台帳v9から移植）。住所の列名だけ他層と違い `address`（読み込み時に `addr` へ） |
+| `restaurants.json` | 飲食店93件（v9系50+検証済み拡充43。v9原本は削除済みで、tools/convert-v9-dining.js がコミット済みデータ+dining-additions.jsonから再生成）。住所の列名だけ他層と違い `address`（読み込み時に `addr` へ） |
 
 ## その他
 
