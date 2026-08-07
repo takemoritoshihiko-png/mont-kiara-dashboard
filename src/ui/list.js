@@ -527,7 +527,7 @@ export function activeChips(){
   // invisible from the list.
   if(activeLayer === 'dining' && dayBudgetBasis) chips.push({ id: 'toggleDayBudget', label: '☀ 昼の予算' });
   if(activeLayer === 'dining' && showKidOkOnly) chips.push({ id: 'toggleKidOk', label: '👶 子連れ◎のみ' });
-  if(eatoutActive() && showWantOnly) chips.push({ id: 'toggleWant', label: '★ 行きたい' });
+  if(eatoutActive() && showWantOnly) chips.push({ id: 'toggleWant', label: '♡ 行きたい' });
   if(eatoutActive() && showUndoneOnly) chips.push({ id: 'toggleUndone', label: '未訪問' });
   return chips;
 }

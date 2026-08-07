@@ -340,7 +340,6 @@ button,input,select{font-family:inherit}
    place the stylesheet has to win over generated markup. */
 .mk-pin>div{transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),filter var(--dur) var(--ease)}
 /* 背景層の減光: 不透明度でなく彩度を落とす（高彩度オレンジは45%でも主役より目立ってしまうため） */
-.mk-dim>div{filter:grayscale(.85) saturate(.3) opacity(.55)}
 /* ホバー=「押せる」の予告。選択リングとは別物なので控えめに */
 .mk-pin:hover>div{transform:scale(1.12);box-shadow:var(--shadow-2)}
 .mk-pin.mk-pin-sel:hover>div{transform:scale(1.25)}

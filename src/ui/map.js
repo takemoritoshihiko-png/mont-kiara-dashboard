@@ -3,11 +3,11 @@ import {
   CONDOS, filtered, markers, setMarkers, legendOpen, setLegendOpen,
   selectedCondo, activeLayer, appMode, setDiningNear, visibleLayers,
 } from '../state.js';
-import { NEAR_KM } from '../domain/filter.js';
+import { NEAR_KM, recordLayer } from '../domain/filter.js';
 import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
 import { selectCondo, closeInfo } from './info.js';
 // Deferred-usage only (called inside functions): safe across the list.js<->map.js cycle.
-import { cardHeroText, ratingText } from './list.js';
+import { cardHeroText, ratingText, num } from './list.js';
 import { getEntry } from '../data/personal.js';
 
 // ============================================================
@@ -101,14 +101,6 @@ let clusterGroups = null;
 // when a zoom change crosses the threshold, never on every zoom step.
 let labelMode = null;
 
-/** condo | commercial | school | dining — the visual language each marker follows. */
-function markerType(c) {
-  return c.status === 'school' ? 'school'
-    : c.status === 'commercial' ? 'commercial'
-    : c.status === 'dining' ? 'dining'
-    : 'condo';
-}
-
 /**
  * Escape for an HTML attribute. Leaflet builds divIcon content from a raw
  * string outside the document, so the shared esc() in ui/list.js is not
@@ -117,10 +109,6 @@ function markerType(c) {
  */
 export const attrEsc = (s) => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-
-// B3a: the layers the user is not looking at stay on the map as context, but
-// dimmed and label-free. This is the single knob for "how faint is context".
-export const DIM_OPACITY = 0.45;
 
 // B3b (spec 2.9): the type colours live here, once. Markers, cluster bubbles
 // and the legend all read them, so school navy / commercial orange can never
@@ -336,13 +324,13 @@ const labelOpts = (permanent, offsetX) => permanent
 /** The hover preview: name, the record's one deciding line, a short sub. */
 function hoverCardHtml(c){
   const e = attrEsc;
-  const t = markerType(c);
+  const t = recordLayer(c);
   const rows = [`<div class="mhc-name">${e(c.name)}</div>`];
   if (c.nameJa) rows.push(`<div class="mhc-ja">${e(c.nameJa)}</div>`);
   const hero = cardHeroText(c);
   if (hero) rows.push(`<div class="mhc-hero">${e(hero)}</div>`);
   let sub = '';
-  if (t === 'condo') sub = [c.luxTier ? `Tier ${c.luxTier}` : null, c.year ? `${c.year}年` : null, c.units > 0 ? `${c.units}戸` : null].filter(Boolean).join(' ・ ');
+  if (t === 'condo') sub = [c.luxTier ? `Tier ${c.luxTier}` : null, c.year ? `${c.year}年` : null, c.units > 0 ? `${num(c.units)}戸` : null].filter(Boolean).join(' ・ ');
   else if (t === 'school') sub = [c.curriculum, c.ageRange ? `${c.ageRange}歳` : null].filter(Boolean).join(' ・ ');
   else if (t === 'commercial') sub = [c.year ? `${c.year}年開業` : null, c.anchorTenants ? String(c.anchorTenants).split(';')[0].trim() : null].filter(Boolean).join(' ・ ');
   else if (t === 'dining') sub = [c.catGroup, MICHELIN_BADGES[c.michelin] || null, ratingText(c)].filter(Boolean).join(' ・ ');
@@ -350,16 +338,14 @@ function hoverCardHtml(c){
   return `<div class="mhc">${rows.join('')}</div>`;
 }
 
-function bindLabel(m, name, text, offsetX, dim) {
+function bindLabel(m, name, text, offsetX) {
   m._labelName = name;
   m._labelText = text;
   m._labelOffsetX = offsetX;
-  m._dim = !!dim;
   m._hoverHtml = null; // built lazily on first hover-mode bind
   // Dimmed context markers never carry an always-on label (spec 2.2), but
   // they DO answer to a hover — context you can point at is context you can
-  // read. (Their fade comes from the .mk-dim class; no marker opacity here.)
-  const permanent = !dim && ((labelMode || 'permanent') === 'permanent' || name === selectedCondo);
+  const permanent = (labelMode || 'permanent') === 'permanent' || name === selectedCondo;
   m.bindTooltip(permanent ? text : (m._hoverHtml = m._hoverHtml || hoverCardHtml(m._rec)), labelOpts(permanent, offsetX));
   return m;
 }
@@ -367,7 +353,7 @@ function bindLabel(m, name, text, offsetX, dim) {
 /** Re-bind every marker's tooltip for the given mode ('permanent' | 'hover'). */
 function applyLabelMode(mode) {
   Object.values(markers).forEach(m => {
-    const permanent = !m._dim && (mode === 'permanent' || m._labelName === selectedCondo);
+    const permanent = mode === 'permanent' || m._labelName === selectedCondo;
     const tip = m.getTooltip();
     if (tip && !!tip.options.permanent === permanent) return;
     m.unbindTooltip();
@@ -389,13 +375,11 @@ function applyLabelMode(mode) {
 export function pinClassName(isSelected) {
   return isSelected ? 'mk-pin mk-pin-sel' : 'mk-pin';
 }
-// Dimming is a CLASS (.mk-dim), not marker opacity: 45% opacity left the
-// saturated commercial orange louder than the active layer. The class
-// desaturates AND fades (see .mk-dim>div in index.html).
-const pinClass = (c, dim) => pinClassName(c.name === selectedCondo) + (dim ? ' mk-dim' : '');
+// Selection is a CLASS on the icon so the CSS ring can follow it.
+const pinClass = (c) => pinClassName(c.name === selectedCondo);
 
 // Custom DivIcon with tier label inside circle
-function mkMarker(c, dim) {
+function mkMarker(c) {
   const yearColor = getYearColor(c.year);
   const tierColor = TIER_COLORS[c.luxTier];
   // Circle size based on units (min 26, max 42)
@@ -409,7 +393,7 @@ function mkMarker(c, dim) {
   if (isSchool) {
     const csz = 20;
     const icon = L.divIcon({
-      className: pinClass(c, dim),
+      className: pinClass(c),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
       html: `<div role="button" aria-label="学校 ${attrEsc(c.name)}" style="width:${csz}px;height:${csz}px;border-radius:50%;background:${MARKER_COLORS.school.bg};border:2px solid ${MARKER_COLORS.school.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.3);cursor:pointer">
@@ -419,7 +403,7 @@ function mkMarker(c, dim) {
     const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
     m._rec = c;
     m.on('click',()=>selectCondo(c.name));
-    return bindLabel(m, c.name, c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), csz/2+2, dim);
+    return bindLabel(m, c.name, c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), csz/2+2);
   }
 
   if (c.status === 'dining') {
@@ -440,10 +424,10 @@ function mkMarker(c, dim) {
     // なので、住まい側で飲食レイヤーを重ねてもバッジは描かない。
     const visited = appMode === 'eatout' && c.id && getEntry(c.id).v === 1;
     const badge = visited
-      ? `<span aria-hidden="true" style="position:absolute;top:-5px;right:-5px;width:13px;height:13px;border-radius:50%;background:#1D5F55;border:1.5px solid #fff;color:#fff;font-size:9px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.35)">✓</span>`
+      ? `<span aria-hidden="true" style="position:absolute;top:-5px;right:-5px;width:13px;height:13px;border-radius:50%;background:#1d5f55;border:1.5px solid #fff;color:#fff;font-size:9px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.35)">✓</span>`
       : '';
     const icon = L.divIcon({
-      className: pinClass(c, dim),
+      className: pinClass(c),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
       html: `<div role="button" aria-label="飲食店 ${attrEsc(c.name)}${mb ? '、' + mb : ''}${visited ? '、訪問済み' : ''}" style="position:relative;width:${csz}px;height:${csz}px;display:flex;align-items:center;justify-content:center;cursor:pointer">
@@ -454,7 +438,7 @@ function mkMarker(c, dim) {
     const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
     m._rec = c;
     m.on('click',()=>selectCondo(c.name));
-    return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2, dim);
+    return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2);
   }
 
   if (isCommercial) {
@@ -466,7 +450,7 @@ function mkMarker(c, dim) {
     const csz = nla >= 200000 ? 22 : nla >= 50000 ? 18 : 14;
     const fsz = nla >= 200000 ? 11 : nla >= 50000 ? 10 : 8;
     const icon = L.divIcon({
-      className: pinClass(c, dim),
+      className: pinClass(c),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
       html: `<div role="button" aria-label="商業施設 ${attrEsc(c.name)}" style="width:${csz}px;height:${csz}px;border-radius:${MARKER_COLORS.commercial.radius};background:${MARKER_COLORS.commercial.bg};border:2px solid ${MARKER_COLORS.commercial.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer">
@@ -476,7 +460,7 @@ function mkMarker(c, dim) {
     const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
     m._rec = c;
     m.on('click',()=>selectCondo(c.name));
-    return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2, dim);
+    return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2);
   }
 
   const borderStyle = isUpcoming ? `3px dashed ${tierColor}` : `3px solid ${tierColor}`;
@@ -491,7 +475,7 @@ function mkMarker(c, dim) {
     : `${attrEsc(c.name)}、Tier ${attrEsc(c.luxTier)}、${c.year}年`;
 
   const icon = L.divIcon({
-    className: pinClass(c, dim),
+    className: pinClass(c),
     iconSize: [sz, sz],
     iconAnchor: [sz/2, sz/2],
     html: `<div role="button" aria-label="${a11yLabel}" style="width:${sz}px;height:${sz}px;border-radius:50%;background:${bgColor};border:${borderStyle};display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;line-height:1.1">
@@ -505,10 +489,10 @@ function mkMarker(c, dim) {
   m.on('click',()=>selectCondo(c.name));
 
   // Name label (permanent when zoomed in / selected, hover-only otherwise)
-  return bindLabel(m, c.name, c.name.replace(/ Mont Kiara/g,'').replace(/ \(.*\)/,''), sz/2+2, dim);
+  return bindLabel(m, c.name, c.name.replace(/ Mont Kiara/g,'').replace(/ \(.*\)/,''), sz/2+2);
 }
 
-/** All three cluster groups stay on the map; the layer control dims, never hides. */
+/** Every cluster group stays attached; which markers exist inside them is decided in rebuild(). */
 function syncGroupVisibility(){
   Object.values(clusterGroups).forEach(g=>{ if(!map.hasLayer(g)) map.addLayer(g); });
 }
@@ -520,11 +504,9 @@ export function rebuild(){
   Object.values(clusterGroups).forEach(g=>g.clearLayers());
   setMarkers({});
   labelMode = labelModeForZoom(map.getZoom());
-  // The active layer shows exactly what the filters left. The other two stay
-  // on the map in full, dimmed, as "what else is around here" context.
   const ns=new Set(filtered.map(c=>c.name));
   CONDOS.forEach(c=>{
-    const type=markerType(c);
+    const type=recordLayer(c);
     // 外食モード draws restaurants only. 住まいモード draws exactly the layers
     // whose checkbox is on (2026-08-07 ruling: the layer tabs became
     // check-boxes — one, two or all four at once). What is checked is shown
@@ -533,7 +515,7 @@ export function rebuild(){
     else if(!visibleLayers[type]) return;
     const isActive=type===activeLayer;
     if(isActive&&!ns.has(c.name))return;
-    const m=mkMarker(c,false);markers[c.name]=m;
+    const m=mkMarker(c);markers[c.name]=m;
     // The selected marker stays unclustered so its always-on label survives
     // at every zoom level.
     if(c.name===selectedCondo)m.addTo(map);
