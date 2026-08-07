@@ -1,0 +1,58 @@
+# CLAUDE.md — このリポジトリで作業するAIへの指示
+
+## これは何か
+
+KLとペナンの**コンドミニアム271・学校33・商業施設88**を1枚の地図で見くらべる、日本人向けの住まい探しダッシュボード。
+公開サイト: https://takemoritoshihiko-png.github.io/mont-kiara-dashboard/
+
+## 技術構成
+
+- **フロントのみ**。サーバーもビルド成果物も無い。`index.html` がCSSとマークアップ、`src/` がESモジュール
+- 開発は **Vite**（`npm run dev`）。本番は **GitHub Pages の静的直配信**（リポジトリのファイルがそのまま配信される＝ビルド無し）
+- テストは **Vitest**（`npm test`）。DOM環境は入れていない。テストはすべて**純関数**か、`index.html` をテキストとして読む**契約テスト**
+- 地図は Leaflet + markercluster（CDN）
+
+```bash
+npm install
+npm run dev            # http://localhost:5173
+npm test               # 299件
+npm run hooks:install  # pre-push フックを .git/hooks へ
+```
+
+## 🛑 push のルール（最重要）
+
+**push = 本番反映**（masterへのpushでGitHub Pagesが更新される）。
+
+- `tools/githooks/pre-push` が **push を既定で拒否**する。`npm run hooks:install` で導入
+- 承認済みのpushだけ `GIC_ALLOW_PUSH=1` を付けて通す
+- **サブエージェントは push 禁止。`GIC_ALLOW_PUSH` を自分で設定してはならない**。マージとpushはメインエージェントだけが行う
+- master へ上げる前に、必ず**「本番に反映しますか?」と確認して了承を得る**
+
+## 正本（SSOT）はどこか
+
+| 知りたいこと | 見るファイル |
+|---|---|
+| UI/UXの設計方針・実行バッチ | `docs/superpowers/specs/2026-08-07-uiux-refined-plan.md` |
+| 情報設計・地図の可読性の判断根拠 | 同フォルダの `b3-information-architecture.md` / `b2-map-readability.md` |
+| 飲食店の追加計画・調査結果 | 同フォルダの `dining-integration-plan.md` / `dining-research-30min.md` |
+| 保留にした課題（append-only） | `docs/superpowers/deferred-backlog.md` |
+| どのファイルが何をするか | `docs/CODEBASE-MAP.md` |
+
+**スコープ外として保留した課題は、完了報告の前に必ず deferred-backlog.md に追記する。**
+
+## データの契約（破ると静かに壊れる）
+
+- **premium_score は加重式**: `private_lift×7 + concierge×2 + low_density + pool + sky_lounge + ev_charging`（最大15）。単純合計ではない。`test/integrity.test.js` が強制する
+- **`schools_detail.json` のキーは `schools_data.csv` の `name` と完全一致**。改名すると詳細パネルが無言で空になる。片方を直したら必ず両方
+- **学費は絶対に作らない**。公表されていない学年の額を補間・平均・外挿してはならない。近い学年の**実額**を、その学年名を明示して出す（`src/domain/fees.js`）
+- 不明値は `0` ではなく「要問合せ」「未定」「—」。**ゼロ円を価格として表示しない**
+- データ読み込みの一部失敗は**必ず画面に警告を出す**。無言で件数を減らさない
+- CSVを触ったら `npm test`（integrity）を必ず green で確認
+
+## 実装するときの作法
+
+- `index.html` の `:root` に**デザイントークン**がある。色・サイズ・余白の直書き（リテラルのhex/px）は禁止。フォントサイズは `var(--fs-*)` のみ（テストが検査する）
+- カード・行・凡例のようなクリックできる要素は `role="button" tabindex="0" aria-label` を付ける。Enter/Space の処理は `src/ui/a11y.js` の**委譲ハンドラ1つ**が担う（要素ごとに listener を足さない）
+- 表示テキストを組み立てる関数（例: `cardHeroText`）は**1つの実装を共有**する。同じ数字を2箇所で組み立てない
+- 状態の書き込みは `src/state.js` のセッター経由のみ
+- モバイルは `index.html` 末尾の `@media(max-width:768px)` ブロック。**新しいUI要素を足したら、このブロックにも入れる**（タップ標的40px）

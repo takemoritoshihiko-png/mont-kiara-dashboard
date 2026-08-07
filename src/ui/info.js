@@ -26,8 +26,13 @@ import { syncUrl, withUrlWritesSuspended } from './urlState.js';
 // re-render without going through the whole selection flow again.
 let currentRecord = null;
 
+/** The overlay's accessible name when nothing is selected. */
+const DIALOG_LABEL_EMPTY = '詳細';
+
 export function closeInfo(){
-  document.getElementById('infoOverlay').classList.remove('active');
+  const ov = document.getElementById('infoOverlay');
+  ov.classList.remove('active');
+  ov.setAttribute('aria-label', DIALOG_LABEL_EMPTY);
   currentRecord = null;
   // Nothing is selected any more, so the list highlight, the un-clustered
   // marker and the URL all have to agree with that.
@@ -184,7 +189,9 @@ const MAX_PER_LAYER = 5;
 
 function nearbyRow(item){
   const c = item.record;
-  return `<div class="nb-row" onclick="selectNearby('${jsStr(c.name)}')" title="${esc(c.name)}">` +
+  const label = `${c.name}、${formatDistance(item.distanceM)}`;
+  return `<div class="nb-row" role="button" tabindex="0" aria-label="${esc(label)}"` +
+    ` onclick="selectNearby('${jsStr(c.name)}')" title="${esc(c.name)}">` +
     `<span class="nb-icon">${LAYER_ICONS[recordLayer(c)]}</span>` +
     `<span class="nb-name">${esc(c.name)}</span>` +
     `<span class="nb-dist">${formatDistance(item.distanceM)}</span></div>`;
@@ -264,7 +271,7 @@ function renderInfo(){
   const body = activeTab === 'nearby' ? nearbyTabHtml(c) : detailHtml(c);
   document.getElementById('infoContent').innerHTML =
     headerHtml(c) +
-    `<div class="info-tabs" role="tablist">${tabBtn('detail', '詳細')}${tabBtn('nearby', '周辺')}</div>` +
+    `<div class="info-tabs" role="tablist" aria-label="表示する内容">${tabBtn('detail', '詳細')}${tabBtn('nearby', '周辺')}</div>` +
     `<div class="info-tab-body">${body}</div>`;
 }
 
@@ -294,7 +301,10 @@ export function selectCondo(name, opts = {}){
     rebuild();
     currentRecord = c;
     renderInfo();
-    document.getElementById('infoOverlay').classList.add('active');
+    const ov = document.getElementById('infoOverlay');
+    // The dialog is named after what it is showing, not "詳細" for every record.
+    ov.setAttribute('aria-label', c.name + ' の詳細');
+    ov.classList.add('active');
     // A selection is navigation: it earns its own history entry.
     syncUrl();
   }

@@ -69,7 +69,10 @@ function feeRowHtml(r){
   const note = r.exact
     ? `${esc(r.gradeLabel)}の実額`
     : `※近い学年 ${esc(r.gradeLabel)} の実額`;
-  return `<div class="sf-row${selected ? ' sf-selected' : ''}" onclick="sfSelectSchool('${jsStr(r.name)}')" title="${esc(r.name)}">` +
+  const label = `${r.name}、年間 RM ${num(r.fee)}、${r.exact ? r.gradeLabel : r.gradeLabel + ' の実額'}`;
+  return `<div class="sf-row${selected ? ' sf-selected' : ''}" role="button" tabindex="0"` +
+    ` aria-label="${esc(label)}" aria-pressed="${selected ? 'true' : 'false'}"` +
+    ` onclick="sfSelectSchool('${jsStr(r.name)}')" title="${esc(r.name)}">` +
     `<div class="sf-row-top">` +
       `<span class="sf-area">${esc(r.area)}</span>` +
       `<span class="sf-name">${esc(r.name)}</span>` +
@@ -125,7 +128,9 @@ function renderFeeChart(selAge){
   const maxFee=90000;
   const x=a=>PL+(a-3)/(17-3)*pw;
   const y=f=>PT+(1-f/maxFee)*ph;
-  let svg=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;font-family:sans-serif">`;
+  // The chart is a picture of numbers that are already in the list above it, so
+  // it gets one summary name rather than being read out tick by tick.
+  let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="ペナン9校の年齢別 年間学費の推移。${selAge}歳の位置に補助線。" style="width:100%;height:auto;font-family:sans-serif">`;
   // Grid
   [0,30000,60000,90000].forEach(f=>{
     svg+=`<line x1="${PL}" y1="${y(f)}" x2="${W-PR}" y2="${y(f)}" stroke="#e0e0e0" stroke-width="0.5"/>`;
@@ -169,7 +174,9 @@ function condoRowHtml(item){
     c.rentMin > 0 ? `RM ${num(c.rentMin)}–${num(c.rentMax)}/月` : '',
     c.salePsfMin > 0 ? `PSF ${num(c.salePsfMin)}–${num(c.salePsfMax)}` : '',
   ].filter(Boolean).join(' ・ ') || c.name;
-  return `<div class="sf-condo-row" onclick="sfSelectCondo('${jsStr(c.name)}')" title="${esc(tip)}">` +
+  return `<div class="sf-condo-row" role="button" tabindex="0"` +
+    ` aria-label="${esc(c.name + '、' + formatDistance(item.distanceM))}"` +
+    ` onclick="sfSelectCondo('${jsStr(c.name)}')" title="${esc(tip)}">` +
     `<span class="sf-condo-name">${esc(c.name)}</span>` +
     `<span class="sf-condo-dist">${formatDistance(item.distanceM)}</span></div>`;
 }

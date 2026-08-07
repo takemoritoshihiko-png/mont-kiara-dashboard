@@ -38,6 +38,15 @@ function markerType(c) {
   return c.status === 'school' ? 'school' : c.status === 'commercial' ? 'commercial' : 'condo';
 }
 
+/**
+ * Escape for an HTML attribute. Leaflet builds divIcon content from a raw
+ * string outside the document, so the shared esc() in ui/list.js is not
+ * reachable here without importing the panel into the map. A name like
+ * 「Pavilion Hilltop ("The Peak")」 must not break out of aria-label.
+ */
+export const attrEsc = (s) => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
 // B3a: the layers the user is not looking at stay on the map as context, but
 // dimmed and label-free. This is the single knob for "how faint is context".
 export const DIM_OPACITY = 0.45;
@@ -61,6 +70,9 @@ const CLUSTER_STYLE = {
   school:     { bg:MARKER_COLORS.school.bg, radius:'50%' },
 };
 
+/** What a cluster bubble is a cluster OF — read out instead of a bare number. */
+const CLUSTER_LABELS = { condo: '物件', commercial: '商業施設', school: '学校' };
+
 function clusterIconFactory(type) {
   const st = CLUSTER_STYLE[type];
   return (cluster) => {
@@ -74,8 +86,8 @@ function clusterIconFactory(type) {
       className: '',
       iconSize: [sz, sz],
       iconAnchor: [sz/2, sz/2],
-      html: `<div style="opacity:${op};width:${sz}px;height:${sz}px;border-radius:${st.radius};background:${st.bg};border:2px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer">
-        <span style="color:#fff;font-size:${fs}px;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,0.35)">${n}</span>
+      html: `<div role="button" aria-label="${CLUSTER_LABELS[type]} ${n}件。開くには拡大してください" style="opacity:${op};width:${sz}px;height:${sz}px;border-radius:${st.radius};background:${st.bg};border:2px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer">
+        <span aria-hidden="true" style="color:#fff;font-size:${fs}px;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,0.35)">${n}</span>
       </div>`
     });
   };
@@ -215,8 +227,8 @@ function mkMarker(c, dim) {
       className: pinClass(c),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
-      html: `<div style="width:${csz}px;height:${csz}px;border-radius:50%;background:${MARKER_COLORS.school.bg};border:2px solid ${MARKER_COLORS.school.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.3);cursor:pointer">
-        <span style="color:#fff;font-size:10px">🎓</span>
+      html: `<div role="button" aria-label="学校 ${attrEsc(c.name)}" style="width:${csz}px;height:${csz}px;border-radius:50%;background:${MARKER_COLORS.school.bg};border:2px solid ${MARKER_COLORS.school.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.3);cursor:pointer">
+        <span aria-hidden="true" style="color:#fff;font-size:10px">🎓</span>
       </div>`
     });
     const m = L.marker([c.lat,c.lng],{icon});
@@ -233,8 +245,8 @@ function mkMarker(c, dim) {
       className: pinClass(c),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
-      html: `<div style="width:${csz}px;height:${csz}px;border-radius:${MARKER_COLORS.commercial.radius};background:${MARKER_COLORS.commercial.bg};border:2px solid ${MARKER_COLORS.commercial.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer">
-        <span style="color:#fff;font-size:${fsz}px">🛒</span>
+      html: `<div role="button" aria-label="商業施設 ${attrEsc(c.name)}" style="width:${csz}px;height:${csz}px;border-radius:${MARKER_COLORS.commercial.radius};background:${MARKER_COLORS.commercial.bg};border:2px solid ${MARKER_COLORS.commercial.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer">
+        <span aria-hidden="true" style="color:#fff;font-size:${fsz}px">🛒</span>
       </div>`
     });
     const m = L.marker([c.lat,c.lng],{icon});
@@ -247,14 +259,19 @@ function mkMarker(c, dim) {
   const textColor = isUpcoming ? '#333' : '#fff';
   const label1 = isUpcoming ? '🔜' : c.luxTier;
   const label2 = "'" + yr2;
+  // The pin shows a tier letter and a two-digit year; spelled out, that is what
+  // the label has to say, because "S '08" read literally is noise.
+  const a11yLabel = isUpcoming
+    ? `${attrEsc(c.name)}、${c.year}年 竣工予定`
+    : `${attrEsc(c.name)}、Tier ${attrEsc(c.luxTier)}、${c.year}年`;
 
   const icon = L.divIcon({
     className: pinClass(c),
     iconSize: [sz, sz],
     iconAnchor: [sz/2, sz/2],
-    html: `<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${bgColor};border:${borderStyle};display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;line-height:1.1">
-      <span style="color:${textColor};font-size:${sz>34?11:9}px;font-weight:800;text-shadow:${isUpcoming?'none':'0 1px 2px rgba(0,0,0,0.5)'}">${label1}</span>
-      <span style="color:${isUpcoming?'#666':'rgba(255,255,255,0.85)'};font-size:${sz>34?8:7}px;font-weight:600;text-shadow:${isUpcoming?'none':'0 1px 2px rgba(0,0,0,0.5)'}">${label2}</span>
+    html: `<div role="button" aria-label="${a11yLabel}" style="width:${sz}px;height:${sz}px;border-radius:50%;background:${bgColor};border:${borderStyle};display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;line-height:1.1">
+      <span aria-hidden="true" style="color:${textColor};font-size:${sz>34?11:9}px;font-weight:800;text-shadow:${isUpcoming?'none':'0 1px 2px rgba(0,0,0,0.5)'}">${label1}</span>
+      <span aria-hidden="true" style="color:${isUpcoming?'#666':'rgba(255,255,255,0.85)'};font-size:${sz>34?8:7}px;font-weight:600;text-shadow:${isUpcoming?'none':'0 1px 2px rgba(0,0,0,0.5)'}">${label2}</span>
     </div>`
   });
 
@@ -299,8 +316,11 @@ export function toggleLegend(e){
   setLegendOpen(!legendOpen);
   const body=document.getElementById('legendBody');
   const tog=document.getElementById('legendToggle');
+  const box=document.getElementById('mapLegend');
   if(body) body.style.display=legendOpen?'block':'none';
   if(tog) tog.textContent=legendOpen?'▼':'▶';
+  // The ▶/▼ glyph and aria-expanded are set together so they cannot disagree.
+  if(box) box.setAttribute('aria-expanded', legendOpen?'true':'false');
 }
 // B3b (audit A3): the year-colour scale used to be drawn twice — as a gradient
 // bar inside the panel AND in this legend. The panel bar is gone; this legend
@@ -308,7 +328,7 @@ export function toggleLegend(e){
 export function updateLegend(){
   const ml=document.getElementById('mapLegend');
   if(!ml)return;
-  let h=`<div class="map-legend-title" style="display:flex;justify-content:space-between;align-items:center">Legend <span id="legendToggle">${legendOpen?'▼':'▶'}</span></div>`;
+  let h=`<div class="map-legend-title" style="display:flex;justify-content:space-between;align-items:center">Legend <span id="legendToggle" aria-hidden="true">${legendOpen?'▼':'▶'}</span></div>`;
   h+=`<div id="legendBody" style="display:${legendOpen?'block':'none'}">`;
   h+=`<div class="map-legend-title" style="margin-top:var(--s2)">Year Built (${YEAR_MIN}–${YEAR_MAX})</div>`;
   [{y:1993,l:'~1993'},{y:2001,l:'~2001'},{y:2009,l:'~2009'},{y:2017,l:'~2017'},{y:2025,l:'~2025'}].forEach(({y,l})=>{

@@ -122,7 +122,12 @@ export function syncLayerUI(){
   const more = $('moreFilters');
   if(more) more.style.display = moreOpen ? '' : 'none';
   const mt = $('moreToggle');
-  if(mt) mt.innerHTML = '絞り込み ' + (moreOpen ? '⌃' : '⌄');
+  if(mt){
+    mt.innerHTML = '絞り込み ' + (moreOpen ? '⌃' : '⌄');
+    // The chevron says "open" to a sighted user; aria-expanded says it to
+    // everyone else. They are set together so they cannot disagree.
+    mt.setAttribute('aria-expanded', moreOpen ? 'true' : 'false');
+  }
   // Sort options follow the layer
   const sel = $('fSort');
   if(sel){
@@ -231,22 +236,66 @@ function cardHead(c, badge, trailing, nameClass){
     (c.nameJa ? `<div class="card-ja">${esc(c.nameJa)}</div>` : '');
 }
 
+// The hero line — the one number the card is built around — is computed apart
+// from the markup so the card's accessible name can reuse it verbatim
+// (cardAriaLabel below). One source, so the label can never describe a card
+// differently from what the card shows.
+/** @returns {string} plain text, '' when the record has nothing to lead with. */
+function condoHeroText(c){
+  // An unbuilt project has no price yet; whatever stale numbers a row carries
+  // are not what will be asked for it.
+  if(c.status === 'upcoming') return '価格 未定';
+  const parts = [];
+  if(c.rentMin > 0 && c.rentMax > 0) parts.push(`RM ${num(c.rentMin)}–${num(c.rentMax)}/月`);
+  if(c.salePsfMin > 0 && c.salePsfMax > 0) parts.push(`PSF ${num(c.salePsfMin)}–${num(c.salePsfMax)}`);
+  return parts.join(' ・ ');
+}
+
+function schoolHeroText(c){
+  if(c.sizeMin > 0 && c.sizeMax > 0) return `学費 RM ${num(c.sizeMin)}–${num(c.sizeMax)}/年`;
+  if(c.sizeMin > 0) return `学費 RM ${num(c.sizeMin)}〜/年`;
+  return '学費 要問合せ';
+}
+
+function commercialHeroText(c){
+  const parts = [];
+  if(c.sizeMin > 0) parts.push(`NLA ${num(c.sizeMin)} sf`);
+  if(c.units > 0) parts.push(`${num(c.units)}店`);
+  return parts.join(' ・ ');
+}
+
+/** The hero line of any record, chosen by its type. Pure. */
+export function cardHeroText(c){
+  const layer = recordLayer(c);
+  return layer === 'school' ? schoolHeroText(c)
+    : layer === 'commercial' ? commercialHeroText(c)
+    : condoHeroText(c);
+}
+
+/**
+ * What a screen reader reads out for a card. Name first — it is what you are
+ * looking for — then the hero number, which is what you are comparing on.
+ * The address, meta line and score are deliberately left out: that is what
+ * opening the record is for, and a five-clause label is unusable at speed.
+ */
+export function cardAriaLabel(c){
+  const hero = cardHeroText(c);
+  return hero ? `${c.name}、${hero}` : String(c.name);
+}
+
 function condoCard(c){
   const tierColor = TIER_COLORS[c.luxTier] || '#999';
   const badge = `<span class="tier-badge" style="background:${tierColor}">${esc(c.luxTier)}</span>`;
   const award = c.fiabciAward
     ? `<span class="card-award" title="FIABCI MPA ${esc(c.fiabciAward.year)} ${esc(c.fiabciAward.category || '')}">🏆</span>` : '';
   const upcoming = c.status === 'upcoming';
-  const hero = [];
-  if(!upcoming && c.rentMin > 0 && c.rentMax > 0) hero.push(`RM ${num(c.rentMin)}–${num(c.rentMax)}/月`);
-  if(!upcoming && c.salePsfMin > 0 && c.salePsfMax > 0) hero.push(`PSF ${num(c.salePsfMin)}–${num(c.salePsfMax)}`);
+  const hero = condoHeroText(c);
   const meta = [];
   if(c.year) meta.push(upcoming ? `${c.year}年完成予定` : `${c.year}年`);
   if(c.units > 0) meta.push(`${num(c.units)} units`);
   if(c.sizeMin > 0 && c.sizeMax > 0) meta.push(`${num(c.sizeMin)}–${num(c.sizeMax)} sf`);
   return cardHead(c, badge + award, '') +
-    (hero.length ? `<div class="card-hero">${hero.join(' ・ ')}</div>`
-                 : (upcoming ? `<div class="card-hero card-hero-muted">価格 未定</div>` : '')) +
+    (hero ? `<div class="card-hero${upcoming ? ' card-hero-muted' : ''}">${hero}</div>` : '') +
     `<div class="card-addr">${esc(c.addr)}</div>` +
     (meta.length ? `<div class="card-meta">${esc(meta.join(' ・ '))}</div>` : '') +
     (c.luxScore > 0 ? `<div class="card-score">Luxury ${c.luxScore}</div>` : '');
@@ -260,10 +309,7 @@ function schoolCard(c){
   // School (POWIIS) Tanjung Bungah」 to nothing useful; the school's identity
   // matters more than its curriculum.
   const chip = cur ? `<div class="card-chips"><span class="card-chip chip-school">${esc(cur)}</span></div>` : '';
-  let hero = '';
-  if(c.sizeMin > 0 && c.sizeMax > 0) hero = `学費 RM ${num(c.sizeMin)}–${num(c.sizeMax)}/年`;
-  else if(c.sizeMin > 0) hero = `学費 RM ${num(c.sizeMin)}〜/年`;
-  else hero = '学費 要問合せ';
+  const hero = schoolHeroText(c);
   const meta = [];
   if(c.year) meta.push(`${c.year}年設立`);
   if(c.units > 0) meta.push(`生徒数 ${num(c.units)}名`);
@@ -279,15 +325,13 @@ function schoolCard(c){
 
 function commercialCard(c){
   const badge = `<span class="type-badge type-commercial">🛒</span>`;
-  const hero = [];
-  if(c.sizeMin > 0) hero.push(`NLA ${num(c.sizeMin)} sf`);
-  if(c.units > 0) hero.push(`${num(c.units)}店`);
+  const hero = commercialHeroText(c);
   const meta = [];
   if(c.year) meta.push(`${c.year}年開業`);
   const anchors = (c.anchorTenants || '').split(';').map(s => s.trim()).filter(Boolean).slice(0, 2);
   if(anchors.length) meta.push(anchors.join(' ・ '));
   return cardHead(c, badge, '') +
-    (hero.length ? `<div class="card-hero">${hero.join(' ・ ')}</div>` : '') +
+    (hero ? `<div class="card-hero">${hero}</div>` : '') +
     `<div class="card-addr">${esc(c.addr)}</div>` +
     (meta.length ? `<div class="card-meta">${esc(meta.join(' ・ '))}</div>` : '');
 }
@@ -301,8 +345,15 @@ export function cardBodyHtml(c){
   return layer === 'school' ? schoolCard(c) : layer === 'commercial' ? commercialCard(c) : condoCard(c);
 }
 
+/**
+ * A card is a control, so it announces itself as one and answers Enter/Space
+ * (the delegated handler in ui/a11y.js does the key part). It is not a native
+ * <button> because a button cannot carry this block layout without a stack of
+ * resets — role + tabindex buys the same semantics with none of that.
+ */
 export function cardHtml(c){
-  return `<div class="condo-card ${selectedCondo === c.name ? 'selected' : ''}" onclick="selectCondo('${jsStr(c.name)}')">${cardBodyHtml(c)}</div>`;
+  return `<div class="condo-card ${selectedCondo === c.name ? 'selected' : ''}" role="button" tabindex="0"` +
+    ` aria-label="${esc(cardAriaLabel(c))}" onclick="selectCondo('${jsStr(c.name)}')">${cardBodyHtml(c)}</div>`;
 }
 
 function emptyStateHtml(){
@@ -393,6 +444,11 @@ export function togglePanel(){
   const p = $('panel'), b = $('toggleBtn');
   const isMobile = window.innerWidth <= 768;
   p.classList.toggle('collapsed'); b.classList.toggle('collapsed');
-  b.innerHTML = p.classList.contains('collapsed') ? (isMobile ? '&#9650;' : '&#9654;') : (isMobile ? '&#9660;' : '&#9664;');
+  const collapsed = p.classList.contains('collapsed');
+  b.innerHTML = collapsed ? (isMobile ? '&#9650;' : '&#9654;') : (isMobile ? '&#9660;' : '&#9664;');
+  // The button's only content is an arrow glyph, which is no name at all — the
+  // label and the expanded state are the whole of what a screen reader gets.
+  b.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+  b.setAttribute('aria-label', collapsed ? '一覧パネルを開く' : '一覧パネルを閉じる');
   setTimeout(() => map.invalidateSize(), 300);
 }
