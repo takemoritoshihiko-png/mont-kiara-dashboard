@@ -5,7 +5,7 @@ import {
   showAwardOnly, setShowAwardOnly,
 } from '../state.js';
 import { TIER_COLORS } from '../data/inline.js';
-import { parseR, matchesFilters, recordLayer, LAYER_LABELS } from '../domain/filter.js';
+import { parseR, matchesFilters, recordLayer, LAYER_LABELS, CURRICULA } from '../domain/filter.js';
 import { SORT_OPTIONS, comparatorFor, defaultSortFor, sortAvailable } from '../domain/sort.js';
 import { map, rebuild } from './map.js';
 
@@ -87,8 +87,23 @@ export function setLayer(layer){
   applyFilters();
 }
 
+/**
+ * The curriculum options come from the domain constant, so the dropdown can
+ * never drift from what matchesCurriculum() actually knows about.
+ */
+function populateCurriculum(){
+  const sel = $('fCurriculum');
+  if(!sel || sel.dataset.filled) return;
+  const keep = sel.value;
+  sel.innerHTML = '<option value="">すべて</option>' +
+    CURRICULA.map(c => `<option value="${c}">${c}</option>`).join('');
+  sel.value = keep;
+  sel.dataset.filled = '1';
+}
+
 /** Show the controls of the active layer, hide the others, rebuild the sort select. */
 export function syncLayerUI(){
+  populateCurriculum();
   document.querySelectorAll('.seg-btn').forEach(b => {
     const on = b.dataset.layer === activeLayer;
     b.classList.toggle('active', on);
