@@ -14,6 +14,7 @@ import {
   clearSearch, removeFilter, clearAllFilters, showLoading,
 } from './ui/list.js';
 import { selectCondo, closeInfo, setInfoTab, selectNearby, applyUrlState } from './ui/info.js';
+import { initA11y } from './ui/a11y.js';
 import { readUrlState, withUrlWritesSuspended } from './ui/urlState.js';
 import {
   toggleSchoolFinder, closeSchoolFinder, renderSchoolFinder, sfSelectSchool, sfSelectCondo,
@@ -56,6 +57,9 @@ initMap();
 // Build the sort options / show the condo layer's controls before any data
 // arrives, so the panel is never in a half-wired state.
 syncLayerUI();
+// Enter/Space on the card-shaped controls, Escape on the overlay. One
+// delegated listener, so it survives every re-render of the list.
+initA11y();
 
 // ============================================================
 // URL = SCREEN STATE

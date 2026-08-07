@@ -4,6 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KL・ペナン 住まいマップ | KL &amp; Penang Living Map</title>
+<!-- ============================================================
+     SEO / OGP (B4)
+     Public site: the link is shared as-is (LINE, Slack, X), so the card has to
+     say what the page is without the page loading. No og:image is declared —
+     we have no screenshot asset in the repo, and a fabricated one would be a
+     picture of something that is not this app. Platforms fall back to their
+     own no-image card, which is honest.
+     ============================================================ -->
+<meta name="description" content="クアラルンプールとペナンのコンドミニアム・インターナショナルスクール・商業施設を1枚の地図で比べられる、日本人向けの住まい探しダッシュボードです。">
+<meta name="theme-color" content="#f5f5f7">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KL・ペナン 住まいマップ">
+<meta property="og:title" content="KL・ペナン 住まいマップ | KL &amp; Penang Living Map">
+<meta property="og:description" content="クアラルンプールとペナンのコンドミニアム・インターナショナルスクール・商業施設を1枚の地図で比べられる、日本人向けの住まい探しダッシュボードです。">
+<meta property="og:url" content="https://takemoritoshihiko-png.github.io/mont-kiara-dashboard/">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://takemoritoshihiko-png.github.io/mont-kiara-dashboard/">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
@@ -91,7 +109,9 @@ button,input,select{font-family:inherit}
 .filters{padding:var(--s3);background:var(--surface);border-bottom:1px solid var(--hairline);flex-shrink:1;overflow-y:auto}
 .filter-row{display:flex;gap:var(--s2);margin-bottom:var(--s2)}
 .filter-group{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
-.filter-group label{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;font-weight:600;letter-spacing:.2px}
+/* .fg-label is the same caption for a group whose control is a button, not a
+   form field: a <label> with nothing to point at is a dangling label. */
+.filter-group label,.filter-group .fg-label{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;font-weight:600;letter-spacing:.2px}
 .filter-group select,.filter-group input{background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:6px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm);min-width:0}
 .filter-group select:focus,.filter-group input:focus,.sort-select:focus,.search-wrap input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(10,108,255,.16)}
 .sort-row{display:flex;gap:var(--s2);align-items:center;margin-top:var(--s2)}
@@ -303,21 +323,51 @@ button,input,select{font-family:inherit}
 .load-warn{margin:var(--s2);padding:var(--s3);background:#fdecea;border:1px solid #d93025;border-radius:var(--r-control);color:#b3261e;font-size:var(--fs-xs);line-height:1.6}
 .load-error{padding:var(--s5) var(--s4);text-align:center;color:#b3261e;font-size:var(--fs-sm)}
 
+/* ============================================================
+   KEYBOARD FOCUS (B4 a11y)
+   Everything you can operate has to say so when you reach it with Tab. This
+   block sits last on purpose: the :focus rules further up kill the outline in
+   favour of a soft ring, and a mouse click should not draw a focus box — but a
+   keyboard landing always must. :focus-visible is the browser's own answer to
+   "was this reached by keyboard", so the same declarations win here by order.
+   ============================================================ */
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.filter-group select:focus-visible,.filter-group input:focus-visible,
+.sort-select:focus-visible,.search-wrap input:focus-visible,
+.sf-age-row select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+/* Rows and cards are flush with their container, so the ring goes inside. */
+.condo-card:focus-visible,.nb-row:focus-visible,.sf-row:focus-visible,
+.sf-condo-row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+/* The markers are Leaflet's elements; the ring goes on the pin inside, the same
+   place the selected-marker ring lives (see .mk-pin-sel above). */
+.mk-pin:focus-visible{outline:none}
+.mk-pin:focus-visible>div{outline:2px solid var(--accent);outline-offset:2px}
+
 /* ---- Respect the OS "reduce motion" setting ---- */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 
-/* ---- Mobile (redesigned properly in B4; here only kept in sync) ---- */
+/* ============================================================
+   MOBILE (≤768px)  — B4
+   Not a second design, the same one re-proportioned. Three rules govern it:
+   1. The bottom panel is 45% of the split (it was 27vh, which cut the richer
+      B3 cards in half — you could not read one card without scrolling).
+   2. The split is a share of .main, not of the viewport. 73vh+27vh added up to
+      a full screen inside a container that is a screen MINUS the header, so
+      the bottom of the panel was clipped by exactly the header's height.
+   3. Anything you tap is at least 40px in its smallest dimension.
+   ============================================================ */
 @media(max-width:768px){
+  body{height:100dvh}
   .header{padding:0 var(--s3);height:44px}
   .header h1{font-size:var(--fs-md)}
   .header h1 .en{display:none}
-  .main{flex-direction:column}
-  #map{height:73vh;min-height:250px}
-  .panel{width:100%!important;height:27vh;border-left:none;border-top:1px solid var(--hairline)}
-  .panel.collapsed{height:0;min-height:0}
-  .toggle-panel{right:var(--s3)!important;top:auto;bottom:27vh;border-radius:var(--r-control) var(--r-control) 0 0;padding:3px var(--s3);z-index:1001;font-size:var(--fs-xs)}
+  .main{flex-direction:column;height:calc(100vh - 44px);height:calc(100dvh - 44px)}
+  #map{flex:1 1 auto;height:auto;min-height:0}
+  .panel{width:100%!important;flex:0 0 45%;height:auto;border-left:none;border-top:1px solid var(--hairline)}
+  .panel.collapsed{flex:0 0 0;height:0;min-height:0}
+  .toggle-panel{right:var(--s3)!important;top:auto;bottom:45%;border-radius:var(--r-control) var(--r-control) 0 0;padding:var(--s1) var(--s4);z-index:1001;font-size:var(--fs-xs);min-height:32px}
   .toggle-panel.collapsed{bottom:0}
   .summary-bar{gap:3px;padding:var(--s1)}
   .summary-val{font-size:var(--fs-sm)}
@@ -326,28 +376,56 @@ button,input,select{font-family:inherit}
   .filter-row{gap:var(--s1);margin-bottom:var(--s1)}
   .sort-row{gap:var(--s1);margin-top:var(--s1)}
   .layer-seg{margin-bottom:var(--s2)}
+
+  /* ---- Touch targets ---- */
+  .seg-btn{min-height:40px}
+  .filter-group select,.filter-group input,.sort-select,.sf-age-row select{min-height:40px}
+  .disclosure{min-height:40px;padding:var(--s2) 0}
+  .chip-toggle,.sort-btn,.sf-back,.fchip-clear,.btn-clear-all{min-height:40px}
+  .search-clear{min-width:40px;min-height:40px;display:flex;align-items:center;justify-content:center;padding:0}
+  .info-tab{min-height:40px}
+  .nb-row,.sf-row,.sf-condo-row{min-height:40px}
+  /* A chip's ✕ has to stay small or the pill stops being a pill, so the tap
+     area is grown invisibly around the glyph instead of the glyph itself. */
+  .fchip-x{position:relative}
+  .fchip-x::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px}
+
+  /* ---- Active-filter chips: one scrolling row, never a growing wall ---- */
+  .chips{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding-bottom:2px}
+  .chips::-webkit-scrollbar{display:none}
+  .fchip{flex-shrink:0}
+
   .condo-card{padding:var(--s2) var(--s3)}
   .card-name{font-size:var(--fs-sm)}
   .card-hero{font-size:var(--fs-md)}
+  .skel-card{padding:var(--s2) var(--s3)}
   .empty-state{padding:var(--s4) var(--s3)}
   .panel-footer{padding:var(--s1) var(--s2)}
   .map-legend{display:none!important}
   .tier-badge{width:12px!important;height:12px!important;line-height:12px!important;font-size:8px!important}
-  .info-overlay{top:0;width:78vw;max-width:280px;max-height:100%}
+
+  /* ---- Detail overlay: a sheet over the map, not a full-height column.
+     bottom:auto releases the base rule's top/bottom stretch so max-height can
+     actually cap it; the header inside stays sticky and the body scrolls. ---- */
+  .info-overlay{top:0;bottom:auto;width:78vw;max-width:280px;max-height:60vh;overflow-y:auto}
   .info-name{font-size:var(--fs-md)}
+
+  /* ---- 学費くらべ ---- */
+  .sf-header{padding:var(--s2)}
+
   .area-jump{top:6px;left:46px;right:6px;max-width:calc(100% - 52px);padding:var(--s1) 6px;gap:2px}
-  .area-jump button{font-size:var(--fs-label);padding:2px var(--s2)}
+  .area-jump button{font-size:var(--fs-label);padding:var(--s1) var(--s2);min-height:32px}
   .aj-label{font-size:var(--fs-label)}
 }
 </style>
 </head>
 <body>
-<div class="header">
+<header class="header">
   <h1>KL・ペナン 住まいマップ<span class="en">KL &amp; Penang Living Map</span></h1>
-</div>
-<div class="main" style="position:relative">
-  <div id="map"></div>
-  <div class="area-jump" id="areaJump">
+</header>
+<main class="main" style="position:relative">
+  <div id="map" role="application" aria-label="地図。物件・学校・商業施設のマーカーを表示します。キーボードでは右の一覧から選んでください。"></div>
+  <div class="area-jump" id="areaJump" role="group" aria-label="エリアへ移動">
     <span class="aj-label">🏙️KL</span>
     <button data-area="mont-kiara" onclick="jumpToArea('mont-kiara')" title="モントキアラ">Mont Kiara</button>
     <button data-area="parkcity" onclick="jumpToArea('parkcity')" title="デサ・パークシティ">ParkCity</button>
@@ -365,14 +443,20 @@ button,input,select{font-family:inherit}
     <button data-area="bayan" onclick="jumpToArea('bayan')" title="バヤン・レパス">Bayan Lepas</button>
     <button data-area="all-pg" onclick="jumpToArea('all-pg')" title="ペナン全体">PG全体</button>
   </div>
-  <div class="info-overlay" id="infoOverlay"><div id="infoContent"></div></div>
-  <button class="toggle-panel" id="toggleBtn" onclick="togglePanel()">&#9664;</button>
-  <div class="panel" id="panel">
+  <!-- aria-modal="false": the overlay sits over the map but never traps you —
+       the list, the filters and the map stay operable behind it. Its
+       aria-label is rewritten with the selected record's name by info.js. -->
+  <div class="info-overlay" id="infoOverlay" role="dialog" aria-modal="false" aria-label="詳細" tabindex="-1"><div id="infoContent"></div></div>
+  <button class="toggle-panel" id="toggleBtn" aria-label="一覧パネルを閉じる" aria-expanded="true" aria-controls="panel" onclick="togglePanel()">&#9664;</button>
+  <aside class="panel" id="panel" aria-label="検索と一覧">
+    <!-- Each figure is tied to its caption with aria-labelledby: on its own,
+         「271」 tells a screen-reader user nothing. Shown is a live region so a
+         filter change announces the new count instead of changing in silence. -->
     <div class="summary-bar">
-      <div class="summary-item"><div class="summary-val" id="sumTotal">–</div><div class="summary-label">Total</div></div>
-      <div class="summary-item"><div class="summary-val" id="sumFiltered">–</div><div class="summary-label">Shown</div></div>
-      <div class="summary-item"><div class="summary-val" id="sumStat3">–</div><div class="summary-label" id="sumStat3Label">Med.PSF</div></div>
-      <div class="summary-item"><div class="summary-val" id="sumStat4">–</div><div class="summary-label" id="sumStat4Label">Med.Rent</div></div>
+      <div class="summary-item"><div class="summary-val" id="sumTotal" aria-labelledby="sumTotalLabel">–</div><div class="summary-label" id="sumTotalLabel">Total</div></div>
+      <div class="summary-item"><div class="summary-val" id="sumFiltered" aria-labelledby="sumFilteredLabel" aria-live="polite" aria-atomic="true">–</div><div class="summary-label" id="sumFilteredLabel">Shown</div></div>
+      <div class="summary-item"><div class="summary-val" id="sumStat3" aria-labelledby="sumStat3Label">–</div><div class="summary-label" id="sumStat3Label">Med.PSF</div></div>
+      <div class="summary-item"><div class="summary-val" id="sumStat4" aria-labelledby="sumStat4Label">–</div><div class="summary-label" id="sumStat4Label">Med.Rent</div></div>
     </div>
     <div class="filters">
       <div class="layer-seg" role="tablist" aria-label="表示する種別">
@@ -403,7 +487,7 @@ button,input,select{font-family:inherit}
         <div class="filter-group"><label for="fNla">規模 (NLA)</label><select id="fNla" onchange="applyFilters()"><option value="">すべて</option><option value="1-150000">&lt;150K sf</option><option value="150000-500000">150K-500K sf</option><option value="500000-99999999">&gt;500K sf</option></select></div>
       </div>
 
-      <button type="button" class="disclosure" id="moreToggle" onclick="toggleMore()" aria-controls="moreFilters">絞り込み ⌄</button>
+      <button type="button" class="disclosure" id="moreToggle" onclick="toggleMore()" aria-controls="moreFilters" aria-expanded="false">絞り込み ⌄</button>
 
       <div id="moreFilters" style="display:none">
         <div class="filter-row" data-layer-only="condo">
@@ -416,7 +500,7 @@ button,input,select{font-family:inherit}
         </div>
         <div class="filter-row" data-layer-only="condo">
           <div class="filter-group"><label for="fStatus">状態</label><select id="fStatus" onchange="applyFilters()"><option value="">すべて</option><option value="completed">Completed (既築)</option><option value="upcoming">Upcoming (今後建つ)</option></select></div>
-          <div class="filter-group"><label>受賞</label><button type="button" class="chip-toggle" id="toggleAward" aria-pressed="false" onclick="toggleAward()" title="FIABCI Malaysia Property Award 受賞物件のみ">🏆 受賞のみ</button></div>
+          <div class="filter-group"><span class="fg-label">受賞</span><button type="button" class="chip-toggle" id="toggleAward" aria-pressed="false" onclick="toggleAward()" title="FIABCI Malaysia Property Award 受賞物件のみ">🏆 受賞のみ</button></div>
         </div>
         <div class="filter-row" data-layer-only="school" style="display:none">
           <div class="filter-group"><label for="fFee">年間学費</label><select id="fFee" onchange="applyFilters()"><option value="">すべて</option><option value="1-40000">≤40K RM</option><option value="40000-80000">40K-80K RM</option><option value="80000-120000">80K-120K RM</option><option value="120000-9999999">&gt;120K RM</option></select></div>
@@ -461,11 +545,11 @@ button,input,select{font-family:inherit}
       </div>
       <div class="sf-body" id="sfContent"></div>
     </div>
-    <div class="condo-list" id="condoList"></div>
+    <div class="condo-list" id="condoList" aria-label="検索結果の一覧"></div>
     <div class="panel-footer">出典: iProperty / PropertyGuru / EdgeProp (2025-2026), MICHELIN Guide, 各公式サイト</div>
-  </div>
-</div>
-<div class="map-legend" id="mapLegend" style="cursor:pointer" onclick="toggleLegend()"></div>
+  </aside>
+  <div class="map-legend" id="mapLegend" style="cursor:pointer" role="button" tabindex="0" aria-expanded="false" aria-label="凡例を開閉" onclick="toggleLegend()"></div>
+</main>
 
 <script type="module" src="./src/main.js"></script>
 </body>
