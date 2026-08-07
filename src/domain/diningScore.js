@@ -1,3 +1,5 @@
+import { num } from '../format.js';
+
 // 台帳スコア — the dining ledger's 100-point total, ported from 台帳v9 §3.
 //
 // The number answers one question: "how much does this place's reputation
@@ -220,6 +222,6 @@ export function ratingMetaText(rec, baseline){
   const c = Number(rec && rec.reviewCount) || 0;
   if(!(r > 0)) return '';
   const rb = shrunkRating(rec, baseline);
-  const count = c > 0 ? `${c.toLocaleString('en-US')}件（母数 ${reviewDepthLabel(c)}）` : 'レビュー数不明';
+  const count = c > 0 ? `${num(c)}件（母数 ${reviewDepthLabel(c)}）` : 'レビュー数不明';
   return `Google ★${r} / ${count} → 縮約後 ${rb.toFixed(2)}`;
 }

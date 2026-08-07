@@ -2623,7 +2623,7 @@
   "kidOk": 1,
   "venue": "EQ Kuala Lumpur",
   "venueType": "hotel",
-  "area": "KLCC",
+  "area": "Bukit Bintang",
   "address": "Equatorial Plaza, Jalan Sultan Ismail",
   "lat": 3.152864,
   "lng": 101.709709,
@@ -2675,7 +2675,7 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "毎日16:30-23:00の夜のみ。実測は2名で総額RM350程度の例あり。",
-  "editorNote": "2003年開業、洗練空間で味わう本格マレー高級料理の草分け。複数の群衆ランキングで重複ヒット。",
+  "editorNote": "2003年開業、洗練空間で味わう本格マレー高級料理の草分け。各種ベストリストの常連。",
   "vox": {
    "pros": "",
    "cons": ""
@@ -2775,7 +2775,7 @@
   "address": "Publika Shopping Gallery, Solaris Dutamas",
   "lat": 3.171582,
   "lng": 101.664525,
-  "geoPrecision": "building",
+  "geoPrecision": "venue",
   "priceLunch": [
    50,
    90
@@ -2786,7 +2786,7 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "11:00-22:00(金土-23:00)終日同一メニュー。実食2名合計RM81の例。ピザRM39-73・パスタRM79前後。",
-  "editorNote": "ムスリムオーナー経営のハラール&ノンアルコール本格イタリアン。Publikaエリアで群衆バーを唯一クリア。",
+  "editorNote": "ムスリムオーナー経営のハラール&ノンアルコール本格イタリアン。Publikaの人気筆頭格。",
   "vox": {
    "pros": "",
    "cons": ""
@@ -2843,10 +2843,10 @@
   "reviewCount": 1631,
   "natCode": 3,
   "kidOk": 0,
-  "venue": "タワー1F",
+  "venue": "Menara Manulife",
   "venueType": "tower",
   "area": "Damansara Heights",
-  "address": "Bukit Damansara",
+  "address": "Menara Manulife, Jalan Beringin, Bukit Damansara",
   "lat": 3.151298,
   "lng": 101.663339,
   "geoPrecision": "building",
@@ -2934,7 +2934,7 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "18:00-24:00の夜のみ。前菜RM65-75+熟成肉RM130-150/100g・メインRM198-205(実メニュー)。",
-  "editorNote": "熟成肉専門の高級ステーキブティック。ミシュランSelected 2025・2026連続掲載をGoogle★4.5×1,321件の群衆実証が裏付け。",
+  "editorNote": "熟成肉専門の高級ステーキブティック。ミシュランSelected 2025・2026連続掲載。",
   "vox": {
    "pros": "",
    "cons": ""
@@ -2957,7 +2957,7 @@
   "venue": "路面店",
   "venueType": "street",
   "area": "TTDI",
-  "address": "TTDI",
+  "address": "Persiaran Zaaba, TTDI",
   "lat": 3.14171,
   "lng": 101.62742,
   "geoPrecision": "building",
@@ -3087,7 +3087,7 @@
    "pros": "",
    "cons": ""
   },
-  "catGroup": "マレーシア料理",
+  "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": []
  },
@@ -3098,8 +3098,8 @@
   "nameJa": "宮武讃岐うどん",
   "cat": "うどん",
   "michelin": "none",
-  "rating": 4.4,
-  "reviewCount": 433,
+  "rating": null,
+  "reviewCount": 0,
   "natCode": 3,
   "kidOk": 0,
   "venue": "路面店",
@@ -3118,8 +3118,8 @@
    30
   ],
   "priceConfidence": "概算",
-  "priceNote": "21:00閉店。牛肉うどんRM23前後の例。★値はRestaurant Guru/Kuraberu 4.4×433のプロキシ（Google実値要確認）。",
-  "editorNote": "職人が毎日手打ち・出汁を仕込む本格讃岐うどん。1 Utama伊勢丹から移転しMont Kiara+TRXの2店。MK核心部の日本人定番。",
+  "priceNote": "21:00閉店。牛肉うどんRM23前後の例。",
+  "editorNote": "職人が毎日手打ち・出汁を仕込む本格讃岐うどん。1 Utama伊勢丹から移転しMont Kiara+TRXの2店。MK核心部の日本人定番。Google評価は未取得(参考: Restaurant Guru/Kuraberu 4.4×433)。",
   "vox": {
    "pros": "",
    "cons": ""
@@ -3142,7 +3142,7 @@
   "venue": "路面店",
   "venueType": "street",
   "area": "Damansara Heights",
-  "address": "Bukit Damansara",
+  "address": "Jalan Setiakasih 5, Bukit Damansara",
   "lat": 3.1531,
   "lng": 101.6492,
   "geoPrecision": "street",
@@ -3266,8 +3266,8 @@
    0
   ],
   "priceConfidence": "概算",
-  "priceNote": "火-土18-23時の夜のみ・日月祝休。単一テイスティングコース制(額非公開)。Google評価は未集計(新店につき評価欄は空)。",
-  "editorNote": "中華ディアスポラ料理を欧州技法で再解釈、亡き母の名を冠する店。ミシュランSelected 2026新規+Young Chef Award。",
+  "priceNote": "火-土18-23時の夜のみ・日月祝休。単一テイスティングコース制(額非公開)。",
+  "editorNote": "中華ディアスポラ料理を欧州技法で再解釈、亡き母の名を冠する店。ミシュランSelected 2026新規+Young Chef Award。Google評価は未集計(新店につき評価欄は空)。",
   "vox": {
    "pros": "",
    "cons": ""
@@ -3303,7 +3303,7 @@
    0
   ],
   "priceConfidence": "概算",
-  "priceNote": "月休・火-日11-15時/17-22時。$$$帯・RM実例未取得。",
+  "priceNote": "月休・火-日11-15時/17-22時。高級帯(コース中心)・RM実例未取得。",
   "editorNote": "シーフード不使用の精進寿司+ノンアル創作カクテル。Kusaチームの姉妹ブランド。ミシュランSelected 2026新規。",
   "vox": {
    "pros": "",
@@ -3365,10 +3365,10 @@
   "kidOk": 0,
   "venue": "路面店",
   "venueType": "street",
-  "area": "Sea Park (PJ)",
-  "address": "11a, Jalan 20/16, Sea Park, PJ",
-  "lat": 3.11,
-  "lng": 101.62,
+  "area": "Taman Paramount (PJ)",
+  "address": "11a, Jalan 20/16, Taman Paramount, PJ",
+  "lat": 3.1064,
+  "lng": 101.625,
   "geoPrecision": "street",
   "priceLunch": [
    0,
@@ -3380,7 +3380,7 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "月休。水-土12:30-14:30/18-22時、日火は夜のみ。ノーメニューおまかせ・RM実例未取得。",
-  "editorNote": "マレーシア食材×和食のBeyond Omakase。Tatler Best 20を2025/2026連続選出(件数180は少なめだが権威二重署名を優先採用)。",
+  "editorNote": "マレーシア食材×和食のBeyond Omakase。Tatler Best 20を2025/2026連続選出。",
   "extraFlags": [
    "Tatler Best 20"
   ],
@@ -3419,7 +3419,7 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "月-木は夜のみ17:30-21:30、金-日は昼11:30-14:30も。シェアプレート業態・RM実例未取得。",
-  "editorNote": "2014年創業のネイバーフッド洋食の代表格。Tatler Best 20 2025+TimeOut選出、★4.5×1,786件の群衆実証も両立。隣にベーカリー併設。",
+  "editorNote": "2014年創業のネイバーフッド洋食の代表格。Tatler Best 20 2025+TimeOut選出、★4.5×1,786件と地元支持も厚い。隣にベーカリー併設。",
   "extraFlags": [
    "Tatler Best 20"
   ],
@@ -3445,8 +3445,8 @@
   "venueType": "hotel",
   "area": "KL Sentral",
   "address": "The St. Regis, 6 Jalan Stesen Sentral 2",
-  "lat": 3.1336,
-  "lng": 101.6862,
+  "lat": 3.13664,
+  "lng": 101.68876,
   "geoPrecision": "building",
   "priceLunch": [
    0,
@@ -3457,8 +3457,8 @@
    0
   ],
   "priceConfidence": "概算",
-  "priceNote": "火休。おまかせ主体の$$$$帯・RM実例未取得。",
-  "editorNote": "東京三ツ星「鮨さいとう」系譜のカウンター。Tatler Best 20 2025選出。件数290は閾値300線上だが系譜+権威で採用。",
+  "priceNote": "火休。おまかせ主体の最高級帯・RM実例未取得。",
+  "editorNote": "東京三ツ星「鮨さいとう」系譜のカウンター。Tatler Best 20 2025選出。Ozaki牛も提供。",
   "extraFlags": [
    "Tatler Best 20"
   ],

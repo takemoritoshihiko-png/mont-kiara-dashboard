@@ -102,13 +102,10 @@ export function matchesArea(c, areaFilter){
 // ============================================================
 // SCHOOL helpers
 // ============================================================
-/** "3-18" -> {min:3, max:18}. Returns null when the field is missing/unparsable. */
-export function parseAgeRange(s){
-  if(!s) return null;
-  const [a,b]=String(s).split('-').map(Number);
-  if(!Number.isFinite(a)||!Number.isFinite(b)) return null;
-  return {min:a, max:b};
-}
+// "3-18" -> {min:3, max:18}。パーサは fees.js と共有(1本)。あちらは en/em ダッシュも
+// 読むため、CSVに – が紛れても「学費くらべには出るのに年齢フィルタでは消える」が起きない。
+import { parseAgeRange } from './fees.js';
+export { parseAgeRange };
 
 /** The school accepts a child of `age` (its age_range covers that age). */
 export function matchesSchoolAge(c, age){

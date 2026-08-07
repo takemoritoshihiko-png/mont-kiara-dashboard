@@ -8,7 +8,7 @@ import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS, MICHELIN_BADGES } from '.
 import { selectCondo, closeInfo } from './info.js';
 // Deferred-usage only (called inside functions): safe across the list.js<->map.js cycle.
 import { cardHeroText, ratingText, num } from './list.js';
-import { getEntry } from '../data/personal.js';
+import { isVisited } from '../data/personal.js';
 
 // ============================================================
 // ZOOM THRESHOLDS (tune here)
@@ -102,13 +102,13 @@ let clusterGroups = null;
 let labelMode = null;
 
 /**
- * Escape for an HTML attribute. Leaflet builds divIcon content from a raw
- * string outside the document, so the shared esc() in ui/list.js is not
- * reachable here without importing the panel into the map. A name like
- * 「Pavilion Hilltop ("The Peak")」 must not break out of aria-label.
+ * Escape for an HTML attribute — the shared esc() under its map-side name.
+ * A name like 「Pavilion Hilltop ("The Peak")」 must not break out of
+ * aria-label. (Was a byte-identical local copy until src/format.js existed;
+ * the alias is kept because divIcon markup reads as attribute-escaping.)
  */
-export const attrEsc = (s) => String(s == null ? '' : s)
-  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+export { esc as attrEsc } from '../format.js';
+import { esc as attrEsc } from '../format.js';
 
 // B3b (spec 2.9): the type colours live here, once. Markers, cluster bubbles
 // and the legend all read them, so school navy / commercial orange can never
@@ -378,6 +378,15 @@ export function pinClassName(isSelected) {
 // Selection is a CLASS on the icon so the CSS ring can follow it.
 const pinClass = (c) => pinClassName(c.name === selectedCondo);
 
+/** The tail every marker branch shares: build the Leaflet marker, wire the
+ *  click, bind the name label. shortName is what the label prints. */
+function attachMarker(c, icon, shortName, size){
+  const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
+  m._rec = c;
+  m.on('click',()=>selectCondo(c.name));
+  return bindLabel(m, c.name, shortName, size/2+2);
+}
+
 // Custom DivIcon with tier label inside circle
 function mkMarker(c) {
   const yearColor = getYearColor(c.year);
@@ -400,10 +409,7 @@ function mkMarker(c) {
         <span aria-hidden="true" style="color:#fff;font-size:10px">🎓</span>
       </div>`
     });
-    const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
-    m._rec = c;
-    m.on('click',()=>selectCondo(c.name));
-    return bindLabel(m, c.name, c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), csz/2+2);
+    return attachMarker(c, icon, c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), csz);
   }
 
   if (c.status === 'dining') {
@@ -422,7 +428,7 @@ function mkMarker(c) {
     // 緑 (--rv-again) のリテラル。
     // 外食モード限定: 住まいモードは個人記録を一切出さない契約（CLAUDE.md）
     // なので、住まい側で飲食レイヤーを重ねてもバッジは描かない。
-    const visited = appMode === 'eatout' && c.id && getEntry(c.id).v === 1;
+    const visited = appMode === 'eatout' && isVisited(c);
     const badge = visited
       ? `<span aria-hidden="true" style="position:absolute;top:-5px;right:-5px;width:13px;height:13px;border-radius:50%;background:#1d5f55;border:1.5px solid #fff;color:#fff;font-size:9px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.35)">✓</span>`
       : '';
@@ -435,10 +441,7 @@ function mkMarker(c) {
         <span aria-hidden="true" style="position:relative;color:#fff;font-size:10px;line-height:1">🍽</span>${badge}
       </div>`
     });
-    const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
-    m._rec = c;
-    m.on('click',()=>selectCondo(c.name));
-    return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2);
+    return attachMarker(c, icon, c.name.replace(/ \(.*\)/,''), csz);
   }
 
   if (isCommercial) {
@@ -457,10 +460,7 @@ function mkMarker(c) {
         <span aria-hidden="true" style="color:#fff;font-size:${fsz}px">🛒</span>
       </div>`
     });
-    const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
-    m._rec = c;
-    m.on('click',()=>selectCondo(c.name));
-    return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2);
+    return attachMarker(c, icon, c.name.replace(/ \(.*\)/,''), csz);
   }
 
   const borderStyle = isUpcoming ? `3px dashed ${tierColor}` : `3px solid ${tierColor}`;
@@ -484,12 +484,7 @@ function mkMarker(c) {
     </div>`
   });
 
-  const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
-    m._rec = c;
-  m.on('click',()=>selectCondo(c.name));
-
-  // Name label (permanent when zoomed in / selected, hover-only otherwise)
-  return bindLabel(m, c.name, c.name.replace(/ Mont Kiara/g,'').replace(/ \(.*\)/,''), sz/2+2);
+  return attachMarker(c, icon, c.name.replace(/ Mont Kiara/g,'').replace(/ \(.*\)/,''), sz);
 }
 
 /** Every cluster group stays attached; which markers exist inside them is decided in rebuild(). */

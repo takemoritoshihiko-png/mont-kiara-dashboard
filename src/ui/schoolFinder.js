@@ -55,7 +55,6 @@ function setPanel(on){
   if(on) renderSchoolFinder(currentAge());
 }
 
-export function openSchoolFinder(){ setPanel(true); }
 export function closeSchoolFinder(){ setPanel(false); }
 export function toggleSchoolFinder(){ setPanel(!sfActive); }
 

@@ -141,9 +141,7 @@ export function eatoutCardExtraHtml(c){
 }
 
 /** Whether a card should sink in the list because you have already been. */
-export function isVisited(c){
-  return !!(c && c.id && P.getEntry(c.id).v === 1);
-}
+export const isVisited = P.isVisited;
 
 /** The score block a 台帳 card leads with in 外食モード. '' elsewhere. */
 export function eatoutCardScoreHtml(c){
@@ -283,7 +281,7 @@ export const PRIVACY_TEXT =
 function savedAtText(st){
   if(!st.savedAt) return 'まだ保存していません';
   const d = st.savedAt;
-  const p = (n) => String(n).padStart(2, '0');
+  const p = P.pad2;
   return `最終保存 ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
 }
 
@@ -458,4 +456,3 @@ export function eatoutListHtml(){
 }
 
 /** Kept for the list header: how many records the 台帳 view is showing. */
-export function shownCount(){ return filtered.length; }

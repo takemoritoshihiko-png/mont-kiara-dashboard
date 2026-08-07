@@ -24,13 +24,10 @@ import {
 
 const $ = (id) => document.getElementById(id);
 const val = (id) => { const el = $(id); return el ? el.value : ''; };
-// Every user-facing number goes through this: thousands separators everywhere,
-// no exceptions (audit C5). Shared with info.js and schoolFinder.js.
-export const num = (n) => Number(n).toLocaleString('en-US');
-// Shared with info.js so both renderers escape identically.
-export const esc = (s) => String(s == null ? '' : s)
-  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-export const jsStr = (s) => String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+// num/esc/jsStr moved to src/format.js (domain modules need them too);
+// re-exported here so long-standing importers keep one door.
+import { num, esc, jsStr } from '../format.js';
+export { num, esc, jsStr };
 
 // ============================================================
 // CRITERIA — which controls belong to which layer

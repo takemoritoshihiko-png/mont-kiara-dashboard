@@ -14,6 +14,7 @@
 // Pure: records + a personal-record lookup in, numbers and arrays out.
 
 import { REPEAT_VALUES, REPEAT_LABELS, amountValue } from '../data/personal.js';
+import { num } from '../format.js';
 
 /** Group order is fixed, so the list does not reshuffle as records change. */
 export const REPEAT_GROUPS = [
@@ -91,7 +92,7 @@ export function groupByRepeat(records, entries, scoreOf = () => 0){
 export function logMetaText(row, score){
   const parts = [row.entry.vd ? `${row.entry.vd} 訪問` : '訪問日なし'];
   const amt = amountValue(row.entry);
-  if(amt > 0) parts.push(`実額 RM ${amt.toLocaleString('en-US')}／人`);
+  if(amt > 0) parts.push(`実額 RM ${num(amt)}／人`);
   if(score > 0) parts.push(`台帳スコア ${score}`);
   return parts.join(' ・ ');
 }

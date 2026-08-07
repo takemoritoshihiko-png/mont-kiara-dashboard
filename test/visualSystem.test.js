@@ -189,6 +189,10 @@ describe('JS-side colours are inventoried (map.js / inline.js)', () => {
     ]);
   });
 
+  it('src/ui/schoolFinder.js introduces no unlisted colour', () => {
+    expect(hexesOf('../src/ui/schoolFinder.js')).toEqual(['#0a6cff', '#bbb', '#e0e0e0', '#fff']);
+  });
+
   it('src/data/inline.js introduces no unlisted colour (legacy blues/greens are grandfathered pending the marker redesign)', () => {
     expect(hexesOf('../src/data/inline.js')).toEqual([
       '#00838f', '#1565c0', '#2e7d32', '#64b5f6', '#78909c', '#7b1fa2',

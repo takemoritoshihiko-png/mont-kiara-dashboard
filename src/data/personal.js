@@ -55,7 +55,7 @@ export const TYPING_SAVE_MS = 250;
  * when that happens.
  */
 export function localDate(d = new Date()){
-  const p = (n) => String(n).padStart(2, '0');
+  const p = pad2;
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
 }
 
@@ -420,3 +420,11 @@ export function storedCounts(){
     amount: e.filter(x => amountValue(x) > 0).length,
   };
 }
+
+/** 純述語: この記録は訪問済みか。モード判定は各画面の責務(地図バッジは外食のみ)。 */
+export function isVisited(c){
+  return !!(c && c.id && getEntry(c.id).v === 1);
+}
+
+/** 2桁ゼロ詰め。日付組み立てで dining.js と共有。 */
+export const pad2 = (n) => String(n).padStart(2, '0');
