@@ -112,6 +112,42 @@ describe('numbers read as numbers (audit C5)', () => {
   });
 });
 
+describe('B3c: 学費くらべ, the selected marker and the sticky header', () => {
+  it('names the panel for what it now covers — KL as well as Penang (audit E4)', () => {
+    expect(html).toContain('🎓 学費くらべ');
+    expect(html).toContain('🎓 学費くらべ (KL・ペナン)');
+    expect(html).not.toContain('Penang School Finder');
+  });
+
+  it('closes the panel through its own function, never by assigning a global (audit E2)', () => {
+    expect(html).toContain('onclick="closeSchoolFinder()"');
+    expect(html).not.toContain('sfActive=false');
+  });
+
+  it('rings the selected marker in the accent colour and scales it (spec 2.7 / D3)', () => {
+    expect(css).toContain('--ring-accent:0 0 0 3px rgba(10,108,255,.4)');
+    const rule = css.slice(css.indexOf('.mk-pin-sel>div{'));
+    const body = rule.slice(0, rule.indexOf('}'));
+    expect(body).toContain('transform:scale(1.25)');
+    expect(body).toContain('var(--ring-accent)');
+    // The nudge is the shared 150ms, applied to every pin so it animates both
+    // on and off.
+    const base = css.slice(css.indexOf('.mk-pin>div{'));
+    expect(base.slice(0, base.indexOf('}'))).toContain('var(--dur)');
+  });
+
+  it('keeps the detail overlay close button reachable at any scroll position', () => {
+    const rule = css.slice(css.indexOf('.info-sticky{'));
+    const body = rule.slice(0, rule.indexOf('}'));
+    expect(body).toContain('position:sticky');
+    expect(body).toContain('top:0');
+    expect(body).toContain('background:var(--surface)');
+    expect(body).toContain('border-bottom:1px solid var(--hairline)');
+    // The ✕ moved into the rendered header so it travels with the sticky block.
+    expect(html).not.toContain('<button class="info-close"');
+  });
+});
+
 describe('loading state (audit E3 / spec 2.10)', () => {
   it('draws four card-shaped placeholders, not a line of text', () => {
     const h = skeletonHtml();

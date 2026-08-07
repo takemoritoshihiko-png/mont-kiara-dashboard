@@ -61,6 +61,8 @@
 
   --shadow-1:0 1px 2px rgba(0,0,0,.05);
   --shadow-2:0 4px 16px rgba(0,0,0,.10);
+  /* The one "you are here" ring: selected map marker, 40% accent (spec 2.7). */
+  --ring-accent:0 0 0 3px rgba(10,108,255,.4);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -138,6 +140,9 @@ button,input,select{font-family:inherit}
 /* ---- Cards (spec 2.5: one template per type) ---- */
 .card-head{display:flex;align-items:center;gap:var(--s2);margin-bottom:1px}
 .card-name{font-size:var(--fs-md);font-weight:600;color:var(--text);line-height:1.3;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-.2px}
+/* School names have no short form that still names the campus: wrap to a
+   second line rather than cut it off. Capped at two so cards stay uniform. */
+.card-name-wrap{white-space:normal;text-overflow:clip;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .card-ja{font-size:var(--fs-xs);color:var(--text-2);margin-bottom:var(--s1)}
 .card-hero{font-size:var(--fs-lg);font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.3px;margin:var(--s1) 0}
 .card-hero-muted{color:var(--text-2);font-weight:500}
@@ -146,6 +151,10 @@ button,input,select{font-family:inherit}
 .card-score{font-size:var(--fs-label);color:var(--text-2);margin-top:var(--s1);font-variant-numeric:tabular-nums}
 .card-award{font-size:var(--fs-xs);line-height:1}
 .card-chip{margin-left:auto;font-size:var(--fs-label);padding:1px var(--s2);border-radius:var(--r-pill);font-weight:600;white-space:nowrap;max-width:45%;overflow:hidden;text-overflow:ellipsis}
+/* School cards give the name the whole line and drop the chip underneath, so a
+   long school name is not cut to 55% of the card. */
+.card-chips{margin:2px 0 var(--s1)}
+.card-chips .card-chip{display:inline-block;margin-left:0;max-width:100%}
 .chip-school{background:var(--accent-soft);color:var(--type-school)}
 .type-badge{display:inline-block;width:18px;height:18px;border-radius:50%;text-align:center;line-height:18px;font-size:var(--fs-label);flex-shrink:0}
 .type-school{background:var(--type-school)}
@@ -178,6 +187,9 @@ button,input,select{font-family:inherit}
 @keyframes infoIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
 /* 3px band in the record's type colour — the only place type colour appears in the panel. */
 .info-band{height:3px}
+/* The header stays put while the body scrolls, so the ✕ is always reachable —
+   on a long school entry it used to scroll out of the overlay entirely. */
+.info-sticky{position:sticky;top:0;z-index:3;background:var(--surface);border-bottom:1px solid var(--hairline)}
 .info-close{position:absolute;top:var(--s1);right:var(--s1);width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:none;border:none;font-size:var(--fs-md);cursor:pointer;color:var(--text-2);line-height:1;border-radius:50%;z-index:2;transition:background var(--dur) var(--ease)}
 .info-close:hover{background:var(--bg);color:var(--text)}
 .info-head{padding:var(--s3) var(--s3) var(--s2)}
@@ -231,6 +243,15 @@ button,input,select{font-family:inherit}
 .area-jump button.active{background:var(--accent);color:var(--surface);border-color:var(--accent)}
 .aj-label{font-size:var(--fs-label);color:var(--text-2);font-weight:700;padding:0 2px}
 .aj-div{color:var(--hairline);padding:0 2px}
+/* ---- Selected marker (spec 2.7 / audit D3) ----
+   Leaflet owns the icon element's own transform (that is how it positions the
+   marker), so the ring and the scale go on the pin INSIDE it. The pin's
+   box-shadow is written inline by map.js, hence the !important — it is the one
+   place the stylesheet has to win over generated markup. */
+.mk-pin>div{transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
+.mk-pin-sel{z-index:1000!important}
+.mk-pin-sel>div{transform:scale(1.25);box-shadow:var(--ring-accent)!important}
+
 .map-legend{position:absolute;bottom:var(--s5);left:var(--s4);z-index:1000;background:var(--surface);padding:var(--s3) var(--s4);border-radius:var(--r-card);box-shadow:var(--shadow-2);border:1px solid var(--hairline)}
 .map-legend-title{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;letter-spacing:.3px;font-weight:700;margin-bottom:var(--s2)}
 .map-legend-item{display:flex;align-items:center;gap:var(--s2);font-size:var(--fs-xs);color:var(--text-2);margin:var(--s1) 0}
@@ -248,14 +269,20 @@ button,input,select{font-family:inherit}
 .sf-age-row select{flex:1;min-width:0;padding:5px var(--s2);border:1px solid var(--hairline);border-radius:var(--r-control);font-size:var(--fs-sm);background:var(--surface);color:var(--text)}
 .sf-count{font-size:var(--fs-xs);color:var(--text-2);white-space:nowrap}
 .sf-body{flex:1;overflow-y:auto;padding:var(--s2)}
-.sf-row{display:flex;align-items:center;padding:var(--s2) var(--s1);border-bottom:1px solid var(--hairline);cursor:pointer;gap:var(--s1);transition:background var(--dur) var(--ease)}
+.sf-row{padding:var(--s2) var(--s1);border-bottom:1px solid var(--hairline);cursor:pointer;transition:background var(--dur) var(--ease)}
 .sf-row:hover{background:var(--accent-soft)}
-.sf-row.sf-selected{background:var(--accent-soft);border-left:3px solid var(--accent)}
-.sf-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sf-row.sf-selected{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+.sf-row-top{display:flex;align-items:baseline;gap:var(--s2)}
+/* KL / ペナン — the only thing that tells two same-named campuses apart. */
+.sf-area{font-size:var(--fs-label);font-weight:700;color:var(--text-2);background:var(--bg);border-radius:var(--r-pill);padding:1px var(--s2);white-space:nowrap;flex-shrink:0}
 .sf-name{font-size:var(--fs-xs);font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sf-cur{font-size:var(--fs-label);color:var(--text-2);background:var(--bg);padding:1px var(--s1);border-radius:var(--r-pill);white-space:nowrap}
 .sf-fee{font-size:var(--fs-sm);font-weight:700;color:var(--text);white-space:nowrap;font-variant-numeric:tabular-nums}
-.sf-max{font-size:var(--fs-label);color:var(--text-2);white-space:nowrap}
+.sf-per{font-size:var(--fs-label);font-weight:600;color:var(--text-2)}
+/* Which published year the number came from. Grayed, because it qualifies the
+   figure above rather than competing with it. */
+.sf-grade{font-size:var(--fs-label);color:var(--text-2);margin-top:1px}
+.sf-grade-near{color:var(--type-commercial)}
+.sf-nodata{font-size:var(--fs-label);color:var(--text-2);padding:var(--s2) var(--s1)}
 .sf-chart-wrap{margin-top:var(--s3);padding:var(--s2);background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-card)}
 .sf-chart-title{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;letter-spacing:.3px;font-weight:700;margin-bottom:var(--s1)}
 .sf-legend{text-align:center;line-height:2;margin-top:2px}
@@ -266,6 +293,10 @@ button,input,select{font-family:inherit}
 .sf-condo-row:hover{color:var(--accent)}
 .sf-condo-name{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sf-condo-dist{color:var(--text-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* Distance bands, same wording as the detail panel's 周辺 tab. */
+.sf-bucket-head{display:flex;justify-content:space-between;gap:var(--s2);font-size:var(--fs-label);font-weight:700;color:var(--text);margin-top:var(--s2)}
+.sf-bucket-n{color:var(--text-2);font-weight:600;font-variant-numeric:tabular-nums}
+.sf-condo-more{font-size:var(--fs-label);color:var(--text-2);padding:var(--s1) 0}
 .sf-empty{font-size:var(--fs-xs);color:var(--text-2)}
 
 /* ---- Data load warning ---- */
@@ -334,7 +365,7 @@ button,input,select{font-family:inherit}
     <button data-area="bayan" onclick="jumpToArea('bayan')" title="バヤン・レパス">Bayan Lepas</button>
     <button data-area="all-pg" onclick="jumpToArea('all-pg')" title="ペナン全体">PG全体</button>
   </div>
-  <div class="info-overlay" id="infoOverlay"><button class="info-close" aria-label="閉じる" onclick="closeInfo()">✕</button><div id="infoContent"></div></div>
+  <div class="info-overlay" id="infoOverlay"><div id="infoContent"></div></div>
   <button class="toggle-panel" id="toggleBtn" onclick="togglePanel()">&#9664;</button>
   <div class="panel" id="panel">
     <div class="summary-bar">
@@ -404,14 +435,14 @@ button,input,select{font-family:inherit}
       <div class="sort-row">
         <label class="sort-label" for="fSort">並び替え</label>
         <select id="fSort" class="sort-select" onchange="setSort(this)"></select>
-        <button class="sort-btn" id="sfToggle" data-layer-only="school" style="display:none;margin-left:auto" onclick="toggleSchoolFinder()" title="学費を比較する">🎓 比較</button>
+        <button class="sort-btn" id="sfToggle" data-layer-only="school" style="display:none;margin-left:auto" aria-pressed="false" onclick="toggleSchoolFinder()" title="年齢を選んでKL・ペナン全校の年間学費を比べる">🎓 学費くらべ</button>
       </div>
     </div>
     <div class="school-finder" id="schoolFinder" style="display:none;flex-direction:column;flex:1;overflow:hidden">
       <div class="sf-header">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--s2)">
-          <div class="sf-title" style="margin-bottom:0">🎓 Penang School Finder</div>
-          <button type="button" class="sf-back" onclick="toggleSchoolFinder()">✕ 戻る</button>
+          <div class="sf-title" style="margin-bottom:0">🎓 学費くらべ (KL・ペナン)</div>
+          <button type="button" class="sf-back" onclick="closeSchoolFinder()">✕ 戻る</button>
         </div>
         <div class="sf-age-row">
           <label for="sfAge">お子様の年齢</label>

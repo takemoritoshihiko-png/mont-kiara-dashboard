@@ -244,13 +244,18 @@ function headerHtml(c){
   } else {
     tag.push('🛒 商業施設');
   }
-  return `<div class="info-band" style="background:${TYPE_COLOR_VAR[layer]}"></div>` +
+  // The header sticks to the top of the scrolling overlay, so the ✕ is always
+  // reachable — it used to scroll out of sight on a long school entry. The ✕
+  // lives here rather than in index.html so it travels with the sticky block.
+  return `<div class="info-sticky">` +
+    `<div class="info-band" style="background:${TYPE_COLOR_VAR[layer]}"></div>` +
+    `<button type="button" class="info-close" aria-label="閉じる" onclick="closeInfo()">✕</button>` +
     `<div class="info-head">` +
     `<div class="info-name">${esc(c.name)}</div>` +
     (c.nameJa ? `<div class="info-ja">${esc(c.nameJa)}</div>` : '') +
     `<div class="info-addr">${esc(c.addr)}</div>` +
     `<div class="info-tagline">${tag.join(' ')}</div>` +
-    `</div>`;
+    `</div></div>`;
 }
 
 function renderInfo(){
@@ -283,6 +288,10 @@ export function selectCondo(name, opts = {}){
   const c=CONDOS.find(x=>x.name===name);
   if(c){
     map.setView([c.lat, c.lng], 16);
+    // Redraw the markers so the newly selected one gets its accent ring and
+    // leaves the cluster (spec 2.7 / audit D3). closeInfo() does the same on
+    // the way out, which is what removes the ring again.
+    rebuild();
     currentRecord = c;
     renderInfo();
     document.getElementById('infoOverlay').classList.add('active');
