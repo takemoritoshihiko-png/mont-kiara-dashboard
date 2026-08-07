@@ -45,7 +45,12 @@ export let showKidOkOnly = false;
 // まだ行っていない店" could not be asked for at all.
 export let showWantOnly = false;
 export let showUndoneOnly = false;
-export let legendOpen = true;
+// Open by default on desktop — the legend is the only place the pin symbols
+// are explained, and a first-time visitor needs it in the first screen.
+// On a phone the same open legend covers two thirds of the map (measured in
+// a real 390px render), so there it starts folded instead.
+export let legendOpen = typeof window === 'undefined' || !window.matchMedia
+  ? true : !window.matchMedia('(max-width: 768px)').matches;
 
 export let sfActive = false;
 export let sfSelectedSchool = null;
