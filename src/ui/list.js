@@ -12,7 +12,9 @@ import { syncUrl } from './urlState.js';
 
 const $ = (id) => document.getElementById(id);
 const val = (id) => { const el = $(id); return el ? el.value : ''; };
-const num = (n) => Number(n).toLocaleString('en-US');
+// Every user-facing number goes through this: thousands separators everywhere,
+// no exceptions (audit C5). Shared with info.js and schoolFinder.js.
+export const num = (n) => Number(n).toLocaleString('en-US');
 // Shared with info.js so both renderers escape identically.
 export const esc = (s) => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -311,6 +313,30 @@ export function renderList(){
 }
 
 // ============================================================
+// LOADING SKELETON (spec 2.10 / audit E3)
+// Four card-shaped placeholders instead of one line of text, so the panel keeps
+// its shape while the CSVs arrive and the list does not jump when they land.
+// ============================================================
+const SKELETON_CARDS = 4;
+/** @returns {string} the skeleton markup — pure, so it can be asserted on. */
+export function skeletonHtml(n = SKELETON_CARDS){
+  const card = '<div class="skel-card">' +
+    '<div class="skel-line" style="width:70%"></div>' +
+    '<div class="skel-line" style="width:45%;height:14px"></div>' +
+    '<div class="skel-line" style="width:90%"></div>' +
+    '</div>';
+  return card.repeat(n);
+}
+
+/** Put the panel into its loading state: skeleton list, blank summary tiles. */
+export function showLoading(){
+  const el = $('condoList');
+  if(el) el.innerHTML = skeletonHtml();
+  ['sumTotal', 'sumFiltered', 'sumStat3', 'sumStat4']
+    .forEach(id => { const t = $(id); if(t) t.textContent = TILE_EMPTY; });
+}
+
+// ============================================================
 // SUMMARY — the four tiles follow the active layer
 // ============================================================
 const median = (arr) => {
@@ -318,31 +344,35 @@ const median = (arr) => {
   return s.length ? s[Math.floor(s.length / 2)] : 0;
 };
 
+/** Placeholder shown in a tile with nothing to show (and while data loads). */
+export const TILE_EMPTY = '–';
+
 export function updateSummary(){
   const total = CONDOS.filter(c => recordLayer(c) === activeLayer).length;
   $('sumTotal').textContent = num(total);
   $('sumFiltered').textContent = num(filtered.length);
-  $('totalCount').textContent = num(total);
 
-  let l3 = 'Med.PSF', l4 = 'Med.Rent', v3 = '-', v4 = '-';
+  let l3 = 'Med.PSF', l4 = 'Med.Rent', v3 = TILE_EMPTY, v4 = TILE_EMPTY;
   if(activeLayer === 'condo'){
     const ms = median(filtered.map(c => c.salePsfMid || 0));
-    const mr = median(filtered.map(c => c.rentPsfMid || 0));
-    v3 = ms ? 'RM ' + num(Math.round(ms)) : '-';
-    v4 = mr ? 'RM ' + mr.toFixed(2) : '-';
-    if(ms) $('medianPsf').textContent = 'RM ' + num(Math.round(ms));
+    // MED.RENT is the median monthly rent in ringgit. It used to show the
+    // median rent *per square foot* (「RM 2.75」) under a label that promised
+    // the rent — a number nobody could interpret (audit C5).
+    const mr = median(filtered.map(c => c.rentMid || 0));
+    v3 = ms ? 'RM ' + num(Math.round(ms)) : TILE_EMPTY;
+    v4 = mr ? 'RM ' + num(Math.round(mr)) : TILE_EMPTY;
   } else if(activeLayer === 'school'){
     l3 = '学費中央値'; l4 = '生徒数合計';
     const mf = median(filtered.map(c => c.sizeMin || 0));
     const st = filtered.reduce((s, c) => s + (c.units || 0), 0);
-    v3 = mf ? 'RM ' + num(mf) : '-';
-    v4 = st ? num(st) : '-';
+    v3 = mf ? 'RM ' + num(mf) : TILE_EMPTY;
+    v4 = st ? num(st) : TILE_EMPTY;
   } else {
     l3 = 'NLA中央値'; l4 = 'テナント数';
     const mn = median(filtered.map(c => c.sizeMin || 0));
     const tn = filtered.reduce((s, c) => s + (c.units || 0), 0);
-    v3 = mn ? num(mn) + ' sf' : '-';
-    v4 = tn ? num(tn) : '-';
+    v3 = mn ? num(mn) + ' sf' : TILE_EMPTY;
+    v4 = tn ? num(tn) : TILE_EMPTY;
   }
   $('sumStat3').textContent = v3;
   $('sumStat4').textContent = v4;

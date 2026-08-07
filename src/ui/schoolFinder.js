@@ -5,15 +5,19 @@ import {
 import { SF_SCHOOLS, SF_FEES } from '../data/inline.js';
 import { haversineKm } from '../domain/geo.js';
 import { map } from './map.js';
+import { num } from './list.js';
 
 export function toggleSchoolFinder(){
   setSfActive(!sfActive);
+  // The button is a normal .sort-btn; "on" is the shared active state, so the
+  // colour comes from the stylesheet instead of being painted inline.
   const btn=document.getElementById('sfToggle');
-  btn.style.background=sfActive?'#1565c0':'#e8f0fe';
-  btn.style.color=sfActive?'#fff':'#1565c0';
+  if(btn){
+    btn.classList.toggle('active',sfActive);
+    btn.setAttribute('aria-pressed',sfActive?'true':'false');
+  }
   document.getElementById('schoolFinder').style.display=sfActive?'flex':'none';
   document.querySelector('.filters').style.display=sfActive?'none':'';
-  document.querySelector('.legend').style.display=sfActive?'none':'';
   document.getElementById('condoList').style.display=sfActive?'none':'';
   if(sfActive){
     renderSchoolFinder(parseInt(document.getElementById('sfAge').value)||5);
@@ -34,7 +38,7 @@ export function renderSchoolFinder(age){
     h+=`<span class="sf-dot" style="background:${s.color}"></span>`;
     h+=`<span class="sf-name">${s.name}</span>`;
     h+=`<span class="sf-cur">${s.curriculum}</span>`;
-    h+=`<span class="sf-fee">RM${fee.toLocaleString()}</span>`;
+    h+=`<span class="sf-fee">RM ${num(fee)}</span>`;
     h+=`<span class="sf-max">～${s.maxLevel}</span>`;
     h+=`</div>`;
   });
@@ -66,7 +70,7 @@ function renderFeeChart(selAge){
   // Age labels
   for(let a=3;a<=17;a++){
     svg+=`<text x="${x(a)}" y="${H-PB+12}" text-anchor="middle" fill="#bbb" font-size="6.5">${a}歳</text>`;
-    if(a===selAge) svg+=`<line x1="${x(a)}" y1="${PT}" x2="${x(a)}" y2="${H-PB}" stroke="#1a73e8" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.4"/>`;
+    if(a===selAge) svg+=`<line x1="${x(a)}" y1="${PT}" x2="${x(a)}" y2="${H-PB}" stroke="#0a6cff" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.4"/>`;
   }
   // Lines
   SF_SCHOOLS.forEach(s=>{
@@ -94,17 +98,17 @@ function sfShowCondos(key){
   const s=SF_SCHOOLS.find(x=>x.key===key);
   if(!s)return;
   const nearby=CONDOS.filter(c=>c.status==='completed'&&c.lat>5&&c.salePsfMid>0)
-    .map(c=>({name:c.name,dist:haversineKm(s.lat,s.lng,c.lat,c.lng),psf:`RM${c.salePsfMin}-${c.salePsfMax}`,rent:`RM${c.rentMin.toLocaleString()}-${c.rentMax.toLocaleString()}`}))
+    .map(c=>({name:c.name,dist:haversineKm(s.lat,s.lng,c.lat,c.lng),psf:`RM ${num(c.salePsfMin)}–${num(c.salePsfMax)}`,rent:`RM ${num(c.rentMin)}–${num(c.rentMax)}`}))
     .filter(c=>c.dist<=3).sort((a,b)=>a.dist-b.dist).slice(0,10);
   const el=document.getElementById('sfCondoList');
   if(!el)return;
   let h=`<div class="sf-condo-section">`;
   h+=`<div class="sf-condo-title">🏠 ${s.name}から3km以内のコンド (${nearby.length}件)</div>`;
-  if(!nearby.length){h+=`<div style="font-size:10px;color:#5f6368">近隣データなし</div>`;}
+  if(!nearby.length){h+=`<div class="sf-empty">近隣データなし</div>`;}
   else{nearby.forEach(c=>{
-    h+=`<div class="sf-condo-row" onclick="sfActive=false;toggleSchoolFinder();selectCondo('${c.name.replace(/'/g,"\\'")}')">`;
-    h+=`<span style="font-weight:600">${c.name}</span>`;
-    h+=`<span style="color:#5f6368">${c.dist.toFixed(1)}km</span>`;
+    h+=`<div class="sf-condo-row" onclick="sfActive=false;toggleSchoolFinder();selectCondo('${c.name.replace(/'/g,"\\'")}')" title="${c.psf} ・ ${c.rent}">`;
+    h+=`<span class="sf-condo-name">${c.name}</span>`;
+    h+=`<span class="sf-condo-dist">${c.dist.toFixed(1)}km</span>`;
     h+=`</div>`;
   });}
   h+=`</div>`;
