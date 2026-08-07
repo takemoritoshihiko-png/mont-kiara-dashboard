@@ -129,7 +129,7 @@ export const DIM_OPACITY = 0.45;
 // references. Change one and change the token next to it.
 export const MARKER_COLORS = {
   condo:      { bg:'#78909c', border:'#546e7a', radius:'50%' },
-  commercial: { bg:'#c2600a', border:'#8f4a05', radius:'4px' },
+  commercial: { bg:'#e8710a', border:'#b85806', radius:'4px' },
   school:     { bg:'#1a3d7c', border:'#112a58', radius:'50%' },
   dining:     { bg:'#c2185b', border:'#8c1145', radius:'50% 50% 50% 0' },
 };

@@ -67,7 +67,7 @@
      They never colour text, buttons or backgrounds. */
   --type-condo:var(--accent);
   --type-school:#1a3d7c;
-  --type-commercial:#c2600a;
+  --type-commercial:#e8710a;
   /* 外食モード (D4). Inherited from 台帳v9 so a screenshot of the old ledger and
      this app read as the same thing. They live here, not in the JS, because
      nothing in this repo may write a literal hex outside :root.
@@ -145,9 +145,11 @@ button,input,select{font-family:inherit}
 .layer-seg{display:flex;background:var(--bg);border-radius:var(--r-control);padding:2px;margin-bottom:var(--s3)}
 /* 層チップ = ☑(表示) + 名前(一覧の切替)。アクティブ層は名前が濃く下線 */
 .layer-chip{display:flex;flex:1;align-items:stretch;border-radius:var(--r-control);overflow:hidden}
-.chip-vis{border:none;background:transparent;color:var(--text-2);cursor:pointer;padding:0 var(--s1) 0 var(--s2);font-size:var(--fs-xs);opacity:.35}
-.chip-vis[aria-pressed="true"]{color:var(--accent);opacity:1}
-.chip-vis:hover{opacity:1}
+/* 本物のチェックボックスに見えること（「どこで使えるのか分からない」への回答）:
+   未チェック=空の四角、チェック=アクセント塗り+白✓。 */
+.chip-vis{width:16px;height:16px;align-self:center;margin-left:var(--s2);flex:none;border:1.5px solid var(--text-2);border-radius:4px;background:var(--surface);color:transparent;font-size:var(--fs-label);font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer;transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.chip-vis[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip-vis:hover{border-color:var(--accent)}
 .chip-name{flex:1;border:none;background:transparent;cursor:pointer;padding:6px var(--s1);font-size:var(--fs-xs);font-weight:600;color:var(--text-2);border-radius:var(--r-control);white-space:nowrap}
 .chip-name:hover{color:var(--text)}
 .layer-chip.active{background:var(--surface);box-shadow:var(--shadow-1)}
@@ -601,7 +603,8 @@ button,input,select{font-family:inherit}
   .disclosure{min-height:40px;padding:var(--s2) 0}
   .chip-toggle,.sort-btn,.sf-back,.fchip-clear,.btn-clear-all{min-height:40px}
   .search-clear{min-width:40px;min-height:40px;display:flex;align-items:center;justify-content:center;padding:0}
-  .chip-vis,.chip-name{min-height:40px}
+  .chip-name{min-height:40px}
+  .chip-vis{width:24px;height:24px}
   .data-details>summary{min-height:40px;display:flex;align-items:center}
   .info-tab{min-height:40px}
   .nb-row,.sf-row,.sf-condo-row{min-height:40px}
