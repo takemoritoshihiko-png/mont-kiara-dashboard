@@ -259,12 +259,13 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2
 
 <script>
 // ============================================================
-// DATA SOURCE: GitHub raw CSV (auto-updated on push)
+// DATA SOURCE: CSV/JSON files served alongside this page
+// (same repo, relative path — no cross-origin, no third-party proxy)
 // ============================================================
-const CONDOS_CSV_URL = 'https://raw.githubusercontent.com/takemoritoshihiko-png/mont-kiara-dashboard/master/condos_data.csv';
-const COMMERCIAL_CSV_URL = 'https://raw.githubusercontent.com/takemoritoshihiko-png/mont-kiara-dashboard/master/commercial_data.csv';
-const SCHOOLS_CSV_URL = 'https://raw.githubusercontent.com/takemoritoshihiko-png/mont-kiara-dashboard/master/schools_data.csv';
-const SCHOOLS_DETAIL_URL = 'https://raw.githubusercontent.com/takemoritoshihiko-png/mont-kiara-dashboard/master/schools_detail.json';
+const CONDOS_CSV_URL = 'condos_data.csv';
+const COMMERCIAL_CSV_URL = 'commercial_data.csv';
+const SCHOOLS_CSV_URL = 'schools_data.csv';
+const SCHOOLS_DETAIL_URL = 'schools_detail.json';
 
 let CONDOS = [];
 let COMMERCIALS = [];
@@ -1153,56 +1154,45 @@ function togglePanel(){
     return text;
   }
 
+  // Partial-load failures must NEVER be silent: collect and show them.
+  const loadErrors = [];
+
   try {
-    // Load condos
-    let text;
-    try {
-      text = await tryFetch(CONDOS_CSV_URL);
-    } catch(e1) {
-      listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#80868b">Retrying via proxy...</div>';
-      const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(CONDOS_CSV_URL);
-      text = await tryFetch(proxyUrl);
-    }
-    CONDOS = parseCSV(text);
+    // Load condos (required — hard failure if missing)
+    CONDOS = parseCSV(await tryFetch(CONDOS_CSV_URL));
     if (CONDOS.length === 0) throw new Error('No condo data parsed');
     calcLuxury(CONDOS);
 
     // Load commercial
     try {
-      let comText;
-      try { comText = await tryFetch(COMMERCIAL_CSV_URL); } catch(e) {
-        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(COMMERCIAL_CSV_URL);
-        comText = await tryFetch(proxyUrl);
-      }
-      COMMERCIALS = parseCommercialCSV(comText);
-    } catch(e) { COMMERCIALS = []; }
+      COMMERCIALS = parseCommercialCSV(await tryFetch(COMMERCIAL_CSV_URL));
+    } catch(e) { COMMERCIALS = []; loadErrors.push('商業施設データ (commercial_data.csv): ' + e.message); }
 
     // Load schools
     try {
-      let schText;
-      try { schText = await tryFetch(SCHOOLS_CSV_URL); } catch(e) {
-        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(SCHOOLS_CSV_URL);
-        schText = await tryFetch(proxyUrl);
-      }
-      SCHOOLS = parseSchoolsCSV(schText);
-    } catch(e) { SCHOOLS = []; }
+      SCHOOLS = parseSchoolsCSV(await tryFetch(SCHOOLS_CSV_URL));
+    } catch(e) { SCHOOLS = []; loadErrors.push('学校データ (schools_data.csv): ' + e.message); }
 
     // Load school details
     try {
-      let detText;
-      try { detText = await tryFetch(SCHOOLS_DETAIL_URL); } catch(e) {
-        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(SCHOOLS_DETAIL_URL);
-        detText = await tryFetch(proxyUrl);
-      }
-      SCHOOLS_DETAIL = JSON.parse(detText);
-    } catch(e) { SCHOOLS_DETAIL = {}; }
+      SCHOOLS_DETAIL = JSON.parse(await tryFetch(SCHOOLS_DETAIL_URL));
+    } catch(e) { SCHOOLS_DETAIL = {}; loadErrors.push('学校詳細 (schools_detail.json): ' + e.message); }
 
     // Merge for display
     CONDOS = [...CONDOS, ...COMMERCIALS, ...SCHOOLS];
     filtered = [...CONDOS];
     applyFilters();
+
+    if (loadErrors.length > 0) {
+      const warn = document.createElement('div');
+      warn.style.cssText = 'margin:8px;padding:10px 12px;background:#fdecea;border:1px solid #ea4335;border-radius:8px;color:#b3261e;font-size:12px;line-height:1.5';
+      warn.innerHTML = '<b>⚠ 一部のデータを読み込めませんでした</b><br>' +
+        loadErrors.map(m => '・' + m).join('<br>') +
+        '<br>表示中の件数は不完全です。再読み込みで直らない場合はデータファイルを確認してください。';
+      listEl.parentNode.insertBefore(warn, listEl);
+    }
   } catch(e) {
-    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#ea4335">Failed to load data: ' + e.message + '<br><br><small style="color:#80868b">Check GitHub repository CSV files.</small></div>';
+    listEl.innerHTML = '<div style="padding:20px;text-align:center;color:#ea4335">Failed to load data: ' + e.message + '<br><br><small style="color:#80868b">Check repository CSV files.</small></div>';
   }
 })();
 </script>

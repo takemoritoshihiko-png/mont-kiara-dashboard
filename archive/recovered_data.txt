@@ -1,0 +1,270 @@
+================================================================================
+RECOVERED DATA FROM CRASHED CLAUDE CODE SESSION LOGS
+Date recovered: 2026-04-04
+Source: ~/.claude/projects/C--Users-takem/dd1e93aa-4e19-404c-9bff-a5eaca7d54dd/subagents/
+================================================================================
+
+
+================================================================================
+AGENT 1: agent-a11885ab5f8a94951.jsonl
+ROLE: Ampang / U-Thant / Embassy Row Research
+STATUS: COMPLETED - CSV data extracted
+================================================================================
+
+name,addr,year,units,sizeMin,sizeMax,rentMin,rentMax,salePsfMin,salePsfMax,lat,lng,developer,iproperty_url,homepage_url,status,name_ja,brand_score,blocks,floors,tenure,premium_private_lift,premium_concierge,premium_low_density,premium_pool,premium_sky_lounge,premium_ev_charging,premium_score
+The Binjai On The Park,Persiaran KLCC 50088 KL,2008,171,2228,7200,15000,30000,1616,3236,3.15500,101.71350,KLCC Property Holdings,https://www.iproperty.com.my/building/the-binjai-on-the-park-pty_61299/,,completed,ザ・ビンジャイ・オン・ザ・パーク,85,2,45,FH,1,1,3,1,0,0,14
+The Oval KLCC,Lorong Kuda Off Jalan Tun Razak KLCC 50450 KL,2009,140,3750,7600,13000,29000,962,3038,3.15680,101.71800,GuocoLand (Hong Leong Group),https://www.iproperty.com.my/building/the-oval-pty_62089/,,completed,ザ・オーバル KLCC,80,2,41,FH,1,1,3,1,0,0,14
+Le Nouvel KLCC,152 Jalan Ampang KLCC 50450 KL,2016,195,1722,5791,6000,14000,2133,3456,3.15450,101.71600,Wing Tai Malaysia,https://www.iproperty.com.my/building/le-nouvel-pty_65896/,,completed,ル・ヌーヴェル KLCC,75,2,49,FH,1,1,2,1,1,0,13
+Suria Stonor,Persiaran Stonor KLCC 50450 KL,2008,138,3048,8604,8000,20000,548,1247,3.15400,101.71950,Glomac Bhd,https://www.iproperty.com.my/building/suria-stonor-pty_65976/,,completed,スリア・ストーナー,60,2,23,FH,1,0,3,1,0,0,11
+The Avare KLCC,Lorong Kuda Off Jalan Tun Razak KLCC 50450 KL,2009,78,3800,7600,8500,22000,811,1250,3.15650,101.71850,Magna Prima (JV TM Facilities),https://www.iproperty.com.my/building/the-avare-pty_60930/,,completed,ジ・アヴェア KLCC,40,1,40,FH,1,1,3,1,0,0,14
+Cendana,Jalan Sultan Ismail KLCC 50250 KL,2008,152,2195,7986,9000,20000,571,2089,3.15550,101.71100,Tan & Tan (IGB),https://www.iproperty.com.my/building/cendana-pty_61625/,,completed,センダナ,80,1,42,FH,0,0,2,1,0,0,3
+Dedaun,195 Jalan Ampang Taman U-Thant 55000 KL,2013,38,3240,7128,12000,14500,832,1403,3.15900,101.73050,Selangor Dredging Bhd (SDB),https://www.iproperty.com.my/building/dedaun-condominium-pty_65109/,,completed,デダウン,60,1,10,FH,1,0,3,1,0,0,11
+U-Thant Residence,Jalan Madge Taman U-Thant 55000 KL,2009,77,2467,6803,7300,14000,990,1457,3.15950,101.73200,Tan & Tan (IGB),https://www.iproperty.com.my/building/u-thant-residence-pty_63923/,,completed,ユーサント・レジデンス,80,3,10,FH,0,0,3,1,0,0,4
+Gallery U-Thant,Jalan Ampang Hilir Taman U-Thant 55000 KL,2010,50,3208,6576,11000,17000,731,1793,3.15850,101.73350,Prinaissance (Namfatt Properties),https://www.iproperty.com.my/building/gallery-u-thant-pty_61463/,,completed,ギャラリー・ユーサント,40,2,10,FH,1,0,3,1,0,0,11
+Rimbun Embassy Row,Jalan Ampang Hilir 55000 KL,2015,56,3551,4412,10000,20000,1065,1830,3.15800,101.73100,Amphil Corp,https://www.iproperty.com.my/building/rimbun-pty_65650/,,completed,リンブン・エンバシーロウ,50,1,17,FH,1,1,3,1,0,0,14
+Seri Ampang Hilir,Jalan Ampang Hilir Taman U-Thant 55000 KL,2013,40,2229,5188,7500,12000,804,1106,3.15920,101.73280,Tan & Tan (IGB),https://www.iproperty.com.my/building/seri-ampang-hilir-residences-pty_65560/,,completed,セリ・アンパン・ヒリル,80,1,10,FH,1,0,3,1,0,0,11
+Residensi R8,6 Jalan Ampang Hilir Taman U-Thant 55000 KL,2023,26,2725,5118,12000,18000,1100,1413,3.15980,101.73150,Revival Capital,https://www.iproperty.com.my/building/residensi-r-8-pty_285916/,,completed,レジデンシ R8,40,1,20,FH,1,0,3,1,1,0,12
+3 Kia Peng,3 Jalan Kia Peng KLCC 50450 KL,2010,138,2960,5662,8000,18000,706,1299,3.15120,101.71450,Hong Leong Group (Kia Peng Development),https://www.iproperty.com.my/building/3-kia-peng-pty_60430/,,completed,3キアペン,75,1,28,FH,0,0,2,1,0,0,3
+
+
+================================================================================
+AGENT 2: agent-a362022389c646e1c.jsonl
+ROLE: Damansara Heights / Kenny Hills Research
+STATUS: COMPLETED - CSV data extracted (4 condos, no header in output)
+================================================================================
+
+name,addr,year,units,sizeMin,sizeMax,rentMin,rentMax,salePsfMin,salePsfMax,lat,lng,developer,iproperty_url,homepage_url,status,name_ja,brand_score,blocks,floors,tenure,premium_private_lift,premium_concierge,premium_low_density,premium_pool,premium_sky_lounge,premium_ev_charging,premium_score
+AIRA Residence,No 8 Jalan Batai Damansara Heights 50490 KL,2019,105,2679,7730,13000,55000,1698,2523,3.15350,101.65800,Selangor Properties,https://www.iproperty.com.my/building/aira-residence-pty_63636/,https://www.airaresidence.com/,completed,アイラ・レジデンス,60,2,17,FH,1,1,3,1,0,1,14
+The Peak,Damansara Heights 50490 KL,2025,54,3455,4500,15000,30000,2046,2600,3.15200,101.65500,E&O / Mitsui Fudosan,https://www.iproperty.com.my/building/the-peak-pty_289978/,https://www.thepeakdamansaraheights.my/,completed,ザ・ピーク,85,18,3,FH,1,1,3,1,0,0,13
+The Cedar,Damansara Heights 50490 KL,2026,70,2782,16205,20000,60000,1738,2092,3.15400,101.65600,Satin Magic,https://www.iproperty.com.my/building/the-cedar-pty_287669/,https://thecedar.my/,under_construction,ザ・シダー,40,1,8,FH,1,0,3,1,0,0,12
+Pavilion Damansara Heights (Crown),Jalan Damansara Damansara Heights 50490 KL,2025,166,2303,2803,7800,35000,1409,2249,3.15100,101.65900,Pavilion Group,https://www.iproperty.com.my/building/pavilion-pty_62124/,https://paviliondamansaraheights.com/crown-residences/,completed,パビリオン・ダマンサラハイツ (クラウン),80,1,50,FH,1,1,1,1,1,1,12
+
+
+================================================================================
+AGENT 3: agent-a9556482ff14b407c.jsonl
+ROLE: KLCC Research v2
+STATUS: COMPLETED - CSV data extracted (10 condos)
+================================================================================
+
+name,addr,year,units,sizeMin,sizeMax,rentMin,rentMax,salePsfMin,salePsfMax,lat,lng,developer,iproperty_url,homepage_url,status,name_ja,brand_score,blocks,floors,tenure,premium_private_lift,premium_concierge,premium_low_density,premium_pool,premium_sky_lounge,premium_ev_charging,premium_score
+Four Seasons Place,145 Jalan Ampang KLCC 50450 KL,2018,242,1098,12000,9000,45000,2500,3300,3.15530,101.71520,Venus Assets,https://www.iproperty.com.my/building/four-seasons-place-pty_62774/,https://www.fourseasons.com/residences/private_residences/kualalumpur/,completed,フォーシーズンズ・プレイス KL,60,1,65,FH,1,1,3,1,0,0,12
+Banyan Tree Signatures Pavilion KL,Jalan Conlay Bukit Bintang 55100 KL,2015,411,1076,2184,8000,18000,1800,2500,3.14870,101.71340,Pavilion Group,https://www.iproperty.com.my/building/banyan-tree-signatures-pty_64375/,https://1pavilion.com/index.php/en/banyan-tree-signature/,completed,バンヤンツリー・シグネチャーズ・パビリオン KL,100,1,55,FH,0,1,1,1,1,0,5
+The Ritz-Carlton Residences KL,168 Jalan Imbi KL 55100 KL,2017,288,1023,4284,8500,69000,1500,3300,3.14670,101.71340,Berjaya Corp,https://www.iproperty.com.my/building/the-ritz-carlton-residences-pty_64579/,https://rcr-kl.com/,completed,ザ・リッツカールトン・レジデンシズ KL,60,1,48,FH,0,1,1,1,1,0,5
+St Regis Residences KL,No 6 Jalan Stesen Sentral 2 KL Sentral 50470 KL,2016,160,766,4253,5000,38000,1800,2720,3.13440,101.68630,MRCB / CMY Capital,https://www.iproperty.com.my/building/st-regis-pty_64949/,https://www.stregisklresidences.com/,completed,セントレジス・レジデンシズ KL,60,1,48,FH,0,1,3,1,0,0,6
+8 Conlay (YOO8),Jalan Conlay KLCC 50450 KL,2024,498,700,1328,5000,15000,2600,3300,3.14820,101.71590,KSK Land,https://www.iproperty.com.my/building/yoo-8-residences-8-conlay-pty_62263/,https://8conlay.com/,completed,エイトコンレイ (YOO8),50,2,62,FH,0,1,1,1,1,0,5
+Marc Residences KLCC,No 3 Jalan Pinang KLCC 50450 KL,2007,637,463,6049,2600,16000,495,1533,3.15480,101.71680,Beverly Group,https://www.iproperty.com.my/building/marc-residence-pty_63240/,,completed,マーク・レジデンス KLCC,40,2,35,FH,1,1,2,1,0,0,12
+Stonor 3,Persiaran Stonor KLCC 50450 KL,2022,400,649,1232,3500,8000,1290,1837,3.15340,101.71850,Tan & Tan / Mitsubishi Jisho,https://www.iproperty.com.my/building/stonor-3-pty_63053/,https://www.kl-stonor3.com/,completed,ストーナー3,70,1,41,FH,0,1,1,1,0,0,4
+One KL,No 1 Jalan Pinang KLCC 50450 KL,2009,94,3285,3285,12500,18000,972,1979,3.15550,101.71750,CMY Capital,https://www.iproperty.com.my/building/one-kl-pty_63166/,https://www.onekl.com.my/,completed,ワン KL,60,1,35,FH,1,1,3,1,0,0,13
+Clearwater Residences,Changkat Semantan Damansara Heights 50490 KL,2011,108,826,4735,3600,11000,833,1150,3.15550,101.67750,Clearwater Development,https://www.iproperty.com.my/building/clearwater-residences-pty_61958/,https://theclearwatergroup.com/property/clearwater-residence/,completed,クリアウォーター・レジデンシズ,40,1,18,FH,0,0,3,1,0,0,4
+Pavilion Suites KL,Jalan Bukit Bintang 55100 KL,2018,383,718,1254,4000,18000,3000,3500,3.14890,101.71310,Pavilion Group,https://www.iproperty.com.my/building/pavilion-suites-pty_64216/,https://pavilion-suites.com/,completed,パビリオン・スイーツ KL,100,1,51,FH,0,1,1,1,1,0,5
+
+
+================================================================================
+AGENT 4: agent-a32c4968f4f006046.jsonl
+ROLE: Bangsar South / Mid Valley Research
+STATUS: INCOMPLETE - crashed during research phase (no CSV output)
+NOTE: Agent was still searching for data on KL Gateway Premium Residences when session ended.
+================================================================================
+
+(No CSV data produced - agent was mid-research)
+
+
+================================================================================
+AGENT 5: agent-a5e7849cdc3ebade0.jsonl
+ROLE: Bangsar South / TTDI v2 Research
+STATUS: INCOMPLETE - crashed during research phase (no CSV output)
+NOTE: Agent was searching for detailed data on The Estate and TTDI options.
+================================================================================
+
+(No CSV data produced - agent was mid-research)
+
+
+================================================================================
+AGENT 6: agent-ae1df517cd25ef051.jsonl
+ROLE: Bangsar South / TTDI v3 Research
+STATUS: INCOMPLETE - crashed during research phase (no CSV output)
+NOTE: Agent had just started researching condos when session ended.
+================================================================================
+
+(No CSV data produced - agent was mid-research)
+
+
+================================================================================
+AGENT 7: agent-ad3a7e36d34aa980f.jsonl
+ROLE: Verify KLCC / Bukit Bintang Condos Data
+STATUS: COMPLETED - Full verification table recovered
+================================================================================
+
+VERIFICATION RESULTS - KLCC / Bukit Bintang (10 condos)
+
+| # | Property | Issues Found | Corrected Values |
+|---|----------|-------------|------------------|
+| 1 | Four Seasons Place | EV charging: property DOES have EV charging. ev should be 1, not 0. | ev=1, score=11 (was 10) |
+| 2 | Banyan Tree Signatures Pavilion KL | Units: should be 542 (not 411). Floors: should be 59F (not 55F). | units=542, floors=59F |
+| 3 | Ritz-Carlton Residences KL | Private lift: every unit HAS a private lift. lift should be 1, not 0. | lift=1, score=11 (was 4) |
+| 4 | St Regis Residences KL | Location is KL Sentral, NOT KLCC/BB. Units: should be 208 (not 160). Year: 2014-2015 (not 2016). lowD=0 (208 units). | units=208, year=2014-2015, lowD=0, score=3 (was 4). Location: KL Sentral |
+| 5 | 8 Conlay (YOO8) | Units: 1,062 total across both towers (not 498). Floors: Tower A=61F, Tower B=56F (not 62F). Year: 2024-2025. | units=1062, floors=61F/56F, year=2024-2025 |
+| 6 | Marc Residences KLCC | sizeMax varies (3302 standard vs 6049 w/penthouses). lift=1 is misleading (only ~20-30 premium units out of 637 have private lifts). | sizeMax questionable; lift=1 misleading |
+| 7 | Stonor 3 | Year: should be 2019 (not 2022). | year=2019 |
+| 8 | One KL | No errors found. All data accurate. | None |
+| 9 | Clearwater Residences | Location is Damansara Heights, NOT KLCC/BB. sizeMin possibly 988 (not 826). Concierge exists: conc should be 1. | conc=1, score=5 (was 3). Location: Damansara Heights |
+| 10 | Pavilion Suites KL | No errors found. All data accurate. | None |
+
+SUMMARY OF CRITICAL ERRORS:
+- St Regis units: 208, not 160
+- St Regis year: 2014-2015, not 2016
+- Stonor 3 year: 2019, not 2022
+- 8 Conlay units: 1,062 total (not 498)
+- Banyan Tree units: 542 (not 411)
+- Banyan Tree floors: 59 (not 55)
+- Ritz-Carlton private lift: Should be lift=1
+
+SCORE ERRORS:
+- Four Seasons Place: ev=1, score should be 11
+- Ritz-Carlton: lift=1, score should be 11
+- St Regis: lowD=0 (208 units), score should be 3
+- Clearwater: conc=1, score should be 5
+
+LOCATION ERRORS:
+- St Regis is in KL Sentral (not KLCC/BB)
+- Clearwater Residences is in Damansara Heights (not KLCC/BB)
+
+QUESTIONABLE DATA:
+- Marc Residences lift=1 misleading (only ~20-30 premium units of 637 have private lifts)
+- Marc Residences sizeMax 6049 varies by source (could be 3302 standard)
+- Clearwater sizeMin 826 vs 988 depends on source
+
+
+================================================================================
+AGENT 8: agent-ae4011d512f9ac873.jsonl
+ROLE: Verify Ampang / U-Thant Condos Data
+STATUS: COMPLETED - Full verification table recovered
+================================================================================
+
+VERIFICATION RESULTS - Ampang / U-Thant (13 condos)
+
+| # | Property | Issues Found | Corrected Values |
+|---|----------|-------------|------------------|
+| 1 | The Binjai On The Park | Blocks: 2 blocks (44F and 45F). Year: possibly 2009 not 2008. | Minor only. No scoring errors. |
+| 2 | The Oval KLCC | No major errors found. | None. Data is accurate. |
+| 3 | Le Nouvel KLCC | lowD calculation: 195/2=97.5, <100, so lowD should be 3 (not 2). Score should be 14 (not 13). Two towers are 49F and 43F. | lowD=3, score=14 |
+| 4 | Suria Stonor | sizeMin: should be 3,282 (not 3,048). sizeMax could be 9,338 (penthouses). | sizeMin=3282, sizeMax possibly 9338 |
+| 5 | The Avare KLCC | Has 2 blocks (not 1). Floors: 41F (not 40F). Developer: TM Facilities/Magna Prima JV. | blocks=2, floors=41 |
+| 6 | Cendana | Units: likely 144 (not 152). If 144: lowD=2, score=3 (as listed). If 152: lowD=1, score=2. | units=144 (most reliable sources) |
+| 7 | Dedaun | Has 2 interlocked blocks (not 1). Scoring unaffected (38/2=19, still <100). | blocks=2 |
+| 8 | U-Thant Residence | No major errors found. | None. Data is accurate. |
+| 9 | Gallery U-Thant | No major errors found. | None. Data is accurate. |
+| 10 | Rimbun Embassy Row | No errors found. 56 units confirmed. | None. Data is accurate. |
+| 11 | Seri Ampang Hilir | No major errors found. | None. Data is accurate. |
+| 12 | Residensi R8 | sky_lounge=1 is borderline (has sky pool/rooftop terrace, not traditional sky lounge). | sky_lounge=1 is generous but defensible |
+| 13 | 3 Kia Peng | lift=0 is correct (shared lobby, not private lift). sizeMin may be 3,000 (not 2,960). | sizeMin possibly 3000 |
+
+SUMMARY OF MATERIAL ERRORS:
+1. Le Nouvel KLCC: lowD should be 3 (not 2), score should be 14 (not 13)
+2. Suria Stonor: sizeMin should be 3,282 (not 3,048)
+3. The Avare: Has 2 blocks (not 1), 41 floors (not 40)
+4. Cendana: Total units likely 144 (not 152)
+5. Dedaun: Has 2 blocks (not 1), scoring unaffected
+
+
+================================================================================
+AGENT 9: agent-ab6b12f0b770b2139.jsonl
+ROLE: Verify Damansara Heights Condos Data
+STATUS: COMPLETED - Full verification table recovered
+================================================================================
+
+VERIFICATION RESULTS - Damansara Heights (4 condos)
+
+| # | Property | Error | Correction |
+|---|----------|-------|------------|
+| 1 | AIRA Residence | sky_lounge=0 is wrong; has rooftop "View Lounge" with 360-degree views | sky=1, score=15 (was 14) |
+| 2 | The Peak | ev=0 is wrong; EV charging provision for every unit confirmed | ev=1, score=14 (was 13) |
+| 3 | The Cedar | sky_lounge=0 is wrong; sky lounge explicitly listed in facilities | sky=1, score=13 (was 12) |
+| 4 | The Cedar | Status "under_construction" is actually correct for March 2026 with Q2 2026 completion | Keep as under_construction |
+| 5 | Pavilion Crown | Year completed=2025 is wrong | Should be 2022 |
+| 6 | Pavilion Crown | Units=166 likely wrong | Should be 165 |
+| 7 | Pavilion Crown | PSF range 1409-2249 slightly off | Should be ~1391-2283 |
+| 8 | Pavilion Crown | Developer="Pavilion Group" is imprecise | More accurately "Impian Ekspresi Sdn Bhd" (Pavilion Group/CPPIB JV) |
+| 9 | Pavilion Crown | Premium score=12 is wrong (arithmetic error: 7+2+1+1+1+1=13) | Should be 13 |
+
+DETAILED BREAKDOWN:
+
+AIRA Residence:
+- Floors: MINOR - one tower is 16F, not both 17F
+- Sky lounge: ERROR - Has "The View" rooftop lounge -> sky=1
+- Premium score: ERROR -> should be 15 (lift7 + conc2 + lowD3 + pool1 + sky1 + ev1)
+- All other fields verified correct
+
+The Peak:
+- EV charging: ERROR - EV charging for every unit confirmed -> ev=1
+- Premium score: ERROR -> should be 14 (lift7 + conc2 + lowD3 + pool1 + sky0 + ev1)
+- Villa/landed note: 18 blocks x 3 floors = villa/bungalow-in-the-sky concept
+- All other fields verified correct
+
+The Cedar:
+- Floors: UNCERTAIN - architect says 8 storeys, other sources say 6 storeys. NOT 18F.
+- Sky lounge: ERROR -> sky=1
+- Premium score: ERROR -> should be 13 (lift7 + conc0 + lowD3 + pool1 + sky1 + ev0)
+- Private lift: UNCERTAIN (not explicitly confirmed but typical for this tier)
+- Status under_construction is correct
+
+Pavilion Damansara Heights (Crown):
+- Year: ERROR -> completed 2022, not 2025
+- Units: LIKELY ERROR -> should be 165 (not 166)
+- PSF: MINOR -> should be ~1391-2283 (not 1409-2249)
+- Premium score: ERROR -> should be 13 (arithmetic: 7+2+1+1+1+1=13, not 12)
+
+
+================================================================================
+AGENT 10: agent-a4d83624c051eba45.jsonl
+ROLE: Verify KLGCC Resort Condos Data
+STATUS: INCOMPLETE - crashed during research phase
+================================================================================
+
+CONDOS BEING VERIFIED (from task prompt):
+1. Jendela Residences @ KLGCC Resort - year=2025, units=520, blocks=2, floors=41, LH, score=3
+2. Senada Residences @ KLGCC Resort - year=2022, units=429, blocks=2, floors=22, LH, score=1
+3. East Residence @ KLGCC Resort - year=2016, units=112, blocks=1, floors=4, LH, score=11
+   NOTE: Check lowD: 112/1=112 is >=100 but <150, so lowD should be 2 (not 3). Score would be 10, not 11.
+4. The Ophera @ KLGCC Resort - year=2026, units=150, blocks=3, floors=17, LH, score=13, status=upcoming
+
+PARTIAL FINDINGS (from agent's research before crash):
+- The Ophera completion year: EdgeProp says 2028 (contradicting the 2026 in data)
+- Agent was checking Senada Residences address and Jendela homepage URL redirects when it crashed
+
+(No final verification table produced - agent crashed mid-research)
+
+
+================================================================================
+CORRECTED CSV DATA (applying all verified corrections)
+================================================================================
+
+Below are the corrected CSV lines for condos where verification found errors.
+Apply these corrections to condos_data.csv:
+
+--- KLCC/BB Corrections ---
+Four Seasons Place: premium_ev_charging=1, premium_score=12 (was 10, now 7+2+0+1+0+1=11... wait, lowD for 242/1=242 -> 0. So 7+2+0+1+0+1=11)
+Banyan Tree Signatures: units=542, floors=59
+Ritz-Carlton Residences: premium_private_lift=1, premium_score=11 (7+2+0+1+1+0=11)
+St Regis: units=208, year=2014, premium_low_density=0, premium_score=3 (0+2+0+1+0+0=3)
+8 Conlay (YOO8): units=1062, floors=61 (Tower A)
+Stonor 3: year=2019
+Clearwater Residences: premium_concierge=1, premium_score=5 (0+2+2+1+0+0=5)
+
+--- Ampang/U-Thant Corrections ---
+Le Nouvel KLCC: premium_low_density=3, premium_score=14 (7+2+3+1+1+0=14)
+Suria Stonor: sizeMin=3282
+The Avare: blocks=2, floors=41
+Cendana: units=144
+Dedaun: blocks=2
+
+--- Damansara Heights Corrections ---
+AIRA Residence: premium_sky_lounge=1, premium_score=15 (7+2+3+1+1+1=15)
+The Peak: premium_ev_charging=1, premium_score=14 (7+2+3+1+0+1=14)
+The Cedar: premium_sky_lounge=1, premium_score=13 (7+0+3+1+1+0=12... recalc: lift7+conc0+lowD3+pool1+sky1+ev0=12. Agent said 13 but math gives 12. CHECK THIS.)
+Pavilion Crown: year=2022, units=165, salePsfMin=1391, salePsfMax=2283, premium_score=13 (7+2+1+1+1+1=13)
+
+
+================================================================================
+END OF RECOVERED DATA
+================================================================================
