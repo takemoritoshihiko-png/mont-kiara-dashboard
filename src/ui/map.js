@@ -4,16 +4,18 @@ import {
   selectedCondo, activeLayer, appMode,
 } from '../state.js';
 import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
-import { selectCondo } from './info.js';
+import { selectCondo, closeInfo } from './info.js';
 
 // ============================================================
 // ZOOM THRESHOLDS (tune here)
 // Below CLUSTER_OFF_ZOOM markers are grouped into per-type clusters; at or
-// above it every marker is drawn individually. LABEL_ZOOM does the same for
-// the name labels: hover-only when zoomed out, always-on when zoomed in.
+// above it markers stand alone except when they genuinely overlap (the
+// cluster radius drops to 18px instead of switching off — see
+// makeClusterGroups). LABEL_ZOOM does the same for the name labels:
+// hover-only when zoomed out, always-on when zoomed in.
 // ============================================================
-export const CLUSTER_OFF_ZOOM = 15;
-export const LABEL_ZOOM = 15;
+export const CLUSTER_OFF_ZOOM = 16;
+export const LABEL_ZOOM = 17;
 
 /**
  * Pure helper: the tooltip mode that applies at a given zoom level.
@@ -62,7 +64,7 @@ export const DIM_OPACITY = 0.45;
 // references. Change one and change the token next to it.
 export const MARKER_COLORS = {
   condo:      { bg:'#78909c', border:'#546e7a', radius:'50%' },
-  commercial: { bg:'#e8710a', border:'#b85806', radius:'4px' },
+  commercial: { bg:'#c2600a', border:'#8f4a05', radius:'4px' },
   school:     { bg:'#1a3d7c', border:'#112a58', radius:'50%' },
   dining:     { bg:'#c2185b', border:'#8c1145', radius:'50% 50% 50% 0' },
 };
@@ -87,16 +89,21 @@ function clusterIconFactory(type) {
   const st = CLUSTER_STYLE[type];
   return (cluster) => {
     const n = cluster.getChildCount();
-    const sz = n >= 25 ? 46 : n >= 10 ? 38 : 32;
-    const fs = n >= 25 ? 15 : n >= 10 ? 13 : 12;
     // Read the layer at draw time: the clusters are re-rendered on every
     // rebuild(), so a layer switch re-dims them without any extra wiring.
-    const op = type === activeLayer ? 1 : DIM_OPACITY;
+    const active = type === activeLayer;
+    // Background clusters are context, not content: opacity alone was not
+    // enough (a 46px saturated-orange square at 45% still out-shouts the
+    // active layer), so they also drop a full size tier.
+    const sz0 = n >= 25 ? 46 : n >= 10 ? 38 : 32;
+    const sz = active ? sz0 : sz0 - 10;
+    const fs = (n >= 25 ? 15 : n >= 10 ? 13 : 12) - (active ? 0 : 2);
+    const mute = active ? '' : 'filter:grayscale(.85) saturate(.3) opacity(.55);';
     return L.divIcon({
       className: '',
       iconSize: [sz, sz],
       iconAnchor: [sz/2, sz/2],
-      html: `<div role="button" aria-label="${CLUSTER_LABELS[type]} ${n}件。開くには拡大してください" style="opacity:${op};width:${sz}px;height:${sz}px;border-radius:${st.radius};background:${st.bg};border:2px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer">
+      html: `<div role="button" aria-label="${CLUSTER_LABELS[type]} ${n}件。押すと開きます" style="${mute}width:${sz}px;height:${sz}px;border-radius:${st.radius};background:${st.bg};border:2px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer">
         <span aria-hidden="true" style="color:#fff;font-size:${fs}px;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,0.35)">${n}</span>
       </div>`
     });
@@ -104,19 +111,38 @@ function clusterIconFactory(type) {
 }
 
 function makeClusterGroups() {
-  const mk = (type) => L.markerClusterGroup({
-    maxClusterRadius: 45,
-    disableClusteringAtZoom: CLUSTER_OFF_ZOOM,
-    spiderfyOnMaxZoom: true,
-    showCoverageOnHover: false,
-    iconCreateFunction: clusterIconFactory(type),
-  });
+  // Clustering never fully switches off. Above CLUSTER_OFF_ZOOM the radius
+  // drops to 18px, so markers stand alone unless they genuinely overlap —
+  // two towers of one development, two restaurants in one building. Those
+  // used to stack unclickably (only the top one could ever be selected).
+  //
+  // Click handling is explicit because the library's default would not do
+  // what the bubble promises: spiderfyOnMaxZoom fires only at the map's
+  // maxZoom (19), so a same-point pair took FOUR clicks of zooming before it
+  // fanned open. Instead: at detail zoom every bubble is an overlap bubble —
+  // spiderfy it on the spot (one click); zoomed out, clicking a cluster
+  // still dives into it like before.
+  const mk = (type) => {
+    const g = L.markerClusterGroup({
+      maxClusterRadius: (zoom) => zoom >= CLUSTER_OFF_ZOOM ? 18 : 45,
+      spiderfyOnMaxZoom: true,
+      zoomToBoundsOnClick: false,
+      showCoverageOnHover: false,
+      iconCreateFunction: clusterIconFactory(type),
+    });
+    g.on('clusterclick', (e) => {
+      if (map.getZoom() >= CLUSTER_OFF_ZOOM) e.layer.spiderfy();
+      else e.layer.zoomToBounds();
+    });
+    return g;
+  };
   return { condo: mk('condo'), commercial: mk('commercial'), school: mk('school'), dining: mk('dining') };
 }
 
 /** Create the Leaflet map and inject the marker-tooltip style. */
 export function initMap() {
-  map = L.map('map',{zoomControl:true}).setView([3.1550,101.6850],12);
+  map = L.map('map',{zoomControl:false}).setView([3.1550,101.6850],12);
+  L.control.zoom({ position: 'bottomright' }).addTo(map);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
     attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19
   }).addTo(map);
@@ -124,6 +150,11 @@ export function initMap() {
   clusterGroups = makeClusterGroups();
   Object.values(clusterGroups).forEach(g=>map.addLayer(g));
   labelMode = labelModeForZoom(map.getZoom());
+
+  // Tapping empty map dismisses the detail card — the standard non-modal
+  // popover behaviour (marker clicks stopPropagation inside Leaflet, so this
+  // only fires on genuinely empty map).
+  map.on('click', () => closeInfo());
 
   // Re-bind the labels only when the zoom crosses the threshold.
   map.on('zoomend', () => {
@@ -173,12 +204,39 @@ export const AREA_CENTERS = {
   'gelugor':   {lat:5.38760,lng:100.31300,zoom:13},
   'all-pg':    {lat:5.40000,lng:100.28000,zoom:11}
 };
+/**
+ * 🏝️ Penang ▸ — the Penang areas stay folded until asked for (2026-08-07
+ * ruling: Penang is rarely used, so its seven buttons should not spend the
+ * bar's width by default). Open/close only; jumping stays on the buttons.
+ */
+export function togglePenangAreas(){
+  const wrap = document.getElementById('penangAreas');
+  const btn = document.getElementById('penangToggle');
+  if(!wrap || !btn) return;
+  const open = wrap.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  btn.setAttribute('title', open ? 'ペナンのエリアを閉じる' : 'ペナンのエリアを開く');
+  btn.textContent = open ? '🏝️ Penang ▾' : '🏝️ Penang ▸';
+}
+
 export function jumpToArea(key){
   const a=AREA_CENTERS[key];if(!a)return;
   map.flyTo([a.lat,a.lng],a.zoom,{duration:0.8});
   document.querySelectorAll('.area-jump button').forEach(b=>b.classList.remove('active'));
   const btn=document.querySelector(`.area-jump button[data-area="${key}"]`);
   if(btn)btn.classList.add('active');
+  // The jump also FILTERS the list (audit: the map flying to Bangsar while
+  // the list still said 271件 meant the two halves answered different
+  // questions). The jump keys and the fArea option values are 1:1
+  // (test/map.test.js guards it) except the parkcity spelling; 全体 keys
+  // clear the filter. The dining layer has its own area control, so its
+  // list is left alone. window.applyFilters avoids a circular import —
+  // main.js exposes it for the inline handlers anyway.
+  const fArea = document.getElementById('fArea');
+  if(fArea && activeLayer !== 'dining' && typeof window.applyFilters === 'function'){
+    fArea.value = key.startsWith('all-') ? '' : (key === 'parkcity' ? 'desa-parkcity' : key);
+    window.applyFilters();
+  }
 }
 
 // ============================================================
@@ -224,7 +282,10 @@ function applyLabelMode(mode) {
 export function pinClassName(isSelected) {
   return isSelected ? 'mk-pin mk-pin-sel' : 'mk-pin';
 }
-const pinClass = (c) => pinClassName(c.name === selectedCondo);
+// Dimming is a CLASS (.mk-dim), not marker opacity: 45% opacity left the
+// saturated commercial orange louder than the active layer. The class
+// desaturates AND fades (see .mk-dim>div in index.html).
+const pinClass = (c, dim) => pinClassName(c.name === selectedCondo) + (dim ? ' mk-dim' : '');
 
 // Custom DivIcon with tier label inside circle
 function mkMarker(c, dim) {
@@ -241,14 +302,14 @@ function mkMarker(c, dim) {
   if (isSchool) {
     const csz = 20;
     const icon = L.divIcon({
-      className: pinClass(c),
+      className: pinClass(c, dim),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
       html: `<div role="button" aria-label="学校 ${attrEsc(c.name)}" style="width:${csz}px;height:${csz}px;border-radius:50%;background:${MARKER_COLORS.school.bg};border:2px solid ${MARKER_COLORS.school.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.3);cursor:pointer">
         <span aria-hidden="true" style="color:#fff;font-size:10px">🎓</span>
       </div>`
     });
-    const m = L.marker([c.lat,c.lng],{icon});
+    const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
     m.on('click',()=>selectCondo(c.name));
     return bindLabel(m, c.name, c.name.replace(/International School/g,'IS').replace(/International/g,'Intl'), csz/2+2, dim);
   }
@@ -264,7 +325,7 @@ function mkMarker(c, dim) {
     const border = (c.michelin === '1star' || c.michelin === '2star')
       ? MICHELIN_STAR_BORDER : MARKER_COLORS.dining.border;
     const icon = L.divIcon({
-      className: pinClass(c),
+      className: pinClass(c, dim),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
       html: `<div role="button" aria-label="飲食店 ${attrEsc(c.name)}${mb ? '、' + mb : ''}" style="position:relative;width:${csz}px;height:${csz}px;display:flex;align-items:center;justify-content:center;cursor:pointer">
@@ -272,25 +333,28 @@ function mkMarker(c, dim) {
         <span aria-hidden="true" style="position:relative;color:#fff;font-size:10px;line-height:1">🍽</span>
       </div>`
     });
-    const m = L.marker([c.lat,c.lng],{icon});
+    const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
     m.on('click',()=>selectCondo(c.name));
     return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2, dim);
   }
 
   if (isCommercial) {
-    // Size based on NLA: large(>200K)=28, medium(50K-200K)=22, small(<50K)=16
+    // Size based on NLA: large(>200K)=22, medium(50K-200K)=18, small(<50K)=14.
+    // One step smaller than it used to be (28/22/16): a mall is context, not
+    // the protagonist, and the saturated orange square already carries far
+    // more visual weight per pixel than the muted condo circles.
     const nla = c.sizeMin || 0;
-    const csz = nla >= 200000 ? 28 : nla >= 50000 ? 22 : 16;
-    const fsz = nla >= 200000 ? 13 : nla >= 50000 ? 11 : 9;
+    const csz = nla >= 200000 ? 22 : nla >= 50000 ? 18 : 14;
+    const fsz = nla >= 200000 ? 11 : nla >= 50000 ? 10 : 8;
     const icon = L.divIcon({
-      className: pinClass(c),
+      className: pinClass(c, dim),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
       html: `<div role="button" aria-label="商業施設 ${attrEsc(c.name)}" style="width:${csz}px;height:${csz}px;border-radius:${MARKER_COLORS.commercial.radius};background:${MARKER_COLORS.commercial.bg};border:2px solid ${MARKER_COLORS.commercial.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer">
         <span aria-hidden="true" style="color:#fff;font-size:${fsz}px">🛒</span>
       </div>`
     });
-    const m = L.marker([c.lat,c.lng],{icon});
+    const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
     m.on('click',()=>selectCondo(c.name));
     return bindLabel(m, c.name, c.name.replace(/ \(.*\)/,''), csz/2+2, dim);
   }
@@ -307,7 +371,7 @@ function mkMarker(c, dim) {
     : `${attrEsc(c.name)}、Tier ${attrEsc(c.luxTier)}、${c.year}年`;
 
   const icon = L.divIcon({
-    className: pinClass(c),
+    className: pinClass(c, dim),
     iconSize: [sz, sz],
     iconAnchor: [sz/2, sz/2],
     html: `<div role="button" aria-label="${a11yLabel}" style="width:${sz}px;height:${sz}px;border-radius:50%;background:${bgColor};border:${borderStyle};display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer;line-height:1.1">
@@ -316,7 +380,7 @@ function mkMarker(c, dim) {
     </div>`
   });
 
-  const m = L.marker([c.lat,c.lng],{icon});
+  const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
   m.on('click',()=>selectCondo(c.name));
 
   // Name label (permanent when zoomed in / selected, hover-only otherwise)
@@ -340,11 +404,12 @@ export function rebuild(){
   const ns=new Set(filtered.map(c=>c.name));
   CONDOS.forEach(c=>{
     const type=markerType(c);
-    // Restaurants belong to 外食モード only (2026-08-07 ruling): in 住まいモード
-    // they are not a selectable layer, so their pins stay off the map too.
-    // They still appear on every record's 周辺 tab, which is where the
-    // "good food within walking distance" question actually gets asked.
+    // Each mode draws only its own layers (2026-08-07 ruling + audit):
+    // 住まいモード has no dining pins, and 外食モード has no condo/school/mall
+    // pins — a page about restaurants showing 271 grey condo clusters was
+    // pure noise. The 周辺 tab still crosses modes where it matters.
     if(type==='dining'&&appMode!=='eatout')return;
+    if(type!=='dining'&&appMode==='eatout')return;
     const isActive=type===activeLayer;
     if(isActive&&!ns.has(c.name))return;
     const m=mkMarker(c,!isActive);markers[c.name]=m;

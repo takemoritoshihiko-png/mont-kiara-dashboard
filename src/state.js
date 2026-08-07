@@ -45,7 +45,7 @@ export let showKidOkOnly = false;
 // まだ行っていない店" could not be asked for at all.
 export let showWantOnly = false;
 export let showUndoneOnly = false;
-export let legendOpen = false;
+export let legendOpen = true;
 
 export let sfActive = false;
 export let sfSelectedSchool = null;

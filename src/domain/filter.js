@@ -13,7 +13,7 @@ export const TIER_ORDER = {S:5, A:4, B:3, C:2, D:1};
 export const LAYERS = ['condo', 'school', 'commercial', 'dining'];
 
 /** Japanese label used in headings and the empty-result message. */
-export const LAYER_LABELS = { condo: '物件', school: '学校', commercial: '商業施設', dining: '飲食' };
+export const LAYER_LABELS = { condo: '物件', school: '学校', commercial: '商業施設', dining: '飲食店' };
 
 /** Which layer a record belongs to. `status` is the discriminator in the data. */
 export function recordLayer(c){

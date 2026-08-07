@@ -12,11 +12,11 @@ describe('labelModeForZoom', () => {
   });
 
   it('turns the labels on at the threshold', () => {
-    expect(labelModeForZoom(15)).toBe('permanent');
+    expect(labelModeForZoom(LABEL_ZOOM)).toBe("permanent");
   });
 
   it('keeps the labels on above the threshold', () => {
-    expect(labelModeForZoom(16)).toBe('permanent');
+    expect(labelModeForZoom(LABEL_ZOOM + 1)).toBe("permanent");
   });
 
   it('is hover-only at the initial KL-wide zoom (12) — 392 labels would collide', () => {
@@ -24,8 +24,8 @@ describe('labelModeForZoom', () => {
   });
 
   it('handles fractional zooms on both sides of the threshold', () => {
-    expect(labelModeForZoom(14.9)).toBe('hover');
-    expect(labelModeForZoom(15.1)).toBe('permanent');
+    expect(labelModeForZoom(LABEL_ZOOM - 0.1)).toBe("hover");
+    expect(labelModeForZoom(LABEL_ZOOM + 0.1)).toBe("permanent");
   });
 
   it('returns permanent for every zoom >= LABEL_ZOOM and hover below it', () => {
@@ -45,8 +45,8 @@ describe('selected marker ring (spec 2.7 / audit D3)', () => {
 });
 
 describe('zoom threshold constants', () => {
-  it('clustering stops exactly where the permanent labels start', () => {
-    expect(CLUSTER_OFF_ZOOM).toBe(LABEL_ZOOM);
+  it('labels never precede the un-clustering (pins first at 16, names at 17)', () => {
+    expect(LABEL_ZOOM).toBeGreaterThanOrEqual(CLUSTER_OFF_ZOOM);
   });
 
   it('the thresholds sit inside Leaflet’s zoom range', () => {

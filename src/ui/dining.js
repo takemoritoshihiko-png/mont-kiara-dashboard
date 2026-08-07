@@ -100,9 +100,16 @@ export function visitBoxHtml(c, ctx = 'led'){
   if(!id) return '';
   const e = P.getEntry(id);
   const key = `${ctx}-${jsStr(id)}`;
+  // Both labels are FIXED — the state is carried by the colour (.on) and by
+  // aria-pressed, not by rewording the button. A control whose name changes
+  // when you press it reads as a different control, and the reader can no
+  // longer tell whether the word describes what IS or what WILL BE.
+  //
+  // The heart is deliberate: ★ belongs to the Google rating and to nothing
+  // else in this app, so 行きたい gets ♡/♥ instead of a second star.
   const head = `<div class="vb-head">` +
-    toggleBtn('vb-visit', e.v === 1, e.v === 1 ? '✓ 訪問済み' : '訪問済みにする', `dineVisit('${jsStr(id)}')`) +
-    toggleBtn('vb-want', e.w === 1, e.w === 1 ? '★ 行きたい' : '☆ 行きたい', `dineWant('${jsStr(id)}')`) +
+    toggleBtn('vb-visit', e.v === 1, e.v === 1 ? '✓ 訪問済み' : '訪問済み', `dineVisit('${jsStr(id)}')`) +
+    toggleBtn('vb-want', e.w === 1, e.w === 1 ? '♥ 行きたい' : '♡ 行きたい', `dineWant('${jsStr(id)}')`) +
     `</div>`;
   if(e.v !== 1) return `<div class="visitbox">${head}</div>`;
 
@@ -156,11 +163,26 @@ export function eatoutDetailHtml(c){
 // ============================================================
 function refresh(){ onChanged(); }
 
+/**
+ * The toast has to say what actually happened, not what the button is called.
+ * Turning 訪問済み ON silently clears 行きたい (setVisited's `w: 0`), and
+ * turning it OFF keeps the verdict, the amount and the memo — two facts the
+ * user cannot see on the screen at the moment they act, so the message carries
+ * them. Neither of them changes the stored shape; this is wording only.
+ */
 export function dineVisit(id){
-  const before = P.getEntry(id).v === 1;
+  const cur = P.getEntry(id);
+  const before = cur.v === 1;
+  const wasWanted = cur.w === 1;
   P.setVisited(id, !before);
   refresh();
-  toast(before ? '訪問記録を解除しました' : '訪問済みにしました。また行きたいか答えてください');
+  if(before){
+    toast('訪問記録を解除しました（再訪・実額・感想は保持されます）');
+  } else {
+    toast(wasWanted
+      ? '訪問済みにしました（「行きたい」からは外れます）。また行きたいか答えてください'
+      : '訪問済みにしました。また行きたいか答えてください');
+  }
 }
 
 export function dineWant(id){
@@ -218,10 +240,17 @@ function logRowHtml(row){
   const c = row.record;
   const score = totalOf(c);
   const memo = String(row.entry.m || '').trim();
+  // The whole head band opens the detail panel, not just the glyphs of the
+  // name: an inline-block span is a thin target on a phone, and the row's own
+  // padding around it looked clickable while doing nothing. The role stays on
+  // ONE element — the name inside it is a plain span now, because a button
+  // inside a button is operable by neither keyboard nor screen reader.
+  // The visitbox below is left outside the target on purpose: its fields are
+  // edited in place, and a stray tap must not throw the panel open.
   return `<div class="log-row">` +
-    `<div class="log-row-head">` +
-      `<span class="log-name" role="button" tabindex="0" aria-label="${esc(c.name)} の詳細を開く"` +
-      ` onclick="selectCondo('${jsStr(c.name)}')">${esc(c.name)}</span>` +
+    `<div class="log-row-head" role="button" tabindex="0" aria-label="${esc(c.name)} の詳細を開く"` +
+    ` onclick="selectCondo('${jsStr(c.name)}')">` +
+      `<span class="log-name">${esc(c.name)}</span>` +
     `</div>` +
     `<div class="log-sub">${esc([c.catGroup, c.area, c.venue].filter(Boolean).join(' ・ '))}</div>` +
     `<div class="log-meta">${esc(logMetaText(row, score))}</div>` +
@@ -235,7 +264,7 @@ function logViewHtml(){
   if(!groups.length){
     return tilesHtml() + `<div class="empty-state">` +
       `<div class="empty-title">まだ訪問記録がありません</div>` +
-      `<div class="empty-sub">台帳で店を開き、「訪問済みにする」を押すとここに並びます。</div></div>`;
+      `<div class="empty-sub">台帳で店を開き、「訪問済み」を押すとここに並びます。</div></div>`;
   }
   return tilesHtml() + groups.map(g =>
     `<div class="log-group">` +
@@ -258,28 +287,48 @@ function savedAtText(st){
   return `最終保存 ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
 }
 
+const DATA_EMPTY_TEXT =
+  'まだ記録がありません。台帳で店を開き「訪問済み」を押すと記録が始まります。';
+const EXPORT_LEAD_TEXT =
+  '記録をファイルに保存するか、下のJSONをコピーして控えられます';
+const EXPORT_SUMMARY_TEXT = '書き出した内容（JSON）';
+
 function dataViewHtml(){
   const st = P.saveStatus();
   const cnt = P.storedCounts();
   const warn = st.error
     ? `<div class="data-warn">⚠ ${esc(st.error)}</div>` : '';
+  // 0 records is not "記録中: 0店（訪問 0 ・ …）" — a row of zeros reads as a
+  // failure. It is a state with an instruction, so it gets one.
+  const inventory = cnt.stores
+    ? `<div class="data-line">記録中: ${num(cnt.stores)}店（訪問 ${num(cnt.visited)} ・ 行きたい ${num(cnt.want)} ・ 感想 ${num(cnt.memo)} ・ 実額 ${num(cnt.amount)}）</div>`
+    : `<div class="data-note">${esc(DATA_EMPTY_TEXT)}</div>`;
+  // PRIVACY_TEXT is NOT repeated here: the save bar under the list carries it
+  // on every screen of 外食モード, and the detail panel carries it beside the
+  // record itself. A third copy on the one view the user came to on purpose
+  // was the same sentence twice in one glance.
   return `<div class="dataview">` +
     `<section class="data-sec"><h3 class="data-h">保存の状態</h3>` +
       warn +
       `<div class="data-line">保存先: このブラウザ（localStorage）</div>` +
       `<div class="data-line">${esc(savedAtText(st))}</div>` +
-      `<div class="data-line">記録中: ${num(cnt.stores)}店（訪問 ${num(cnt.visited)} ・ 行きたい ${num(cnt.want)} ・ 感想 ${num(cnt.memo)} ・ 実額 ${num(cnt.amount)}）</div>` +
-      `<div class="data-note">${esc(PRIVACY_TEXT)}</div>` +
+      inventory +
     `</section>` +
 
     `<section class="data-sec"><h3 class="data-h">書き出し（バックアップ）</h3>` +
       `<div class="data-note">機種変更やブラウザのデータ消去に備えて、ときどき保存してください。</div>` +
       `<div class="data-btns">` +
         `<button type="button" class="data-btn primary" onclick="dineDownload()">ファイルに保存</button>` +
-        `<button type="button" class="data-btn" onclick="dineSelectExport()">下の文字を全選択</button>` +
+        `<button type="button" class="data-btn" onclick="dineSelectExport()">JSONを全選択</button>` +
       `</div>` +
-      `<label class="vb-flabel" for="dataExport">書き出した内容</label>` +
-      `<textarea id="dataExport" class="data-area" rows="6" readonly>${esc(P.currentExportText())}</textarea>` +
+      `<div class="data-note">${esc(EXPORT_LEAD_TEXT)}</div>` +
+      // The raw JSON is folded away. It is the fallback, not the offer: the
+      // first thing on this view should be the button that does the job.
+      `<details class="data-details" id="dataExportBox">` +
+        `<summary>${esc(EXPORT_SUMMARY_TEXT)}</summary>` +
+        `<textarea id="dataExport" class="data-area" rows="6" readonly` +
+        ` aria-label="${esc(EXPORT_SUMMARY_TEXT)}">${esc(P.currentExportText())}</textarea>` +
+      `</details>` +
     `</section>` +
 
     `<section class="data-sec"><h3 class="data-h">読み込み</h3>` +
@@ -288,7 +337,8 @@ function dataViewHtml(){
       `<textarea id="dataImport" class="data-area" rows="5" placeholder='{"app":"kl-dining-ledger", ...}'></textarea>` +
       `<div class="data-btns">` +
         `<button type="button" class="data-btn" onclick="dineImport('merge')">いまの記録に統合</button>` +
-        `<button type="button" class="data-btn" onclick="dineImport('replace')">まるごと置き換え</button>` +
+        // 置き換え destroys; it is dressed like 全消去 and says so on its face.
+        `<button type="button" class="data-btn danger" onclick="dineImport('replace')">まるごと置き換え（今の記録は消えます）</button>` +
       `</div>` +
       `<div class="data-result" id="dataResult" role="status" aria-live="polite"></div>` +
     `</section>` +
@@ -307,6 +357,11 @@ function el(id){ return typeof document !== 'undefined' ? document.getElementByI
 export function dineSelectExport(){
   const t = el('dataExport');
   if(!t) return;
+  // The JSON lives inside a <details> now, and a collapsed one cannot be
+  // focused or selected — open it first, or the button would report success
+  // over an empty selection.
+  const box = el('dataExportBox');
+  if(box) box.open = true;
   t.focus(); t.select();
   toast('全選択しました。コピーしてください');
 }

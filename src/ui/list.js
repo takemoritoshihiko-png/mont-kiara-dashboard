@@ -16,7 +16,7 @@ import { map, rebuild } from './map.js';
 import { syncUrl } from './urlState.js';
 import {
   eatoutActive, eatoutCardExtraHtml, eatoutCardScoreHtml, eatoutListHtml,
-  isVisited, personalMap, renderSaveBar,
+  isVisited, personalMap, renderSaveBar, toast,
 } from './dining.js';
 
 const $ = (id) => document.getElementById(id);
@@ -98,6 +98,13 @@ export function readCriteria(){
   return c;
 }
 
+let searchTimer = null;
+/** 検索欄用: 1文字ごとに全マーカーを再生成しない（150ms合流） */
+export function applyFiltersDebounced(){
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(applyFilters, 150);
+}
+
 export function applyFilters(){
   const crit = readCriteria();
   setFiltered(CONDOS.filter(c => matchesFilters(c, crit)));
@@ -115,7 +122,13 @@ export function setLayer(layer){
   // 飲食 is not a 住まいモード layer (2026-08-07 ruling): anything that asks
   // for it there — an old ?layer=dining link, a dining row on the 周辺 tab —
   // is really asking for 外食モード, so go there instead of refusing.
-  if(layer === 'dining' && appMode !== 'eatout'){ setMode('eatout'); return; }
+  if(layer === 'dining' && appMode !== 'eatout'){
+    setMode('eatout');
+    // The whole chrome just changed under the user - say so (audit: silent
+    // mode switch was the most disorienting single event in the app).
+    toast('外食モードに切り替えました（右上の「住まい」で戻れます）');
+    return;
+  }
   if(!LAYER_CONTROLS[layer] || layer === activeLayer) { syncLayerUI(); return; }
   setActiveLayer(layer);
   // Keep the chosen order when the new layer also offers it, otherwise fall
@@ -158,6 +171,10 @@ export function setMode(mode, { silent = false } = {}){
     setActiveLayer(homeLayer || 'condo');
     if(!sortAvailable(activeLayer, currentSort, 'home')) setCurrentSort(defaultSortFor(activeLayer, 'home'));
   }
+  // The headline follows the mode — the audit flagged reading 「住まいマップ」
+  // above a restaurant ledger as quiet disorientation.
+  const h1 = document.querySelector('.header h1');
+  if(h1 && h1.firstChild) h1.firstChild.textContent = next === 'eatout' ? 'KL 外食台帳 ' : 'KL・ペナン 住まいマップ ';
   syncLayerUI();
   applyFilters();
   if(!silent) syncUrl({ replace: true });
@@ -297,7 +314,7 @@ export function syncLayerUI(){
   const mt = $('moreToggle');
   if(mt){
     mt.style.display = ledgerView ? '' : 'none';
-    mt.innerHTML = '絞り込み ' + (moreOpen ? '⌃' : '⌄');
+    mt.innerHTML = moreOpen ? '－ 絞り込みを閉じる' : '＋ もっと絞り込む';
     // The chevron says "open" to a sighted user; aria-expanded says it to
     // everyone else. They are set together so they cannot disagree.
     mt.setAttribute('aria-expanded', moreOpen ? 'true' : 'false');
@@ -341,7 +358,7 @@ function syncAwardBtn(){
   if(!b) return;
   b.classList.toggle('active', showAwardOnly);
   b.setAttribute('aria-pressed', showAwardOnly ? 'true' : 'false');
-  b.innerHTML = (showAwardOnly ? '✓ ' : '') + '🏆 受賞のみ';
+  b.innerHTML = '🏆 受賞のみ';
 }
 
 export function toggleAward(){
@@ -357,7 +374,7 @@ function syncKidOkBtn(){
   if(!b) return;
   b.classList.toggle('active', showKidOkOnly);
   b.setAttribute('aria-pressed', showKidOkOnly ? 'true' : 'false');
-  b.innerHTML = (showKidOkOnly ? '✓ ' : '') + '👶 子連れ◎のみ';
+  b.innerHTML = '👶 子連れ◎のみ';
 }
 
 export function toggleKidOk(){
@@ -375,7 +392,7 @@ function syncWantBtn(){
   if(!b) return;
   b.classList.toggle('active', showWantOnly);
   b.setAttribute('aria-pressed', showWantOnly ? 'true' : 'false');
-  b.innerHTML = (showWantOnly ? '✓ ' : '') + '★ 行きたい';
+  b.innerHTML = (showWantOnly ? '♥' : '♡') + ' 行きたい';
 }
 
 export function toggleWantFilter(){
@@ -389,7 +406,7 @@ function syncUndoneBtn(){
   if(!b) return;
   b.classList.toggle('active', showUndoneOnly);
   b.setAttribute('aria-pressed', showUndoneOnly ? 'true' : 'false');
-  b.innerHTML = (showUndoneOnly ? '✓ ' : '') + '未訪問';
+  b.innerHTML = '未訪問';
 }
 
 export function toggleUndoneFilter(){
@@ -732,7 +749,7 @@ export function updateSummary(){
   $('sumTotal').textContent = num(total);
   $('sumFiltered').textContent = num(filtered.length);
 
-  let l3 = 'Med.PSF', l4 = 'Med.Rent', v3 = TILE_EMPTY, v4 = TILE_EMPTY;
+  let l3 = 'PSF中央値', l4 = '家賃中央値', v3 = TILE_EMPTY, v4 = TILE_EMPTY;
   if(activeLayer === 'condo'){
     // Median over PUBLISHED prices only — a null (unpublished) mid in the
     // population would drag the median toward zero for no real reason.
@@ -788,7 +805,12 @@ export function togglePanel(){
   const isMobile = window.innerWidth <= 768;
   p.classList.toggle('collapsed'); b.classList.toggle('collapsed');
   const collapsed = p.classList.contains('collapsed');
-  b.innerHTML = collapsed ? (isMobile ? '&#9650;' : '&#9654;') : (isMobile ? '&#9660;' : '&#9664;');
+  // Desktop: the panel slides RIGHT to close, so the closed state points
+  // left ('bring it back') and the open state points right ('push it away').
+  // While closed, the button also says what is hidden - layer + count.
+  b.innerHTML = collapsed
+    ? (isMobile ? '&#9650; 一覧' : `&#9664; ${LAYER_LABELS[activeLayer]} ${filtered.length}件`)
+    : (isMobile ? '&#9660;' : '&#9654;');
   // The button's only content is an arrow glyph, which is no name at all — the
   // label and the expanded state are the whole of what a screen reader gets.
   b.setAttribute('aria-expanded', collapsed ? 'false' : 'true');

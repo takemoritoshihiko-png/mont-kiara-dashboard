@@ -12,7 +12,7 @@
 // numerals. No content was removed in the restyle: fees, philosophy,
 // demographics, premium features and awards all still render.
 import {
-  CONDOS, SCHOOLS_DETAIL, activeLayer, activeTab,
+  CONDOS, SCHOOLS_DETAIL, activeLayer, activeTab, appMode,
   setSelectedCondo, setActiveTab,
 } from '../state.js';
 import { TIER_COLORS, MICHELIN_LABELS } from '../data/inline.js';
@@ -360,6 +360,14 @@ export function setInfoTab(tab){
  *   new record always starts from its own data.
  */
 export function selectCondo(name, opts = {}){
+  // Clicking a dimmed background marker adopts its layer (home mode): before
+  // this, the detail opened while the list, filters and summary stayed on the
+  // old layer — two "current things" on one screen (audit C). 外食モード pins
+  // its layer, so there the detail simply opens.
+  const rec = CONDOS.find(x => x.name === name);
+  if(rec && appMode === 'home' && recordLayer(rec) !== activeLayer){
+    withUrlWritesSuspended(() => setLayer(recordLayer(rec)));
+  }
   setActiveTab(opts.tab === 'nearby' ? 'nearby' : 'detail');
   setSelectedCondo(name);
   const c=CONDOS.find(x=>x.name===name);

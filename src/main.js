@@ -9,9 +9,9 @@ import {
 } from './data/load.js';
 import { calcLuxury } from './domain/luxury.js';
 import { calcLedgerScores } from './domain/diningScore.js';
-import { initMap, jumpToArea, toggleLegend } from './ui/map.js';
+import { initMap, jumpToArea, toggleLegend, togglePenangAreas } from './ui/map.js';
 import {
-  applyFilters, setSort, setLayer, setMode, setView, syncLayerUI, toggleMore,
+  applyFilters, applyFiltersDebounced, setSort, setLayer, setMode, setView, syncLayerUI, toggleMore,
   toggleAward, toggleKidOk, toggleWantFilter, toggleUndoneFilter,
   togglePanel, clearSearch, removeFilter, clearAllFilters, showLoading,
 } from './ui/list.js';
@@ -36,9 +36,11 @@ import {
 // block goes away then.
 // ============================================================
 window.jumpToArea = jumpToArea;
+window.togglePenangAreas = togglePenangAreas;
 window.toggleLegend = toggleLegend;
 window.togglePanel = togglePanel;
 window.applyFilters = applyFilters;
+window.applyFiltersDebounced = applyFiltersDebounced;
 window.setSort = setSort;
 window.setLayer = setLayer;
 window.setMode = setMode;
@@ -170,7 +172,7 @@ window.addEventListener('popstate', () => {
       warn.className = 'load-warn';
       warn.innerHTML = '<b>⚠ 一部のデータを読み込めませんでした</b><br>' +
         loadErrors.map(m => '・' + m).join('<br>') +
-        '<br>表示中の件数は不完全です。再読み込みで直らない場合はデータファイルを確認してください。';
+        '<br>表示中の件数は不完全です。通信環境をご確認のうえ、再読み込みしてください。 <button onclick="location.reload()" style="cursor:pointer">再読み込み</button>';
       listEl.parentNode.insertBefore(warn, listEl);
     }
   } catch(e) {

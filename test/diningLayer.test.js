@@ -40,7 +40,7 @@ describe('the 飲食 layer', () => {
   it('is a layer of its own, routed by status', () => {
     expect(LAYERS).toContain('dining');
     expect(recordLayer(eat())).toBe('dining');
-    expect(LAYER_LABELS.dining).toBe('飲食');
+    expect(LAYER_LABELS.dining).toBe('飲食店');
   });
 
   it('never matches a record from another layer, and vice versa', () => {

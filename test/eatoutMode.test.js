@@ -16,10 +16,11 @@ import {
 } from '../src/domain/filter.js';
 import { sortOptionsFor, defaultSortFor, sortAvailable, sortRecords } from '../src/domain/sort.js';
 import { setAppMode, setListView, setRestaurants, setCondos } from '../src/state.js';
-import { initPersonal, setVisited, toggleWant, setRepeat, setAmount, setMemo } from '../src/data/personal.js';
+import { initPersonal, setVisited, toggleWant, setRepeat, setAmount, setMemo, getEntry } from '../src/data/personal.js';
 import {
   eatoutActive, eatoutCardExtraHtml, eatoutCardScoreHtml, eatoutDetailHtml,
   eatoutListHtml, visitBoxHtml, scoreBlockHtml, isVisited, PRIVACY_TEXT, totalOf,
+  dineVisit,
 } from '../src/ui/dining.js';
 import { cardHtml, cardBodyHtml } from '../src/ui/list.js';
 import { detailHtml } from '../src/ui/info.js';
@@ -135,6 +136,27 @@ describe('記録欄', () => {
     expect(off.match(/aria-pressed="false"/g)).toHaveLength(2);
     toggleWant(DEWAKAN.id);
     expect(visitBoxHtml(DEWAKAN)).toContain('class="vb-toggle vb-want on" aria-pressed="true"');
+  });
+
+  it('keeps each toggle\'s NAME fixed — .on and aria-pressed carry the state', () => {
+    // 「訪問済みにする」⇄「✓ 訪問済み」 renamed the control on press, so the
+    // word could be read either as what is true now or as what pressing would
+    // do. The name is now constant and only the mark and the colour move.
+    const off = visitBoxHtml(DEWAKAN);
+    expect(off).toContain('>訪問済み<');
+    expect(off).not.toContain('訪問済みにする');
+    setVisited(DEWAKAN.id, true);
+    expect(visitBoxHtml(DEWAKAN)).toContain('>✓ 訪問済み<');
+  });
+
+  it('gives 行きたい a heart, because ★ belongs to the Google rating', () => {
+    const off = visitBoxHtml(DEWAKAN);
+    expect(off).toContain('>♡ 行きたい<');
+    expect(off).not.toContain('☆');
+    toggleWant(DEWAKAN.id);
+    expect(visitBoxHtml(DEWAKAN)).toContain('>♥ 行きたい<');
+    // …and the star still means one thing only, on the rating line.
+    expect(visitBoxHtml(DEWAKAN)).not.toContain('★');
   });
 
   it('escapes what the user typed instead of letting it become markup', () => {
@@ -279,6 +301,21 @@ describe('台帳 / 行った店 / データ', () => {
     expect(h).toContain(`amt-log-${DEWAKAN.id}`);
   });
 
+  it('opens the panel from the whole head band, not from the glyphs of the name', () => {
+    setup({ mode: 'eatout', view: 'log' });
+    setVisited(DEWAKAN.id, true);
+    const h = eatoutListHtml();
+    expect(h).toContain('<div class="log-row-head" role="button" tabindex="0"');
+    // ONE role per row: a button inside a button is operable by neither the
+    // keyboard nor a screen reader.
+    expect(h).toContain('<span class="log-name">');
+    const row = h.slice(h.indexOf('class="log-row-head"'), h.indexOf('class="visitbox"'));
+    expect(row.match(/role="button"/g)).toHaveLength(1);
+    // The editable fields stay outside the target.
+    const box = h.slice(h.indexOf('class="visitbox"'));
+    expect(box).not.toContain('selectCondo');
+  });
+
   it('puts the four tiles at the top and fills them from the visits only', () => {
     setup({ mode: 'eatout', view: 'log' });
     setVisited(DEWAKAN.id, true);
@@ -298,8 +335,33 @@ describe('台帳 / 行った店 / データ', () => {
     expect(h).toContain("dineImport('merge')");
     expect(h).toContain("dineImport('replace')");
     expect(h).toContain('dineClearAll()');
-    expect(h).toContain(PRIVACY_TEXT);
     expect(h).toContain('台帳v9のバックアップもそのまま読めます');
+  });
+
+  it('says the privacy sentence ONCE per screen — the save bar owns it here', () => {
+    // It used to be printed in the データ view as well, directly above the save
+    // bar that was already saying it: the same sentence twice in one glance.
+    // The bar (renderSaveBar) and the detail panel keep it; this view does not.
+    setup({ mode: 'eatout', view: 'data' });
+    expect(eatoutListHtml()).not.toContain(PRIVACY_TEXT);
+    expect(eatoutDetailHtml(DEWAKAN)).toContain(PRIVACY_TEXT);
+  });
+
+  it('folds the raw JSON away behind a summary, with a plain line above it', () => {
+    setup({ mode: 'eatout', view: 'data' });
+    const h = eatoutListHtml();
+    expect(h).toContain('<details class="data-details" id="dataExportBox">');
+    expect(h).toContain('<summary>書き出した内容（JSON）</summary>');
+    expect(h).toContain('記録をファイルに保存するか、下のJSONをコピーして控えられます');
+    // The textarea keeps a name of its own: <summary> is not a <label>.
+    expect(h).toMatch(/<textarea id="dataExport"[^>]*aria-label="書き出した内容（JSON）"/);
+    expect(h.indexOf('下のJSONをコピー')).toBeLessThan(h.indexOf('<details'));
+  });
+
+  it('dresses まるごと置き換え as the destructive act it is', () => {
+    setup({ mode: 'eatout', view: 'data' });
+    const h = eatoutListHtml();
+    expect(h).toContain(`<button type="button" class="data-btn danger" onclick="dineImport('replace')">まるごと置き換え（今の記録は消えます）</button>`);
   });
 
   it('shows the storage inventory on データ', () => {
@@ -309,9 +371,53 @@ describe('台帳 / 行った店 / データ', () => {
     expect(eatoutListHtml()).toContain('記録中: 1店（訪問 1 ・ 行きたい 0 ・ 感想 1 ・ 実額 0）');
   });
 
+  it('replaces the row of zeros with what to do about it', () => {
+    setup({ mode: 'eatout', view: 'data' });
+    const h = eatoutListHtml();
+    expect(h).not.toContain('記録中: 0店');
+    expect(h).toContain('まだ記録がありません。台帳で店を開き「訪問済み」を押すと記録が始まります。');
+  });
+
   it('draws no view of its own in 住まいモード, whatever the view flag says', () => {
     setup({ mode: 'home', view: 'log' });
     expect(eatoutListHtml()).toBeNull();
+  });
+});
+
+// ============================================================
+// WHAT THE TOAST SAYS
+// ============================================================
+describe('the toast reports what actually happened', () => {
+  // toast() writes into #toast; the app has no DOM under vitest, so one node
+  // is enough to read the sentence back.
+  function withToast(fn){
+    const node = { textContent: '', classList: { add(){}, remove(){}, toggle(){} } };
+    globalThis.document = { getElementById: (id) => (id === 'toast' ? node : null) };
+    try { fn(); return node.textContent; }
+    finally { delete globalThis.document; }
+  }
+
+  beforeEach(() => setup({ mode: 'eatout' }));
+
+  it('warns that 行きたい comes off when the visit goes on', () => {
+    toggleWant(DEWAKAN.id);
+    const msg = withToast(() => dineVisit(DEWAKAN.id));
+    expect(msg).toContain('訪問済みにしました');
+    expect(msg).toContain('「行きたい」からは外れます');
+    expect(getEntry(DEWAKAN.id).w).toBe(0);           // the toast was telling the truth
+  });
+
+  it('does not mention 行きたい when it was never on', () => {
+    const msg = withToast(() => dineVisit(DEWAKAN.id));
+    expect(msg).toBe('訪問済みにしました。また行きたいか答えてください');
+  });
+
+  it('says what SURVIVES when the visit is undone (it is not an erase)', () => {
+    setVisited(DEWAKAN.id, true);
+    setAmount(DEWAKAN.id, '790');
+    setMemo(DEWAKAN.id, 'よかった');
+    const msg = withToast(() => dineVisit(DEWAKAN.id));
+    expect(msg).toBe('訪問記録を解除しました（再訪・実額・感想は保持されます）');
   });
 });
 
