@@ -2,6 +2,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   SORT_OPTIONS, COMPARATORS, comparatorFor, defaultSortFor, sortAvailable, sortRecords,
+  sortOnArrival,
 } from '../src/domain/sort.js';
 
 const names = (list) => list.map(r => r.name);
@@ -129,5 +130,64 @@ describe('determinism', () => {
       expect(() => sortRecords(condos, o.value)).not.toThrow();
       expect(typeof comparatorFor(o.value)).toBe('function');
     });
+  });
+});
+
+// ============================================================
+// COMING BACK TO A LAYER (sortOnArrival)
+// The bug it fixes, walked through: 物件 in 「PSF 高い順」 → a 学校 tapped on the
+// 周辺 tab (学校 has no PSF order, so it falls back to 学費 安い順) → back to
+// 物件. Without a per-layer memory the carried order is now feeLow, 物件 does
+// not offer that either, and the list silently lands on おすすめ順 — the order
+// the user built is gone and nothing on screen says so.
+// ============================================================
+describe('sortOnArrival', () => {
+  it('restores what you last chose on that layer', () => {
+    expect(sortOnArrival('condo', 'home', 'feeLow', { condo: 'psfHigh' })).toBe('psfHigh');
+  });
+
+  it('walks the whole 物件 → 学校 → 物件 detour without losing the order', () => {
+    const remembered = {};
+    // 物件, 「PSF 高い順」 chosen.
+    remembered.condo = 'psfHigh';
+    // → 学校: psfHigh does not exist there, nothing remembered yet → its default.
+    const onSchool = sortOnArrival('school', 'home', 'psfHigh', remembered);
+    expect(onSchool).toBe('feeLow');
+    remembered.school = onSchool;
+    // → back to 物件: the memory wins over the carried (and impossible) feeLow.
+    expect(sortOnArrival('condo', 'home', onSchool, remembered)).toBe('psfHigh');
+  });
+
+  it('carries the current order when the layer has no memory but offers it', () => {
+    expect(sortOnArrival('school', 'home', 'name', {})).toBe('name');
+  });
+
+  it('falls back to the layer default when neither applies', () => {
+    expect(sortOnArrival('school', 'home', 'psfHigh', {})).toBe(defaultSortFor('school'));
+    expect(sortOnArrival('commercial', 'home', 'rentLow', {})).toBe(defaultSortFor('commercial'));
+  });
+
+  it('never restores an order the layer cannot offer', () => {
+    // A stale memory (the layer's options changed, or the mode did) is ignored
+    // rather than set — a sort key with no matching <option> would leave the
+    // select showing one order while the list used another.
+    expect(sortOnArrival('school', 'home', null, { school: 'psfHigh' })).toBe('feeLow');
+    expect(sortOnArrival('dining', 'home', null, { dining: 'ledgerHigh' })).toBe(defaultSortFor('dining'));
+  });
+
+  it('honours the mode: 台帳スコア順 can be restored in 外食モード only', () => {
+    expect(sortOnArrival('dining', 'eatout', null, { dining: 'budgetLow' })).toBe('budgetLow');
+    expect(sortOnArrival('dining', 'eatout', null, {})).toBe('ledgerHigh');
+  });
+
+  it('is pure: it never writes to the remembered map', () => {
+    const remembered = { condo: 'psfHigh' };
+    sortOnArrival('school', 'home', 'psfHigh', remembered);
+    expect(remembered).toEqual({ condo: 'psfHigh' });
+  });
+
+  it('works with no memory argument at all', () => {
+    expect(sortOnArrival('condo', 'home', 'name')).toBe('name');
+    expect(sortOnArrival('condo', 'home', null)).toBe(defaultSortFor('condo'));
   });
 });

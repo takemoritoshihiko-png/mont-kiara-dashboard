@@ -4,7 +4,10 @@
 // function and never runs at import time.
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { labelModeForZoom, LABEL_ZOOM, CLUSTER_OFF_ZOOM, pinClassName, AREA_CENTERS } from '../src/ui/map.js';
+import {
+  labelModeForZoom, LABEL_ZOOM, CLUSTER_OFF_ZOOM, pinClassName, AREA_CENTERS,
+  focusActionForZoom, OVERVIEW_ZOOM, SELECT_ZOOM, SELECT_PAN_PADDING, panPaddingFor,
+} from '../src/ui/map.js';
 
 describe('labelModeForZoom', () => {
   it('hides the labels below the threshold (hover only)', () => {
@@ -88,5 +91,63 @@ describe('area keys stay in sync across the jump bar, the dropdown and the map',
       expect(AREA_CENTERS[k].lat).toBeGreaterThan(4);   // on the island
       expect(AREA_CENTERS[k].zoom).toBeGreaterThanOrEqual(12);
     });
+  });
+});
+
+// ============================================================
+// WHAT A SELECTION DOES TO THE MAP
+// The rule under test: do not move what the user just pressed. Only the pure
+// decision is exercised — map.setView / map.panInside are Leaflet.
+// ============================================================
+describe('focusActionForZoom (selection must not steal the view)', () => {
+  it('zooms in from a city-wide view, where you cannot see what you picked', () => {
+    expect(focusActionForZoom(12)).toEqual({ action: 'setView', zoom: SELECT_ZOOM });
+    expect(focusActionForZoom(OVERVIEW_ZOOM - 0.1)).toEqual({ action: 'setView', zoom: SELECT_ZOOM });
+  });
+
+  it('only pans once you are framing a neighbourhood — the zoom is yours', () => {
+    expect(focusActionForZoom(OVERVIEW_ZOOM)).toEqual({ action: 'panInside' });
+    expect(focusActionForZoom(17)).toEqual({ action: 'panInside' });
+  });
+
+  it('never zooms OUT of a close-up: comparing at 18 stays at 18', () => {
+    for (let z = OVERVIEW_ZOOM; z <= 19; z++) {
+      expect(focusActionForZoom(z).action).toBe('panInside');
+    }
+  });
+
+  it('lands short of the un-clustering zoom, so a selection is a nudge not a dive', () => {
+    expect(SELECT_ZOOM).toBeGreaterThan(OVERVIEW_ZOOM - 2);
+    expect(SELECT_ZOOM).toBeLessThan(CLUSTER_OFF_ZOOM);
+  });
+
+  it('keeps the pin clear of the 300px detail overlay at the map\'s top-left', () => {
+    const [x, y] = SELECT_PAN_PADDING.paddingTopLeft;
+    expect(x).toBeGreaterThanOrEqual(300);
+    expect(y).toBeGreaterThanOrEqual(48);
+    expect(SELECT_PAN_PADDING.paddingBottomRight).toEqual([20, 20]);
+  });
+});
+
+describe('panPaddingFor (the padding has to fit the screen it is on)', () => {
+  it('uses the overlay width in full on a desktop map', () => {
+    expect(panPaddingFor({ x: 1264, y: 900 }).paddingTopLeft).toEqual([320, 60]);
+  });
+
+  it('shrinks it on a phone rather than inverting the padded rectangle', () => {
+    const p = panPaddingFor({ x: 390, y: 450 });
+    expect(p.paddingTopLeft[0]).toBe(234);
+    expect(p.paddingBottomRight).toEqual([20, 20]);
+  });
+
+  it('always leaves a usable area, at every width the app is used at', () => {
+    for (const x of [280, 320, 360, 390, 768, 1440]) {
+      const [px] = panPaddingFor({ x, y: 400 }).paddingTopLeft;
+      expect(px + 20, `padding must not exceed the map at ${x}px`).toBeLessThan(x);
+    }
+  });
+
+  it('survives a zero-size map (called before the first layout)', () => {
+    expect(panPaddingFor({ x: 0, y: 0 }).paddingTopLeft).toEqual([0, 0]);
   });
 });
