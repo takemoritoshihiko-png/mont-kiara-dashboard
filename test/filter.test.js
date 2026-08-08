@@ -192,7 +192,7 @@ describe('matchesArea', () => {
 // KL condo always matches at least one area; the failure mode here is TWO
 // (found live: four Kia Peng / Stonor towers sat in both klcc and ampang).
 describe('the KL areas claim each KL condo exactly once', () => {
-  const KL_AREAS = ['mont-kiara', 'parkcity', 'bangsar', 'klgcc', 'klcc', 'ampang', 'damansara'];
+  const KL_AREAS = ['mont-kiara', 'parkcity', 'bangsar', 'klgcc', 'klcc', 'ampang', 'damansara', 'other-kl'];
   const condos = parseCsv(readFileSync(new URL('../condos_data.csv', import.meta.url), 'utf8'));
   const kl = condos.filter(c => Number(c.lat) > 1 && Number(c.lat) < 4);
   const areasOf = (c) => KL_AREAS.filter(a => matchesArea({ ...c, lat: Number(c.lat) }, a));

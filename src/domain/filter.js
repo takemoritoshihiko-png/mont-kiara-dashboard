@@ -80,10 +80,20 @@ export function matchesArea(c, areaFilter){
   // to exactly one KL area, same as the Penang rule above.
   const isAmpang=!isPenang&&!isKLCC&&(a.includes('u-thant')||a.includes('ampang hilir')||a.includes('embassy row')||a.includes('kia peng')||a.includes('persiaran stonor')||a.includes('lorong kuda'));
   const isDH=!isPenang&&(a.includes('damansara heights')||a.includes('jalan batai')||a.includes('changkat semantan'));
-  // Mont Kiara is the KL catch-all: anything on the KL side that is not one of
-  // the other named areas. Penang records are never Mont Kiara.
-  const isMK=!isPenang&&!isDPC&&!isBangsar&&!isKLGCC&&!isKLCC&&!isAmpang&&!isDH;
+  // Mont Kiara は 2026-08-09 竹森さん指摘(MK在住)で厳密化: 旧実装は「KL側で
+  // 他エリアに該当しない全部」の受け皿で、Shah Alam(22km)や Sungai Buloh(11km)
+  // まで Mont Kiara 扱いだった。実際の MK 圏 = Mont Kiara / Jalan Kiara /
+  // Dutamas / Solaris / North Kiara(マーケティング上MK北縁を名乗る物件群)。
+  const isMK=!isPenang&&!isDPC&&!isKLGCC&&(
+    a.includes('mont kiara')||a.includes("mont' kiara")||a.includes('jalan kiara')||
+    a.includes('dutamas')||a.includes('solaris')||
+    n.includes('mont kiara')||n.includes("mont' kiara")||n.includes('north kiara')||
+    n.includes('dutamas')||n.includes('solaris'));
+  // その他KL: どの名前付きKLエリアにも属さない残り(旧MKが担っていた受け皿の、
+  // 正直な名前)。エリアで絞ったとき遠方の物件が紛れ込まない代わりに、ここに集まる。
+  const isOtherKL=!isPenang&&!isMK&&!isDPC&&!isBangsar&&!isKLGCC&&!isKLCC&&!isAmpang&&!isDH;
   if(areaFilter==='mont-kiara'&&!isMK) return false;
+  if(areaFilter==='other-kl'&&!isOtherKL) return false;
   if((areaFilter==='desa-parkcity'||areaFilter==='parkcity')&&!isDPC) return false;
   if(areaFilter==='bangsar'&&!isBangsar) return false;
   if(areaFilter==='klgcc'&&!isKLGCC) return false;

@@ -79,6 +79,8 @@ describe('area keys stay in sync across the jump bar, the dropdown and the map',
 
   it('every dropdown area is reachable from the jump bar', () => {
     options.forEach(k => {
+      // その他KL(2026-08-09)は「地図上の場所」ではなく受け皿バケツ — ジャンプ先を持たない
+      if(k === 'other-kl') return;
       const key = ALIAS[k] || k;
       expect(AREA_CENTERS[key], `dropdown area "${k}" has no jump target`).toBeTruthy();
     });
