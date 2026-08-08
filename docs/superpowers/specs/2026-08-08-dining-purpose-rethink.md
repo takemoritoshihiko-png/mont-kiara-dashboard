@@ -139,3 +139,10 @@ Eat Drink KL / Malay Mail / Time Out / TastyJournal / Bangsar Babe の2025-26年
 - filter層は `f.hiddenIds`(Set)で除外。**外食モード限定**(`eatoutActive()` ゲート) — 住まいモード(公開)はpersonal.jsを一切読まないモード分離契約を維持
 - hは書き出し/読み込みの往復・ファイルDB書きスルーで他PCにも同期。h=1だけのエントリは「空」扱いしない(isEmptyEntry改定)
 - テスト10件追加(personal 7+eatoutMode 3)=全680件green。実画面で hide→131→130→データ管理で戻す→131 の往復を確認
+
+## 12. ★4.9削除と新Google条件(2026-08-09・竹森氏裁定)
+
+壁打ち「★4.8以上はマーケティング」→ 実データ提示(4.8の18店中13店に独立権威・星3店含む)→ 裁定:
+- **4.8は残す・4.9は削除**。新Google条件=**★4.2以上4.9未満×口コミ1,000件以上**で全エリア再調査
+- 除名5店(墓標`delisted`・ID安定維持): MT Hotpot/Fire Izakaya/Cotta/TTDI Meat Point/En Yeoh's。K KL（圭）=ミシュラン網羅裁定優先で残留(報告で明示済)
+- 表示126店(行131のうち墓標5)。テスト681件green・実画面確認済

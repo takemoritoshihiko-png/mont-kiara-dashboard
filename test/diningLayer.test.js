@@ -327,11 +327,27 @@ describe('parseRestaurants (restaurants.json → the app record shape)', () => {
     });
   });
 
-  it('every record survives its own category and michelin filters', () => {
+  it('every record survives its own category and michelin filters (除名行は逆に絶対に出ない)', () => {
     recs.forEach(r => {
+      // 台帳除名(★4.9裁定 2026-08-09): 行はID安定のため残るが、どの条件でも描かれない
+      if(r.delisted){
+        expect(matchesFilters(r, fd({})), r.name).toBe(false);
+        return;
+      }
       expect(matchesFilters(r, fd({ catGroup: r.catGroup })), r.name).toBe(true);
       expect(matchesFilters(r, fd({ diningArea: r.area })), r.name).toBe(true);
     });
+  });
+
+  it('★4.9裁定(2026-08-09): 除名は正確にこの5店・IDは動かない', () => {
+    const del = recs.filter(r => r.delisted).map(r => `${r.id}:${r.name}`);
+    expect(del).toEqual([
+      'R0053:MT Hotpot', 'R0055:Fire Izakaya', 'R0056:Cotta',
+      'R0059:TTDI Meat Point', "R0123:En Yeoh's Bak Kut Teh",
+    ]);
+    // K KL（圭）は★4.9だがミシュラン掲載=完全網羅の既存裁定が勝ち、残留
+    const kkl = recs.find(r => r.name.includes('K KL'));
+    expect(kkl.delisted).toBe('');
   });
 
   it('the four price bands cover every priced restaurant exactly once; an unpriced one shows under all', () => {

@@ -155,6 +155,8 @@ export function parseRestaurants(jsonText) {
       area: r.area || '',
       // 推奨軸(2026-08-08)の素材。ティアは domain/recommend.js が毎回導出する。
       closed: r.closed === true,
+      // 台帳除名(★4.9裁定 2026-08-09)。行はID安定のため残し、理由文字列で墓標化。
+      delisted: r.delisted || '',
       recDivergence: r.recDivergence || '',
       recNote: r.recNote || '',
       verified: r.verified || '',
