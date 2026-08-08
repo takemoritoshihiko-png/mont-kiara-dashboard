@@ -185,3 +185,8 @@ Eat Drink KL / Malay Mail / Time Out / TastyJournal / Bangsar Babe の2025-26年
 ### §15追補(南KL境界班の帰還・2026-08-09)
 南KL(Kuchai Lama/Sri Petaling/Cheras内側)12店を追加し**台帳362店(行367)**で監査完結。Baan Thai 2(★4.8×8,951)・Chapathi Recipes・De Maw地茂館など。境界13-14kmの3店はboundary付きで採用。
 **矛盾検出の防御実績**: バンサー班が単独店として採用したEat Drink Thaiを南KL班が5店超チェーンと確定→台帳から除去(2班のクロスチェックが機能)。新エリアKuchai Lama/Sri Petalingは「その他」バケツへ。
+
+## 16. 件数条件の遡及適用(2026-08-09・竹森氏裁定「外して、日本人定番だけ残して」)
+
+台帳362店への「増えすぎでは」を受け実測: 非ミシュランで口コミ1,000件未満=23店(うち9店はTatler/50Best権威枠で存置)。純粋な条件外14店のうち、**採用記録に日本人定番マーカーがある宮武讃岐うどん・Casa Rosaの2店のみ残置**し、残り12店を墓標化(Jhol/Yan Kee/Muska/Kin Gyu/Mercat/Lachér/QingHeGu/VCR MK/Bocado/Napa Thai/Lamei/Ra-Ft)。
+台帳**350店(行367・墓標17)**。これで表示中の非ミシュラン店は権威枠9店+日本人定番2店を除き全店1,000件以上。Yan Keeは件数到達で復活可、除名テストは「4.9の5店が安定ID+全除名に理由必須」形式へ改修。

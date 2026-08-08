@@ -340,15 +340,24 @@ describe('parseRestaurants (restaurants.json → the app record shape)', () => {
     });
   });
 
-  it('★4.9裁定(2026-08-09): 除名は正確にこの5店・IDは動かない', () => {
+  it('除名(墓標)の契約: ★4.9の5店が安定IDで含まれ、全除名に理由がある', () => {
     const del = recs.filter(r => r.delisted).map(r => `${r.id}:${r.name}`);
-    expect(del).toEqual([
+    // ★4.9裁定(2026-08-09)の5店。IDが動いたら家族記録が壊れている
+    for(const pin of [
       'R0053:MT Hotpot', 'R0055:Fire Izakaya', 'R0056:Cotta',
       'R0059:TTDI Meat Point', "R0123:En Yeoh's Bak Kut Teh",
-    ]);
-    // K KL（圭）は★4.9だがミシュラン掲載=完全網羅の既存裁定が勝ち、残留
-    const kkl = recs.find(r => r.name.includes('K KL'));
-    expect(kkl.delisted).toBe('');
+    ]) expect(del).toContain(pin);
+    // 件数条件裁定(2026-08-09)以降も含め、除名には必ず理由文字列がある
+    for(const r of recs.filter(r => r.delisted)){
+      expect(typeof r.delisted, r.name).toBe('string');
+      expect(r.delisted.length, r.name).toBeGreaterThan(5);
+    }
+    // K KL（圭）は★4.9だがミシュラン掲載=完全網羅の既存裁定が勝ち、残留。
+    // 日本人定番の宮武・Casa Rosaも件数条件裁定(2026-08-09)で残留
+    for(const keep of ['K KL', 'Miyatake', 'Casa Rosa']){
+      const r = recs.find(x => x.name.includes(keep));
+      expect(r.delisted, r.name).toBe('');
+    }
   });
 
   it('the four price bands cover every priced restaurant exactly once; an unpriced one shows under all', () => {
