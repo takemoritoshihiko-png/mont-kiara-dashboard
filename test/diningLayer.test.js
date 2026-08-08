@@ -418,3 +418,21 @@ describe('the Google Maps link', () => {
     expect(googleMapsUrl('')).toBe('');
   });
 });
+
+// ── Google評価のリンク化（2026-08-08 依頼） ─────────────────────────
+describe('the Google rating links out to the restaurant on Google Maps', () => {
+  const eatWith = (over) => ({ status: 'dining', id: 'R0001', name: 'x', venueType: 'street',
+    rating: 4.5, reviewCount: 100, placeId: 'ChIJtest123', michelin: 'none',
+    cat: 'フレンチ', catGroup: '洋食・グリル', priceLunch: [0,0], priceDinner: [0,0],
+    vox: { pros: '', cons: '' }, ...over });
+  it('wraps the rating in a Maps link when the store has a real placeId', () => {
+    const h = detailHtml(eatWith({}));
+    expect(h).toContain('class="kv-link"');
+    expect(h).toContain('place_id:ChIJtest123');
+    expect(h).toContain('rel="noopener"');
+  });
+  it('stays plain text for a pending placeId and for an unrated store', () => {
+    expect(detailHtml(eatWith({ placeId: 'pending:somewhere' }))).not.toContain('kv-link');
+    expect(detailHtml(eatWith({ rating: null, reviewCount: 0 }))).not.toContain('kv-link');
+  });
+});

@@ -190,9 +190,16 @@ function diningDetail(c){
   // that only serves dinner says so instead of showing a zero for lunch.
   const lunch = priceRangeText(c.priceLunch);
   const dinner = priceRangeText(c.priceDinner);
+  // 評価はその店のGoogleマップへの入口を兼ねる（2026-08-08 依頼）。
+  // pending: の店はリンク先が無いので素のテキストのまま。
+  const gm = googleMapsUrl(c.placeId);
+  const ratingCell = gm && c.rating > 0
+    ? `<a class="kv-link" href="${esc(gm)}" target="_blank" rel="noopener"` +
+      ` title="Googleマップでレビューを見る">${esc(ratingText(c))} ↗</a>`
+    : esc(ratingText(c) || '—');
   let h = kvGrid([
     kv('ミシュラン', esc(MICHELIN_LABELS[c.michelin] || '—'), c.michelin === 'none' || !c.michelin),
-    kv('Google評価', esc(ratingText(c) || '—'), !(c.rating > 0)),
+    kv('Google評価', ratingCell, !(c.rating > 0)),
     kv('昼 / 1人', esc(lunch || '—'), !lunch),
     kv('夜 / 1人', esc(dinner || '—'), !dinner),
     kv('カテゴリ', esc(c.cat || c.catGroup || '—'), !(c.cat || c.catGroup)),
