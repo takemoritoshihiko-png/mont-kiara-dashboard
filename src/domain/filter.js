@@ -327,6 +327,8 @@ export function matchesDriveTime(c, limit){
 }
 
 export function matchesDining(c, f){
+  // オーナー除外(2026-08-08): 「ここは違う」と消した店は外食モードの一覧/地図に出さない
+  if(f.hiddenIds && f.hiddenIds.has(c.id)) return false;
   if(f.catGroup && c.catGroup !== f.catGroup) return false;
   if(!matchesMichelin(c, f.michelin)) return false;
   if(!matchesPriceBand(c, f.priceBand, f.priceBasis)) return false;

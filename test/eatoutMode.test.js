@@ -16,7 +16,7 @@ import {
 } from '../src/domain/filter.js';
 import { sortOptionsFor, defaultSortFor, sortAvailable, sortRecords } from '../src/domain/sort.js';
 import { setAppMode, setListView, setRestaurants, setCondos } from '../src/state.js';
-import { initPersonal, setVisited, toggleWant, setRepeat, setAmount, setMemo, getEntry } from '../src/data/personal.js';
+import { initPersonal, setVisited, toggleWant, setRepeat, setAmount, setMemo, getEntry, setHidden } from '../src/data/personal.js';
 import {
   eatoutActive, eatoutCardExtraHtml, eatoutCardScoreHtml, eatoutDetailHtml,
   eatoutListHtml, visitBoxHtml, scoreBlockHtml, isVisited, PRIVACY_TEXT, totalOf,
@@ -561,5 +561,38 @@ describe('visited badge stays out of home mode', () => {
     const line = map.split('\n').find(l => l.includes('const visited ='));
     expect(line, 'visited badge line not found').toBeTruthy();
     expect(line).toContain("appMode === 'eatout'");
+  });
+});
+
+// ============================================================
+// 非表示(🗑) — オーナーが「ここは違う」と消した店(2026-08-08)
+// ============================================================
+describe('非表示にした店', () => {
+  it('hiddenIds に入ったIDは matchesDining が落とす(台帳・地図から消える)', () => {
+    const f = { layer: 'dining', hiddenIds: new Set([DEWAKAN.id]) };
+    expect(matchesDining(DEWAKAN, f)).toBe(false);
+    expect(matchesDining(LEDGER[1], f)).toBe(true);
+    // セットが無ければ何も落とさない(住まいモードはここ)
+    expect(matchesDining(DEWAKAN, { layer: 'dining' })).toBe(true);
+  });
+
+  it('台帳カードに 🗑(dineHide) が付く', () => {
+    setup({ mode: 'eatout' });
+    const h = cardHtml(DEWAKAN);
+    expect(h).toContain(`dineHide('${DEWAKAN.id}')`);
+  });
+
+  it('データ管理に「非表示にした店」の一覧と戻すボタンが出る', () => {
+    setup({ mode: 'eatout', view: 'data' });
+    setHidden(DEWAKAN.id, true);
+    const h = eatoutListHtml();
+    expect(h).toContain('非表示にした店');
+    expect(h).toContain(DEWAKAN.name);
+    expect(h).toContain(`dineUnhide('${DEWAKAN.id}')`);
+  });
+
+  it('1件も非表示がなければ、その節は出ない(空の節でデータ管理を汚さない)', () => {
+    setup({ mode: 'eatout', view: 'data' });
+    expect(eatoutListHtml()).not.toContain('非表示にした店');
   });
 });

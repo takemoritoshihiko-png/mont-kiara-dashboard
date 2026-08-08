@@ -16,7 +16,7 @@ import {
   togglePanel, clearSearch, removeFilter, clearAllFilters, showLoading,
 } from './ui/list.js';
 import {
-  setOnPersonalChange, dineVisit, dineWant, dineRepeat, dineAmount, dineMemo,
+  setOnPersonalChange, dineVisit, dineWant, dineRepeat, dineAmount, dineMemo, dineHide, dineUnhide,
   initFileDb, dineFileConnect, dineFileReauth, dineFileDisconnect, dineFileAdoptFile, dineFileAdoptCache,
   dineImport, dineClearAll, dineDownload, dineSelectExport, renderSaveBar, toast,
 } from './ui/dining.js';
@@ -64,6 +64,8 @@ window.dineFileDisconnect = dineFileDisconnect;
 window.dineFileAdoptFile = dineFileAdoptFile;
 window.dineFileAdoptCache = dineFileAdoptCache;
 window.dineWant = dineWant;
+window.dineHide = dineHide;
+window.dineUnhide = dineUnhide;
 window.dineRepeat = dineRepeat;
 window.dineAmount = dineAmount;
 window.dineMemo = dineMemo;

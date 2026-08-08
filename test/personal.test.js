@@ -17,6 +17,7 @@ import {
   initPersonal, saveStatus, getEntry, hasEntry, allEntries, flush,
   toggleWant, setVisited, setRepeat, setAmount, setMemo,
   mergeAll, replaceAll, clearAll, currentExportText, storedCounts,
+  setHidden, hiddenIds,
 } from '../src/data/personal.js';
 
 /** A localStorage stand-in. `fail` makes every write throw, like a full quota. */
@@ -63,14 +64,14 @@ describe('訪問日 is a LOCAL date, not a UTC one', () => {
 // ============================================================
 describe('the six fields', () => {
   it('starts blank, and every empty entry is a fresh object', () => {
-    expect(emptyEntry()).toEqual({ w: 0, v: 0, vd: '', rv: '', m: '', amt: '' });
+    expect(emptyEntry()).toEqual({ w: 0, v: 0, vd: '', rv: '', m: '', amt: '', h: 0 });
     const a = emptyEntry(); a.m = 'x';
     expect(emptyEntry().m).toBe('');
   });
 
   it('coerces whatever came out of storage into the six fields', () => {
     expect(normalizeEntry({ w: '1', v: true, vd: '2026-08-07', rv: 'a', m: 'ok', amt: ' 180 ' }))
-      .toEqual({ w: 1, v: 1, vd: '2026-08-07', rv: 'a', m: 'ok', amt: '180' });
+      .toEqual({ w: 1, v: 1, vd: '2026-08-07', rv: 'a', m: 'ok', amt: '180', h: 0 });
   });
 
   it('throws away a malformed date and an unknown verdict rather than storing them', () => {
@@ -176,7 +177,7 @@ describe('the storage is proved writable before anything is typed', () => {
     const s = fakeStorage({ seed: { R0001: { v: 1, vd: '2026-08-01', rv: 'a', amt: '180' }, junk: { v: 1 } } });
     const r = initPersonal({ storage: s });
     expect(r.count).toBe(1);
-    expect(getEntry('R0001')).toEqual({ w: 0, v: 1, vd: '2026-08-01', rv: 'a', m: '', amt: '180' });
+    expect(getEntry('R0001')).toEqual({ w: 0, v: 1, vd: '2026-08-01', rv: 'a', m: '', amt: '180', h: 0 });
   });
 });
 
@@ -208,7 +209,7 @@ describe('訪問済み / 行きたい / 再訪意向', () => {
     setMemo('R0001', 'ラクサがよかった');
     setVisited('R0001', false);
     expect(getEntry('R0001')).toEqual({
-      w: 0, v: 0, vd: '2026-08-07', rv: 'a', m: 'ラクサがよかった', amt: '180',
+      w: 0, v: 0, vd: '2026-08-07', rv: 'a', m: 'ラクサがよかった', amt: '180', h: 0,
     });
     // …and turning it back on restores the whole thing.
     setVisited('R0001', true, new Date(2026, 7, 9));
@@ -354,7 +355,7 @@ describe('読み込み', () => {
     const r = parseImport(v9, MAP);
     expect(r.ok).toBe(true);
     expect(r.stats).toMatchObject({ total: 2, kept: 2, converted: 2, unknown: 0 });
-    expect(r.data.R0001).toEqual({ w: 0, v: 1, vd: '2026-07-30', rv: 'a', m: 'よかった', amt: '790' });
+    expect(r.data.R0001).toEqual({ w: 0, v: 1, vd: '2026-07-30', rv: 'a', m: 'よかった', amt: '790', h: 0 });
     expect(r.data.R0004).toMatchObject({ w: 1, v: 0, rv: '' });
   });
 
@@ -402,7 +403,7 @@ describe('読み込み', () => {
       { R0001: { v: 1, vd: '2026-07-01', rv: 'a', m: '大事な感想', amt: '180' } },
       { R0001: { w: 1 } });
     expect(merged.R0001).toEqual({
-      w: 1, v: 1, vd: '2026-07-01', rv: 'a', m: '大事な感想', amt: '180',
+      w: 1, v: 1, vd: '2026-07-01', rv: 'a', m: '大事な感想', amt: '180', h: 0,
     });
   });
 
@@ -442,5 +443,61 @@ describe('記録の内訳（データビュー）', () => {
     setVisited('R0001', true);
     setMemo('R0001', '   ');
     expect(storedCounts().memo).toBe(0);
+  });
+});
+
+// ============================================================
+// 非表示フラグ h — 「ここは違う」を1タップで消す(2026-08-08)
+// 物理削除ではない: IDは追い番で採番済み・家族記録と同じ袋に入るため、
+// 記録側のフラグで隠し、データ管理からいつでも戻せる。
+// ============================================================
+describe('非表示フラグ h', () => {
+  let s;
+  beforeEach(() => { s = fakeStorage(); initPersonal({ storage: s }); });
+
+  it('setHidden(id, true) が保存され、hiddenIds() に現れる', () => {
+    setHidden('R0001', true);
+    flush();
+    expect(stored(s).R0001.h).toBe(1);
+    expect([...hiddenIds()]).toEqual(['R0001']);
+  });
+
+  it('戻すと、他に何も記録がなければエントリごと消える(ゴミを残さない)', () => {
+    setHidden('R0001', true);
+    setHidden('R0001', false);
+    flush();
+    expect(stored(s)).toEqual({});
+    expect(hiddenIds().size).toBe(0);
+  });
+
+  it('非表示にしても訪問記録・感想は無傷(hは他の6欄と独立)', () => {
+    setVisited('R0001', true);
+    setMemo('R0001', 'よかった');
+    setHidden('R0001', true);
+    setHidden('R0001', false);
+    flush();
+    expect(stored(s).R0001).toMatchObject({ v: 1, m: 'よかった', h: 0 });
+  });
+
+  it('h=1 だけのエントリは「空」ではない(isEmptyEntryが消してしまわない)', () => {
+    expect(isEmptyEntry({ ...emptyEntry(), h: 1 })).toBe(false);
+  });
+
+  it('不正IDは黙って無視(storageに書かない)', () => {
+    setHidden('../etc', true);
+    flush();
+    expect(stored(s)).toEqual({});
+  });
+
+  it('書き出し→読み込みの往復で h が残る(別PCでも消した店は消えたまま)', () => {
+    setHidden('R0007', true);
+    flush();
+    const file = currentExportText();
+    const s2 = fakeStorage();
+    initPersonal({ storage: s2 });
+    const r = parseImport(file, []);
+    mergeAll(r.data);
+    flush();
+    expect(stored(s2).R0007.h).toBe(1);
   });
 });

@@ -61,7 +61,9 @@ export function localDate(d = new Date()){
 
 /** A record with nothing in it. A fresh object every call — never shared. */
 export function emptyEntry(){
-  return { w: 0, v: 0, vd: '', rv: '', m: '', amt: '' };
+  // h = 非表示(オーナー除外・2026-08-08): 「この店は違う」と思ったら台帳から
+  // 気楽に消せる。物理削除はID採番と家族記録を壊すので、記録側のフラグで隠す。
+  return { w: 0, v: 0, vd: '', rv: '', m: '', amt: '', h: 0 };
 }
 
 const flag = (v) => (v === 1 || v === '1' || v === true ? 1 : 0);
@@ -78,12 +80,13 @@ export function normalizeEntry(raw){
     rv: REPEAT_VALUES.includes(rv) ? rv : '',
     m: text(raw.m),
     amt: text(raw.amt).trim(),
+    h: flag(raw.h),
   };
 }
 
 /** True when a record holds nothing worth storing. */
 export function isEmptyEntry(e){
-  return !e || (!e.w && !e.v && !e.vd && !e.rv && !text(e.m).trim() && !text(e.amt).trim());
+  return !e || (!e.w && !e.v && !e.vd && !e.rv && !text(e.m).trim() && !text(e.amt).trim() && !e.h);
 }
 
 /** The amount as a number. '' / '—' / 'abc' are 0, never a fake price. */
@@ -419,6 +422,22 @@ export function storedCounts(){
     memo: e.filter(x => String(x.m).trim() !== '').length,
     amount: e.filter(x => amountValue(x) > 0).length,
   };
+}
+
+/** 非表示(オーナー除外)の付け外し。 */
+export function setHidden(id, on){
+  if(!ID_RE.test(String(id))) return;
+  const e = normalizeEntry(store[id]);
+  e.h = on ? 1 : 0;
+  if(isEmptyEntry(e)) delete store[id]; else store[id] = e;
+  schedule({ immediate: true });
+}
+
+/** 非表示にした店のIDセット。フィルタが毎描画で読む。 */
+export function hiddenIds(){
+  const s = new Set();
+  for(const [k, v] of Object.entries(store)) if(v && v.h === 1) s.add(k);
+  return s;
 }
 
 /** 純述語: この記録は訪問済みか。モード判定は各画面の責務(地図バッジは外食のみ)。 */

@@ -35,6 +35,9 @@ export function setOnPersonalChange(fn){ onChanged = typeof fn === 'function' ? 
 /** True while 外食モード is showing the 飲食 layer's own record UI. */
 export function eatoutActive(){ return appMode === 'eatout'; }
 
+/** 非表示IDセット(list.jsのcriteriaが毎描画で読む)。 */
+export function hiddenIdsSet(){ return P.hiddenIds(); }
+
 /** The record map the dining filters read (行きたい / 未訪問). */
 export function personalMap(){ return P.allEntries(); }
 
@@ -106,7 +109,11 @@ function toggleBtn(cls, on, label, call){
 // belongs to the Google rating and to nothing else in this app.
 function vbHeadButtons(id, e){
   return toggleBtn('vb-visit', e.v === 1, e.v === 1 ? '✓ 訪問済み' : '訪問済み', `dineVisit('${jsStr(id)}')`) +
-    toggleBtn('vb-want', e.w === 1, e.w === 1 ? '♥ 行きたい' : '♡ 行きたい', `dineWant('${jsStr(id)}')`);
+    toggleBtn('vb-want', e.w === 1, e.w === 1 ? '♥ 行きたい' : '♡ 行きたい', `dineWant('${jsStr(id)}')`) +
+    // 「この店は違う」と思ったら1タップで台帳から消せる(2026-08-08 竹森さん依頼)。
+    // 物理削除ではなく非表示 — データ管理の「非表示にした店」からいつでも戻せる。
+    `<button type="button" class="vb-toggle vb-hide" aria-label="この店を台帳から非表示にする"` +
+    ` title="台帳から消す（データ管理から戻せます）" onclick="dineHide('${jsStr(id)}')">🗑</button>`;
 }
 
 export function visitBoxHtml(c, ctx = 'led'){
@@ -203,6 +210,20 @@ export function dineVisit(id){
       ? '訪問済みにしました（「行きたい」からは外れます）。また行きたいか答えてください'
       : '訪問済みにしました。また行きたいか答えてください');
   }
+}
+
+/** 台帳から非表示にする(オーナー除外)。戻すのはデータ管理から。 */
+export function dineHide(id){
+  const c = diningRecords().find(x => x.id === id);
+  P.setHidden(id, true);
+  onChanged();
+  toast(`「${c ? c.name : id}」を台帳から非表示にしました（💾データ管理から戻せます）`);
+}
+
+export function dineUnhide(id){
+  P.setHidden(id, false);
+  onChanged();
+  toast('台帳に戻しました');
 }
 
 export function dineWant(id){
@@ -362,6 +383,16 @@ function dataViewHtml(){
       `<div class="data-result" id="dataResult" role="status" aria-live="polite"></div>` +
     `</section>` +
 
+    (() => {
+      const hid = [...P.hiddenIds()];
+      if(!hid.length) return '';
+      const rows = hid.map(id => {
+        const c = diningRecords().find(x => x.id === id);
+        return `<div class="data-line">🗑 ${esc(c ? c.name : id)} <button type="button" class="data-btn" style="padding:1px 8px;margin-left:6px" onclick="dineUnhide('${jsStr(id)}')">台帳に戻す</button></div>`;
+      }).join('');
+      return `<section class="data-sec"><h3 class="data-h">非表示にした店（${num(hid.length)}件）</h3>` +
+        `<div class="data-note">「ここは違う」と消した店。台帳・地図から見えなくなっていますが、いつでも戻せます。</div>` + rows + `</section>`;
+    })() +
     `<section class="data-sec"><h3 class="data-h">全消去</h3>` +
       `<div class="data-note">この端末の記録をすべて消します。戻せません。先に書き出しておいてください。</div>` +
       `<div class="data-btns"><button type="button" class="data-btn danger" onclick="dineClearAll()">記録をすべて消す</button></div>` +

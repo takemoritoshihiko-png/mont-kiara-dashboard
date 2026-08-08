@@ -28,7 +28,7 @@
 | `src/data/parseCsv.js` | CSVパーサ（引用符・改行対応）。**唯一の実装** |
 | `src/data/load.js` | ファイルURL定義・fetch・CSV/JSON列 → アプリのレコード形へのマッピング（飲食は `parseRestaurants`） |
 | `src/data/inline.js` | コードに埋めた固定データ: FIABCI受賞・開発会社・Tier色・年色スケール・ペナン9校の学費カーブ・ミシュランの表記 |
-| `src/data/personal.js` | **個人記録の唯一の書き込み口**（外食モード）。localStorage `mkd_dining_personal_v1`・6項目(w/v/vd/rv/m/amt)・ローカル日付・起動時の書込テスト・書き出し / 読み込み(v9のplaceIdキーを変換) / 全消去 |
+| `src/data/personal.js` | **個人記録の唯一の書き込み口**（外食モード）。localStorage `mkd_dining_personal_v1`・6項目(w/v/vd/rv/m/amt)+非表示フラグh(🗑で台帳から消す・データ管理から戻す)・ローカル日付・起動時の書込テスト・書き出し / 読み込み(v9のplaceIdキーを変換) / 全消去 |
 
 ### domain/ — 純粋なロジック（DOMを触らない）
 
@@ -52,7 +52,7 @@
 | `src/ui/info.js` | 詳細オーバーレイ（dialog）: ヘッダー／「詳細」「周辺」タブ／外部リンク／選択の遷移 |
 | `src/ui/urlState.js` | URL ⇄ 画面状態（`?mode=&layer=&sel=&tab=`）。`mode=eatout` のときだけ書かれる（住まいは既定＝省略）。履歴の積み方（push/replace）もここ |
 | `src/ui/schoolFinder.js` | 学費くらべ: 年齢別の全校比較リスト・学費推移チャート・選んだ学校の周辺コンド |
-| `src/ui/dining.js` | **外食モードの画面**。台帳スコアの表示・記録欄(visitbox)・行った店ビュー・データビュー・toast・保存バー。書き込みは全部 `data/personal.js` 経由 |
+| `src/ui/dining.js` | **外食モードの画面**。台帳スコアの表示・記録欄(visitbox)・🗑非表示(dineHide/dineUnhide)・データビュー(非表示にした店の一覧含む)・toast・保存バー。書き込みは全部 `data/personal.js` 経由 |
 | `src/ui/a11y.js` | Enter/Space で `role="button"` を起動、Escapeで詳細を閉じる。**document に委譲リスナー1つだけ** |
 
 ## test/ — 20ファイル・670件

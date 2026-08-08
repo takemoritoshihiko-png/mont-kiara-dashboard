@@ -19,7 +19,7 @@ import { sortOptionsFor, comparatorFor, sortOnArrival } from '../domain/sort.js'
 import { map, rebuild } from './map.js';
 import { syncUrl } from './urlState.js';
 import {
-  eatoutActive, eatoutCardExtraHtml, eatoutCardScoreHtml, eatoutListHtml, eatoutRecBadgeHtml,
+  eatoutActive, eatoutCardExtraHtml, eatoutCardScoreHtml, eatoutListHtml, eatoutRecBadgeHtml, hiddenIdsSet,
   isVisited, personalMap, renderSaveBar, toast,
 } from './dining.js';
 
@@ -104,6 +104,8 @@ export function readCriteria(){
       c.wantOnly = showWantOnly;
       c.undoneOnly = showUndoneOnly;
       c.visitedOnly = showVisitedOnly;
+    // 非表示(オーナー除外)は外食モードでは常時適用
+    if(eatoutActive()) c.hiddenIds = hiddenIdsSet();
       if(showWantOnly || showUndoneOnly || showVisitedOnly) c.personal = personalMap();
     }
   } else {
