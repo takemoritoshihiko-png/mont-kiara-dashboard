@@ -312,11 +312,14 @@ describe('calcLedgerScores', () => {
     }
   });
 
-  it('produces a spread worth sorting by, not 50 near-identical numbers', () => {
+  it('produces a spread worth sorting by, not near-identical numbers', () => {
     const recs = parseRestaurants(RAW);
     calcLedgerScores(recs);
     const totals = recs.map(r => r.ledgerTotal);
-    expect(Math.min(...totals)).toBe(28);
-    expect(Math.max(...totals)).toBe(93);
+    // 台帳はデータ追加で伸びる(2026-08-09に131→217行)ので、正確な最小/最大の
+    // ピン留めではなく「分布の幅」を守る。40点以上の開きがあればソートは機能する。
+    expect(Math.min(...totals)).toBeLessThanOrEqual(35);
+    expect(Math.max(...totals)).toBeGreaterThanOrEqual(85);
+    expect(Math.max(...totals) - Math.min(...totals)).toBeGreaterThanOrEqual(40);
   });
 });

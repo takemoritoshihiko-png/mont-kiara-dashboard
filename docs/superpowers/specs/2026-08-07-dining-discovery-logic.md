@@ -59,3 +59,7 @@ wanderlog/top-rated実値 → Nominatim座標+エリア整合 → チェーン�
 **★4.9の既存5店を台帳から除名**: MT Hotpot・Fire Izakaya・Cotta・TTDI Meat Point・En Yeoh's Bak Kut Teh。
 K KL（圭）は★4.9だがミシュランSelected=完全網羅裁定が勝ち残留。
 **除名の実装は物理削除ではなく墓標**(`delisted`フラグ): 追い番R####のID安定と家族記録の整合を守るため、行は残して全面非表示(filter/map/一覧すべて)。
+
+### 実行結果(2026-08-09 全エリア再調査)
+台帳126→**242店**(新規116)。カバレッジ: PJ核心部(Seksyen 17/SS2/Seksyen 19/PJ New Town)・Kampung Baru・Chow Kit・Bamboo Hills・Desa ParkCity・Kepongを新規開拓。
+未探索の弱点(次回スイープ対象): ★4.2-4.4帯のKepong/Cheras/OKR・Keramat内陸・Titiwangsa東・Ampang Hilir(出典が★4.5以上限定だったため)。詳細=deferred-backlog 2026-08-09節。

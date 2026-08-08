@@ -500,3 +500,37 @@ describe('a hawker-street entry declares itself an AREA, not a restaurant', () =
     expect(h).toContain('chip-dining');
   });
 });
+
+// ============================================================
+// 評価下限フィルタ(2026-08-09 竹森さん依頼: ★4.3以上/★4.5以上)
+// ============================================================
+describe('minRating — Google評価の下限', () => {
+  const recs = parseRestaurants(raw);
+  const r43 = recs.find(r => !r.delisted && r.rating != null && r.rating >= 4.3 && r.rating < 4.5);
+  const r42 = recs.find(r => !r.delisted && r.rating != null && r.rating < 4.3);
+  // パース後の契約では「評価未集計」= rating 0 (load.jsが null→0 に潰す)
+  const rNull = recs.find(r => !r.delisted && r.rating === 0);
+
+  it('4.3以上で 4.3台は通り 4.3未満は落ちる', () => {
+    expect(matchesFilters(r43, fd({ minRating: 4.3 })), r43.name).toBe(true);
+    expect(matchesFilters(r42, fd({ minRating: 4.3 })), r42.name).toBe(false);
+  });
+
+  it('4.5以上では 4.3台も落ちる', () => {
+    expect(matchesFilters(r43, fd({ minRating: 4.5 })), r43.name).toBe(false);
+  });
+
+  it('評価未集計(null)は絞り込み中は出ない(証明できない高評価は高評価ではない)', () => {
+    expect(rNull, 'null評価の店が台帳にいる前提').toBeTruthy();
+    expect(matchesFilters(rNull, fd({ minRating: 4.3 })), rNull.name).toBe(false);
+    expect(matchesFilters(rNull, fd({})), rNull.name).toBe(true);   // 絞り込みなしなら出る
+  });
+
+  it('index.html に評価セレクトがあり、選択肢は 4.3 / 4.5(モバイル40pxも登録済み)', () => {
+    const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+    expect(html).toContain('id="fMinRating"');
+    expect(html).toContain('★4.3以上');
+    expect(html).toContain('★4.5以上');
+    expect(html).toMatch(/#fMinRating[^{]*{min-height:40px}/);
+  });
+});

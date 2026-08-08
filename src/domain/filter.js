@@ -333,6 +333,11 @@ export function matchesDining(c, f){
   if(f.hiddenIds && f.hiddenIds.has(c.id)) return false;
   if(f.catGroup && c.catGroup !== f.catGroup) return false;
   if(!matchesMichelin(c, f.michelin)) return false;
+  // Google評価の下限(2026-08-09 竹森さん依頼: ★4.3以上/★4.5以上)。評価未集計
+  // (rating=null)の店は「下限を満たすと証明できない」ので、絞り込み中は出さない
+  // — 価格帯の「不明は全帯に出す」とは逆だが、この絞り込みは“証明済みの高評価
+  // だけ見たい”という問いなので未知を混ぜたら答えにならない。
+  if(f.minRating && !(c.rating != null && c.rating >= f.minRating)) return false;
   if(!matchesPriceBand(c, f.priceBand, f.priceBasis)) return false;
   // The ledger's own `area` field (KLCC / Bangsar / Chinatown …). Exact match:
   // it is a controlled value, not free text.

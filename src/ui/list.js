@@ -50,7 +50,8 @@ const LAYER_CONTROLS = {
   // ledger's curated values, not the condo areas fArea offers. See the comment
   // in matchesFilters() for why the two must not be shared.
   dining: [
-    ['fCatGroup', 'カテゴリ'], ['fMichelin', 'ミシュラン'], ['fPriceBand', '価格帯'],
+    ['fCatGroup', 'カテゴリ'], ['fMichelin', 'ミシュラン'], ['fMinRating', '評価'],
+    ['fPriceBand', '価格帯'],
     ['fDiningArea', 'エリア'], ['fVenueType', '施設'], ['fDriveTime', '車で'],
   ],
 };
@@ -89,6 +90,7 @@ export function readCriteria(){
   } else if(layer === 'dining'){
     c.catGroup = val('fCatGroup');
     c.michelin = val('fMichelin');
+    c.minRating = parseFloat(val('fMinRating')) || 0;
     c.priceBand = val('fPriceBand');
     c.priceBasis = currentBudgetBasis();
     c.diningArea = val('fDiningArea');

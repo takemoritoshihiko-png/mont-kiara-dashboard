@@ -146,3 +146,12 @@ Eat Drink KL / Malay Mail / Time Out / TastyJournal / Bangsar Babe の2025-26年
 - **4.8は残す・4.9は削除**。新Google条件=**★4.2以上4.9未満×口コミ1,000件以上**で全エリア再調査
 - 除名5店(墓標`delisted`・ID安定維持): MT Hotpot/Fire Izakaya/Cotta/TTDI Meat Point/En Yeoh's。K KL（圭）=ミシュラン網羅裁定優先で残留(報告で明示済)
 - 表示126店(行131のうち墓標5)。テスト681件green・実画面確認済
+
+## 13. 新Google条件の全エリア再調査と統合(2026-08-09)
+
+§12の裁定(★4.2以上4.9未満×口コミ1,000件以上)で7エリア並列再調査→検証統合。**台帳126→242店(行247・墓標5)、新規116店**。
+- 工程: 発掘7体(エリア分割)→候補141→付与・裏取り6体(日本語名/cat/価格帯/チェーン店舗数/営業確認)→機械検証(帯域・重複・座標・12km圏)→統合
+- **チェーン規則の裏取りが主戦場だった**: 見た目個店の多店舗チェーン16件を除外(Thong Bowl 10店/Good Taste 9店/Jibby 8店/Burung Hantu 8店/Hot Bird 6店/JIBRIL 6店/Tsukiji 6店/SOULed OUT 6店/Tono 5-6店/KGB 5店/Don の Makase 5店/MamaKim 14店 等)。閉店1(Hama)・退去1(PULP)・件数不実1(Moggumung 679件)も検出
+- 座標: 全候補をNominatim機械パス→フラグ7件を検証体で裁定→実誤り2件修正(Kin Kin 543m/Coliseum 361m)・偽陽性5件
+- テスト: スコア分布テストの min/max 完全一致ピンをデータ拡大に耐える分布アサーションへ改修。685件green
+- 併せて評価下限フィルタ(★4.3以上/4.5以上)を実装(§12裁定と同日の竹森さん依頼)

@@ -660,6 +660,586 @@
    "km": 1.2,
    "minFree": 3,
    "minJam": 6
+  },
+  "Oh Yeah Banana Leaf Brickfields": {
+   "km": 9.6,
+   "minFree": 15,
+   "minJam": 26
+  },
+  "Yeast Bistronomy": {
+   "km": 8.4,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "The Lankan Crabs": {
+   "km": 9.4,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Proof Pizza + Wine": {
+   "km": 10.6,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "The Ganga Cafe": {
+   "km": 9.7,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Mahbub Restaurant": {
+   "km": 8.9,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Restoran Rebung Chef Ismail": {
+   "km": 8.5,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Breakfast Thieves APW Bangsar": {
+   "km": 10.6,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Lisette's Café & Bakery @ Bangsar": {
+   "km": 9.4,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Nature's Vegetarian Restaurant (Bangsar)": {
+   "km": 8.4,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Urban Daybreak Cafe @ Bangsar": {
+   "km": 8.2,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Café Deli by El Mesón @ Desa ParkCity": {
+   "km": 7.9,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "大隻蟹 Big Big Crab Kepong (HQ)": {
+   "km": 9.5,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Shang Jia Dim Sum 尚佳点心 | Keponggi": {
+   "km": 9.8,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Feeka Coffee Roasters": {
+   "km": 12.5,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "LOKL Coffee Co": {
+   "km": 11.3,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Three Years Old Cafe": {
+   "km": 11.8,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Ho Kow Hainam Kopitiam": {
+   "km": 12,
+   "minFree": 15,
+   "minJam": 26
+  },
+  "Soong Kee Beef Noodle": {
+   "km": 11.5,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "The Hungry Tapir": {
+   "km": 12.1,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "PS150": {
+   "km": 12,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Pisco Bar": {
+   "km": 12.5,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Havana Bar & Grill": {
+   "km": 12.1,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "The Rabbit Hole": {
+   "km": 12,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "El Cerdo": {
+   "km": 12.6,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Pinchos Tapas Bar": {
+   "km": 12,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Taps Beer Bar": {
+   "km": 12.5,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Yu Yi Bak Kut Teh": {
+   "km": 12.8,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Damascus": {
+   "km": 12.7,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Mansion Tea Stall (Al-Amna)": {
+   "km": 11.4,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Levain Boulangerie & Patisserie": {
+   "km": 14.5,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "La Boca Latino Bar & Grill": {
+   "km": 12.1,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Cielo Rooftop": {
+   "km": 12,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Suzie Wong": {
+   "km": 12.2,
+   "minFree": 15,
+   "minJam": 28
+  },
+  "Lemon Garden": {
+   "km": 11.2,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "THIRTY8 Restaurant, Bar & Lounge": {
+   "km": 11.6,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Rehan Restaurant": {
+   "km": 11.7,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Samad Al Iraqi Restaurant": {
+   "km": 11.3,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Shawarma City - KLCC": {
+   "km": 11.4,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Kani Kawa": {
+   "km": 11.5,
+   "minFree": 15,
+   "minJam": 28
+  },
+  "Pokok KLCC (Lot 91)": {
+   "km": 11.8,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Blackbyrd KL": {
+   "km": 13.6,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Envi Skydining": {
+   "km": 11.3,
+   "minFree": 15,
+   "minJam": 28
+  },
+  "Gobo Chit Chat": {
+   "km": 12.1,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Sakana Japanese Dining": {
+   "km": 11.6,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Vertigo @ Banyan Tree": {
+   "km": 11.9,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Canopy Lounge Rooftop Bar": {
+   "km": 11.3,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "After One KL": {
+   "km": 11.6,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "1919 Restaurant KL": {
+   "km": 11.6,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Cafe:in House": {
+   "km": 10.6,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Sambal Bakar Malaya - Kampung Baru KL": {
+   "km": 10.4,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Marrakesh Restaurant": {
+   "km": 12,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Restoran Kin Kin Chilli Pan Mee": {
+   "km": 10,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Coliseum Cafe & Grill Room": {
+   "km": 10.7,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "White & Black Kampong": {
+   "km": 11.4,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Pekin Duck & Grill": {
+   "km": 11.4,
+   "minFree": 15,
+   "minJam": 26
+  },
+  "White & Black Lakeside": {
+   "km": 11,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Roofino Bar & Skydining": {
+   "km": 12.2,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Makan Kitchen (DoubleTree)": {
+   "km": 12.6,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Ikan Bakar Ampang": {
+   "km": 15,
+   "minFree": 19,
+   "minJam": 35
+  },
+  "Pak Punjab Restaurant HQ": {
+   "km": 9.5,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "Myeong Ryun Jinsa Galbi": {
+   "km": 1.1,
+   "minFree": 3,
+   "minJam": 5
+  },
+  "Arté 66 Restaurant & Bar": {
+   "km": 3.5,
+   "minFree": 8,
+   "minJam": 14
+  },
+  "Maya @ Solaris Banana Leaf": {
+   "km": 2.8,
+   "minFree": 6,
+   "minJam": 11
+  },
+  "Feng Yun Ke Zhan": {
+   "km": 3.1,
+   "minFree": 7,
+   "minJam": 12
+  },
+  "Shin Yangpyung Haejang-Guk": {
+   "km": 2.3,
+   "minFree": 4,
+   "minJam": 8
+  },
+  "Buldojang": {
+   "km": 1.8,
+   "minFree": 4,
+   "minJam": 7
+  },
+  "Namaste India Hartamas": {
+   "km": 2.4,
+   "minFree": 4,
+   "minJam": 8
+  },
+  "Mallar Bistro": {
+   "km": 2.4,
+   "minFree": 5,
+   "minJam": 8
+  },
+  "Burnin' Pit": {
+   "km": 1.8,
+   "minFree": 4,
+   "minJam": 7
+  },
+  "Savor Restaurant": {
+   "km": 2.4,
+   "minFree": 4,
+   "minJam": 8
+  },
+  "Cor Blimey! British Fish & Chips": {
+   "km": 2.4,
+   "minFree": 4,
+   "minJam": 8
+  },
+  "The Ice Cream Bar Hartamas": {
+   "km": 1.9,
+   "minFree": 4,
+   "minJam": 8
+  },
+  "Kantan @ Damas": {
+   "km": 3.3,
+   "minFree": 7,
+   "minJam": 13
+  },
+  "Chakri Skyhill": {
+   "km": 3.5,
+   "minFree": 7,
+   "minJam": 12
+  },
+  "Orito": {
+   "km": 3.5,
+   "minFree": 7,
+   "minJam": 12
+  },
+  "Butaya Izakaya 豚家居酒屋": {
+   "km": 2.2,
+   "minFree": 4,
+   "minJam": 8
+  },
+  "Chica Bonita @ Publika": {
+   "km": 3.9,
+   "minFree": 9,
+   "minJam": 16
+  },
+  "The Roomah Restaurant": {
+   "km": 3.8,
+   "minFree": 9,
+   "minJam": 16
+  },
+  "Zen & Co Duta North": {
+   "km": 5.9,
+   "minFree": 9,
+   "minJam": 17
+  },
+  "Locarasa Restaurant & Patisserie": {
+   "km": 6.4,
+   "minFree": 11,
+   "minJam": 20
+  },
+  "TAP ROOM KL": {
+   "km": 6.4,
+   "minFree": 11,
+   "minJam": 20
+  },
+  "Botanica+Co at Bamboo Hills": {
+   "km": 6.4,
+   "minFree": 11,
+   "minJam": 20
+  },
+  "Ginger By Brick House Group": {
+   "km": 6.3,
+   "minFree": 11,
+   "minJam": 20
+  },
+  "The Qing Banquet & Restaurant": {
+   "km": 6.4,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Hanam BBQ @ Bamboo Hills": {
+   "km": 6.3,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "FujiYama Japanese Restaurant": {
+   "km": 10,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Kompassion": {
+   "km": 9.5,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "The Locker & Loft": {
+   "km": 9.2,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "Mr Fish Seafood Noodle": {
+   "km": 10.8,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Dáo Desserts": {
+   "km": 10.8,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Fluffed Cafe": {
+   "km": 10.6,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Choon Prawn Mee House 春虾面": {
+   "km": 11.1,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Yellow Brick Road": {
+   "km": 6.3,
+   "minFree": 9,
+   "minJam": 17
+  },
+  "Rocku Yakiniku 1 Utama": {
+   "km": 8.6,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Muhibbah Seafood Restaurant": {
+   "km": 7.2,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Grub by Ahong & Friends": {
+   "km": 8.5,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "Omulab": {
+   "km": 9.7,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Strangers at 47": {
+   "km": 9.6,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Jane's Nem": {
+   "km": 8.3,
+   "minFree": 12,
+   "minJam": 21
+  },
+  "Pizza Mansion": {
+   "km": 8.5,
+   "minFree": 12,
+   "minJam": 21
+  },
+  "Good Blue Men": {
+   "km": 8.3,
+   "minFree": 12,
+   "minJam": 21
+  },
+  "Little Heritage House": {
+   "km": 7.6,
+   "minFree": 10,
+   "minJam": 19
+  },
+  "Mekong Delights": {
+   "km": 8.5,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "Tasty Chapathi": {
+   "km": 9.9,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "WOWNANA": {
+   "km": 10.6,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Granny's Mansion 粥公面婆": {
+   "km": 10.7,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Togather 讲饮讲吃": {
+   "km": 11,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Noodle Art SS2": {
+   "km": 10.7,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "ONO Specialty Coffee & Matcha": {
+   "km": 11.3,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Iberico Kitchen": {
+   "km": 10.9,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Rekindle": {
+   "km": 10.9,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "IOSEN 興發漁膳": {
+   "km": 10.5,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Cafe Bandit": {
+   "km": 11.2,
+   "minFree": 15,
+   "minJam": 28
+  },
+  "Bayleaf Kitchen": {
+   "km": 11.3,
+   "minFree": 15,
+   "minJam": 26
+  },
+  "Zainul Nasi Kandar Original No.90": {
+   "km": 11,
+   "minFree": 14,
+   "minJam": 26
   }
  }
 }

@@ -587,7 +587,7 @@ button,input,select{font-family:inherit}
   /* 飲食 (D3/UX2): its four dropdowns, the 子連れ toggle and the 昼の予算 basis
      toggle. The generic rules above already reach them; they are named so this
      block visibly covers the layer. */
-  #fCatGroup,#fMichelin,#fPriceBand,#fDiningArea,#fDriveTime,#toggleKidOk,#toggleDayBudget{min-height:40px}
+  #fCatGroup,#fMichelin,#fMinRating,#fPriceBand,#fDiningArea,#fDriveTime,#toggleKidOk,#toggleDayBudget{min-height:40px}
   /* Two chips (michelin + category) now share the row under a dining name. */
   .card-chips .card-chip{max-width:calc(50% - var(--s1))}
 
@@ -761,6 +761,7 @@ button,input,select{font-family:inherit}
       <div class="filter-row" data-layer-only="dining" style="display:none">
         <div class="filter-group"><label for="fCatGroup">カテゴリ</label><select id="fCatGroup" onchange="applyFilters()"><option value="">すべて</option></select></div>
         <div class="filter-group"><label for="fMichelin">ミシュラン</label><select id="fMichelin" onchange="applyFilters()"><option value="">すべて</option></select></div>
+        <div class="filter-group"><label for="fMinRating">評価</label><select id="fMinRating" onchange="applyFilters()"><option value="">すべて</option><option value="4.3">★4.3以上</option><option value="4.5">★4.5以上</option></select></div>
       </div>
 
 
