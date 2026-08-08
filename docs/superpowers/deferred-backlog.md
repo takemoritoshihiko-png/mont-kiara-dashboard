@@ -203,3 +203,7 @@
 - **Michelangelo's Ristorante Italiano(Pavilion)**: Google件数1,000超の裏取りが2班とも取れず見送り(再検証班で最終確認中)
 - **makan.guruの値の鮮度問題(教訓)**: Win Heng Seng(実4.2未満)・Kim Lian Kee(実★3.5)・Ho Weng Kee(実★2.8)・Yut Kee(実4.1)など、収録時の値が現況と大きくずれる例が多発。**今後の発掘はmakan.guru値を候補生成にのみ使い、採用前にGoogle直読を必須とする**(今回の検証班の作法を標準化)
 - **閉店検出**: Ho Min San Pavilion店(2026-06-25移転閉店)・DayOne DayOne Pavilion店(2026-04-12閉店)・WaaronKuus(Tamu Kopitiamに改称の上一時閉業)・Bhai Jim Jum MyTown(閉業可能性表示)
+- **4.2-4.4帯の差し替え候補(裁定待ち)**: JOLOKO(★4.2×1,154・アフロカリビアン=ジャンル独自性最高)・Sahara Tent(★4.2×1,224)・WET Deck(同)。件数順21-23位で今回は見送り。追加希望なら1言で入る
+- **Tarbush(★4.2×5,503・帯内最大件数)**: 国内5店で機械除外。チェーン基準を「営業中5店以上」等に緩める裁定があれば最優先復活候補(JW Marriott店=★4.8×1,210が系列最良)
+- **Chee Meng BB店のミシュラン掲載疑い**: 複数出典が掲載と記載。台帳のミシュラン網羅リストとの突合を次回スイープで
+- **教訓(4.2-4.4帯は閉店率が高い)**: 数値合格でも閉店済みが6件(Merchant's Lane/Atmosphere 360/Cantaloupe/Omakase+Appreciate/Naab/Erawan)。この帯の採用は営業確認を必須工程とする

@@ -8474,5 +8474,685 @@
    "cons": "ピーク帯は待ち。店舗は2階で見つけにくい。"
   },
   "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:rsmy-medan-tuanku",
+  "name": "RSMY",
+  "nameJa": "アールエスエムワイ",
+  "cat": "インド",
+  "michelin": "none",
+  "rating": 4.2,
+  "reviewCount": 3966,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Jalan Medan Tuanku 11&13",
+  "venueType": "street",
+  "area": "Chow Kit",
+  "address": "11 & 13 Jalan Medan Tuanku, Medan Tuanku, 50300 Kuala Lumpur",
+  "lat": 3.1583275,
+  "lng": 101.6968005,
+  "geoPrecision": "building",
+  "priceLunch": [
+   15,
+   30
+  ],
+  "priceDinner": [
+   15,
+   30
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ナン+カレーで一人20RM前後。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "チーズナンで名を上げたインド系ムスリム食堂。ブキッビンタンから外れた中心部北側で口コミ4000件近い集客力。",
+  "vox": {
+   "pros": "濃厚なチーズナンとカレーの味付け、店内の清潔さが好評。",
+   "cons": "価格の割に量が少ない、値上げが続くという指摘。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:al-rawsha-kampung-pandan",
+  "name": "Al Rawsha Restaurant",
+  "nameJa": "アル・ラウシャ",
+  "cat": "中東",
+  "michelin": "none",
+  "rating": 4.2,
+  "reviewCount": 3959,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Jalan Kampung Pandan 8",
+  "venueType": "street",
+  "area": "Kampung Pandan",
+  "address": "8 Jalan Kampung Pandan, 55000 Kuala Lumpur",
+  "lat": 3.1388449,
+  "lng": 101.7219008,
+  "geoPrecision": "building",
+  "priceLunch": [
+   40,
+   70
+  ],
+  "priceDinner": [
+   60,
+   100
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "マンディ/カブサは4人向け大皿が基本。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "イエメン式マンディ・カブサの大皿で家族連れに強い中東料理店。KL中心部東端の穴場。",
+  "vox": {
+   "pros": "マンディ・カブサの量が多くグループ向けに満足度が高い。",
+   "cons": "4人前提の盛りで、少人数だと割高になるという声。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:betel-leaf-lebuh-ampang",
+  "name": "Betel Leaf",
+  "nameJa": "ベテルリーフ",
+  "cat": "インド",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 3279,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Lebuh Ampang 77A",
+  "venueType": "street",
+  "area": "Masjid India",
+  "address": "77A Lebuh Ampang, Kuala Lumpur City Centre, 50100 Kuala Lumpur",
+  "lat": 3.1494005,
+  "lng": 101.6979006,
+  "geoPrecision": "building",
+  "priceLunch": [
+   25,
+   50
+  ],
+  "priceDinner": [
+   25,
+   50
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ビリヤニ/カレー中心、一人30RM前後。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "リトルインディア（レブ・アンパン）の2階にある南インド・チェティナード料理店。ビリヤニと羊料理が看板。",
+  "vox": {
+   "pros": "マトン・スッカやプラウンマサラなど本格チェティナード味が好評。",
+   "cons": "周辺の駐車が難しく、副菜の質にムラがあるとの指摘。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:wadi-hadramawt-jalan-ampang",
+  "name": "Wadi Hadramawt",
+  "nameJa": "ワディ・ハドラマウト",
+  "cat": "中東",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 2873,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Jalan Ampang Lot 226",
+  "venueType": "street",
+  "area": "Keramat",
+  "address": "Lot 226 Jalan Ampang, Kampung Datuk Keramat, 50450 Kuala Lumpur",
+  "lat": 3.1611641,
+  "lng": 101.7297606,
+  "geoPrecision": "building",
+  "priceLunch": [
+   30,
+   60
+  ],
+  "priceDinner": [
+   30,
+   60
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ラムファフサなど一皿30-45RM。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "イエメン料理の実力店。看板のラム・ファフサ目当てに中東系居住者が通う、KLCC東側の実用枠。",
+  "vox": {
+   "pros": "量が多く味付けがしっかりして価格も手頃という評価。",
+   "cons": "入口が分かりにくく駐車に苦労するという声。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:hadramawt-palace-bukit-bintang",
+  "name": "Restoran Hadramawt Palace",
+  "nameJa": "ハドラマウト・パレス",
+  "cat": "中東",
+  "michelin": "none",
+  "rating": 4.4,
+  "reviewCount": 2802,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Jalan Bukit Bintang Lot 251",
+  "venueType": "street",
+  "area": "Bukit Bintang",
+  "address": "Lot 251 Jalan Bukit Bintang, Imbi, 55100 Kuala Lumpur",
+  "lat": 3.1474516,
+  "lng": 101.7215001,
+  "geoPrecision": "building",
+  "priceLunch": [
+   25,
+   45
+  ],
+  "priceDinner": [
+   25,
+   45
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "マンディ中心で一人30RM前後。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "ブキッビンタン東端のイエメン料理店。マンディライスの評価は中東系店の中でも上位。",
+  "vox": {
+   "pros": "「中東以外で食べた最高のマンディ」と評され、量も多い。",
+   "cons": "混雑時は提供が遅く、店内が騒がしくなる。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:samba-brazilian-avenue-k",
+  "name": "Samba Brazilian Steakhouse",
+  "nameJa": "サンバ・ブラジリアン・ステーキハウス",
+  "cat": "南米グリル",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 2582,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Avenue K Level 3",
+  "venueType": "mall",
+  "area": "KLCC",
+  "address": "L3-3 & L3-4A, Level 3, Avenue K, 156 Jalan Ampang, 50450 Kuala Lumpur",
+  "lat": 3.1594534,
+  "lng": 101.7135977,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   95,
+   119
+  ],
+  "priceDinner": [
+   139,
+   180
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "シュラスコ食べ放題。平日昼95RM/週末119RM nett、夜は139RM++帯。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "KLCC対面Avenue K内のシュラスコ食べ放題。串焼き肉のテーブルサービスとサラダ・海鮮ビュッフェ付き。",
+  "vox": {
+   "pros": "焼き加減の指定ができ肉の種類が多い、生バンドと眺めも良い。",
+   "cons": "食べている最中も肉を運び続けられる、サイドのビュッフェは平凡との声。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:kudu-bin-abdul-jalan-tar",
+  "name": "Restoran Kudu Bin Abdul",
+  "nameJa": "クドゥ・ビン・アブドゥル",
+  "cat": "インド",
+  "michelin": "none",
+  "rating": 4.2,
+  "reviewCount": 2458,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Jalan Tuanku Abdul Rahman 335",
+  "venueType": "street",
+  "area": "Chow Kit",
+  "address": "335 Jalan Tuanku Abdul Rahman, Chow Kit, 50100 Kuala Lumpur",
+  "lat": 3.1605725,
+  "lng": 101.6974236,
+  "geoPrecision": "building",
+  "priceLunch": [
+   10,
+   20
+  ],
+  "priceDinner": [
+   10,
+   20
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ナシカンダー一皿10-15RMの庶民価格。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "1960年代から続くジャランTARのナシカンダー老舗。アヤムマドゥ（蜂蜜チキン）が看板。",
+  "vox": {
+   "pros": "安くて量があり、KLのナシカンダーの基準として長年支持されている。",
+   "cons": "行列と席の少なさ、時期による味のムラを指摘する声。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:tgs-bistro-tengkat-tong-shin",
+  "name": "TG's Bistro",
+  "nameJa": "ティージーズ・ビストロ",
+  "cat": "インド",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 2377,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Tengkat Tong Shin 8",
+  "venueType": "street",
+  "area": "Bukit Bintang",
+  "address": "8 Tengkat Tong Shin, Bukit Bintang, 50200 Kuala Lumpur",
+  "lat": 3.1456306,
+  "lng": 101.7069183,
+  "geoPrecision": "building",
+  "priceLunch": [
+   15,
+   30
+  ],
+  "priceDinner": [
+   15,
+   30
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ロティ・カレー中心、24時間営業。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "24時間営業のママック（インド系ムスリム）ビストロ。1m級のロティ・ティシューが名物で深夜の受け皿になる。",
+  "vox": {
+   "pros": "時間帯を問わず味が安定、パニールバターマサラと紅茶が特に良いと評判。",
+   "cons": "ロティ・ティシューは見た目重視で味は普通、ピーク時は40分待ちも。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:bricks-and-bread-kamunting",
+  "name": "Bricks and Bread KL",
+  "nameJa": "ブリックス・アンド・ブレッド",
+  "cat": "カフェ・ブランチ",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 2290,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Jalan Kamunting 20",
+  "venueType": "street",
+  "area": "Chow Kit",
+  "address": "20 Jalan Kamunting, Chow Kit, 50300 Kuala Lumpur",
+  "lat": 3.1570675,
+  "lng": 101.7001789,
+  "geoPrecision": "building",
+  "priceLunch": [
+   30,
+   50
+  ],
+  "priceDinner": [
+   40,
+   70
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "8:00-22:00営業でディナー帯も使える。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "チョウキット再開発エリアのサワードウ系ブランチカフェ。天窓のある明るい造りで夜まで営業。",
+  "vox": {
+   "pros": "自家製パンとコーヒーの質、明るい店内と接客が好評。",
+   "cons": "ドリンクが平凡、料理の当たり外れが大きいという声。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:al-halabi-pavilion",
+  "name": "Al Halabi Gourmet Restaurant",
+  "nameJa": "アル・ハラビ",
+  "cat": "中東",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 2087,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Pavilion Kuala Lumpur Level 7",
+  "venueType": "mall",
+  "area": "Bukit Bintang",
+  "address": "Lot 7.01.06, 168 Jalan Bukit Bintang, Bukit Bintang, 55100 Kuala Lumpur",
+  "lat": 3.149628,
+  "lng": 101.71298,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   50,
+   90
+  ],
+  "priceDinner": [
+   50,
+   90
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "メゼ+グリルで一人60-80RM。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "パビリオン最上階のシリア・レバノン料理。屋外テラス側の落ち着いた席が評価を支える。",
+  "vox": {
+   "pros": "提供が速く量が多い、モール上層の静かな雰囲気が良い。",
+   "cons": "同ジャンルの路面店より割高、屋外席は音響がうるさい時がある。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:natalina-avenue-k",
+  "name": "Natalina Italian Kitchen",
+  "nameJa": "ナタリーナ",
+  "cat": "イタリアン",
+  "michelin": "none",
+  "rating": 4.4,
+  "reviewCount": 1706,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Avenue K Level 3",
+  "venueType": "mall",
+  "area": "KLCC",
+  "address": "03-06, Avenue K, 156 Jalan Ampang, 50450 Kuala Lumpur",
+  "lat": 3.1594534,
+  "lng": 101.7135977,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   80,
+   140
+  ],
+  "priceDinner": [
+   100,
+   180
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "メイン52-85RM。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "KLCC向かいAvenue K内の本格イタリアン。手打ちパスタとブッラータピッツァが看板。",
+  "vox": {
+   "pros": "手打ちパスタとナスのパルミジャーナ、ピスタチオのクロスタータが好評。",
+   "cons": "以前より質が落ちたという声と、テーブル間隔が近い点。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:rama-v-jalan-u-thant",
+  "name": "Rama V • Enthaicingly Thai",
+  "nameJa": "ラーマ・ファイブ",
+  "cat": "タイ",
+  "michelin": "none",
+  "rating": 4.4,
+  "reviewCount": 1675,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Jalan U Thant 5",
+  "venueType": "street",
+  "area": "Ampang Hilir",
+  "address": "5 Jalan U Thant, 55000 Kuala Lumpur",
+  "lat": 3.1536792,
+  "lng": 101.7238412,
+  "geoPrecision": "building",
+  "priceLunch": [
+   60,
+   100
+  ],
+  "priceDinner": [
+   80,
+   150
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "12-15時/18-22時の2部制。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "池と木造家屋を配した高級タイ料理。KL中心部東側の接待・記念日枠として使える。",
+  "vox": {
+   "pros": "シーバスのマナオ蒸しやトムヤム川海老、量の多さと接客が高評価。",
+   "cons": "一般的なタイ料理店より価格が高い、特別ディナーは割高との声。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:tommy-le-baker-kampung-attap",
+  "name": "Tommy Le Baker",
+  "nameJa": "トミー・ル・ベイカー",
+  "cat": "ベーカリー",
+  "michelin": "none",
+  "rating": 4.2,
+  "reviewCount": 1501,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Zhongshan Building",
+  "venueType": "street",
+  "area": "Kampung Attap",
+  "address": "Zhongshan Building, 80-82 Jalan Rotan, Kampung Attap, 50460 Kuala Lumpur",
+  "lat": 3.1378922,
+  "lng": 101.697139,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   55
+  ],
+  "priceDinner": [
+   20,
+   55
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "パン購入中心。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "カンポン・アタップの旧ビル群Zhongshan Buildingにあるサワードウ専門ベーカリー。KLのパン職人系の代表格。",
+  "vox": {
+   "pros": "サワードウの焼き上がりと形の美しさに定評。",
+   "cons": "1本55RM級とパンとしては高価という指摘。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:contango-majestic",
+  "name": "Contango",
+  "nameJa": "コンタンゴ",
+  "cat": "ビュッフェ（マレー・多国籍）",
+  "michelin": "none",
+  "rating": 4.2,
+  "reviewCount": 1478,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "The Majestic Hotel Kuala Lumpur",
+  "venueType": "hotel",
+  "area": "Kampung Attap",
+  "address": "5 Jalan Sultan Hishamuddin, 50000 Kuala Lumpur",
+  "lat": 3.1385629,
+  "lng": 101.6920636,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   100,
+   150
+  ],
+  "priceDinner": [
+   150,
+   220
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ビュッフェ一人約200RM。6:30-22:00通し。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "植民地期建築マジェスティック・ホテルの多国籍ビュッフェ。マレー菓子から洋菓子まで250席規模。",
+  "vox": {
+   "pros": "デザートの種類の多さと、焼き加減の良いビーフステーキが好評。",
+   "cons": "料理により当たり外れ、告知されていた牡蠣がない等の品切れ不満。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:bunn-choon-balai-polis",
+  "name": "Bunn Choon",
+  "nameJa": "ブンチュン",
+  "cat": "広東・点心",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 1275,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Jalan Balai Polis 3",
+  "venueType": "street",
+  "area": "Chinatown",
+  "address": "3 Jalan Balai Polis, Kuala Lumpur City Centre, 50000 Kuala Lumpur",
+  "lat": 3.1413522,
+  "lng": 101.6976066,
+  "geoPrecision": "building",
+  "priceLunch": [
+   15,
+   30
+  ],
+  "priceDinner": [
+   15,
+   30
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "エッグタルト等の点心・菓子中心。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "1893年創業とされる老舗菓子舗。インビ市場から移転しチャイナタウンで営業、エッグタルトが看板。",
+  "vox": {
+   "pros": "エッグタルトの生地の層とクリーミーな中身が絶賛される。",
+   "cons": "タルト以外の点心は期待ほどでない、過大評価という声もある。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:hyderabad-recipes-house-jalan-putra",
+  "name": "Restoran Hyderabad Recipe's House",
+  "nameJa": "ハイデラバード・レシピズ・ハウス",
+  "cat": "インド",
+  "michelin": "none",
+  "rating": 4.4,
+  "reviewCount": 2028,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Chow Kit",
+  "address": "78-1 Jalan Putra, 50350 Kuala Lumpur",
+  "lat": 3.166957,
+  "lng": 101.694319,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   40
+  ],
+  "priceDinner": [
+   20,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ビリヤニ中心で一人RM25前後。KL+イポーの2店のみ。採用=KL中心部深掘り調査(2026-08-09・4.2-4.4帯)。",
+  "editorNote": "ハイデラバード料理の専門店で、ビリヤニだけで13種。中心部北側(PWTC)の未開拓エリア。",
+  "vox": {
+   "pros": "「本物のハイデラバードの味」と評され、接客も丁寧という評価。",
+   "cons": "辛さ・塩気がもう少し欲しい、価格に見合わないという声も。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:hookie-dookie-lalaport-bbcc",
+  "name": "Hookie Dookie @ LaLaport Bukit Bintang",
+  "nameJa": "フーキー・ドゥーキー（ららぽーとBBCC）",
+  "cat": "洋食ビストロ",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 3322,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Mitsui Shopping Park LaLaport BBCC（Gourmet Street）",
+  "venueType": "mall",
+  "area": "Bukit Bintang",
+  "address": "GF84 & 85, Ground Level, Mitsui Shopping Park LaLaport, 2, Jln Hang Tuah, Bukit Bintang, 55100 Kuala Lumpur",
+  "lat": 3.1393478,
+  "lng": 101.7080923,
+  "geoPrecision": "building",
+  "priceLunch": [
+   40,
+   70
+  ],
+  "priceDinner": [
+   60,
+   120
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "モール内グルメストリートの洋食＋バー価格帯からの推計。系列はデサパークシティ店との2店のみ。採用=KL中心部深掘り調査(2026-08-09・再検証)。",
+  "editorNote": "ららぽーとBBCC地上階グルメストリートの独立区画(フードコート屋台ではない)。終日使える洋食グリル＆バーで11:30〜24:00通し営業。",
+  "vox": {
+   "pros": "モール内なのに深夜0時まで通しで開いており、買い物途中のブランチにも夜のグリル＋一杯にも振れる使い勝手。",
+   "cons": "ラウンジ＆バー寄りの内装と照明で、小さい子連れの長居や静かな会話には向かない時間帯がある。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:k-wing-lalaport-bbcc",
+  "name": "K-Wing • Lalaport • Bukit Bintang City Centre",
+  "nameJa": "ケー・ウィング（ららぽーとBBCC）",
+  "cat": "韓国焼肉",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 3125,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Mitsui Shopping Park LaLaport BBCC（Gourmet Street）",
+  "venueType": "mall",
+  "area": "Bukit Bintang",
+  "address": "Lot G-89 & 90, Ground Floor, Mitsui Shopping Park LaLaport, 2, Jln Hang Tuah, Bukit Bintang, 55100 Kuala Lumpur",
+  "lat": 3.1396404,
+  "lng": 101.707572,
+  "geoPrecision": "building",
+  "priceLunch": [
+   25,
+   45
+  ],
+  "priceDinner": [
+   35,
+   70
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "実食レポートの2名RM52.15から推計。1店舗のみ。採用=KL中心部深掘り調査(2026-08-09・再検証)。",
+  "editorNote": "実態は韓国式フライドチキン＋ビールの店(語彙に韓国チキンがないため暫定で韓国焼肉に分類)。独立区画・金土は深夜1時まで。",
+  "vox": {
+   "pros": "3,000件超で★4.6を維持する人気店で、韓国式チキンを取り分けながら深夜まで粘れる。",
+   "cons": "チキンがパサつく・軟骨が多いという辛口レビューもあり、当たり外れと待ち時間の指摘が残る。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:michelangelos-ristorante-italiano-pavilion",
+  "name": "Michelangelo's Ristorante Italiano",
+  "nameJa": "ミケランジェロズ・リストランテ・イタリアーノ",
+  "cat": "イタリアン",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 2688,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Pavilion Kuala Lumpur",
+  "venueType": "mall",
+  "area": "Bukit Bintang",
+  "address": "Lot C3.04.00, Pavilion Kuala Lumpur, 168, Jln Bukit Bintang, Bukit Bintang, 55100 Kuala Lumpur",
+  "lat": 3.1493266,
+  "lng": 101.7125081,
+  "geoPrecision": "building",
+  "priceLunch": [
+   70,
+   130
+  ],
+  "priceDinner": [
+   110,
+   220
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "パビリオン上層階の本格イタリアンの相場からの推計。同名はパビリオンKLの1店のみ。採用=KL中心部深掘り調査(2026-08-09・再検証)。",
+  "editorNote": "件数裏取りは決着(Google直読★4.6×2,688で一致)。毎日12:00〜23:30営業のモール内本格イタリアン。",
+  "vox": {
+   "pros": "モール最上層の本格イタリアンで、買い物帰りにそのまま記念日ディナーへ移行できる。",
+   "cons": "パビリオン価格で1人RM150前後に届きやすく、週末夜は予約なしだと待たされる。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:steam-era-seafood-jalan-imbi",
+  "name": "Steam Era Seafood",
+  "nameJa": "スチーム・エラ・シーフード（蒸時代）",
+  "cat": "中華（モダン）",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 3098,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Jalan Imbi ショップハウス",
+  "venueType": "street",
+  "area": "Imbi",
+  "address": "145, Jln Imbi, Pudu, 55100 Kuala Lumpur",
+  "lat": 3.1445525,
+  "lng": 101.714013,
+  "geoPrecision": "building",
+  "priceLunch": [
+   40,
+   70
+  ],
+  "priceDinner": [
+   60,
+   110
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "蒸し海鮮＋お粥鍋のKL相場からの推計。系列はデサ・スリ・ハルタマス店との2店のみ。採用=KL中心部深掘り調査(2026-08-09・再検証)。",
+  "editorNote": "Jalan Imbiの路面店で24時間営業。蒸し海鮮とスチームボートの大衆店。",
+  "vox": {
+   "pros": "24時間営業なので深夜着や早朝でも蒸し海鮮の鍋が食べられ、3,000件超で★4.7と評価も安定。",
+   "cons": "路面の大衆店で冷房・内装は簡素、ピーク時は席待ちと騒がしさを覚悟したい。"
+  },
+  "verified": "2026-08-09"
  }
 ]

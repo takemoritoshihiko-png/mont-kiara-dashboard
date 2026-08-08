@@ -76,6 +76,7 @@ describe('restaurants.json', () => {
       'Nipah (EQ Kuala Lumpur)', 'Sabayon at EQ',   // EQホテル同棟(1F/51F)
       'Imperial Chakri Palace', 'ParaThai',   // Suria KLCC(venue精度)
       'Al-Amar Lebanese Restaurant', 'CALIA', 'Quivo', 'Weissbrau German Bistro and Bar',   // Pavilion KL(venue精度)
+      'Samba Brazilian Steakhouse', 'Natalina Italian Kitchen',   // Avenue K(venue精度)
     ];
     const seen = new Map();
     for (const r of restaurants) {

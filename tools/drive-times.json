@@ -1495,6 +1495,106 @@
    "km": 2.2,
    "minFree": 4,
    "minJam": 7
+  },
+  "RSMY": {
+   "km": 10.1,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Al Rawsha Restaurant": {
+   "km": 13.4,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "Betel Leaf": {
+   "km": 10.9,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Wadi Hadramawt": {
+   "km": 13.8,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Restoran Hadramawt Palace": {
+   "km": 14.3,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "Samba Brazilian Steakhouse": {
+   "km": 11.8,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Restoran Kudu Bin Abdul": {
+   "km": 9.9,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "TG's Bistro": {
+   "km": 12.1,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Bricks and Bread KL": {
+   "km": 11.4,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Al Halabi Gourmet Restaurant": {
+   "km": 12.1,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Natalina Italian Kitchen": {
+   "km": 11.8,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Rama V • Enthaicingly Thai": {
+   "km": 13.6,
+   "minFree": 16,
+   "minJam": 30
+  },
+  "Tommy Le Baker": {
+   "km": 10.3,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Contango": {
+   "km": 9.1,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Bunn Choon": {
+   "km": 12.2,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Restoran Hyderabad Recipe's House": {
+   "km": 10,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Hookie Dookie @ LaLaport Bukit Bintang": {
+   "km": 13.1,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "K-Wing • Lalaport • Bukit Bintang City Centre": {
+   "km": 12.8,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "Michelangelo's Ristorante Italiano": {
+   "km": 11.7,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Steam Era Seafood": {
+   "km": 13.1,
+   "minFree": 17,
+   "minJam": 31
   }
  }
 }

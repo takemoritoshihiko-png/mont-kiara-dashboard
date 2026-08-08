@@ -63,3 +63,6 @@ K KL（圭）は★4.9だがミシュランSelected=完全網羅裁定が勝ち�
 ### 実行結果(2026-08-09 全エリア再調査)
 台帳126→**242店**(新規116)。カバレッジ: PJ核心部(Seksyen 17/SS2/Seksyen 19/PJ New Town)・Kampung Baru・Chow Kit・Bamboo Hills・Desa ParkCity・Kepongを新規開拓。
 未探索の弱点(次回スイープ対象): ★4.2-4.4帯のKepong/Cheras/OKR・Keramat内陸・Titiwangsa東・Ampang Hilir(出典が★4.5以上限定だったため)。詳細=deferred-backlog 2026-08-09節。
+
+### 実行結果(2026-08-09 KL中心部深掘り)
+台帳244→**313店**(中心部74→160店)。検証作法の恒久追記: **集計サイト(makan.guru等)の値は候補生成専用とし、採用前にGoogle直読で★・件数・営業・チェーン店舗数を確定する**(陳腐化値の実測反証が12件出たため)。4.2-4.4帯は閉店率が高く営業確認必須。
