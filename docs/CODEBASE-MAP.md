@@ -16,6 +16,8 @@
 |---|---|
 | `src/main.js` | 起動: 地図生成 → UI初期化 → CSV/JSON読込 → 初回描画 → URL状態の復元。インライン`onclick`用に関数を`window`へ公開 |
 | `src/state.js` | 共有する可変状態（データ・絞り込み結果・選択中・アクティブ層/タブ・**モード(住まい/外食)**・**外食の3ビュー**・各トグル・**飲食の「近く」中心(diningNear)**・**予算の昼夜基準(dayBudgetBasis)**）。書き込みは全てセッター経由 |
+| `src/domain/fileSync.js` | ファイルDB(A案)の判断だけ: 突合(reconcile)・書き込み前スタンプ照合・バックアップ剪定・安定直列化。FSAには触れない純ロジック |
+| `src/data/fileStore.js` | File System Access APIに触る唯一の場所。フォルダ握手・ハンドルのIndexedDB保存・書きスルー・日次7世代バックアップ。personal.jsはonPersonalChange購読で駆動され無改変 |
 | `src/format.js` | num/esc/jsStrの唯一の実装(ui/とdomain/の両方から使うためui外に置く)。jsStrはJSエスケープ+HTML属性エスケープの2層 |
 
 ### data/ — 読み込みと固定データ
@@ -52,7 +54,7 @@
 | `src/ui/dining.js` | **外食モードの画面**。台帳スコアの表示・記録欄(visitbox)・行った店ビュー・データビュー・toast・保存バー。書き込みは全部 `data/personal.js` 経由 |
 | `src/ui/a11y.js` | Enter/Space で `role="button"` を起動、Escapeで詳細を閉じる。**document に委譲リスナー1つだけ** |
 
-## test/ — 20ファイル・637件
+## test/ — 20ファイル・657件
 
 | ファイル | 何を守るか |
 |---|---|
@@ -74,6 +76,7 @@
 | `test/personal.test.js` | **個人記録**: ローカル日付・読み取りが書き込まないこと・保存可否の起動テスト・デバウンス保存・v9形式の読み込み変換・書き出し往復 |
 | `test/diningLog.test.js` | 行った店: 母集団＝訪問済みのみ・平均実額の分母・グループの固定順と並び |
 | `test/uxDining.test.js` | UX2: 飲食のエリア連動（距離フィルタ・3kmの妥当性・ジャンプ配線）と昼夜基準（`diningPriceCeiling`/価格帯/並び替えが**同じ数字を読む**invariant）・層タブの飲食入口・トグルのmarkup契約 |
+| `test/fileSync.test.js` | ファイルDBの判断契約: どの分岐でも無言でデータを失わない・剪定は自作ファイルのみ・配線(単一ドア温存)のソース契約 |
 | `test/eatoutMode.test.js` | 外食モード: **住まいモードに記録UIが出ないこと**（訪問済み✓バッジ含む）・記録欄・カード構造・3ビュー・独立トグル・台帳スコア順・markup契約 |
 | `test/infoPanel.test.js` | 詳細パネルの表現契約: 物件=出典語併記(PSF)/未定表示・商業=運営者/NLA/エスケープ・学校=長文ブロックの既定折りたたみ(畳んでも情報は落とさない) |
 

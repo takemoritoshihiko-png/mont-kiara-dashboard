@@ -19,7 +19,7 @@
 ```bash
 npm install
 npm run dev            # ローカル開発サーバー (Vite)
-npm test               # テスト 637件（データ整合性の契約を含む）
+npm test               # テスト 657件（データ整合性の契約を含む）
 npm run hooks:install  # pre-pushフック導入（push既定拒否・GIC_ALLOW_PUSH=1で許可）
 ```
 
@@ -37,7 +37,7 @@ npm run hooks:install  # pre-pushフック導入（push既定拒否・GIC_ALLOW_
 | `commercial_data.csv` | 商業施設88件（11列） |
 | `schools_data.csv` / `schools_detail.json` | 学校33件 ／ その詳細（学年別の年間学費表を含む） |
 | `restaurants.json` | 飲食店93件（ミシュラン系50＋検証済み拡充43・9分類）。`tools/convert-v9-dining.js` が生成 |
-| `test/` | 20ファイル・637件。`integrity.test.js` が**データ整合性の契約** |
+| `test/` | 20ファイル・657件。`integrity.test.js` が**データ整合性の契約** |
 | `docs/CODEBASE-MAP.md` | どのファイルが何をするかの一覧 |
 | `docs/superpowers/` | 設計プラン・deferred-backlog |
 | `archive/` | 参照されなくなったファイル（削除せず保管） |
