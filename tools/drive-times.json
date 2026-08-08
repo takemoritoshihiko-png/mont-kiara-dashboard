@@ -1595,6 +1595,196 @@
    "km": 13.1,
    "minFree": 17,
    "minJam": 31
+  },
+  "Mr Naan & Mrs Idly (Brickfields)": {
+   "km": 9.5,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Erode Amman Mess (Brickfields)": {
+   "km": 9.8,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Roots Bangsar": {
+   "km": 8.5,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Gajaa at 8 Indian Restaurant": {
+   "km": 9.1,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Bunglow37 (Bangsar)": {
+   "km": 10.8,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Bombay Grand Indian Cuisine - Brickfields Branch": {
+   "km": 9.7,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Punjabi Rasoi - Brickfields": {
+   "km": 9.8,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Khalids Biriyani • Brickfields": {
+   "km": 9.3,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Muito Bom! Brazilian BBQ Buffet": {
+   "km": 10.5,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Eat Drink Thai @ Taman Bukit Desa": {
+   "km": 11.8,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Big Singh Chapati • TTDI": {
+   "km": 8.2,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Bedouin Arabian Cuisine": {
+   "km": 8.8,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "Team Udon TTDI": {
+   "km": 8,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Don Omakase TTDI": {
+   "km": 7.4,
+   "minFree": 11,
+   "minJam": 20
+  },
+  "Corks Out TTDI": {
+   "km": 7.1,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Fan Hua 繁華": {
+   "km": 8.2,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "Peko Peko TTDI - Japas and Sake": {
+   "km": 9,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "The Bread Bar TTDI": {
+   "km": 7.2,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Baker Next Door": {
+   "km": 6.7,
+   "minFree": 10,
+   "minJam": 18
+  },
+  "Fowlboys Diner @ The MET Corporate Towers": {
+   "km": 5.7,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Cocoon+ Kids Cafe - Desa ParkCity KL": {
+   "km": 6.8,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Hokkaido Seafood KL Main Branch": {
+   "km": 9.5,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "Hadramawt Kitchen - Ampang": {
+   "km": 14.6,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "Lau Heong Seafood Restaurant": {
+   "km": 11.4,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "YaHala Restaurant - Ampang": {
+   "km": 14.9,
+   "minFree": 19,
+   "minJam": 34
+  },
+  "Qasar Balqis Restaurant (Ampang)": {
+   "km": 15.7,
+   "minFree": 20,
+   "minJam": 36
+  },
+  "TasteBud Sentul": {
+   "km": 9.1,
+   "minFree": 12,
+   "minJam": 21
+  },
+  "Sahara Tent Restaurant • Jalan Ampang": {
+   "km": 14.2,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "HAHA Buffet Steamboat BBQ Kepong": {
+   "km": 9.6,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Fullwealth Seafood Restaurant": {
+   "km": 8.4,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "爱点心茶楼 Ai Authentic Dim Sum Restaurant": {
+   "km": 12.6,
+   "minFree": 15,
+   "minJam": 28
+  },
+  "QHouse 港湾茶餐厅 Setapak": {
+   "km": 13.8,
+   "minFree": 16,
+   "minJam": 30
+  },
+  "Mafuji Malaysia 马服记火锅馆": {
+   "km": 9.4,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Ai Delicious Cafe": {
+   "km": 13.1,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "B.A.J Cafe": {
+   "km": 13.2,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "家里面食馆+ JiaLiMian Plus Kepong": {
+   "km": 8.7,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Surawon Korean BBQ Restaurant": {
+   "km": 13.9,
+   "minFree": 18,
+   "minJam": 33
+  },
+  "Manjalis Indian Cuisine, Sentul": {
+   "km": 10.1,
+   "minFree": 13,
+   "minJam": 24
   }
  }
 }

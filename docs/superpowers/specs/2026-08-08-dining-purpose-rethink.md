@@ -171,3 +171,13 @@ Eat Drink KL / Malay Mail / Time Out / TastyJournal / Bangsar Babe の2025-26年
 - TRXは全店チェーンor蓄積不足で採用ゼロ=正常(2027年再走査をバックログ登録)
 - 併せて生存スイープ7件完了(Niko Neko閉店確定/Moggumung 1,172件確定で復活/Café Café・Yan Kee数値更新/Heun Kee Connaught圏外確定)
 - 教訓の恒久化: 「集計サイト値は候補生成専用・採用前にGoogle直読必須」「4.2-4.4帯は閉店率が高く営業確認必須」を発掘ルールに追記
+
+## 15. 全エリア取りこぼし監査(2026-08-09・竹森氏指示「同一のミスが他エリアにないか」)
+
+中心部深掘り(§14)と同じ手法で全エリアを機械照合→**同種の取りこぼしを全エリアで確認**し、sonnet班6体(新モデル選択ルール適用後の初運用)で検証統合。**台帳313→351店(行356)**。
+- 追加38店: TTDI 8(Big Singh 4.8×4,975等)+MK圏3(Fowlboys 4.8×3,699等)+バンサー・ブリックフィールズ10(Roots 4.8×4,232等)+北KL 17(HAHA・Fullwealth・アンパン内陸の中東食堂群・Setapak開拓)
+- 原因も中心部と同一と確定: wanderlog/makan.guru系ソース班のエリアほど穴が大きく、Google直読班(MK/PJ)はほぼ穴なし
+- 監査所見: バンサー/ダマンサラ圏の4.2-4.4×1,000+帯は実勢が薄い(★4.5+と★4.1以下に二極化)=この地区に中心部型の帯ギャップは無し
+- 検証防御: チェーン検出(Tea Garden 27店/Young Sanna 7店/Kenny Hills 6店等)・臨時休業(NALE)・ブランド重複(Pak Punjab/Tasty Chapathi/Maya/Chef Wan系列)・確認不能9件は正直にreject→バックログ
+- 新エリア: Sentul/Setapak/Kampung Pandan/Keramatが台帳入り(バケツ対応表に登録済み)
+- **モデル選択新ルールの初運用実績: sonnet 6体でopus班と同水準の検証品質を確認**(チェーン全数カウント・閉店検出・未確証の正直な棄却)

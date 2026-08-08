@@ -207,3 +207,7 @@
 - **Tarbush(★4.2×5,503・帯内最大件数)**: 国内5店で機械除外。チェーン基準を「営業中5店以上」等に緩める裁定があれば最優先復活候補(JW Marriott店=★4.8×1,210が系列最良)
 - **Chee Meng BB店のミシュラン掲載疑い**: 複数出典が掲載と記載。台帳のミシュラン網羅リストとの突合を次回スイープで
 - **教訓(4.2-4.4帯は閉店率が高い)**: 数値合格でも閉店済みが6件(Merchant's Lane/Atmosphere 360/Cantaloupe/Omakase+Appreciate/Naab/Erawan)。この帯の採用は営業確認を必須工程とする
+- **Nasi Kandar Rasmeena(44 Jalan Bangsar ★4.3×1,021)**: 数値合格だがレート制限で座標未確定のため見送り。次回スイープで座標確認→追加可
+- **監査所見(2026-08-09)**: バンサー/ダマンサラ圏の4.2-4.4×1,000+帯は実勢が薄い(★4.5+と★4.1以下に二極化)。中心部型の帯ギャップはこの地区にはほぼ無し
+- **北KL圏の確認不能9件(CAPTCHA障害)**: Nice Soup Gang/Jia Kopitiam/Sun Thai/iian Cuisine/SRK Borneo麵館/Fish With You/Fujisawa居酒屋/Soybean Factory/QQ BBQ(評価不一致)。次回スイープでGoogle直読再検証
+- **The Social @ Desa ParkCity(★4.3×1,445)**: チェーン店舗数未確証で見送り。店舗数確定なら再検討
