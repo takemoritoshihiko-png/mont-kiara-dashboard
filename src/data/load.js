@@ -153,6 +153,11 @@ export function parseRestaurants(jsonText) {
       venue: r.venue || '',
       venueType: r.venueType || '',
       area: r.area || '',
+      // Mont Kiaraからの車所要時間(tools/gen-drive-times.jsの焼き込み)。
+      // 無い店は null のまま通す — 0 に潰すと「0分=すぐそこ」という嘘になる。
+      driveKm: r.driveKm ?? null,
+      driveMinFree: r.driveMinFree ?? null,
+      driveMinJam: r.driveMinJam ?? null,
       priceLunch: Array.isArray(r.priceLunch) ? r.priceLunch : [0, 0],
       priceDinner: Array.isArray(r.priceDinner) ? r.priceDinner : [0, 0],
       priceConfidence: r.priceConfidence || '',

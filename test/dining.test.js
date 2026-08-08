@@ -66,6 +66,7 @@ describe('restaurants.json', () => {
       'Nam Heong Chicken Rice', 'Lai Foong Lala Noodles', 'Sin Kiew Yee Beef Noodles',
       'Yun House', 'Nadodi',
       'Jhol KL', 'Lachér Patisserie',
+      'Jwala', 'Seed',   // The Five@KPD Block E — 同一複合の同座標
     ];
     const seen = new Map();
     for (const r of restaurants) {

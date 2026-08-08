@@ -36,3 +36,12 @@ wanderlog/top-rated実値 → Nominatim座標+エリア整合 → チェーン�
 - **評価null契約**: 開業直後でGoogle未集計の店（Jie/Shu）は rating=null+reviewCount=0 を許容（test/dining.test.js更新済）。スコアは縮約で基準線=中立、表示は空欄
 - **カバレッジ改善**: カフェ・デザート3→8 / Publika 0→1 / MK核心+1 / Hartamas+1。Desa ParkCity・Sentulは正直に「該当なし」（backlog参照）
 - 見送り10店と理由 = docs/superpowers/deferred-backlog.md の 2026-08-07 D7節
+
+## ミシュランKL完全網羅（2026-08-08・裁定3点=1時間圏/ペナン除外維持/掲載店は上限外）
+
+**結果: 114店。現存する公式KLミシュラン2026の全75店(2★1+1★6+ビブ24+Sel44)を網羅。**
+- 検算: 公式Sel45リスト(Malay Mail 2025-11-11)・公式Bib記事・Wikipedia・michelin-my-maps DB・公式個別ページの5系統照合で完全一致
+- 新規追加21店(Sel系)。既存修正: Dancing Fish/Sushi Taka→sel昇格・**Kappo Hiyori=Wagyu Kappo Yoshidaへ改名**(住所ユニット一致で同定・選外ではなかった)・**Heun Kee=閉店**(2026年版でClosed)・**Lama=既存Lama Nyonyaの移転**(2026年6月・IG公式で住所一致)・Qureshi=1年超休業で見送り
+- 所要時間: OSRM(基点=地図初期表示のMK中心・渋滞込み=×1.8)を全店焼き込み。最遠でも渋滞込み41分=全店が1時間圏
+- UI: 車での目安表示+〜15/30/45分フィルタ・Wazeナビ・ビブ=橙縁マーカー+凡例
+- 残: 新規21店のGoogle Place ID(8店は取得済・13店pending)・La Suisse/The Brasserie/TanglinのGoogle実値(null契約で空欄表示)

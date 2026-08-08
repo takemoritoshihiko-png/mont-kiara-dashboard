@@ -231,10 +231,10 @@
    "minFree": 16,
    "minJam": 29
   },
-  "Kappo Hiyori KL": {
-   "km": 13.8,
-   "minFree": 18,
-   "minJam": 32
+  "Wagyu Kappo Yoshida": {
+   "km": 13.6,
+   "minFree": 17,
+   "minJam": 30
   },
   "Studio Restaurant": {
    "km": 9.4,
@@ -467,6 +467,111 @@
    "minJam": 24
   },
   "Sushi Taka": {
+   "km": 8.8,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "Bōl": {
+   "km": 11.9,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Café Café": {
+   "km": 10.8,
+   "minFree": 14,
+   "minJam": 24
+  },
+  "Dominic": {
+   "km": 11.5,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Frangipaani": {
+   "km": 4.6,
+   "minFree": 7,
+   "minJam": 13
+  },
+  "Gai by Darren Chin": {
+   "km": 7,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Jwala": {
+   "km": 6.1,
+   "minFree": 9,
+   "minJam": 16
+  },
+  "Kayra": {
+   "km": 8.9,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "La Suisse": {
+   "km": 7.1,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Li Yen": {
+   "km": 12.4,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Malai": {
+   "km": 11.3,
+   "minFree": 15,
+   "minJam": 28
+  },
+  "Marble 8": {
+   "km": 13.5,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Passage Thru India": {
+   "km": 14.4,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "Seed": {
+   "km": 6.1,
+   "minFree": 9,
+   "minJam": 16
+  },
+  "Shanghai Restaurant": {
+   "km": 12.3,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Sushi Masa": {
+   "km": 11.1,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Sushi Ori": {
+   "km": 12.7,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Tanglin (Bukit Damansara)": {
+   "km": 5,
+   "minFree": 8,
+   "minJam": 14
+  },
+  "Tenmasa": {
+   "km": 13.7,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "Teochew Lao Er": {
+   "km": 12.9,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "The Brasserie": {
+   "km": 9.2,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Ushi": {
    "km": 8.8,
    "minFree": 12,
    "minJam": 22

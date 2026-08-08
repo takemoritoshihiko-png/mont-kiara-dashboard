@@ -176,3 +176,8 @@
 - natCodeは読み込むだけの死列(描画なし)。使うか消すか
 - pending placeId 9件(Nero Nero/Vantador/Der Backmeister/Foo Foo/Niko Neko/Dancing Fish/宮武/Jie/Shu)
 - list.js(928行)の分割候補: format.js抽出は完了。次はcards.js(約225行・純関数)とsummary.js
+
+## 2026-08-08 ミシュランKL完全網羅で判明した保留
+- **Qureshi (KLGCC)** — 2026年版Selected発表リストに載ったが、1年超の臨時休業で公式サイトからページ削除済み(「Restaurant not found」実確認)。訪問不能のため台帳追加を見送り。再開したら追加(Wagyu Saikouと同じ休業ウォッチ)
+- **Heun Kee Claypot / Kappo Hiyori** — 2026年版で選外を確認しmichelinバッジを外した(店は台帳に残置・経緯は各editorNoteに記載)
+- 新規追加分のGoogle Place IDは全て pending:(Places API無しでは取得不能)。既存のpending 9件と合わせ、いつかまとめてブラウザ実機で採取する

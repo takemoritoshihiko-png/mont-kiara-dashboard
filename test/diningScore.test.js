@@ -232,12 +232,15 @@ describe('hand-computed totals', () => {
 
   it('akar, from the real file: ★1 / tier1 / ★4.8 of 1,178 → 71', () => {
     // au = 29, ct = 6
-    // rb = (1178×4.8 + 800×4.360029…) / 1978 = 4.62205…
-    // ev = 40 × 0.72205/0.80 = 36.1027…
-    // total = round(29 + 6 + 36.1027) = 71
+    // rb = (1178×4.8 + 800×C_REAL) / 1978 = 4.62204…
+    //   C_REAL は先頭50店の実データから再計算される来歴チェック。2026-08-08 に
+    //   Kappo Hiyori→Wagyu Kappo Yoshida の改名で評価値を実勢へ直したため
+    //   小数第5位が動いた(アプリ本体は BASELINE_STAR=4.36 固定で無影響)。
+    // ev = 40 × 0.72205/0.80 = 36.102…
+    // total = round(29 + 6 + 36.102) = 71
     const s = ledgerScore(LEDGER.find(x => x.name === 'akar'), C_REAL);
     expect(s).toMatchObject({ au: 29, ct: 6, total: 71 });
-    expect(s.rb).toBeCloseTo(4.6221, 4);
+    expect(s.rb).toBeCloseTo(4.62205, 4);
   });
 });
 

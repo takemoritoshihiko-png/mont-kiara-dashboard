@@ -1085,7 +1085,7 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "支払いは現金かTouch'n GoのQRのみ。ピークは45分待ち。近隣の駐車はRM5前後。入口が分かりにくい。",
-  "editorNote": "炭火の土鍋が並ぶ光景そのものが目的地。 【2026年版で選外】2023-2025はビブグルマン。公式サイト・2026年リストに不在を確認(2026-08-08)。店の実力評価は変わらず台帳に残す。",
+  "editorNote": "炭火の土鍋が並ぶ光景そのものが目的地。 【閉店】2023-2025ビブグルマンだったが、2026年版ガイドでClosed表記(Wikipedia照合2026-08-08)。訪問不可。IDを保持するため行は残す(追い番規則)。再開情報が出たら更新。",
   "vox": {
    "pros": "炭火の土鍋のおこげと香り。45分待ちでも整理券の仕組みは機能している。",
    "cons": "「50/50で好みが分かれる」「腸詰の匂いが強い」「豚の胃のスープは冷めていた」。現金かTnGのみ。"
@@ -1485,7 +1485,7 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "モール内で駐車が容易。週末は要予約。子連れ導線が最も楽なニョニャ。",
-  "editorNote": "2026年の新規ビブグルマン。1980年代の家庭を思わせる内装。",
+  "editorNote": "2026年の新規ビブグルマン。1980年代の家庭を思わせる内装。 ミシュラン ビブグルマン2026(旧屋号LAMA Antique & Restaurant名義)。2026年6月にTaman Ayer Panasから現Mont Kiara店(Steppes)へ移転(IG公式告知・ガイド掲載住所は旧店のまま)。父娘経営・火曜休の情報。",
   "vox": {
    "pros": "kerabu pucuk pakuの完成度。子どもが完食するオムレツ。駐車が楽。",
    "cons": "「テーブルクロスを替えず拭くだけだった」「ayam pongtehの味が薄い」「カレー魚が乾いていた」。"
@@ -1817,44 +1817,42 @@
  {
   "id": "R0046",
   "placeId": "ChIJW3HkBOI3zDER4p7E3lRVFTI",
-  "name": "Kappo Hiyori KL",
-  "nameJa": "割烹 日和",
+  "name": "Wagyu Kappo Yoshida",
+  "nameJa": "ワギュウ・カッポウ・ヨシダ",
   "cat": "日本料理",
   "catGroup": "日本・その他アジア",
-  "michelin": "none",
+  "michelin": "sel",
   "tier": 3,
-  "extraFlags": [
-   "屋号は要確認"
-  ],
+  "extraFlags": [],
   "rating": 4.8,
-  "reviewCount": 160,
+  "reviewCount": 157,
   "natCode": 3,
   "kidOk": 0,
   "venue": "Naza Tower / Skyviews 48F",
   "venueType": "tower",
   "area": "KLCC",
-  "address": "Unit 3-48, Level 48, 10, Persiaran KLCC",
-  "lat": 3.1544528,
-  "lng": 101.7186828,
-  "geoPrecision": "venue",
+  "address": "Unit 3-48, 48F, Naza Tower, Platinum Park, 10 Persiaran KLCC",
+  "lat": 3.1546359,
+  "lng": 101.7186231,
+  "geoPrecision": "building",
   "priceLunch": [
-   250,
-   400
+   138,
+   138
   ],
   "priceDinner": [
-   500,
-   750
+   888,
+   1188
   ],
   "priceConfidence": "概算",
-  "priceNote": "Dewakanと同じ48階フロア。昼夜とも営業。日曜休。TRXを望む席あり。",
-  "editorNote": "ミシュラン表記はWagyu Kappo Yoshida。屋号変更の可能性があり予約時に確認を。 【ミシュラン区分を修正】2026年公式リスト・現行サイトに不在を確認(2026-08-08)し、掲載表記を外した。",
+  "priceNote": "月-土12-14:30/18-22:30・日休。昼セットRM138++〜、夜は和牛&海鮮RM888/フル和牛おまかせRM1,188++。",
+  "editorNote": "旧Kappo Hiyoriが改名した和牛割烹(住所ユニット同一で同定・2026-08-08)。ミシュランSelected 2026現役。カウンター12席のおまかせ。",
   "vox": {
    "pros": "和牛の質、締めのカレーライス、48階のTRXビュー。落ち着いた設え。",
    "cons": "「和牛証明書が他の投稿と同一に見える」という疑義。「肉の香りが調味に負けている」「脂が重い」。この価格帯なら他に選択肢があるという声。"
   },
-  "driveKm": 13.8,
-  "driveMinFree": 18,
-  "driveMinJam": 32
+  "driveKm": 13.6,
+  "driveMinFree": 17,
+  "driveMinJam": 30
  },
  {
   "id": "R0047",
@@ -3744,6 +3742,846 @@
   },
   "catGroup": "日本・その他アジア",
   "tier": 0,
+  "driveKm": 8.8,
+  "driveMinFree": 12,
+  "driveMinJam": 22
+ },
+ {
+  "id": "R0094",
+  "placeId": "pending:b-l",
+  "name": "Bōl",
+  "nameJa": "ボール",
+  "cat": "ボーダーレス",
+  "michelin": "sel",
+  "rating": 4.8,
+  "reviewCount": 404,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Bukit Bintang",
+  "address": "15 Jalan Sin Chew Kee, Bukit Bintang",
+  "lat": 3.143192,
+  "lng": 101.7049335,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "火-金18-22:30、土日は昼も。月休。RM実例未取得。ミシュラン表記は$$$(高価格帯)。",
+  "editorNote": "シンガポール人シェフとデザイナーの2人が2022年開業したアジアン・コンテンポラリー。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 11.9,
+  "driveMinFree": 16,
+  "driveMinJam": 29
+ },
+ {
+  "id": "R0095",
+  "placeId": "pending:caf-caf",
+  "name": "Café Café",
+  "nameJa": "カフェ・カフェ",
+  "cat": "フレンチ",
+  "michelin": "sel",
+  "rating": 4.1,
+  "reviewCount": 507,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Kampung Attap",
+  "address": "175 Jalan Maharajalela, Kampung Attap",
+  "lat": 3.1359837,
+  "lng": 101.7034463,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "火-日18-23時の夜のみ・月休。RM実例未取得。ミシュラン表記は$$$(高価格帯)。",
+  "editorNote": "フランス修業の地元シェフ2人が営むパリ風クラシックフレンチ。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 10.8,
+  "driveMinFree": 14,
+  "driveMinJam": 24
+ },
+ {
+  "id": "R0096",
+  "placeId": "pending:dominic",
+  "name": "Dominic",
+  "nameJa": "ドミニク",
+  "cat": "フレンチ",
+  "michelin": "sel",
+  "rating": 4.4,
+  "reviewCount": 731,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "The Row",
+  "venueType": "street",
+  "area": "Chow Kit",
+  "address": "54G, The Row, Jalan Doraisamy, Chow Kit",
+  "lat": 3.15848,
+  "lng": 101.69954,
+  "geoPrecision": "building",
+  "priceLunch": [
+   120,
+   120
+  ],
+  "priceDinner": [
+   400,
+   400
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日12-15時/18-23時。昼RM120前後・夜RM400前後(口コミ言及の目安)。",
+  "editorNote": "旧2OXが改名したパリ風ブラッスリー。The Rowの青いファサードとテラス。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 11.5,
+  "driveMinFree": 16,
+  "driveMinJam": 29
+ },
+ {
+  "id": "R0097",
+  "placeId": "pending:frangipaani",
+  "name": "Frangipaani",
+  "nameJa": "フランジパニ",
+  "cat": "インド",
+  "michelin": "sel",
+  "rating": 4.7,
+  "reviewCount": 1896,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "The Republik",
+  "venueType": "mall",
+  "area": "Damansara Heights",
+  "address": "The Republik, Lot No.M.03, Mezzanine Floor, Jalan Medan Setia 1, Bukit Damansara",
+  "lat": 3.148946,
+  "lng": 101.651991,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼夜二部制(日-木 11:30-15時/18-23時前後)。RM実例未取得。ミシュラン表記は$$(中価格帯)。",
+  "editorNote": "2019年開業、温かな木とレザーの空間で味わうモダンインド。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "インド・スリランカ",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 4.6,
+  "driveMinFree": 7,
+  "driveMinJam": 13
+ },
+ {
+  "id": "R0098",
+  "placeId": "pending:gai-by-darren-chin-taman-tun-dr-ismail",
+  "name": "Gai by Darren Chin",
+  "nameJa": "ガイ・バイ・ダレン・チン",
+  "cat": "タイ",
+  "michelin": "sel",
+  "rating": 4.6,
+  "reviewCount": 1105,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "TTDI",
+  "address": "26A Lorong Datuk Sulaiman 1, Taman Tun Dr Ismail",
+  "lat": 3.1486361,
+  "lng": 101.6298115,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   200,
+   250
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "火-日12-15時/18-23時・月休。夜RM200+/人の言及。併設Gai Expressは12-19時。",
+  "editorNote": "DC Restaurantのダレン・チンによる北タイ料理。家族でシェアする流儀。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 7,
+  "driveMinFree": 11,
+  "driveMinJam": 19
+ },
+ {
+  "id": "R0099",
+  "placeId": "pending:jwala",
+  "name": "Jwala",
+  "nameJa": "ジュワラ",
+  "cat": "北インド",
+  "michelin": "sel",
+  "rating": 4.8,
+  "reviewCount": 441,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "The Five@KPD",
+  "venueType": "tower",
+  "area": "Damansara Heights",
+  "address": "E-02-01, Block E, The Five@KPD, 49 Jalan Dungun, Bukit Damansara",
+  "lat": 3.1508826,
+  "lng": 101.6644017,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "12-15時/18-23時・月休。RM実例未取得。ミシュラン表記は$$$(高価格帯)。",
+  "editorNote": "特注タンドール窯の炭火料理と自家製パン。サンスクリット語で炎の意。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "インド・スリランカ",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 6.1,
+  "driveMinFree": 9,
+  "driveMinJam": 16
+ },
+ {
+  "id": "R0100",
+  "placeId": "pending:kayra",
+  "name": "Kayra",
+  "nameJa": "カイラ",
+  "cat": "インド",
+  "michelin": "sel",
+  "rating": 4.3,
+  "reviewCount": 1528,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "Bangsar Village 1",
+  "venueType": "mall",
+  "area": "Bangsar",
+  "address": "F-8, 1F, Bangsar Village 1, Jalan Telawi 1, Bangsar",
+  "lat": 3.1297977,
+  "lng": 101.6709123,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日11:30-22時(L.O.21:30)。RM実例未取得。ミシュラン表記は$$(中価格帯)。",
+  "editorNote": "ケララ(南西インド)料理の名店。同グループのCoast by Kayra(Starhill・ビブ)とは別店。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "インド・スリランカ",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 8.9,
+  "driveMinFree": 14,
+  "driveMinJam": 25
+ },
+ {
+  "id": "R0101",
+  "placeId": "pending:la-suisse",
+  "name": "La Suisse",
+  "nameJa": "ラ・スイス",
+  "cat": "スイス",
+  "michelin": "sel",
+  "rating": null,
+  "reviewCount": 0,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "TTDI",
+  "address": "17, Lorong Rahim Kajai 13, Taman Tun Dr Ismail",
+  "lat": 3.1544687,
+  "lng": 101.6225843,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "営業時間は要確認(公式サイト接続不可)。RM実例未取得。ミシュラン表記は$$(中価格帯)。Google実値未取得(TripAdvisor4.4×39の参考値のみ)。",
+  "editorNote": "1992年開業、夫婦経営のスイス・欧州料理の老舗。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 7.1,
+  "driveMinFree": 11,
+  "driveMinJam": 19
+ },
+ {
+  "id": "R0102",
+  "placeId": "pending:li-yen",
+  "name": "Li Yen",
+  "nameJa": "麗苑(リーイェン)",
+  "cat": "広東・点心",
+  "michelin": "sel",
+  "rating": 3.9,
+  "reviewCount": 317,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "The Ritz-Carlton",
+  "venueType": "hotel",
+  "area": "Imbi",
+  "address": "2F, The Ritz-Carlton, 168 Jalan Imbi, Bukit Bintang",
+  "lat": 3.1469006,
+  "lng": 101.7154141,
+  "geoPrecision": "building",
+  "priceLunch": [
+   200,
+   200
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "昼は点心中心(4人でRM800+の実例=1人約RM200)。夜はアラカルト。",
+  "editorNote": "リッツカールトン2Fの正統広東料理。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 12.4,
+  "driveMinFree": 17,
+  "driveMinJam": 30
+ },
+ {
+  "id": "R0103",
+  "placeId": "pending:malai",
+  "name": "Malai",
+  "nameJa": "マライ",
+  "cat": "タイ",
+  "michelin": "sel",
+  "rating": 4.6,
+  "reviewCount": 1805,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "Menara Ample West",
+  "venueType": "tower",
+  "area": "KLCC",
+  "address": "GF, Menara Ample West, 6 Jalan Puncak",
+  "lat": 3.1520314,
+  "lng": 101.7062926,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日12-22時。RM実例未取得。ミシュラン表記は$$(中価格帯)。",
+  "editorNote": "器から体験まで作り込んだ本格タイ。2022年末に現在地へ移転。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 11.3,
+  "driveMinFree": 15,
+  "driveMinJam": 28
+ },
+ {
+  "id": "R0104",
+  "placeId": "pending:marble-8",
+  "name": "Marble 8",
+  "nameJa": "マーブル8",
+  "cat": "ステーキ",
+  "michelin": "sel",
+  "rating": 4.6,
+  "reviewCount": 1881,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Menara 3 Petronas 56F",
+  "venueType": "tower",
+  "area": "KLCC",
+  "address": "56F, Menara 3 Petronas, Persiaran KLCC, Kuala Lumpur City Centre",
+  "lat": 3.158135,
+  "lng": 101.715475,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "夜中心(金土日は昼も)。RM実例未取得。ミシュラン表記は$$$(高価格帯)。",
+  "editorNote": "ツインタワーを目前に望む56階の熟成ステーキ。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 13.5,
+  "driveMinFree": 17,
+  "driveMinJam": 30
+ },
+ {
+  "id": "R0105",
+  "placeId": "pending:passage-thru-india",
+  "name": "Passage Thru India",
+  "nameJa": "パッセージ・スルー・インディア",
+  "cat": "インド",
+  "michelin": "sel",
+  "rating": 4.3,
+  "reviewCount": 2041,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Imbi",
+  "address": "4 Jalan Delima, off Jalan Bukit Bintang, Imbi",
+  "lat": 3.1467502,
+  "lng": 101.7211091,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日昼夜二部制。RM実例未取得。ミシュラン表記は$$(中価格帯)。",
+  "editorNote": "1993年創業。オーナー自筆の壁画が彩る老舗インド料理。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "インド・スリランカ",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 14.4,
+  "driveMinFree": 18,
+  "driveMinJam": 32
+ },
+ {
+  "id": "R0106",
+  "placeId": "ChIJH8dvpIlJzDERuzO5S41eV6M",
+  "name": "Seed",
+  "nameJa": "シード",
+  "cat": "イノベーティブ",
+  "michelin": "sel",
+  "rating": 4.6,
+  "reviewCount": 92,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "The Five@KPD",
+  "venueType": "tower",
+  "area": "Damansara Heights",
+  "address": "L1-04, Block E, The Five@KPD, 49 Jalan Dungun, Bukit Damansara",
+  "lat": 3.1508826,
+  "lng": 101.6644017,
+  "geoPrecision": "building",
+  "priceLunch": [
+   488,
+   488
+  ],
+  "priceDinner": [
+   688,
+   688
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "火-土12-15時/18-23時・月日休。昼5品RM488++、夜8品RM688++。",
+  "editorNote": "Whitegrass(シンガポール)の姉妹店。波形カウンターからオープンキッチンを望むイノベーティブ。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 6.1,
+  "driveMinFree": 9,
+  "driveMinJam": 16
+ },
+ {
+  "id": "R0107",
+  "placeId": "ChIJWwyNaiw2zDER7uyyxH-iXCY",
+  "name": "Shanghai Restaurant",
+  "nameJa": "シャンハイ・レストラン",
+  "cat": "上海料理",
+  "michelin": "sel",
+  "rating": 4.1,
+  "reviewCount": 216,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "JW Marriott",
+  "venueType": "hotel",
+  "area": "Bukit Bintang",
+  "address": "1F, JW Marriott, 183 Jalan Bukit Bintang, Bukit Bintang",
+  "lat": 3.1478307,
+  "lng": 101.7137774,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月休。参考: 6品コースRM238/人(季節企画)。円卓ありで家族利用可。 ミシュラン表記は$$$(高価格帯)。",
+  "editorNote": "1999年開業・2021年改装のホテル上海料理。老練シェフの小籠包が看板。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 12.3,
+  "driveMinFree": 17,
+  "driveMinJam": 30
+ },
+ {
+  "id": "R0108",
+  "placeId": "ChIJ0dBxTSo3zDERh6en1WjEMtg",
+  "name": "Sushi Masa",
+  "nameJa": "スシマサ",
+  "cat": "寿司",
+  "michelin": "sel",
+  "rating": 4.8,
+  "reviewCount": 104,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Menara Hap Seng 3",
+  "venueType": "tower",
+  "area": "KLCC",
+  "address": "Lot 1-03, 1F, Menara Hap Seng 3, Jalan P. Ramlee",
+  "lat": 3.15481,
+  "lng": 101.70874,
+  "geoPrecision": "building",
+  "priceLunch": [
+   488,
+   488
+  ],
+  "priceDinner": [
+   988,
+   1288
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月休・火金は夜のみ。昼KouRM488、夜MiyabiRM988/おまかせRM1,288++。",
+  "editorNote": "東京で成功した石橋正和シェフの江戸前。200年の伝統に基づく独自アプローチ。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 11.1,
+  "driveMinFree": 15,
+  "driveMinJam": 27
+ },
+ {
+  "id": "R0109",
+  "placeId": "ChIJi2EvDOI3zDER7yppWKt1i-4",
+  "name": "Sushi Ori",
+  "nameJa": "スシオリ",
+  "cat": "寿司",
+  "michelin": "sel",
+  "rating": 4.7,
+  "reviewCount": 332,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Menara Keck Seng",
+  "venueType": "tower",
+  "area": "Bukit Bintang",
+  "address": "Unit PG-01, GF, Podium Block, Menara Keck Seng, 203 Jalan Bukit Bintang, Bukit Bintang",
+  "lat": 3.14523,
+  "lng": 101.70914,
+  "geoPrecision": "building",
+  "priceLunch": [
+   382,
+   382
+  ],
+  "priceDinner": [
+   780,
+   980
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月休・日は夜のみ。昼KohakuRM382、夜RM780/HisuiRM980(1週間前要予約)。",
+  "editorNote": "マレーシア在住10年超の織田シェフによるおまかせと鮨セット。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 12.7,
+  "driveMinFree": 17,
+  "driveMinJam": 30
+ },
+ {
+  "id": "R0110",
+  "placeId": "pending:tanglin-bukit-damansara-",
+  "name": "Tanglin (Bukit Damansara)",
+  "nameJa": "タングリン",
+  "cat": "ナシレマ",
+  "michelin": "sel",
+  "rating": null,
+  "reviewCount": 0,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Damansara Heights",
+  "address": "57G, Jalan Medan Setia 1, Bukit Damansara",
+  "lat": 3.1503107,
+  "lng": 101.6533012,
+  "geoPrecision": "building",
+  "priceLunch": [
+   10,
+   25
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日7-19時・現金のみ。大衆価格帯(RM10-20台)。夜営業なし。Google実値は同名他店(Cenderasari店4.8×2,296)との混同を避けるため未採用。",
+  "editorNote": "1948年創業・家族経営2代目のナシレマの老舗。ミシュランSelected 2026。同名の他店舗と混同注意(掲載はBukit Damansara店)。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "マレーシア料理",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 5,
+  "driveMinFree": 8,
+  "driveMinJam": 14
+ },
+ {
+  "id": "R0111",
+  "placeId": "ChIJfcnkAIw3zDEREDealx6_YXk",
+  "name": "Tenmasa",
+  "nameJa": "テンマサ",
+  "cat": "天ぷら",
+  "michelin": "sel",
+  "rating": 4.8,
+  "reviewCount": 499,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Platinum Park Tower1",
+  "venueType": "tower",
+  "area": "KLCC",
+  "address": "Unit 3.3 (annexe), 2F, Tower 1, Platinum Park, 11 Persiaran KLCC",
+  "lat": 3.1555176,
+  "lng": 101.7188475,
+  "geoPrecision": "building",
+  "priceLunch": [
+   398,
+   398
+  ],
+  "priceDinner": [
+   398,
+   568
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月-土12-15時/18-22:30・日休。天ぷらおまかせRM398〜RM568++。10席カウンター実演。",
+  "editorNote": "天ぷら専門のおまかせカウンター。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 13.7,
+  "driveMinFree": 17,
+  "driveMinJam": 31
+ },
+ {
+  "id": "R0112",
+  "placeId": "pending:teochew-lao-er",
+  "name": "Teochew Lao Er",
+  "nameJa": "テオチュー・ラオアー",
+  "cat": "潮州",
+  "michelin": "sel",
+  "rating": 4.3,
+  "reviewCount": 1278,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Pudu",
+  "address": "6 Jalan Brunei, Pudu",
+  "lat": 3.1387218,
+  "lng": 101.713076,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   40
+  ],
+  "priceDinner": [
+   20,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "11-21:30・水曜休(毎週か隔週かは出典不一致・要現地確認)。大衆価格帯RM20-40。",
+  "editorNote": "1984年屋台発祥、2011年に3代目が店舗化したPuduの潮州料理の看板店。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 12.9,
+  "driveMinFree": 17,
+  "driveMinJam": 30
+ },
+ {
+  "id": "R0113",
+  "placeId": "pending:the-brasserie",
+  "name": "The Brasserie",
+  "nameJa": "ザ・ブラッスリー",
+  "cat": "フレンチ",
+  "michelin": "sel",
+  "rating": null,
+  "reviewCount": 0,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "The St. Regis",
+  "venueType": "hotel",
+  "area": "KL Sentral",
+  "address": "2F, The St. Regis, 6 Jalan Stesen Sentral 2, Kuala Lumpur Sentral",
+  "lat": 3.1370138,
+  "lng": 101.6888572,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "毎日6:30-22:30。日曜ジャズブランチRM280(ノンアル)/RM450。Google実値未取得(TripAdvisor4.5×342の参考値のみ)。",
+  "editorNote": "セントレジス2Fのモダンフレンチ。欧亜の名店を渡ったシェフによる地中海・アジアの影響。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 9.2,
+  "driveMinFree": 13,
+  "driveMinJam": 23
+ },
+ {
+  "id": "R0114",
+  "placeId": "ChIJK3HVgFpJzDERtnM_vbJnJc0",
+  "name": "Ushi",
+  "nameJa": "ウシ",
+  "cat": "日本料理（割烹）",
+  "michelin": "sel",
+  "rating": 4.5,
+  "reviewCount": 282,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "The St. Regis",
+  "venueType": "hotel",
+  "area": "KL Sentral",
+  "address": "3A, The St. Regis, 6 Jalan Stesen Sentral 2, Kuala Lumpur Sentral",
+  "lat": 3.1369182,
+  "lng": 101.6887494,
+  "geoPrecision": "building",
+  "priceLunch": [
+   550,
+   550
+  ],
+  "priceDinner": [
+   988,
+   1400
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "火休・営業は曜日で二部制が変動。昼3品RM550、夜は尾崎牛8品RM988/10品RM1,400。★値は同住所TAKAとの共有リスティング由来の参考値。",
+  "editorNote": "黒い波のファサードの奥、12席カウンターの懐石おまかせ。尾崎牛が主役。ミシュランSelected 2026。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": [],
   "driveKm": 8.8,
   "driveMinFree": 12,
   "driveMinJam": 22

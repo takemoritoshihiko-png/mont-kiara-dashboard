@@ -456,3 +456,16 @@ describe('matchesDriveTime — MKからの渋滞込み目安で絞る', () => {
     expect(matchesDriveTime({ driveMinJam: null }, '15')).toBe(false);
   });
 });
+
+// 列を足したらパーサにも足す(2026-08-08のdrive列で実際に落ちた) — 再発防止の契約
+describe('parseRestaurants carries the drive-time columns', () => {
+  it('keeps driveKm/minFree/minJam and passes null through (never 0)', () => {
+    const rows = JSON.stringify([{ id:'R0001', name:'x', address:'a', lat:3.1, lng:101.6,
+      driveKm: 13.6, driveMinFree: 17, driveMinJam: 30 },
+      { id:'R0002', name:'y', address:'a', lat:3.1, lng:101.61 }]);
+    const [a, b] = parseRestaurants(rows);
+    expect(a.driveMinJam).toBe(30);
+    expect(a.driveKm).toBe(13.6);
+    expect(b.driveMinJam).toBeNull();
+  });
+});
