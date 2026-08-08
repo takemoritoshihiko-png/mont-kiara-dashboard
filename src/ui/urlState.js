@@ -54,7 +54,7 @@ export function buildQuery({ mode, layer, sel, tab, f } = {}) {
 const FILTER_IDS = [
   'fSearch', 'fArea', 'fRent', 'fTier', 'fSalePsf', 'fYear', 'fAge', 'fSize',
   'fStatus', 'fSchoolAge', 'fCurriculum', 'fFee', 'fNla', 'fOpenYear',
-  'fAnchor', 'fCatGroup', 'fMichelin', 'fPriceBand', 'fDiningArea', 'fVenueType',
+  'fAnchor', 'fCatGroup', 'fMichelin', 'fPriceBand', 'fDiningArea', 'fVenueType', 'fDriveTime',
 ];
 
 /** The non-empty filter controls, serialized. '' when nothing is set. */

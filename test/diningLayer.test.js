@@ -403,8 +403,14 @@ describe('the dining detail panel', () => {
     expect(h).toContain('rel="noopener"');
   });
 
-  it('offers no link at all when the record has no Place ID', () => {
-    expect(detailHtml(eat({ placeId: '' }))).not.toContain('info-links');
+  it('without a Place ID there is no Google Maps link — but Waze still works off the coordinates', () => {
+    const h = detailHtml(eat({ placeId: '' }));
+    expect(h).not.toContain('google.com/maps');
+    expect(h).toContain('waze.com/ul');
+  });
+
+  it('without coordinates there is no Waze link either', () => {
+    expect(detailHtml(eat({ placeId: '', lat: null, lng: null }))).not.toContain('waze.com');
   });
 });
 
@@ -434,5 +440,19 @@ describe('the Google rating links out to the restaurant on Google Maps', () => {
   it('stays plain text for a pending placeId and for an unrated store', () => {
     expect(detailHtml(eatWith({ placeId: 'pending:somewhere' }))).not.toContain('kv-link');
     expect(detailHtml(eatWith({ rating: null, reviewCount: 0 }))).not.toContain('kv-link');
+  });
+});
+
+// ── 所要時間フィルタ + ビブ識別（ミシュラン網羅 P4・2026-08-08） ──────
+import { matchesDriveTime } from '../src/domain/filter.js';
+describe('matchesDriveTime — MKからの渋滞込み目安で絞る', () => {
+  it('no limit passes everything, including unknown', () => {
+    expect(matchesDriveTime({ driveMinJam: 41 }, '')).toBe(true);
+    expect(matchesDriveTime({ driveMinJam: null }, '')).toBe(true);
+  });
+  it('bounded limit keeps within, drops beyond, and is honest about unknown', () => {
+    expect(matchesDriveTime({ driveMinJam: 15 }, '15')).toBe(true);
+    expect(matchesDriveTime({ driveMinJam: 16 }, '15')).toBe(false);
+    expect(matchesDriveTime({ driveMinJam: null }, '15')).toBe(false);
   });
 });

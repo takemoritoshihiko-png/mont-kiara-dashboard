@@ -313,6 +313,17 @@ function matchesCommercial(c, f){
  * the michelin tier and the price band all come from the ledger's own columns,
  * so none of them needs a keyword heuristic.
  */
+/**
+ * 所要時間フィルタ — Mont Kiaraから車で「渋滞込み目安(driveMinJam)」が
+ * limit分以内か。値が無い(null)店は絞り込みに応えられないので、上限を
+ * 指定されたときは正直に外す(不明を「近い」と偽らない)。
+ */
+export function matchesDriveTime(c, limit){
+  if(!limit) return true;
+  const m = c && c.driveMinJam;
+  return m != null && m <= Number(limit);
+}
+
 export function matchesDining(c, f){
   if(f.catGroup && c.catGroup !== f.catGroup) return false;
   if(!matchesMichelin(c, f.michelin)) return false;
@@ -326,6 +337,7 @@ export function matchesDining(c, f){
   // ledger's labels do not tile the map finely enough to answer the second.
   if(!matchesDiningNear(c, f.near)) return false;
   if(f.venueType && c.venueType !== f.venueType) return false;
+  if(!matchesDriveTime(c, f.driveTime)) return false;
   // kidOk is 0/1 in restaurants.json. The filter is one-way — 「子連れ◎のみ」
   // narrows, it never asks for the places that are NOT child-friendly.
   if(f.kidOnly && c.kidOk !== 1) return false;

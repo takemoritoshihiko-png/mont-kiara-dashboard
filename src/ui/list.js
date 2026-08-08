@@ -50,7 +50,7 @@ const LAYER_CONTROLS = {
   // in matchesFilters() for why the two must not be shared.
   dining: [
     ['fCatGroup', 'カテゴリ'], ['fMichelin', 'ミシュラン'], ['fPriceBand', '価格帯'],
-    ['fDiningArea', 'エリア'], ['fVenueType', '施設'],
+    ['fDiningArea', 'エリア'], ['fVenueType', '施設'], ['fDriveTime', '車で'],
   ],
 };
 
@@ -91,6 +91,7 @@ export function readCriteria(){
     c.priceBand = val('fPriceBand');
     c.priceBasis = currentBudgetBasis();
     c.diningArea = val('fDiningArea');
+    c.driveTime = val('fDriveTime');
     // 「近く: Mont Kiara」 lives in state, not in a control: it is set by the
     // map's area jump, and the chip is what removes it again.
     c.near = diningNear;

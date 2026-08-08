@@ -127,6 +127,10 @@ export const MARKER_COLORS = {
 // so "there is a starred place here" is readable without opening anything.
 export const MICHELIN_STAR_BORDER = '#c9a227';
 
+// ビブグルマンも縁で読めるように(2026-08-08 ミシュラン網羅と同時採用)。
+// 商業のオレンジ(#e8710a)より暗い橙にして、四角い商業マーカーと混ざらない。
+export const MICHELIN_BIB_BORDER = '#b45309';
+
 // Cluster bubbles reuse the marker colours so the type stays readable when
 // several markers collapse into one.
 const CLUSTER_STYLE = {
@@ -420,8 +424,8 @@ function mkMarker(c) {
     // silently un-rotate the pin.
     const csz = 22;
     const mb = MICHELIN_BADGES[c.michelin];
-    const border = (c.michelin === '1star' || c.michelin === '2star')
-      ? MICHELIN_STAR_BORDER : MARKER_COLORS.dining.border;
+    const border = (c.michelin === '1star' || c.michelin === '2star') ? MICHELIN_STAR_BORDER
+      : c.michelin === 'bib' ? MICHELIN_BIB_BORDER : MARKER_COLORS.dining.border;
     // 訪問済みの店はピン自体に緑の✓バッジ（2026-08-07 依頼: 地図を見るだけで
     // 「もう行った」が分かるように）。記録が変わると applyFilters→rebuild が
     // 走るので、押した瞬間にバッジも追随する。色は再訪意向「また行く」と同じ
@@ -550,6 +554,7 @@ export function updateLegend(){
   if(eatout){
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>飲食店</div>`;
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-color:${MICHELIN_STAR_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ミシュラン星付き（金の縁）</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-color:${MICHELIN_BIB_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ビブグルマン（橙の縁）</div>`;
     h+=`<div class="map-legend-item">数字の丸 = 重なった店。押すと開きます</div>`;
   } else {
     // The condo pin carries year (fill) + tier (letter/ring): explain both

@@ -36,7 +36,10 @@
   "vox": {
    "pros": "厨房ツアーから始まる導線と、他国では再現できない土着食材の物語性。夕景を含めた2.5時間の体験全体。",
    "cons": "「一皿ごとに驚きはあるが、心を打つ決定打がない」という指摘が複数。サービスが台本的で温度がない、食事中に伝票を持ってこられた、冷房が寒すぎる、という声も。"
-  }
+  },
+  "driveKm": 13.6,
+  "driveMinFree": 17,
+  "driveMinJam": 30
  },
  {
   "id": "R0002",
@@ -73,7 +76,10 @@
   "vox": {
    "pros": "サービスの水準がKLで突出。ソムリエの提案、自家製パン、シェフ自ら仕入れる魚介。",
    "cons": "「見た目は美しいがwowがない」「塩気が強い」「苦味が残る皿があった」。価格への期待値との差で減点する層が一定数いる。"
-  }
+  },
+  "driveKm": 8,
+  "driveMinFree": 12,
+  "driveMinJam": 22
  },
  {
   "id": "R0003",
@@ -112,7 +118,10 @@
   "vox": {
    "pros": "北・東・中央・南を巡る構成と、皿ごとの土地の物語。ヴィーガン対応も柔軟。",
    "cons": "肉料理の塩梅が甘いという指摘。入口で放置された、デポジット（RM300/人）の運用でもめた、というトラブル報告あり。"
-  }
+  },
+  "driveKm": 11.8,
+  "driveMinFree": 16,
+  "driveMinJam": 29
  },
  {
   "id": "R0004",
@@ -149,7 +158,10 @@
   "vox": {
    "pros": "一つ星獲得後にコースを刷新し、以前より明確に良くなったという再訪者の評価。誕生日対応も柔軟。",
    "cons": "「美しいが味に印象が残らない」という声。マネージャーの接客にムラがあるという指摘。"
-  }
+  },
+  "driveKm": 7.4,
+  "driveMinFree": 11,
+  "driveMinJam": 20
  },
  {
   "id": "R0005",
@@ -186,7 +198,10 @@
   "vox": {
    "pros": "郷愁を呼ぶ地元の味を現代的に再構成する手つき。事前のWhatsAppでのやり取りが緻密。",
    "cons": "周辺環境が店の格と釣り合っていない、到着時の受け入れとアクセスに難がある、という指摘。"
-  }
+  },
+  "driveKm": 7.3,
+  "driveMinFree": 11,
+  "driveMinJam": 19
  },
  {
   "id": "R0006",
@@ -223,7 +238,10 @@
   "vox": {
    "pros": "9皿でタイ料理の歴史を辿る構成。辛さ調整に応じる柔軟さ。窓際の夜景。",
    "cons": "調整してもなお全体に辛い。辛味耐性が低い人には厳しいという声。"
-  }
+  },
+  "driveKm": 13,
+  "driveMinFree": 19,
+  "driveMinJam": 33
  },
  {
   "id": "R0007",
@@ -262,7 +280,10 @@
   "vox": {
    "pros": "専用エレベーターから始まる設えとツインタワーの眺望。牛・フォアグラの不食に個別対応。",
    "cons": "ノンアルペアリングが重く、期待した爽快感がなかったという声。件数91件で評価が定まっていない。"
-  }
+  },
+  "driveKm": 10.3,
+  "driveMinFree": 14,
+  "driveMinJam": 25
  },
  {
   "id": "R0008",
@@ -299,7 +320,10 @@
   "vox": {
    "pros": "圧倒的なポーションとマレー料理の直球。スタッフを名指しで褒めるレビューが際立って多い。",
    "cons": "2人だと確実に頼みすぎる。内装が過剰という好みの分かれ。"
-  }
+  },
+  "driveKm": 13,
+  "driveMinFree": 16,
+  "driveMinJam": 30
  },
  {
   "id": "R0009",
@@ -336,7 +360,10 @@
   "vox": {
    "pros": "点心の質と窓際席の眺望。北京ダックが最高だったという声。フォーシーズンズ水準のサービス。",
    "cons": "マレーシアの相場からすると明確に高い。"
-  }
+  },
+  "driveKm": 13.6,
+  "driveMinFree": 17,
+  "driveMinJam": 30
  },
  {
   "id": "R0010",
@@ -373,7 +400,10 @@
   "vox": {
    "pros": "ジャファナ式カニカレーと無料のラッサム。19年の蓄積。",
    "cons": "席の時間制限を電話でも到着時にも繰り返され、8時に追い立てられたという不満。魚料理に生臭さを感じたという声。"
-  }
+  },
+  "driveKm": 4.8,
+  "driveMinFree": 8,
+  "driveMinJam": 14
  },
  {
   "id": "R0011",
@@ -412,7 +442,10 @@
   "vox": {
    "pros": "オープンキッチンの薪火が見える席。ポーションが大きく2人でちょうど。皿ごとの説明が丁寧。",
    "cons": "明確に高い。特別な日向けという位置づけで、日常使いには向かない。"
-  }
+  },
+  "driveKm": 12.5,
+  "driveMinFree": 15,
+  "driveMinJam": 27
  },
  {
   "id": "R0012",
@@ -451,7 +484,10 @@
   "vox": {
    "pros": "熟成と食感の実験。13席の親密さ。buduクラッカーなど独創性。",
    "cons": "提供が速すぎて1〜2分で次が来る。カレーパスタなど好みが分かれる皿がある。RM650++に対する評価が割れる。"
-  }
+  },
+  "driveKm": 10.8,
+  "driveMinFree": 15,
+  "driveMinJam": 27
  },
  {
   "id": "R0013",
@@ -490,7 +526,10 @@
   "vox": {
    "pros": "目の前で焼く備長炭。ハンウ牛、シマアジ、ミニバーガー、カヤトースト×フォアグラ。",
    "cons": "提供に30〜45分かかる。備長炭の違いが分からなかったという声。季節のスナックが見た目倒れという指摘。"
-  }
+  },
+  "driveKm": 12.3,
+  "driveMinFree": 17,
+  "driveMinJam": 30
  },
  {
   "id": "R0014",
@@ -530,7 +569,10 @@
   "vox": {
    "pros": "客2人に料理人1人という体制。専属フォレジャーの食材。2026年のサービス賞受賞。",
    "cons": "件数35件で判断材料が絶対的に不足。高評価しかないこと自体が判断を難しくしている。"
-  }
+  },
+  "driveKm": 13,
+  "driveMinFree": 16,
+  "driveMinJam": 29
  },
  {
   "id": "R0015",
@@ -567,7 +609,10 @@
   "vox": {
    "pros": "ルンダンとナシゴレン。マレー・ジャワの家庭料理として誠実。提供が速い。",
    "cons": "「素材は良いが慣れが要る味」「照明が暗く食器が清潔でなかった」「評判ほどではない」という指摘が並ぶ。"
-  }
+  },
+  "driveKm": 12.8,
+  "driveMinFree": 17,
+  "driveMinJam": 30
  },
  {
   "id": "R0016",
@@ -604,7 +649,10 @@
   "vox": {
    "pros": "炭の香りと皮のパリパリ感。回転は速く、行列も15分程度。",
    "cons": "屋台構えでチャーシュー飯RM19は高い、焼豚RM28で身がパサついた、店員の大半が無関心、という不満が具体的。★3.8はこの積み重ね。"
-  }
+  },
+  "driveKm": 12.9,
+  "driveMinFree": 17,
+  "driveMinJam": 31
  },
  {
   "id": "R0017",
@@ -641,7 +689,10 @@
   "vox": {
    "pros": "タンドールの鯛と海老カレー。ケララの味をそのまま持ってきている。",
    "cons": "ロンドン・NY並みの価格設定。殻の破片が入っていた、牡蠣が塩辛かったという報告。"
-  }
+  },
+  "driveKm": 12.8,
+  "driveMinFree": 18,
+  "driveMinJam": 32
  },
  {
   "id": "R0018",
@@ -678,7 +729,10 @@
   "vox": {
    "pros": "スモークフムスと羊。質に対して価格が良心的という評価が繰り返し出る。ワイン持込無料。",
    "cons": "ミシュラン掲載店としてはサービスが行き届かない場面がある。平日はランチ営業なし。"
-  }
+  },
+  "driveKm": 6.8,
+  "driveMinFree": 10,
+  "driveMinJam": 18
  },
  {
   "id": "R0019",
@@ -715,7 +769,10 @@
   "vox": {
    "pros": "南インド菜食の本格。ドーサ、イドゥリ、ターリー。カンナダ語が通じるスタッフ。",
    "cons": "相場より高いという指摘が複数。店内環境は簡素で快適さは期待できない。"
-  }
+  },
+  "driveKm": 9.4,
+  "driveMinFree": 14,
+  "driveMinJam": 25
  },
  {
   "id": "R0020",
@@ -752,7 +809,10 @@
   "vox": {
    "pros": "タンドーリチキンとビリヤニ。ハラール認証。手で食べる人向けの設備も丁寧。",
    "cons": "シェア皿のポーションが価格の割に小さい。サービスにムラ。わざわざ行くほどではないという声。"
-  }
+  },
+  "driveKm": 13.2,
+  "driveMinFree": 17,
+  "driveMinJam": 30
  },
  {
   "id": "R0021",
@@ -789,7 +849,10 @@
   "vox": {
    "pros": "チキンビリヤニのバナナリーフとカレーの厚み。活気そのものが体験になる。",
    "cons": "おかわりが無料でない点に、バナナリーフ文化として異議を唱える声。"
-  }
+  },
+  "driveKm": 9,
+  "driveMinFree": 14,
+  "driveMinJam": 26
  },
  {
   "id": "R0022",
@@ -826,7 +889,10 @@
   "vox": {
    "pros": "マンゴスチンのサラダ、竹筒の牛、鴨のオレンジ。セリアック対応の知識が確か。",
    "cons": "万人受けしない独自路線。ベトナム料理の定番を期待すると外れる。"
-  }
+  },
+  "driveKm": 12.2,
+  "driveMinFree": 16,
+  "driveMinJam": 29
  },
  {
   "id": "R0023",
@@ -863,7 +929,10 @@
   "vox": {
    "pros": "揚げた魚頭の白濁スープ。冷房あり。店頭に海鮮が並ぶ。",
    "cons": "「1年前より明らかに質が落ちた」「スープが酸っぱかった」という直近の指摘。魚の量が価格に見合わない。"
-  }
+  },
+  "driveKm": 17.6,
+  "driveMinFree": 23,
+  "driveMinJam": 41
  },
  {
   "id": "R0024",
@@ -900,7 +969,10 @@
   "vox": {
    "pros": "鶏腿の柔らかさと飯の香り。ワンタンミーとコピも強い。国際カード可。",
    "cons": "「以前と別物」「生姜ペーストが効いていない」「飯がべたつく」という劣化の指摘。肉が冷たかったという声も。"
-  }
+  },
+  "driveKm": 12.4,
+  "driveMinFree": 16,
+  "driveMinJam": 28
  },
  {
   "id": "R0025",
@@ -937,7 +1009,10 @@
   "vox": {
    "pros": "冷房2フロアで朝10時なら待ちなし。薬膳感が強すぎず、肉骨茶の初回に向く。",
    "cons": "他の肉骨茶店より明確に高い。肉団子が工場製という指摘。"
-  }
+  },
+  "driveKm": 13.1,
+  "driveMinFree": 18,
+  "driveMinJam": 32
  },
  {
   "id": "R0026",
@@ -974,7 +1049,10 @@
   "vox": {
    "pros": "ドライが本命。スープおかわり無料。雨天時に席を移してくれる機転。",
    "cons": "「スープが塩辛い」「肉に脂がなく淡白」「通りがかりでなければ寄る価値はない」。"
-  }
+  },
+  "driveKm": 8.8,
+  "driveMinFree": 13,
+  "driveMinJam": 23
  },
  {
   "id": "R0027",
@@ -983,7 +1061,7 @@
   "nameJa": "ヒンキー土鍋鶏飯",
   "cat": "土鍋鶏飯",
   "catGroup": "鶏飯・ご飯もの",
-  "michelin": "bib",
+  "michelin": "none",
   "tier": 3,
   "extraFlags": [],
   "rating": 4.1,
@@ -1007,11 +1085,14 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "支払いは現金かTouch'n GoのQRのみ。ピークは45分待ち。近隣の駐車はRM5前後。入口が分かりにくい。",
-  "editorNote": "炭火の土鍋が並ぶ光景そのものが目的地。",
+  "editorNote": "炭火の土鍋が並ぶ光景そのものが目的地。 【2026年版で選外】2023-2025はビブグルマン。公式サイト・2026年リストに不在を確認(2026-08-08)。店の実力評価は変わらず台帳に残す。",
   "vox": {
    "pros": "炭火の土鍋のおこげと香り。45分待ちでも整理券の仕組みは機能している。",
    "cons": "「50/50で好みが分かれる」「腸詰の匂いが強い」「豚の胃のスープは冷めていた」。現金かTnGのみ。"
-  }
+  },
+  "driveKm": 13.4,
+  "driveMinFree": 17,
+  "driveMinJam": 31
  },
  {
   "id": "R0028",
@@ -1048,7 +1129,10 @@
   "vox": {
    "pros": "擂茶の濃度が適切。客家料理の品揃え。店主が薦めてくれる。",
    "cons": "「餃子は2個からしか作らない」と言われた、英語が通じない、トムヤム炒飯が塩辛すぎた、という強い不満も。"
-  }
+  },
+  "driveKm": 4.2,
+  "driveMinFree": 7,
+  "driveMinJam": 13
  },
  {
   "id": "R0029",
@@ -1085,7 +1169,10 @@
   "vox": {
    "pros": "ハラール認証で人種を問わず混み合う。飯に鶏の香りが移っている。",
    "cons": "冷凍鶏を疑う声、生姜ソースが生っぽい、RM14は割高、席が狭い。"
-  }
+  },
+  "driveKm": 14,
+  "driveMinFree": 21,
+  "driveMinJam": 38
  },
  {
   "id": "R0030",
@@ -1122,7 +1209,10 @@
   "vox": {
    "pros": "琵琶鴨、八宝鴨、蝦棗。70年の広東料理をそのまま食べられる。",
    "cons": "「琵琶鴨の身が乾いていた」「以前の質ではない」。駐車が困難で、旧館は冷房なし・騒がしい。"
-  }
+  },
+  "driveKm": 12.1,
+  "driveMinFree": 16,
+  "driveMinJam": 28
  },
  {
   "id": "R0031",
@@ -1159,7 +1249,10 @@
   "vox": {
    "pros": "ラクサの出汁と生の血蛤。朝7時から夜10時まで通し。KL Sentral至近。",
    "cons": "「わざわざ来るほどではない」という評価。★4.0はこの層の積み重ね。"
-  }
+  },
+  "driveKm": 9.7,
+  "driveMinFree": 14,
+  "driveMinJam": 25
  },
  {
   "id": "R0032",
@@ -1196,7 +1289,10 @@
   "vox": {
    "pros": "生姜・唐辛子・紹興酒の蛤スープ。Petaling Streetの喧騒とセット。",
    "cons": "行列が長い。人気メニューが早い時間に売り切れる。麺自体は標準的という声。"
-  }
+  },
+  "driveKm": 12.4,
+  "driveMinFree": 16,
+  "driveMinJam": 28
  },
  {
   "id": "R0033",
@@ -1233,7 +1329,10 @@
   "vox": {
    "pros": "鶏の量が多い。開店直後（11時半）は空いていて快適。",
    "cons": "「土鍋の香りが全くない」「油っぽく塩辛い」「事前調理を土鍋で温め直しただけに見える」。"
-  }
+  },
+  "driveKm": 13.5,
+  "driveMinFree": 17,
+  "driveMinJam": 30
  },
  {
   "id": "R0034",
@@ -1270,7 +1369,10 @@
   "vox": {
    "pros": "塩魚入りが定番。常連比率が高い素の一軒。羅漢果のドリンク。",
    "cons": "テント下で日中は暑い。ピークの待ち時間が長い。小鍋は味が明確に落ちるという指摘。"
-  }
+  },
+  "driveKm": 7.6,
+  "driveMinFree": 11,
+  "driveMinJam": 20
  },
  {
   "id": "R0035",
@@ -1307,7 +1409,10 @@
   "vox": {
    "pros": "牛肉の柔らかさとミンチのコク。豚不使用。注文から提供まで速い。",
    "cons": "「ミシュランと言うほどの感動はない」「相席前提」「並ぶ列が日向」「割高」。"
-  }
+  },
+  "driveKm": 12.4,
+  "driveMinFree": 16,
+  "driveMinJam": 28
  },
  {
   "id": "R0036",
@@ -1344,7 +1449,10 @@
   "vox": {
    "pros": "ナスのサンバル、gulai tumis ikan pari、パク・レマ。家庭的な内装と接客。",
    "cons": "塩ダレのイカは半分が衣。揚げ鶏が硬く乾いていた。狭く声が響く。"
-  }
+  },
+  "driveKm": 4.7,
+  "driveMinFree": 8,
+  "driveMinJam": 14
  },
  {
   "id": "R0037",
@@ -1381,7 +1489,10 @@
   "vox": {
    "pros": "kerabu pucuk pakuの完成度。子どもが完食するオムレツ。駐車が楽。",
    "cons": "「テーブルクロスを替えず拭くだけだった」「ayam pongtehの味が薄い」「カレー魚が乾いていた」。"
-  }
+  },
+  "driveKm": 1.9,
+  "driveMinFree": 4,
+  "driveMinJam": 7
  },
  {
   "id": "R0038",
@@ -1418,7 +1529,10 @@
   "vox": {
    "pros": "ニョニャ・ラクサのrempahの厚み。アイス・ニョニャコーヒー。",
    "cons": "「トッピングが貧弱」「魚のすり身が新鮮でない」「辛さが物足りない」。冷房が届かない席がある。"
-  }
+  },
+  "driveKm": 11.5,
+  "driveMinFree": 16,
+  "driveMinJam": 28
  },
  {
   "id": "R0039",
@@ -1455,7 +1569,10 @@
   "vox": {
    "pros": "実際のスパイスを使うカクテルペアリング。KLCC公園ビュー。支配人の説明が丁寧。",
    "cons": "価格帯に対する期待値の管理が要る。日曜休。"
-  }
+  },
+  "driveKm": 13.6,
+  "driveMinFree": 17,
+  "driveMinJam": 30
  },
  {
   "id": "R0040",
@@ -1492,7 +1609,10 @@
   "vox": {
    "pros": "ツナタルタルと海老マンゴーの前菜、デザート。41階の眺望と個室感。",
    "cons": "「和牛とフォアグラがこの価格帯の深みに届かない」「メインが標準的」。サービスが冷たく感じる場面。駐車が高い。"
-  }
+  },
+  "driveKm": 10,
+  "driveMinFree": 14,
+  "driveMinJam": 26
  },
  {
   "id": "R0041",
@@ -1529,7 +1649,10 @@
   "vox": {
    "pros": "熟成鴨の皮、アニョロッティ。質と量に対して価格が妥当という声が多い。",
    "cons": "「リングイネのソースが甘く不自然」「貝が新鮮でなかった」というセットメニューでの失敗報告。"
-  }
+  },
+  "driveKm": 11.1,
+  "driveMinFree": 15,
+  "driveMinJam": 27
  },
  {
   "id": "R0042",
@@ -1566,7 +1689,10 @@
   "vox": {
    "pros": "トリュフバターとパイ、カペリーニ。RM150nettの金曜ランチ。長年の安定感。",
    "cons": "「5人で行って全滅」「フォアグラが崩れた」「魚が生臭い」という強い酷評が1件。件数72件なので1件の影響が大きい。"
-  }
+  },
+  "driveKm": 13.3,
+  "driveMinFree": 16,
+  "driveMinJam": 29
  },
  {
   "id": "R0043",
@@ -1603,7 +1729,10 @@
   "vox": {
    "pros": "海老トースト、フカヒレ餃子、ニンニクのカイラン。90年代の香港式そのまま。",
    "cons": "「食感が詰まって重い」「明確に高い」「ポーションが小さい」「頼んでいないナッツにRM18」。"
-  }
+  },
+  "driveKm": 11.1,
+  "driveMinFree": 15,
+  "driveMinJam": 27
  },
  {
   "id": "R0044",
@@ -1640,7 +1769,10 @@
   "vox": {
    "pros": "フォアグラのタルト。ワインペアリングの質。皿の造形。",
    "cons": "「見た目に対して味の深みがない」「空間が無機質」「価格に対してサービスが届かない」。"
-  }
+  },
+  "driveKm": 6.3,
+  "driveMinFree": 9,
+  "driveMinJam": 17
  },
  {
   "id": "R0045",
@@ -1677,7 +1809,10 @@
   "vox": {
    "pros": "ツインタワー正面の眺望とライブ演奏。ブッラータ、ロブスターのカペリーニ、タラ。",
    "cons": "「ほぼ全皿が塩辛い」「トリュフパスタにトリュフの香りがない」「無料のパンが一番おいしかった」。料理より場所を買う店。"
-  }
+  },
+  "driveKm": 11.6,
+  "driveMinFree": 16,
+  "driveMinJam": 29
  },
  {
   "id": "R0046",
@@ -1686,7 +1821,7 @@
   "nameJa": "割烹 日和",
   "cat": "日本料理",
   "catGroup": "日本・その他アジア",
-  "michelin": "sel",
+  "michelin": "none",
   "tier": 3,
   "extraFlags": [
    "屋号は要確認"
@@ -1712,11 +1847,14 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "Dewakanと同じ48階フロア。昼夜とも営業。日曜休。TRXを望む席あり。",
-  "editorNote": "ミシュラン表記はWagyu Kappo Yoshida。屋号変更の可能性があり予約時に確認を。",
+  "editorNote": "ミシュラン表記はWagyu Kappo Yoshida。屋号変更の可能性があり予約時に確認を。 【ミシュラン区分を修正】2026年公式リスト・現行サイトに不在を確認(2026-08-08)し、掲載表記を外した。",
   "vox": {
    "pros": "和牛の質、締めのカレーライス、48階のTRXビュー。落ち着いた設え。",
    "cons": "「和牛証明書が他の投稿と同一に見える」という疑義。「肉の香りが調味に負けている」「脂が重い」。この価格帯なら他に選択肢があるという声。"
-  }
+  },
+  "driveKm": 13.8,
+  "driveMinFree": 18,
+  "driveMinJam": 32
  },
  {
   "id": "R0047",
@@ -1755,7 +1893,10 @@
   "vox": {
    "pros": "8〜10皿すべてが高水準。豪州ナチュラルワイン。自家製のディナーロール。",
    "cons": "「ハリバットだけが浮いていた」。金土のみ・57件で情報が絶対的に少ない。"
-  }
+  },
+  "driveKm": 9.4,
+  "driveMinFree": 15,
+  "driveMinJam": 27
  },
  {
   "id": "R0048",
@@ -1794,7 +1935,10 @@
   "vox": {
    "pros": "75階の眺望とRM198の3コースランチ。スタッフの案内が丁寧で名指しの称賛が多い。",
    "cons": "会員プログラムの勧誘が入る。ディナーは価格が跳ね上がる。"
-  }
+  },
+  "driveKm": 11.8,
+  "driveMinFree": 16,
+  "driveMinJam": 28
  },
  {
   "id": "R0049",
@@ -1831,7 +1975,10 @@
   "vox": {
    "pros": "屋台の多様性と夜の熱量。ココナッツアイス、サテ、焼き海鮮。",
    "cons": "客引きが強い。ドリアンの匂いが苦手だと厳しい。海鮮は時価で一気に高くなる。"
-  }
+  },
+  "driveKm": 12.5,
+  "driveMinFree": 18,
+  "driveMinJam": 32
  },
  {
   "id": "R0050",
@@ -1868,7 +2015,10 @@
   "vox": {
    "pros": "揚げ鶏の衣と飯のココナッツ感。回転は速く20分程度で着席できる。",
    "cons": "「サンバルが甘く辛くない」。駐車困難、席が密で常に人がぶつかる、注文方式が分かりにくい。"
-  }
+  },
+  "driveKm": 10.5,
+  "driveMinFree": 14,
+  "driveMinJam": 25
  },
  {
   "id": "R0051",
@@ -1905,7 +2055,10 @@
   },
   "catGroup": "日本・その他アジア",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 1.9,
+  "driveMinFree": 5,
+  "driveMinJam": 8
  },
  {
   "id": "R0052",
@@ -1942,7 +2095,10 @@
   },
   "catGroup": "日本・その他アジア",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 1.8,
+  "driveMinFree": 4,
+  "driveMinJam": 8
  },
  {
   "id": "R0053",
@@ -1979,7 +2135,10 @@
   },
   "catGroup": "中華",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 2.9,
+  "driveMinFree": 6,
+  "driveMinJam": 11
  },
  {
   "id": "R0054",
@@ -2016,7 +2175,10 @@
   },
   "catGroup": "洋食・グリル",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 7.1,
+  "driveMinFree": 11,
+  "driveMinJam": 19
  },
  {
   "id": "R0055",
@@ -2053,7 +2215,10 @@
   },
   "catGroup": "日本・その他アジア",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 11.7,
+  "driveMinFree": 16,
+  "driveMinJam": 28
  },
  {
   "id": "R0056",
@@ -2090,7 +2255,10 @@
   },
   "catGroup": "カフェ・デザート",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 1.4,
+  "driveMinFree": 3,
+  "driveMinJam": 6
  },
  {
   "id": "R0057",
@@ -2127,7 +2295,10 @@
   },
   "catGroup": "カフェ・デザート",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 9.8,
+  "driveMinFree": 14,
+  "driveMinJam": 25
  },
  {
   "id": "R0058",
@@ -2164,7 +2335,10 @@
   },
   "catGroup": "インド・スリランカ",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 5.7,
+  "driveMinFree": 11,
+  "driveMinJam": 19
  },
  {
   "id": "R0059",
@@ -2201,7 +2375,10 @@
   },
   "catGroup": "洋食・グリル",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 7.2,
+  "driveMinFree": 11,
+  "driveMinJam": 19
  },
  {
   "id": "R0060",
@@ -2238,7 +2415,10 @@
   },
   "catGroup": "中華",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 7.2,
+  "driveMinFree": 11,
+  "driveMinJam": 21
  },
  {
   "id": "R0061",
@@ -2275,7 +2455,10 @@
   },
   "catGroup": "インド・スリランカ",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 10,
+  "driveMinFree": 14,
+  "driveMinJam": 26
  },
  {
   "id": "R0062",
@@ -2312,7 +2495,10 @@
   },
   "catGroup": "日本・その他アジア",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 1.1,
+  "driveMinFree": 3,
+  "driveMinJam": 5
  },
  {
   "id": "R0063",
@@ -2349,7 +2535,10 @@
   },
   "catGroup": "マレーシア料理",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 9.3,
+  "driveMinFree": 15,
+  "driveMinJam": 27
  },
  {
   "id": "R0064",
@@ -2386,7 +2575,10 @@
   },
   "catGroup": "日本・その他アジア",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 1.8,
+  "driveMinFree": 4,
+  "driveMinJam": 8
  },
  {
   "id": "R0065",
@@ -2423,7 +2615,10 @@
   },
   "catGroup": "洋食・グリル",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 2.4,
+  "driveMinFree": 4,
+  "driveMinJam": 8
  },
  {
   "id": "R0066",
@@ -2460,7 +2655,10 @@
   },
   "catGroup": "洋食・グリル",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 7.3,
+  "driveMinFree": 10,
+  "driveMinJam": 19
  },
  {
   "id": "R0067",
@@ -2497,7 +2695,10 @@
   },
   "catGroup": "カフェ・デザート",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 5.7,
+  "driveMinFree": 11,
+  "driveMinJam": 19
  },
  {
   "id": "R0068",
@@ -2534,7 +2735,10 @@
   },
   "catGroup": "カフェ・デザート",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 8.5,
+  "driveMinFree": 13,
+  "driveMinJam": 24
  },
  {
   "id": "R0069",
@@ -2571,7 +2775,10 @@
   },
   "catGroup": "インド・スリランカ",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 8.2,
+  "driveMinFree": 13,
+  "driveMinJam": 24
  },
  {
   "id": "R0070",
@@ -2608,7 +2815,10 @@
   },
   "catGroup": "洋食・グリル",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 13,
+  "driveMinFree": 16,
+  "driveMinJam": 29
  },
  {
   "id": "R0071",
@@ -2645,7 +2855,10 @@
   },
   "catGroup": "マレーシア料理",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 11.2,
+  "driveMinFree": 15,
+  "driveMinJam": 27
  },
  {
   "id": "R0072",
@@ -2682,7 +2895,10 @@
   },
   "catGroup": "マレーシア料理",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 11.9,
+  "driveMinFree": 16,
+  "driveMinJam": 28
  },
  {
   "id": "R0073",
@@ -2719,7 +2935,10 @@
   },
   "catGroup": "マレーシア料理",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 11.8,
+  "driveMinFree": 15,
+  "driveMinJam": 27
  },
  {
   "id": "R0074",
@@ -2756,7 +2975,10 @@
   },
   "catGroup": "洋食・グリル",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 11.4,
+  "driveMinFree": 15,
+  "driveMinJam": 27
  },
  {
   "id": "R0075",
@@ -2793,7 +3015,10 @@
   },
   "catGroup": "洋食・グリル",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 4.2,
+  "driveMinFree": 10,
+  "driveMinJam": 19
  },
  {
   "id": "R0076",
@@ -2830,7 +3055,10 @@
   },
   "catGroup": "カフェ・デザート",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 8.1,
+  "driveMinFree": 12,
+  "driveMinJam": 22
  },
  {
   "id": "R0077",
@@ -2867,7 +3095,10 @@
   },
   "catGroup": "洋食・グリル",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 6.3,
+  "driveMinFree": 10,
+  "driveMinJam": 18
  },
  {
   "id": "R0078",
@@ -2904,7 +3135,10 @@
   },
   "catGroup": "洋食・グリル",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 7,
+  "driveMinFree": 10,
+  "driveMinJam": 18
  },
  {
   "id": "R0079",
@@ -2941,7 +3175,10 @@
   },
   "catGroup": "洋食・グリル",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 1.9,
+  "driveMinFree": 4,
+  "driveMinJam": 8
  },
  {
   "id": "R0080",
@@ -2978,7 +3215,10 @@
   },
   "catGroup": "カフェ・デザート",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 8.1,
+  "driveMinFree": 13,
+  "driveMinJam": 23
  },
  {
   "id": "R0081",
@@ -3015,7 +3255,10 @@
   },
   "catGroup": "カフェ・デザート",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 7.3,
+  "driveMinFree": 11,
+  "driveMinJam": 20
  },
  {
   "id": "R0082",
@@ -3052,7 +3295,10 @@
   },
   "catGroup": "カフェ・デザート",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 8.4,
+  "driveMinFree": 13,
+  "driveMinJam": 24
  },
  {
   "id": "R0083",
@@ -3060,7 +3306,7 @@
   "name": "Dancing Fish",
   "nameJa": "ダンシング・フィッシュ",
   "cat": "インドネシア",
-  "michelin": "none",
+  "michelin": "sel",
   "rating": 4.6,
   "reviewCount": 2231,
   "natCode": 2,
@@ -3082,14 +3328,17 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "11:30-22:00通し。サテRM32.90・アヤムパンガン半羽RM54・BBQビーフリブRM89.90を数品シェアの積算。",
-  "editorNote": "2010年創業、西ジャワ（スンダ）料理をファインダイニング水準に昇華。ファミリー利用の言及あり。",
+  "editorNote": "2010年創業、西ジャワ（スンダ）料理をファインダイニング水準に昇華。ミシュランSelected 2026現役(公式ページ確認済み)。ファミリー利用の言及あり。",
   "vox": {
    "pros": "",
    "cons": ""
   },
   "catGroup": "日本・その他アジア",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 6.6,
+  "driveMinFree": 10,
+  "driveMinJam": 18
  },
  {
   "id": "R0084",
@@ -3126,7 +3375,10 @@
   },
   "catGroup": "日本・その他アジア",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 1.6,
+  "driveMinFree": 4,
+  "driveMinJam": 7
  },
  {
   "id": "R0085",
@@ -3163,7 +3415,10 @@
   },
   "catGroup": "洋食・グリル",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 4.9,
+  "driveMinFree": 8,
+  "driveMinJam": 14
  },
  {
   "id": "R0086",
@@ -3200,7 +3455,10 @@
   },
   "catGroup": "中華",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 5.3,
+  "driveMinFree": 8,
+  "driveMinJam": 14
  },
  {
   "id": "R0087",
@@ -3237,7 +3495,10 @@
   },
   "catGroup": "日本・その他アジア",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 6.4,
+  "driveMinFree": 10,
+  "driveMinJam": 18
  },
  {
   "id": "R0088",
@@ -3274,7 +3535,10 @@
   },
   "catGroup": "中華",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 10.8,
+  "driveMinFree": 14,
+  "driveMinJam": 26
  },
  {
   "id": "R0089",
@@ -3311,7 +3575,10 @@
   },
   "catGroup": "日本・その他アジア",
   "tier": 0,
-  "extraFlags": []
+  "extraFlags": [],
+  "driveKm": 6.9,
+  "driveMinFree": 10,
+  "driveMinJam": 18
  },
  {
   "id": "R0090",
@@ -3350,7 +3617,10 @@
    "cons": ""
   },
   "catGroup": "洋食・グリル",
-  "tier": 0
+  "tier": 0,
+  "driveKm": 6.5,
+  "driveMinFree": 12,
+  "driveMinJam": 21
  },
  {
   "id": "R0091",
@@ -3389,7 +3659,10 @@
    "cons": ""
   },
   "catGroup": "日本・その他アジア",
-  "tier": 0
+  "tier": 0,
+  "driveKm": 11.3,
+  "driveMinFree": 16,
+  "driveMinJam": 28
  },
  {
   "id": "R0092",
@@ -3428,7 +3701,10 @@
    "cons": ""
   },
   "catGroup": "洋食・グリル",
-  "tier": 0
+  "tier": 0,
+  "driveKm": 9.5,
+  "driveMinFree": 13,
+  "driveMinJam": 24
  },
  {
   "id": "R0093",
@@ -3436,7 +3712,7 @@
   "name": "Sushi Taka",
   "nameJa": "鮨たか",
   "cat": "寿司",
-  "michelin": "none",
+  "michelin": "sel",
   "rating": 4.5,
   "reviewCount": 290,
   "natCode": 3,
@@ -3458,7 +3734,7 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "火休。おまかせ主体の最高級帯・RM実例未取得。",
-  "editorNote": "東京三ツ星「鮨さいとう」系譜のカウンター。Tatler Best 20 2025選出。Ozaki牛も提供。",
+  "editorNote": "東京三ツ星「鮨さいとう」系譜のカウンター。ミシュランSelected 2026現役(公式ページ確認済み)+Tatler Best 20 2025。Ozaki牛も提供。",
   "extraFlags": [
    "Tatler Best 20"
   ],
@@ -3467,6 +3743,9 @@
    "cons": ""
   },
   "catGroup": "日本・その他アジア",
-  "tier": 0
+  "tier": 0,
+  "driveKm": 8.8,
+  "driveMinFree": 12,
+  "driveMinJam": 22
  }
 ]

@@ -580,7 +580,7 @@ button,input,select{font-family:inherit}
   /* 飲食 (D3/UX2): its four dropdowns, the 子連れ toggle and the 昼の予算 basis
      toggle. The generic rules above already reach them; they are named so this
      block visibly covers the layer. */
-  #fCatGroup,#fMichelin,#fPriceBand,#fDiningArea,#toggleKidOk,#toggleDayBudget{min-height:40px}
+  #fCatGroup,#fMichelin,#fPriceBand,#fDiningArea,#fDriveTime,#toggleKidOk,#toggleDayBudget{min-height:40px}
   /* Two chips (michelin + category) now share the row under a dining name. */
   .card-chips .card-chip{max-width:calc(50% - var(--s1))}
 
@@ -801,7 +801,7 @@ button,input,select{font-family:inherit}
              district LABEL; 「近く: ○○」 (the jump bar's radius filter) is a
              separate axis and the two combine. -->
         <div class="filter-row" data-layer-only="dining" style="display:none">
-          <div class="filter-group"><label for="fDiningArea">エリア</label><select id="fDiningArea" onchange="applyFilters()"><option value="">すべて</option></select></div>
+          <div class="filter-group"><label for="fDiningArea">エリア</label><select id="fDiningArea" onchange="applyFilters()"><option value="">すべて</option></select></div><div class="filter-group"><label for="fDriveTime" title="Mont Kiaraから車・渋滞込み目安">車で(MKから)</label><select id="fDriveTime" onchange="applyFilters()"><option value="">すべて</option><option value="15">〜15分</option><option value="30">〜30分</option><option value="45">〜45分</option></select></div>
           <div class="filter-group"><label for="fVenueType">施設タイプ</label><select id="fVenueType" onchange="applyFilters()"><option value="">すべて</option></select></div>
         </div>
         <div class="filter-row" data-layer-only="dining" style="display:none">

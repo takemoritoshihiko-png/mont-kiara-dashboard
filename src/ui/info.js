@@ -201,6 +201,8 @@ function diningDetail(c){
     kv('ミシュラン', esc(MICHELIN_LABELS[c.michelin] || '—'), c.michelin === 'none' || !c.michelin),
     kv('Google評価', ratingCell, !(c.rating > 0)),
     kv('昼 / 1人', esc(lunch || '—'), !lunch),
+    // Mont Kiaraから車の渋滞込み目安(OSRM free-flow×1.8)。無い店は正直に—。
+    kv('車で(MKから)', c.driveMinJam != null ? esc('約'+c.driveMinJam+'分 ('+c.driveKm+'km)') : '—', c.driveMinJam == null, { hint: 'Mont Kiara中心からの目安。渋滞を含めた概算(空いていれば'+(c.driveMinFree!=null?c.driveMinFree+'分':'—')+')' }),
     kv('夜 / 1人', esc(dinner || '—'), !dinner),
     kv('カテゴリ', esc(c.cat || c.catGroup || '—'), !(c.cat || c.catGroup)),
     // kidOk: 1 = family-friendly, 0 = a judged "suits adults" (v9's wording),
@@ -288,6 +290,8 @@ function linksHtml(c){
     // Google Maps is where the hours, the phone number and the route live.
     const g = googleMapsUrl(c.placeId);
     if(g) links.push(linkBtn(g, 'Google マップ'));
+    // KLの運転ナビはWazeが実用(2026-08-08採用)。座標があれば直接ナビ起動リンク。
+    if(c.lat != null) links.push(linkBtn('https://waze.com/ul?ll=' + c.lat + ',' + c.lng + '&navigate=yes', 'Wazeでナビ'));
   } else {
     if(c.homepageUrl) links.push(linkBtn(c.homepageUrl, '公式サイト'));
     if(c.ipropertyUrl) links.push(linkBtn(c.ipropertyUrl, 'iProperty'));

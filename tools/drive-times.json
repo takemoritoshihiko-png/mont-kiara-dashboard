@@ -1,0 +1,475 @@
+{
+ "base": {
+  "lat": 3.171,
+  "lng": 101.652
+ },
+ "jamFactor": 1.8,
+ "computed": "2026-08-08",
+ "times": {
+  "Dewakan": {
+   "km": 13.6,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "DC Restaurant": {
+   "km": 8,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "Beta KL": {
+   "km": 11.8,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "akar": {
+   "km": 7.4,
+   "minFree": 11,
+   "minJam": 20
+  },
+  "Terra Dining": {
+   "km": 7.3,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Chim by Chef Noom": {
+   "km": 13,
+   "minFree": 19,
+   "minJam": 33
+  },
+  "Molina": {
+   "km": 10.3,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "De.Wan 1958": {
+   "km": 13,
+   "minFree": 16,
+   "minJam": 30
+  },
+  "Yun House": {
+   "km": 13.6,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Aliyaa": {
+   "km": 4.8,
+   "minFree": 8,
+   "minJam": 14
+  },
+  "Bar.Kar": {
+   "km": 12.5,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Hide": {
+   "km": 10.8,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Atelier Binchotan": {
+   "km": 12.3,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "K KL（圭）": {
+   "km": 13,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Congkak": {
+   "km": 12.8,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Wong Mei Kee": {
+   "km": 12.9,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "Coast by Kayra": {
+   "km": 12.8,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "Leen's": {
+   "km": 6.8,
+   "minFree": 10,
+   "minJam": 18
+  },
+  "MTR 1924": {
+   "km": 9.4,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "ROTI by d'Tandoor": {
+   "km": 13.2,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Sri Nirwana Maju": {
+   "km": 9,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Sao Nam": {
+   "km": 12.2,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Hai Kah Lang": {
+   "km": 17.6,
+   "minFree": 23,
+   "minJam": 41
+  },
+  "Nam Heong Chicken Rice": {
+   "km": 12.4,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Ah Hei Bak Kut Teh": {
+   "km": 13.1,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "Hing Kee Bakuteh": {
+   "km": 8.8,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Heun Kee Claypot": {
+   "km": 13.4,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "Hor Poh Cuisine": {
+   "km": 4.2,
+   "minFree": 7,
+   "minJam": 13
+  },
+  "Chee Meng": {
+   "km": 14,
+   "minFree": 21,
+   "minJam": 38
+  },
+  "Sek Yuen": {
+   "km": 12.1,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Anak Baba": {
+   "km": 9.7,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Lai Foong Lala Noodles": {
+   "km": 12.4,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Foong Lian": {
+   "km": 13.5,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Jalan Ipoh Claypot": {
+   "km": 7.6,
+   "minFree": 11,
+   "minJam": 20
+  },
+  "Sin Kiew Yee Beef Noodles": {
+   "km": 12.4,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "GulaiNya": {
+   "km": 4.7,
+   "minFree": 8,
+   "minJam": 14
+  },
+  "Lama Nyonya": {
+   "km": 1.9,
+   "minFree": 4,
+   "minJam": 7
+  },
+  "Limapulo": {
+   "km": 11.5,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Nadodi": {
+   "km": 13.6,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Entier": {
+   "km": 10,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Skillet KL": {
+   "km": 11.1,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Cilantro": {
+   "km": 13.3,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Elegant Inn": {
+   "km": 11.1,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Ling Long": {
+   "km": 6.3,
+   "minFree": 9,
+   "minJam": 17
+  },
+  "Marini's on 57": {
+   "km": 11.6,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Kappo Hiyori KL": {
+   "km": 13.8,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "Studio Restaurant": {
+   "km": 9.4,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Merdeka Grill": {
+   "km": 11.8,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Jalan Alor": {
+   "km": 12.5,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "Village Park": {
+   "km": 10.5,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Kyomo": {
+   "km": 1.9,
+   "minFree": 5,
+   "minJam": 8
+  },
+  "Kin Gyu": {
+   "km": 1.8,
+   "minFree": 4,
+   "minJam": 8
+  },
+  "MT Hotpot": {
+   "km": 2.9,
+   "minFree": 6,
+   "minJam": 11
+  },
+  "Vin's Restaurant": {
+   "km": 7.1,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Fire Izakaya": {
+   "km": 11.7,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Cotta": {
+   "km": 1.4,
+   "minFree": 3,
+   "minJam": 6
+  },
+  "Aftermeal Desserts": {
+   "km": 9.8,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Jhol KL": {
+   "km": 5.7,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "TTDI Meat Point": {
+   "km": 7.2,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Lamei Hotpot": {
+   "km": 7.2,
+   "minFree": 11,
+   "minJam": 21
+  },
+  "Annalakshmi": {
+   "km": 10,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Kanbe Ramen": {
+   "km": 1.1,
+   "minFree": 3,
+   "minJam": 5
+  },
+  "Ombak Kitchen": {
+   "km": 9.3,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Napa Thai": {
+   "km": 1.8,
+   "minFree": 4,
+   "minJam": 8
+  },
+  "Marta's Kitchen": {
+   "km": 2.4,
+   "minFree": 4,
+   "minJam": 8
+  },
+  "Bocado": {
+   "km": 7.3,
+   "minFree": 10,
+   "minJam": 19
+  },
+  "Lachér Patisserie": {
+   "km": 5.7,
+   "minFree": 11,
+   "minJam": 19
+  },
+  "Antipodean Cafe": {
+   "km": 8.5,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "WTF Restaurant": {
+   "km": 8.2,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Fuego at Troika Sky Dining": {
+   "km": 13,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Nipah (EQ Kuala Lumpur)": {
+   "km": 11.2,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Bijan Bar & Restaurant": {
+   "km": 11.9,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Manja KL": {
+   "km": 11.8,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Heritage Pizza KL": {
+   "km": 11.4,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Positano Risto": {
+   "km": 4.2,
+   "minFree": 10,
+   "minJam": 19
+  },
+  "Common Man Coffee Roasters": {
+   "km": 8.1,
+   "minFree": 12,
+   "minJam": 22
+  },
+  "Brasserie Léon": {
+   "km": 6.3,
+   "minFree": 10,
+   "minJam": 18
+  },
+  "Nero Nero": {
+   "km": 7,
+   "minFree": 10,
+   "minJam": 18
+  },
+  "Vantador | The Dry Aged Steak Boutique": {
+   "km": 1.9,
+   "minFree": 4,
+   "minJam": 8
+  },
+  "Der Backmeister": {
+   "km": 8.1,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Foo Foo Classic Desserts": {
+   "km": 7.3,
+   "minFree": 11,
+   "minJam": 20
+  },
+  "Niko Neko Matcha": {
+   "km": 8.4,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Dancing Fish": {
+   "km": 6.6,
+   "minFree": 10,
+   "minJam": 18
+  },
+  "Miyatake Sanuki Udon": {
+   "km": 1.6,
+   "minFree": 4,
+   "minJam": 7
+  },
+  "Bidou": {
+   "km": 4.9,
+   "minFree": 8,
+   "minJam": 14
+  },
+  "Restaurant Jie": {
+   "km": 5.3,
+   "minFree": 8,
+   "minJam": 14
+  },
+  "Kazu": {
+   "km": 6.4,
+   "minFree": 10,
+   "minJam": 18
+  },
+  "Restaurant Shu": {
+   "km": 10.8,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "KUKI Vegan": {
+   "km": 6.9,
+   "minFree": 10,
+   "minJam": 18
+  },
+  "Potager": {
+   "km": 6.5,
+   "minFree": 12,
+   "minJam": 21
+  },
+  "Chipta 11a": {
+   "km": 11.3,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Table & Apron": {
+   "km": 9.5,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Sushi Taka": {
+   "km": 8.8,
+   "minFree": 12,
+   "minJam": 22
+  }
+ }
+}

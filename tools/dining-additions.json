@@ -1060,7 +1060,7 @@
   "name": "Dancing Fish",
   "nameJa": "ダンシング・フィッシュ",
   "cat": "インドネシア",
-  "michelin": "none",
+  "michelin": "sel",
   "rating": 4.6,
   "reviewCount": 2231,
   "natCode": 2,
@@ -1082,7 +1082,7 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "11:30-22:00通し。サテRM32.90・アヤムパンガン半羽RM54・BBQビーフリブRM89.90を数品シェアの積算。",
-  "editorNote": "2010年創業、西ジャワ（スンダ）料理をファインダイニング水準に昇華。ファミリー利用の言及あり。",
+  "editorNote": "2010年創業、西ジャワ（スンダ）料理をファインダイニング水準に昇華。ミシュランSelected 2026現役(公式ページ確認済み)。ファミリー利用の言及あり。",
   "vox": {
    "pros": "",
    "cons": ""
@@ -1399,7 +1399,7 @@
   "name": "Sushi Taka",
   "nameJa": "鮨たか",
   "cat": "寿司",
-  "michelin": "none",
+  "michelin": "sel",
   "rating": 4.5,
   "reviewCount": 290,
   "natCode": 3,
@@ -1421,7 +1421,7 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "火休。おまかせ主体の最高級帯・RM実例未取得。",
-  "editorNote": "東京三ツ星「鮨さいとう」系譜のカウンター。Tatler Best 20 2025選出。Ozaki牛も提供。",
+  "editorNote": "東京三ツ星「鮨さいとう」系譜のカウンター。ミシュランSelected 2026現役(公式ページ確認済み)+Tatler Best 20 2025。Ozaki牛も提供。",
   "extraFlags": [
    "Tatler Best 20"
   ],

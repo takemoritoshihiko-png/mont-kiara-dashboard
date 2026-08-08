@@ -42,6 +42,10 @@ const CAT_GROUP = {
   '北インド（菜食）': 'インド・スリランカ',
   '南米グリル': '洋食・グリル', 'ピザ': '洋食・グリル', '洋食ビストロ': '洋食・グリル',
   'インドネシア': '日本・その他アジア', 'ビュッフェ（マレー・多国籍）': 'マレーシア料理',
+  // ミシュランKL完全網羅(2026-08-08)で使う cat
+  '天ぷら': '日本・その他アジア', '日本料理（割烹）': '日本・その他アジア',
+  '潮州': '中華', '上海料理': '中華',
+  'イノベーティブ': '洋食・グリル', 'スイス': '洋食・グリル',
 };
 
 // ベース50件のソースは2系統:
@@ -108,6 +112,23 @@ if (fs.existsSync(ADDITIONS)) {
     if (!group) throw new Error(`unknown cat "${a.cat}" (${a.name})`);
     out.push({ id: 'R' + String(out.length + 1).padStart(4, '0'), ...a, catGroup: group, tier: a.tier ?? 0, extraFlags: a.extraFlags ?? [] });
   }
+}
+
+// Mont Kiara からの車所要時間（tools/gen-drive-times.js の成果物）を焼き込む。
+// 無い店(新規追加直後など)は null — UIは null を「—」で出す。数値を捏造しない。
+// 更新手順: convert → gen-drive-times → convert（README「飲食データの更新」参照）。
+const DRIVE = path.join(ROOT, 'tools/drive-times.json');
+if (fs.existsSync(DRIVE)) {
+  const dt = JSON.parse(fs.readFileSync(DRIVE, 'utf8')).times;
+  let hit = 0;
+  for (const r of out) {
+    const d = dt[r.name];
+    r.driveKm = d ? d.km : null;
+    r.driveMinFree = d ? d.minFree : null;
+    r.driveMinJam = d ? d.minJam : null;
+    if (d) hit++;
+  }
+  console.log(`所要時間の焼き込み: ${hit}/${out.length}件`);
 }
 
 fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
