@@ -1,0 +1,1139 @@
+[
+ {
+  "id": "R0001",
+  "name": "Dewakan",
+  "area": "KLCC",
+  "d": 0,
+  "via": "name",
+  "geo": {
+   "lat": 3.1547191,
+   "lng": 101.7185049
+  }
+ },
+ {
+  "id": "R0002",
+  "name": "DC Restaurant",
+  "area": "TTDI",
+  "d": 295,
+  "via": "address",
+  "geo": {
+   "lat": 3.1425984,
+   "lng": 101.624806
+  }
+ },
+ {
+  "id": "R0003",
+  "name": "Beta KL",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0004",
+  "name": "akar",
+  "area": "TTDI",
+  "d": 0,
+  "via": "address",
+  "geo": {
+   "lat": 3.1527392,
+   "lng": 101.620807
+  }
+ },
+ {
+  "id": "R0005",
+  "name": "Terra Dining",
+  "area": "TTDI",
+  "d": 0,
+  "via": "address",
+  "geo": {
+   "lat": 3.1525139,
+   "lng": 101.6201675
+  }
+ },
+ {
+  "id": "R0006",
+  "name": "Chim by Chef Noom",
+  "area": "Imbi",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0007",
+  "name": "Molina",
+  "area": "Bukit Bintang",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0008",
+  "name": "De.Wan 1958",
+  "area": "Jalan Tun Razak",
+  "d": 25,
+  "via": "name",
+  "geo": {
+   "lat": 3.1594534,
+   "lng": 101.7208194
+  }
+ },
+ {
+  "id": "R0009",
+  "name": "Yun House",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0010",
+  "name": "Aliyaa",
+  "area": "Damansara Heights",
+  "d": 68,
+  "via": "address",
+  "geo": {
+   "lat": 3.1490533,
+   "lng": 101.6533357
+  }
+ },
+ {
+  "id": "R0011",
+  "name": "Bar.Kar",
+  "area": "Jalan Tun Razak",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0012",
+  "name": "Hide",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0013",
+  "name": "Atelier Binchotan",
+  "area": "Taman Desa",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0014",
+  "name": "K KL（圭）",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0015",
+  "name": "Congkak",
+  "area": "Bukit Bintang",
+  "d": 0,
+  "via": "name",
+  "geo": {
+   "lat": 3.147991,
+   "lng": 101.710282
+  }
+ },
+ {
+  "id": "R0016",
+  "name": "Wong Mei Kee",
+  "area": "Pudu",
+  "d": 79,
+  "via": "address",
+  "geo": {
+   "lat": 3.1392365,
+   "lng": 101.7111907
+  }
+ },
+ {
+  "id": "R0017",
+  "name": "Coast by Kayra",
+  "area": "Bukit Bintang",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0018",
+  "name": "Leen's",
+  "area": "TTDI",
+  "d": 12,
+  "via": "address",
+  "geo": {
+   "lat": 3.1532181,
+   "lng": 101.6229756
+  }
+ },
+ {
+  "id": "R0019",
+  "name": "MTR 1924",
+  "area": "Brickfields",
+  "d": 20,
+  "via": "address",
+  "geo": {
+   "lat": 3.1316571,
+   "lng": 101.6872202
+  }
+ },
+ {
+  "id": "R0020",
+  "name": "ROTI by d'Tandoor",
+  "area": "Keramat",
+  "d": 712,
+  "via": "address",
+  "geo": {
+   "lat": 3.1608288,
+   "lng": 101.7307867
+  }
+ },
+ {
+  "id": "R0021",
+  "name": "Sri Nirwana Maju",
+  "area": "Bangsar",
+  "d": 10,
+  "via": "address",
+  "geo": {
+   "lat": 3.1310649,
+   "lng": 101.6708943
+  }
+ },
+ {
+  "id": "R0022",
+  "name": "Sao Nam",
+  "area": "Bukit Bintang",
+  "d": 8,
+  "via": "address",
+  "geo": {
+   "lat": 3.1457596,
+   "lng": 101.7075842
+  }
+ },
+ {
+  "id": "R0023",
+  "name": "Hai Kah Lang",
+  "area": "Cheras",
+  "d": 0,
+  "via": "name",
+  "geo": {
+   "lat": 3.1006724,
+   "lng": 101.7413094
+  }
+ },
+ {
+  "id": "R0024",
+  "name": "Nam Heong Chicken Rice",
+  "area": "Chinatown",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0025",
+  "name": "Ah Hei Bak Kut Teh",
+  "area": "Imbi",
+  "d": 502,
+  "via": "name",
+  "geo": {
+   "lat": 3.1428074,
+   "lng": 101.7094437
+  }
+ },
+ {
+  "id": "R0026",
+  "name": "Hing Kee Bakuteh",
+  "area": "Kepong",
+  "d": 325,
+  "via": "address",
+  "geo": {
+   "lat": 3.213398,
+   "lng": 101.6407869
+  }
+ },
+ {
+  "id": "R0027",
+  "name": "Heun Kee Claypot",
+  "area": "Pudu",
+  "d": 0,
+  "via": "address",
+  "geo": {
+   "lat": 3.1327391,
+   "lng": 101.7162985
+  }
+ },
+ {
+  "id": "R0028",
+  "name": "Hor Poh Cuisine",
+  "area": "Segambut",
+  "d": 0,
+  "via": "address",
+  "geo": {
+   "lat": 3.1891491,
+   "lng": 101.653202
+  }
+ },
+ {
+  "id": "R0029",
+  "name": "Chee Meng",
+  "area": "Old Klang Road",
+  "d": 2,
+  "via": "name",
+  "geo": {
+   "lat": 3.0953962,
+   "lng": 101.6752179
+  }
+ },
+ {
+  "id": "R0030",
+  "name": "Sek Yuen",
+  "area": "Pudu",
+  "d": 378,
+  "via": "address",
+  "geo": {
+   "lat": 3.1355939,
+   "lng": 101.7121612
+  }
+ },
+ {
+  "id": "R0031",
+  "name": "Anak Baba",
+  "area": "Brickfields",
+  "d": 0,
+  "via": "address",
+  "geo": {
+   "lat": 3.1328085,
+   "lng": 101.6901846
+  }
+ },
+ {
+  "id": "R0032",
+  "name": "Lai Foong Lala Noodles",
+  "area": "Chinatown",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0033",
+  "name": "Foong Lian",
+  "area": "Pudu",
+  "d": 0,
+  "via": "address",
+  "geo": {
+   "lat": 3.1330056,
+   "lng": 101.716458
+  }
+ },
+ {
+  "id": "R0034",
+  "name": "Jalan Ipoh Claypot",
+  "area": "Segambut",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0035",
+  "name": "Sin Kiew Yee Beef Noodles",
+  "area": "Chinatown",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0036",
+  "name": "GulaiNya",
+  "area": "Damansara Heights",
+  "d": 90,
+  "via": "address",
+  "geo": {
+   "lat": 3.1486948,
+   "lng": 101.6526094
+  }
+ },
+ {
+  "id": "R0037",
+  "name": "Lama Nyonya",
+  "area": "Mont Kiara",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0038",
+  "name": "Limapulo",
+  "area": "Chow Kit",
+  "d": 10,
+  "via": "address",
+  "geo": {
+   "lat": 3.1582671,
+   "lng": 101.6994784
+  }
+ },
+ {
+  "id": "R0039",
+  "name": "Nadodi",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0040",
+  "name": "Entier",
+  "area": "Bangsar",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0041",
+  "name": "Skillet KL",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0042",
+  "name": "Cilantro",
+  "area": "Jalan Tun Razak",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0043",
+  "name": "Elegant Inn",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0044",
+  "name": "Ling Long",
+  "area": "Damansara Heights",
+  "d": 2248,
+  "via": "name",
+  "geo": {
+   "lat": 3.1350249,
+   "lng": 101.6539395
+  }
+ },
+ {
+  "id": "R0045",
+  "name": "Marini's on 57",
+  "area": "KLCC",
+  "d": 0,
+  "via": "name",
+  "geo": {
+   "lat": 3.1564081,
+   "lng": 101.7114459
+  }
+ },
+ {
+  "id": "R0046",
+  "name": "Wagyu Kappo Yoshida",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0047",
+  "name": "Studio Restaurant",
+  "area": "Bangsar",
+  "d": 0,
+  "via": "address",
+  "geo": {
+   "lat": 3.1293387,
+   "lng": 101.6794228
+  }
+ },
+ {
+  "id": "R0048",
+  "name": "Merdeka Grill",
+  "area": "Merdeka 118",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0049",
+  "name": "Jalan Alor",
+  "area": "Bukit Bintang",
+  "d": 51,
+  "via": "address",
+  "geo": {
+   "lat": 3.1459729,
+   "lng": 101.7086681
+  }
+ },
+ {
+  "id": "R0050",
+  "name": "Village Park",
+  "area": "Damansara Utama",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0051",
+  "name": "Kyomo",
+  "area": "Desa Sri Hartamas",
+  "d": 7,
+  "via": "address",
+  "geo": {
+   "lat": 3.1630502,
+   "lng": 101.6506574
+  }
+ },
+ {
+  "id": "R0052",
+  "name": "Kin Gyu",
+  "area": "Desa Sri Hartamas",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0053",
+  "name": "MT Hotpot",
+  "area": "Mont Kiara",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0054",
+  "name": "Vin's Restaurant",
+  "area": "TTDI",
+  "d": 142,
+  "via": "address",
+  "geo": {
+   "lat": 3.1493399,
+   "lng": 101.6298943
+  }
+ },
+ {
+  "id": "R0055",
+  "name": "Fire Izakaya",
+  "area": "KLCC",
+  "d": 68,
+  "via": "address",
+  "geo": {
+   "lat": 3.1597714,
+   "lng": 101.7146535
+  }
+ },
+ {
+  "id": "R0056",
+  "name": "Cotta",
+  "area": "Mont Kiara",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0057",
+  "name": "Aftermeal Desserts",
+  "area": "Damansara Utama",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0058",
+  "name": "Jhol KL",
+  "area": "KL Metropolis",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0059",
+  "name": "TTDI Meat Point",
+  "area": "TTDI",
+  "d": 29,
+  "via": "address",
+  "geo": {
+   "lat": 3.1522934,
+   "lng": 101.6203895
+  }
+ },
+ {
+  "id": "R0060",
+  "name": "Lamei Hotpot",
+  "area": "Desa ParkCity",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0061",
+  "name": "Annalakshmi",
+  "area": "Brickfields",
+  "d": 13,
+  "via": "address",
+  "geo": {
+   "lat": 3.1277159,
+   "lng": 101.6875855
+  }
+ },
+ {
+  "id": "R0062",
+  "name": "Kanbe Ramen",
+  "area": "Mont Kiara",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0063",
+  "name": "Ombak Kitchen",
+  "area": "Bangsar",
+  "d": 14,
+  "via": "address",
+  "geo": {
+   "lat": 3.1275277,
+   "lng": 101.6698047
+  }
+ },
+ {
+  "id": "R0064",
+  "name": "Napa Thai",
+  "area": "Sri Hartamas",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0065",
+  "name": "Marta's Kitchen",
+  "area": "Sri Hartamas",
+  "d": 0,
+  "via": "address",
+  "geo": {
+   "lat": 3.163603,
+   "lng": 101.6519453
+  }
+ },
+ {
+  "id": "R0066",
+  "name": "Bocado",
+  "area": "Damansara Heights",
+  "d": 217,
+  "via": "address",
+  "geo": {
+   "lat": 3.1508983,
+   "lng": 101.6653827
+  }
+ },
+ {
+  "id": "R0067",
+  "name": "Lachér Patisserie",
+  "area": "KL Metropolis",
+  "d": 24,
+  "via": "name",
+  "geo": {
+   "lat": 3.1812159,
+   "lng": 101.6647068
+  }
+ },
+ {
+  "id": "R0068",
+  "name": "Antipodean Cafe",
+  "area": "Bangsar",
+  "d": 8,
+  "via": "address",
+  "geo": {
+   "lat": 3.1320204,
+   "lng": 101.6719224
+  }
+ },
+ {
+  "id": "R0069",
+  "name": "WTF Restaurant",
+  "area": "Bangsar",
+  "d": 637,
+  "via": "address",
+  "geo": {
+   "lat": 3.1381803,
+   "lng": 101.6733326
+  }
+ },
+ {
+  "id": "R0070",
+  "name": "Fuego at Troika Sky Dining",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0071",
+  "name": "Nipah (EQ Kuala Lumpur)",
+  "area": "Bukit Bintang",
+  "d": 17,
+  "via": "address",
+  "geo": {
+   "lat": 3.1529985,
+   "lng": 101.7097767
+  }
+ },
+ {
+  "id": "R0072",
+  "name": "Bijan Bar & Restaurant",
+  "area": "Bukit Bintang",
+  "d": 12,
+  "via": "name",
+  "geo": {
+   "lat": 3.1483924,
+   "lng": 101.7059707
+  }
+ },
+ {
+  "id": "R0073",
+  "name": "Manja KL",
+  "area": "Bukit Bintang",
+  "d": 10,
+  "via": "address",
+  "geo": {
+   "lat": 3.1505821,
+   "lng": 101.7042978
+  }
+ },
+ {
+  "id": "R0074",
+  "name": "Heritage Pizza KL",
+  "area": "Chow Kit",
+  "d": 18,
+  "via": "address",
+  "geo": {
+   "lat": 3.1576944,
+   "lng": 101.6997203
+  }
+ },
+ {
+  "id": "R0075",
+  "name": "Positano Risto",
+  "area": "KL Metropolis",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0076",
+  "name": "Common Man Coffee Roasters",
+  "area": "TTDI",
+  "d": 81,
+  "via": "address",
+  "geo": {
+   "lat": 3.1397578,
+   "lng": 101.6292988
+  }
+ },
+ {
+  "id": "R0077",
+  "name": "Brasserie Léon",
+  "area": "Damansara Heights",
+  "d": 12,
+  "via": "address",
+  "geo": {
+   "lat": 3.1513873,
+   "lng": 101.6634008
+  }
+ },
+ {
+  "id": "R0078",
+  "name": "Nero Nero",
+  "area": "Damansara Heights",
+  "d": 20,
+  "via": "name",
+  "geo": {
+   "lat": 3.1459105,
+   "lng": 101.6618667
+  }
+ },
+ {
+  "id": "R0079",
+  "name": "Vantador | The Dry Aged Steak Boutique",
+  "area": "Desa Sri Hartamas",
+  "d": 76,
+  "via": "address",
+  "geo": {
+   "lat": 3.1624124,
+   "lng": 101.6494503
+  }
+ },
+ {
+  "id": "R0080",
+  "name": "Der Backmeister",
+  "area": "TTDI",
+  "d": 307,
+  "via": "address",
+  "geo": {
+   "lat": 3.1425984,
+   "lng": 101.624806
+  }
+ },
+ {
+  "id": "R0081",
+  "name": "Foo Foo Classic Desserts",
+  "area": "TTDI",
+  "d": 2089,
+  "via": "address",
+  "geo": {
+   "lat": 3.1361414,
+   "lng": 101.6307373
+  }
+ },
+ {
+  "id": "R0082",
+  "name": "Niko Neko Matcha",
+  "area": "Bangsar",
+  "d": 388,
+  "via": "address",
+  "geo": {
+   "lat": 3.1294861,
+   "lng": 101.6701439
+  }
+ },
+ {
+  "id": "R0083",
+  "name": "Dancing Fish",
+  "area": "Bangsar",
+  "d": 1,
+  "via": "address",
+  "geo": {
+   "lat": 3.1431017,
+   "lng": 101.667334
+  }
+ },
+ {
+  "id": "R0084",
+  "name": "Miyatake Sanuki Udon",
+  "area": "Mont Kiara",
+  "d": 1,
+  "via": "address",
+  "geo": {
+   "lat": 3.1699988,
+   "lng": 101.6521467
+  }
+ },
+ {
+  "id": "R0085",
+  "name": "Bidou",
+  "area": "Damansara Heights",
+  "d": 108,
+  "via": "address",
+  "geo": {
+   "lat": 3.1524777,
+   "lng": 101.6499499
+  }
+ },
+ {
+  "id": "R0086",
+  "name": "Restaurant Jie",
+  "area": "Damansara Heights",
+  "d": 279,
+  "via": "address",
+  "geo": {
+   "lat": 3.1523954,
+   "lng": 101.6584455
+  }
+ },
+ {
+  "id": "R0087",
+  "name": "Kazu",
+  "area": "Damansara Heights",
+  "d": 103,
+  "via": "name",
+  "geo": {
+   "lat": 3.1518639,
+   "lng": 101.6644711
+  }
+ },
+ {
+  "id": "R0088",
+  "name": "Restaurant Shu",
+  "area": "Bukit Bintang",
+  "d": 6,
+  "via": "address",
+  "geo": {
+   "lat": 3.155322,
+   "lng": 101.706654
+  }
+ },
+ {
+  "id": "R0089",
+  "name": "KUKI Vegan",
+  "area": "TTDI",
+  "d": 5,
+  "via": "address",
+  "geo": {
+   "lat": 3.1522941,
+   "lng": 101.6227482
+  }
+ },
+ {
+  "id": "R0090",
+  "name": "Potager",
+  "area": "Bamboo Hills",
+  "d": 36,
+  "via": "name",
+  "geo": {
+   "lat": 3.1936202,
+   "lng": 101.6745747
+  }
+ },
+ {
+  "id": "R0091",
+  "name": "Chipta 11a",
+  "area": "Taman Paramount (PJ)",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0092",
+  "name": "Table & Apron",
+  "area": "Damansara Kim (PJ)",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0093",
+  "name": "Sushi Taka",
+  "area": "KL Sentral",
+  "d": 1,
+  "via": "address",
+  "geo": {
+   "lat": 3.1366351,
+   "lng": 101.6887576
+  }
+ },
+ {
+  "id": "R0094",
+  "name": "Bōl",
+  "area": "Bukit Bintang",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0095",
+  "name": "Café Café",
+  "area": "Kampung Attap",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0096",
+  "name": "Dominic",
+  "area": "Chow Kit",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0097",
+  "name": "Frangipaani",
+  "area": "Damansara Heights",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0098",
+  "name": "Gai by Darren Chin",
+  "area": "TTDI",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0099",
+  "name": "Jwala",
+  "area": "Damansara Heights",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0100",
+  "name": "Kayra",
+  "area": "Bangsar",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0101",
+  "name": "La Suisse",
+  "area": "TTDI",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0102",
+  "name": "Li Yen",
+  "area": "Imbi",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0103",
+  "name": "Malai",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0104",
+  "name": "Marble 8",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0105",
+  "name": "Passage Thru India",
+  "area": "Imbi",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0106",
+  "name": "Seed",
+  "area": "Damansara Heights",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0107",
+  "name": "Shanghai Restaurant",
+  "area": "Bukit Bintang",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0108",
+  "name": "Sushi Masa",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0109",
+  "name": "Sushi Ori",
+  "area": "Bukit Bintang",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0110",
+  "name": "Tanglin (Bukit Damansara)",
+  "area": "Damansara Heights",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0111",
+  "name": "Tenmasa",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0112",
+  "name": "Teochew Lao Er",
+  "area": "Pudu",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0113",
+  "name": "The Brasserie",
+  "area": "KL Sentral",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0114",
+  "name": "Ushi",
+  "area": "KL Sentral",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0115",
+  "name": "Three X Co",
+  "area": "Bangsar",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0116",
+  "name": "Bar Trigona",
+  "area": "KLCC",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0117",
+  "name": "Reka:Bar",
+  "area": "Damansara Heights",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0118",
+  "name": "Penrose",
+  "area": "Chinatown",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0119",
+  "name": "Cabinet 8",
+  "area": "Chinatown",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ },
+ {
+  "id": "R0120",
+  "name": "Coley",
+  "area": "Bangsar",
+  "d": null,
+  "via": "no-hit",
+  "geo": null
+ }
+]

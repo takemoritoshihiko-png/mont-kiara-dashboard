@@ -55,7 +55,7 @@
 | `src/ui/dining.js` | **外食モードの画面**。台帳スコアの表示・記録欄(visitbox)・行った店ビュー・データビュー・toast・保存バー。書き込みは全部 `data/personal.js` 経由 |
 | `src/ui/a11y.js` | Enter/Space で `role="button"` を起動、Escapeで詳細を閉じる。**document に委譲リスナー1つだけ** |
 
-## test/ — 20ファイル・676件
+## test/ — 20ファイル・670件
 
 | ファイル | 何を守るか |
 |---|---|
@@ -71,7 +71,7 @@
 | `test/urlState.test.js` | URLの読み書きと履歴 |
 | `test/visualSystem.test.js` | ページの識別・デザイントークン・情報の二重表示禁止・数値書式 |
 | `test/a11y.test.js` | ランドマーク・全コントロールの名前・状態のaria・フォーカス可視・モバイルブロック・OGP |
-| `test/dining.test.js` | **飲食データの契約**: 114件(v9系50+拡充70(バー6含む))・id/placeId一意・座標域・価格 lo≤hi・9分類・ミシュランenum |
+| `test/dining.test.js` | **飲食データの契約**: 114件(v9系50+拡充81(バー6+MK大衆11含む))・id/placeId一意・座標域・価格 lo≤hi・9分類・ミシュランenum |
 | `test/diningLayer.test.js` | 飲食層: 絞り込み5軸・価格帯の判定基準・カード/ヒーロー文字列・並び替え・詳細パネル・読み込み |
 | `test/diningScore.test.js` | **台帳スコア**: 定数・exタグENUMと実データの照合・C=4.3600・手計算フィクスチャ・内訳が総合点と一致すること |
 | `test/personal.test.js` | **個人記録**: ローカル日付・読み取りが書き込まないこと・保存可否の起動テスト・デバウンス保存・v9形式の読み込み変換・書き出し往復 |
@@ -90,7 +90,7 @@
 | `commercial_data.csv` | 商業施設88件・11列 |
 | `schools_data.csv` | 学校33件（地図と一覧の基本情報） |
 | `schools_detail.json` | 学校の詳細。**キーは schools_data.csv の name と完全一致** |
-| `restaurants.json` | 飲食店120件（v9系50+検証済み拡充70(バー6含む)。**現存する公式KLミシュラン2026全75店を完全網羅**。Mont Kiaraからの車所要時間(driveKm/MinFree/MinJam)を焼き込み済み。v9原本は削除済みで、tools/convert-v9-dining.js がコミット済みデータ+dining-additions.jsonから再生成）。住所の列名だけ他層と違い `address`（読み込み時に `addr` へ） |
+| `restaurants.json` | 飲食店131件（v9系50+検証済み拡充81(バー6+MK大衆11含む)。**現存する公式KLミシュラン2026全75店を完全網羅**。Mont Kiaraからの車所要時間(driveKm/MinFree/MinJam)を焼き込み済み。v9原本は削除済みで、tools/convert-v9-dining.js がコミット済みデータ+dining-additions.jsonから再生成）。住所の列名だけ他層と違い `address`（読み込み時に `addr` へ） |
 | `tools/gen-drive-times.js` | Mont Kiara基点の車所要時間をOSRMで一括計算→drive-times.json。converterが焼き込む。更新手順: convert→gen-drive-times→convert |
 
 ## その他

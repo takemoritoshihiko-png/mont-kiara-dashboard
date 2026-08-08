@@ -70,9 +70,9 @@ describe('the real rulings from 検証A stay in force (regression)', () => {
   it('Café Café stays 未確証 until the sweep clears it', () => {
     expect(recTier(find('Café Café'))).toBe('unverified');
   });
-  it('Heun Kee is closed and therefore never recommended', () => {
-    const h = LEDGER.find((x) => x.name.includes('Heun Kee'));
-    expect(recTier(h)).toBe('closed');
+  it('Yan Kee (旧Heun Kee跡地の再開) is 未確証 until its new Google listing accrues', () => {
+    const h = LEDGER.find((x) => x.name.includes('Yan Kee'));
+    expect(recTier(h)).toBe('unverified');
     expect(isRecommended(h)).toBe(false);
   });
   it('no store in the ledger is an unruled caution (every divergence got its ruling)', () => {

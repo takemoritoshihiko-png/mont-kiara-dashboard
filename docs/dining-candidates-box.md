@@ -15,3 +15,9 @@
 | Grumpy Bagels | Off Jalan Imbi | ベーグル | TastyJournal 2025-11 | D7次点+2次ソース到着 |
 | (ほか38店は上記spec出典の一覧から随時ここへ昇格記載) | | | | |
 | Heun Kee Claypot(Taman Connaught支店) | Cheras | 煲仔飯 | FB公式告知+TastyJournal 2026-06 | Pudu本店閉店後も同一経営で継続。20 Jalan Cerdik。Google値未取得 |
+| The Fishermen's Club | Mont Kiara Meridin | 海鮮 | EDKL 2025-07 | 水槽直の鮮魚。新店で件数薄→家族実食かデータ充実で昇格 |
+| Soya Soba | Verve Shops | 韓国そば | EDKL 2025-09 | 江原道産蕎麦のマレーシア1号店 |
+| Osu | Society Mont Kiara | ワインバー | EDKL 2024-08 | ナチュラルワイン。件数薄 |
+| Laut | Mont Kiara Meridin | カフェ・オイスター | EDKL 2024-05 | ほうじ茶ラテ+生牡蠣 |
+| Hansin Pocha | Solaris Mont Kiara | 韓国居酒屋 | 再調査2026-08-08 | ★4.6×126=あと24件でA基準。開業2年内なら即昇格 |
+| Basic Wine Store | MK | ワイン | 再調査2026-08-08 | ★4.8×88だが2023年開業=B基準外。件数が150超えたら昇格 |

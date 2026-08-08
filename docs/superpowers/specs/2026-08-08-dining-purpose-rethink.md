@@ -114,3 +114,17 @@ Eat Drink KL / Malay Mail / Time Out / TastyJournal / Bangsar Babe の2025-26年
 
 ### §9補足(同日・条件値の確定)
 選択ズームをさらに改定: **選択=必ず中心+常に FOCUS_ZOOM(=CLUSTER_OFF_ZOOM=16) の1ルール**。16は「クラスタの数字玉が解けて全店が個別ピンになる、いちばん引いた縮尺」。17は寄りすぎ・15は数字玉に混ざる、という竹森氏の条件値を定数で固定(panInside方式は中心に来ないことがあるため全廃)。実測=選択ピンが中心から1px・ズーム16。
+
+## 10. 座標全数検査とMK大衆再調査(2026-08-08夜・竹森氏指摘起点)
+
+**発端**: 竹森氏(MK在住)から「宮武うどんの位置が違う」+「MKの大衆口コミ調査が不十分」。
+
+**座標全数検査(エリア別6エージェント+Nominatim機械パス)**: 120店全数を検証し**17件を修正**。
+- 大物: 宮武1,090m(実=Residensi Duta Kiara/Agile Mont Kiara)・Napa Thai 822m(Taman Sri HartamasをDesa Sri Hartamasに誤配置)・Sushi Ori 719m・Hing Kee 710m・Marble 8 497m・Beta KL 399m・Sek Yuen 380m・Bar.Kar 253m 他
+- 構造欠陥の発見: チャイナタウン3店の共有座標(v9由来)を個別実座標に分解。KLCC 4件は「住所は正しいが座標が別ビル」型
+- **Yan Kee発見**: 閉店したHeun Kee跡地(59 Jalan Yew)で創業者の孫が2026年に再開(Malay Mail)。Yan Kee Claypot Chicken Riceとして改名・rating新規蓄積待ちの未確証扱いで復帰
+- Niko Neko Matcha: 住所の通り自体が誤り(正=82A Lorong Maarof)+wanderlogに閉店表示(単一ソース)→未確証降格・次回スイープで確定
+- Jie/Reka:Bar: Jalan Setia Baktiの番地解像度なし=街路重心共有と正直表記(street)
+- 再発防止: tools/check-coords.js(機械パス)を四半期スイープに常設
+
+**MK大衆口コミ再調査(条件明示型)**: 従来バー(★4.5×1000)がMK規模に厳しすぎた反省から、条件を4本明示(A:★4.3×150+/B:新店4.6×80+/C:日本人コミュニティ定番/D:地元メディア2024+)して再走査。**11店を台帳追加**(The Barn 4.7×1948・Fei Fan火鍋 4.5×1983・Sae Ma Eul 4.4×1713・Seng Kee鶏飯・En Yeoh's肉骨茶4.9×320・Ra-Ft・VCR・Mercat・QingHeGu・Muska・Casa Rosa=日本人定番)。新店D枠4店+閾値スレスレ2店は候補箱へ。**台帳131店**。

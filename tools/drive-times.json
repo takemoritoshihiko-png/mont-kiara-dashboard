@@ -17,9 +17,9 @@
    "minJam": 22
   },
   "Beta KL": {
-   "km": 11.8,
-   "minFree": 16,
-   "minJam": 29
+   "km": 12.3,
+   "minFree": 17,
+   "minJam": 31
   },
   "akar": {
    "km": 7.4,
@@ -57,9 +57,9 @@
    "minJam": 14
   },
   "Bar.Kar": {
-   "km": 12.5,
-   "minFree": 15,
-   "minJam": 27
+   "km": 14.4,
+   "minFree": 18,
+   "minJam": 33
   },
   "Hide": {
    "km": 10.8,
@@ -122,9 +122,9 @@
    "minJam": 41
   },
   "Nam Heong Chicken Rice": {
-   "km": 12.4,
-   "minFree": 16,
-   "minJam": 28
+   "km": 11.5,
+   "minFree": 15,
+   "minJam": 27
   },
   "Ah Hei Bak Kut Teh": {
    "km": 13.1,
@@ -133,10 +133,10 @@
   },
   "Hing Kee Bakuteh": {
    "km": 8.8,
-   "minFree": 13,
-   "minJam": 23
+   "minFree": 12,
+   "minJam": 22
   },
-  "Heun Kee Claypot": {
+  "Yan Kee Claypot Chicken Rice": {
    "km": 13.4,
    "minFree": 17,
    "minJam": 31
@@ -152,9 +152,9 @@
    "minJam": 38
   },
   "Sek Yuen": {
-   "km": 12.1,
+   "km": 12.4,
    "minFree": 16,
-   "minJam": 28
+   "minJam": 29
   },
   "Anak Baba": {
    "km": 9.7,
@@ -162,9 +162,9 @@
    "minJam": 25
   },
   "Lai Foong Lala Noodles": {
-   "km": 12.4,
-   "minFree": 16,
-   "minJam": 28
+   "km": 11.4,
+   "minFree": 15,
+   "minJam": 26
   },
   "Foong Lian": {
    "km": 13.5,
@@ -177,9 +177,9 @@
    "minJam": 20
   },
   "Sin Kiew Yee Beef Noodles": {
-   "km": 12.4,
-   "minFree": 16,
-   "minJam": 28
+   "km": 11.5,
+   "minFree": 15,
+   "minJam": 27
   },
   "GulaiNya": {
    "km": 4.7,
@@ -272,8 +272,8 @@
    "minJam": 11
   },
   "Vin's Restaurant": {
-   "km": 7.1,
-   "minFree": 11,
+   "km": 6.9,
+   "minFree": 10,
    "minJam": 19
   },
   "Fire Izakaya": {
@@ -322,7 +322,7 @@
    "minJam": 27
   },
   "Napa Thai": {
-   "km": 1.8,
+   "km": 2.2,
    "minFree": 4,
    "minJam": 8
   },
@@ -412,7 +412,7 @@
    "minJam": 20
   },
   "Niko Neko Matcha": {
-   "km": 8.4,
+   "km": 8.3,
    "minFree": 13,
    "minJam": 24
   },
@@ -422,9 +422,9 @@
    "minJam": 18
   },
   "Miyatake Sanuki Udon": {
-   "km": 1.6,
-   "minFree": 4,
-   "minJam": 7
+   "km": 3.3,
+   "minFree": 7,
+   "minJam": 13
   },
   "Bidou": {
    "km": 4.9,
@@ -457,7 +457,7 @@
    "minJam": 21
   },
   "Chipta 11a": {
-   "km": 11.3,
+   "km": 11.7,
    "minFree": 16,
    "minJam": 28
   },
@@ -522,9 +522,9 @@
    "minJam": 28
   },
   "Marble 8": {
-   "km": 13.5,
-   "minFree": 17,
-   "minJam": 30
+   "km": 11.6,
+   "minFree": 16,
+   "minJam": 29
   },
   "Passage Thru India": {
    "km": 14.4,
@@ -547,8 +547,8 @@
    "minJam": 27
   },
   "Sushi Ori": {
-   "km": 12.7,
-   "minFree": 17,
+   "km": 12.1,
+   "minFree": 16,
    "minJam": 30
   },
   "Tanglin (Bukit Damansara)": {
@@ -605,6 +605,61 @@
    "km": 10.5,
    "minFree": 15,
    "minJam": 27
+  },
+  "Sae Ma Eul BBQ": {
+   "km": 2.9,
+   "minFree": 6,
+   "minJam": 11
+  },
+  "Seng Kee Chicken Rice": {
+   "km": 2.9,
+   "minFree": 6,
+   "minJam": 11
+  },
+  "En Yeoh's Bak Kut Teh": {
+   "km": 2.9,
+   "minFree": 6,
+   "minJam": 11
+  },
+  "Fei Fan Hotpot": {
+   "km": 1.1,
+   "minFree": 3,
+   "minJam": 5
+  },
+  "QingHeGu Korean BBQ": {
+   "km": 1.1,
+   "minFree": 3,
+   "minJam": 5
+  },
+  "The Barn": {
+   "km": 1.6,
+   "minFree": 4,
+   "minJam": 7
+  },
+  "Mercat Barcelona Gastrobar": {
+   "km": 1.6,
+   "minFree": 4,
+   "minJam": 7
+  },
+  "Ra-Ft Café / Bistro": {
+   "km": 1.3,
+   "minFree": 4,
+   "minJam": 6
+  },
+  "Muska": {
+   "km": 1.4,
+   "minFree": 3,
+   "minJam": 6
+  },
+  "VCR Mont Kiara": {
+   "km": 1.2,
+   "minFree": 3,
+   "minJam": 5
+  },
+  "Casa Rosa": {
+   "km": 1.2,
+   "minFree": 3,
+   "minJam": 6
   }
  }
 }

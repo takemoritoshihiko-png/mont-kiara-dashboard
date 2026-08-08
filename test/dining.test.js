@@ -64,10 +64,14 @@ describe('restaurants.json', () => {
     // Yun House + Nadodi (both inside the Four Seasons building), and
     // Jhol KL + Lachér Patisserie (both inside The MET, KL Metropolis).
     const allowShared = [
-      'Nam Heong Chicken Rice', 'Lai Foong Lala Noodles', 'Sin Kiew Yee Beef Noodles',
       'Yun House', 'Nadodi',
       'Jhol KL', 'Lachér Patisserie',
       'Jwala', 'Seed',   // The Five@KPD Block E — 同一複合の同座標
+      'Sae Ma Eul BBQ', 'Seng Kee Chicken Rice', "En Yeoh's Bak Kut Teh",   // Solaris Mont Kiara(venue精度)
+      'Fei Fan Hotpot', 'QingHeGu Korean BBQ',   // 163 Retail Park(venue精度)
+      'The Barn', 'Mercat Barcelona Gastrobar',   // 1 Mont Kiara(venue精度)
+      'Muska',   // Verve Shops(Cottaと同建物venue精度)
+      'Cotta',
       'Restaurant Jie', 'Reka:Bar',   // Jalan Setia Bakti — 双方とも街レベル精度の同街区
     ];
     const seen = new Map();

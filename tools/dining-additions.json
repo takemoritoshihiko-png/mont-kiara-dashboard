@@ -115,9 +115,9 @@
   "venueType": "street",
   "area": "TTDI",
   "address": "6, Lorong Datuk Sulaiman 1, Taman Tun Dr Ismail",
-  "lat": 3.1481,
-  "lng": 101.6296,
-  "geoPrecision": "street",
+  "lat": 3.149385,
+  "lng": 101.629809,
+  "geoPrecision": "building",
   "priceLunch": [
    50,
    100
@@ -455,9 +455,9 @@
   "venueType": "street",
   "area": "Sri Hartamas",
   "address": "27&29, Jalan Sri Hartamas 7, Taman Sri Hartamas",
-  "lat": 3.1648454,
-  "lng": 101.6514232,
-  "geoPrecision": "street",
+  "lat": 3.157616,
+  "lng": 101.649918,
+  "geoPrecision": "building",
   "priceLunch": [
    0,
    0
@@ -1066,10 +1066,10 @@
   "venue": "路面店",
   "venueType": "street",
   "area": "Bangsar",
-  "address": "Jalan Telawi, Bangsar",
-  "lat": 3.13081,
-  "lng": 101.67338,
-  "geoPrecision": "street",
+  "address": "82A, Lorong Maarof, Bangsar",
+  "lat": 3.13199,
+  "lng": 101.6731,
+  "geoPrecision": "building",
   "priceLunch": [
    15,
    18
@@ -1085,7 +1085,9 @@
    "pros": "",
    "cons": ""
   },
-  "verified": "2026-08-08"
+  "verified": "2026-08-08",
+  "recDivergence": "recheck",
+  "recNote": "閉店の疑い(2026-08-08 wanderlogにPermanently closed表示・単一ソースで未確定)。次回スイープで確定するまで未確証扱い"
  },
  {
   "placeId": "pending:dancing-fish-bsc",
@@ -1131,13 +1133,13 @@
   "reviewCount": 0,
   "natCode": 3,
   "kidOk": 0,
-  "venue": "路面店",
+  "venue": "Residensi Duta Kiara",
   "venueType": "street",
   "area": "Mont Kiara",
-  "address": "Mont Kiara",
-  "lat": 3.16999,
-  "lng": 101.65215,
-  "geoPrecision": "street",
+  "address": "LG3-1, Residensi Duta Kiara (Agile Mont Kiara), 7 Jalan Duta Hartamas, Dutamas",
+  "lat": 3.1719195,
+  "lng": 101.6617619,
+  "geoPrecision": "building",
   "priceLunch": [
    20,
    30
@@ -1147,7 +1149,7 @@
    30
   ],
   "priceConfidence": "概算",
-  "priceNote": "21:00閉店。牛肉うどんRM23前後の例。",
+  "priceNote": "昼11:30-15時/夜18-22時。牛肉うどんRM23前後の例。TRX店(The Exchange TRX内)もあり。",
   "editorNote": "職人が毎日手打ち・出汁を仕込む本格讃岐うどん。1 Utama伊勢丹から移転しMont Kiara+TRXの2店。MK核心部の日本人定番。Google評価は未取得(参考: Restaurant Guru/Kuraberu 4.4×433)。",
   "vox": {
    "pros": "",
@@ -1376,9 +1378,9 @@
   "venueType": "street",
   "area": "Taman Paramount (PJ)",
   "address": "11a, Jalan 20/16, Taman Paramount, PJ",
-  "lat": 3.1064,
-  "lng": 101.625,
-  "geoPrecision": "street",
+  "lat": 3.107741,
+  "lng": 101.623991,
+  "geoPrecision": "building",
   "priceLunch": [
    0,
    0
@@ -1831,8 +1833,8 @@
   "venueType": "tower",
   "area": "KLCC",
   "address": "56F, Menara 3 Petronas, Persiaran KLCC, Kuala Lumpur City Centre",
-  "lat": 3.158135,
-  "lng": 101.715475,
+  "lat": 3.156301,
+  "lng": 101.711396,
   "geoPrecision": "building",
   "priceLunch": [
    0,
@@ -1969,8 +1971,8 @@
   "venueType": "tower",
   "area": "KLCC",
   "address": "Lot 1-03, 1F, Menara Hap Seng 3, Jalan P. Ramlee",
-  "lat": 3.15481,
-  "lng": 101.70874,
+  "lat": 3.153038,
+  "lng": 101.707474,
   "geoPrecision": "building",
   "priceLunch": [
    488,
@@ -2003,8 +2005,8 @@
   "venueType": "tower",
   "area": "Bukit Bintang",
   "address": "Unit PG-01, GF, Podium Block, Menara Keck Seng, 203 Jalan Bukit Bintang, Bukit Bintang",
-  "lat": 3.14523,
-  "lng": 101.70914,
+  "lat": 3.1478945,
+  "lng": 101.7150405,
   "geoPrecision": "building",
   "priceLunch": [
    382,
@@ -2283,7 +2285,7 @@
   "address": "67M, Jalan Setia Bakti, Bukit Damansara",
   "lat": 3.1537,
   "lng": 101.6563,
-  "geoPrecision": "building",
+  "geoPrecision": "street",
   "priceLunch": [
    0,
    0
@@ -2409,6 +2411,380 @@
   "extraFlags": [
    "Asia's 50 Best Bars"
   ],
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08"
+ },
+ {
+  "placeId": "pending:sae-ma-eul-bbq",
+  "name": "Sae Ma Eul BBQ",
+  "nameJa": "セマウル",
+  "cat": "韓国焼肉",
+  "michelin": "none",
+  "rating": 4.4,
+  "reviewCount": 1713,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "Solaris Mont Kiara",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "Solaris Mont Kiara, Jalan Solaris",
+  "lat": 3.17547,
+  "lng": 101.65976,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   60,
+   100
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "韓国焼肉。RM60-100/人目安。 採用=MK大衆口コミ再調査(2026-08-08・条件明示型)。",
+  "editorNote": "KL屈指の人気韓国BBQ。開放型グリル。採用条件A(★4.3+×150+)。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08"
+ },
+ {
+  "placeId": "pending:seng-kee-chicken-rice",
+  "name": "Seng Kee Chicken Rice",
+  "nameJa": "センキー鶏飯(成記)",
+  "cat": "海南鶏飯",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1223,
+  "natCode": 1,
+  "kidOk": 0,
+  "venue": "Solaris Mont Kiara",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "Solaris Mont Kiara, Jalan Solaris",
+  "lat": 3.17547,
+  "lng": 101.65976,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   15,
+   25
+  ],
+  "priceDinner": [
+   15,
+   25
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "RM15-25/人の地元定番。 採用=MK大衆口コミ再調査(2026-08-08・条件明示型)。",
+  "editorNote": "Solarisの海南鶏飯定番。採用条件A。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08"
+ },
+ {
+  "placeId": "pending:en-yeoh-s-bak-kut-teh",
+  "name": "En Yeoh's Bak Kut Teh",
+  "nameJa": "エンヨウ肉骨茶(宴楊)",
+  "cat": "肉骨茶",
+  "michelin": "none",
+  "rating": 4.9,
+  "reviewCount": 320,
+  "natCode": 1,
+  "kidOk": 0,
+  "venue": "Solaris Mont Kiara",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "Solaris Mont Kiara, Jalan Solaris",
+  "lat": 3.17547,
+  "lng": 101.65976,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   30,
+   40
+  ],
+  "priceDinner": [
+   30,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "RM30-40/人。 採用=MK大衆口コミ再調査(2026-08-08・条件明示型)。",
+  "editorNote": "★4.9と評価が突出する和風要素ありの肉骨茶。採用条件A。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08"
+ },
+ {
+  "placeId": "pending:fei-fan-hotpot",
+  "name": "Fei Fan Hotpot",
+  "nameJa": "フェイファン火鍋(飛凡)",
+  "cat": "火鍋",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1983,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "163 Retail Park",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "163 Retail Park, Jalan Kiara",
+  "lat": 3.166643,
+  "lng": 101.651998,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   60,
+   80
+  ],
+  "priceDinner": [
+   60,
+   80
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "食べ放題RM60-80/人。 採用=MK大衆口コミ再調査(2026-08-08・条件明示型)。",
+  "editorNote": "163の中華式火鍋バイキング。件数最多クラスの地元人気。採用条件A。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08"
+ },
+ {
+  "placeId": "pending:qinghegu-korean-bbq",
+  "name": "QingHeGu Korean BBQ",
+  "nameJa": "チョンハッコル(青鶴谷)",
+  "cat": "韓国焼肉",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 585,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "163 Retail Park",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "163 Retail Park, Jalan Kiara",
+  "lat": 3.166643,
+  "lng": 101.651998,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   80,
+   130
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "高め(現地レビュー言及)。 採用=MK大衆口コミ再調査(2026-08-08・条件明示型)。",
+  "editorNote": "163内の高評価韓国焼肉。採用条件A。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08"
+ },
+ {
+  "placeId": "pending:the-barn",
+  "name": "The Barn",
+  "nameJa": "ザ・バーン",
+  "cat": "グリル",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 1948,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "1 Mont Kiara",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "1 Mont Kiara Mall, Jalan Kiara",
+  "lat": 3.1653662,
+  "lng": 101.6525034,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   40,
+   80
+  ],
+  "priceDinner": [
+   50,
+   100
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "手頃〜中価格帯。 採用=MK大衆口コミ再調査(2026-08-08・条件明示型)。",
+  "editorNote": "1 Mont Kiaraのコンテンポラリー豪州系。件数・評価とも別格の地元定番。採用条件A。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08"
+ },
+ {
+  "placeId": "pending:mercat-barcelona-gastrobar",
+  "name": "Mercat Barcelona Gastrobar",
+  "nameJa": "メルカット・バルセロナ",
+  "cat": "スペイン",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 477,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "1 Mont Kiara",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "1 Mont Kiara Mall, Jalan Kiara",
+  "lat": 3.1653662,
+  "lng": 101.6525034,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   80,
+   150
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "やや高め。パエリア等。 採用=MK大衆口コミ再調査(2026-08-08・条件明示型)。",
+  "editorNote": "スペイン・タパス。特別な日向け。採用条件A。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08"
+ },
+ {
+  "placeId": "pending:ra-ft-caf-bistro",
+  "name": "Ra-Ft Café / Bistro",
+  "nameJa": "ラフト・カフェ",
+  "cat": "カフェ・ブランチ",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 936,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Arcoris Mont Kiara",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "Arcoris Mont Kiara, Jalan Kiara 4",
+  "lat": 3.167845,
+  "lng": 101.651825,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   25,
+   50
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ブランチ中心・ペット可。 採用=MK大衆口コミ再調査(2026-08-08・条件明示型)。",
+  "editorNote": "Arcorisの自家焙煎カフェ。朝食/ブランチの地元定番。採用条件A。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08"
+ },
+ {
+  "placeId": "pending:muska",
+  "name": "Muska",
+  "nameJa": "ムスカ",
+  "cat": "カフェ・ブランチ",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 299,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Verve Shops",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "Verve Shops, Jalan Kiara 5",
+  "lat": 3.1675734,
+  "lng": 101.6467533,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   25,
+   50
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": " 採用=MK大衆口コミ再調査(2026-08-08・条件明示型)。",
+  "editorNote": "Verve内のインド系フュージョンカフェ。採用条件A(出典やや弱め=Makan Guru)。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08"
+ },
+ {
+  "placeId": "pending:vcr-mont-kiara",
+  "name": "VCR Mont Kiara",
+  "nameJa": "ブイシーアール",
+  "cat": "カフェ・ブランチ",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 585,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Shoplex Mont Kiara",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "Shoplex, Jalan Kiara 3",
+  "lat": 3.167172,
+  "lng": 101.652827,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   25,
+   50
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "コーヒーとサンドイッチ。 採用=MK大衆口コミ再調査(2026-08-08・条件明示型)。",
+  "editorNote": "Bangsar/TTDI/MKの3店小規模チェーン。採用条件A。",
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08"
+ },
+ {
+  "placeId": "pending:casa-rosa",
+  "name": "Casa Rosa",
+  "nameJa": "カーサ・ローザ",
+  "cat": "ヨーロピアン",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 184,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Mont Kiara Pines",
+  "venueType": "mall",
+  "area": "Mont Kiara",
+  "address": "Mont Kiara Pines, Jalan Kiara",
+  "lat": 3.166894,
+  "lng": 101.654379,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   60,
+   120
+  ],
+  "priceConfidence": "概算",
+  "priceNote": " 採用=MK大衆口コミ再調査(2026-08-08・条件明示型)。",
+  "editorNote": "日本人駐在員の隠れ家(MTOWN掲載・採用条件C+A)。Jake'sの姉妹店。※評価出典やや弱め=次回スイープで再確認。",
   "vox": {
    "pros": "",
    "cons": ""

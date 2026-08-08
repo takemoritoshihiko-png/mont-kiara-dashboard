@@ -54,11 +54,12 @@ describe('the constants are the ledger\'s, not something that drifted', () => {
 // C — the baseline
 // ============================================================
 describe('C, the ledger-wide baseline star', () => {
-  it('is 4.36 for the 50 v9 restaurants, and BASELINE_STAR pins exactly that', () => {
-    // v9 printed 4.36 in its header. Same figure, same weighting.
-    expect(C_REAL).toBeCloseTo(4.36, 2);
-    expect(Number(C_REAL.toFixed(4))).toBe(4.3600);
-    expect(BASELINE_STAR).toBeCloseTo(C_REAL, 2);
+  it('BASELINE_STAR stays pinned at 4.36; the live first-50 recompute may drift', () => {
+    // 2026-08-08: 旧Heun Kee(先頭50の一員)がYan Keeとして再生し評価がリセット
+    // されたため、先頭50からの再計算値は完全一致しなくなった。アプリが使うのは
+    // ピン(BASELINE_STAR)だけであり、そこは動かさないのが契約。
+    expect(BASELINE_STAR).toBe(4.36);
+    expect(C_REAL).toBeCloseTo(4.36, 1);   // 来歴の緩い整合(±0.05)
   });
 
   it('is weighted by review count, not a plain mean of the stars', () => {
@@ -224,10 +225,10 @@ describe('hand-computed totals', () => {
     // ev = 40 × (4.29497 − 3.90) / 0.80 = 19.7486…
     // total = round(35 + 25 + 19.7486) = 80
     const r = LEDGER.find(x => x.name === 'Dewakan');
-    const s = ledgerScore(r, C_REAL);
+    const s = ledgerScore(r, BASELINE_STAR);
     expect(s.au).toBe(35);
     expect(s.ct).toBe(25);
-    expect(s.rb).toBeCloseTo(4.2950, 4);
+    expect(s.rb).toBeCloseTo(4.29496, 4);
     expect(s.total).toBe(80);
   });
 
@@ -239,9 +240,9 @@ describe('hand-computed totals', () => {
     //   小数第5位が動いた(アプリ本体は BASELINE_STAR=4.36 固定で無影響)。
     // ev = 40 × 0.72205/0.80 = 36.102…
     // total = round(29 + 6 + 36.102) = 71
-    const s = ledgerScore(LEDGER.find(x => x.name === 'akar'), C_REAL);
+    const s = ledgerScore(LEDGER.find(x => x.name === 'akar'), BASELINE_STAR);
     expect(s).toMatchObject({ au: 29, ct: 6, total: 71 });
-    expect(s.rb).toBeCloseTo(4.62205, 4);
+    expect(s.rb).toBeCloseTo(4.62204, 4);
   });
 });
 
@@ -258,7 +259,7 @@ describe('the breakdown adds up to the number beside it (v9 欠陥5)', () => {
 
   it('holds for every restaurant in the file, not just the one that was checked', () => {
     for(const r of LEDGER){
-      const s = ledgerScore(r, C_REAL);
+      const s = ledgerScore(r, BASELINE_STAR);
       const sum = scoreBreakdownText(s).split(' + ').map(Number).reduce((a, b) => a + b, 0);
       expect(sum, r.name).toBe(s.total);
     }
@@ -286,7 +287,7 @@ describe('レビュー母数の厚み', () => {
   });
 
   it('prints the star, the sample size, its thickness and the shrunk value', () => {
-    expect(ratingMetaText(LEDGER.find(x => x.name === 'akar'), C_REAL))
+    expect(ratingMetaText(LEDGER.find(x => x.name === 'akar'), BASELINE_STAR))
       .toBe('Google ★4.8 / 1,178件（母数 標準） → 縮約後 4.62');
   });
 
