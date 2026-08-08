@@ -9894,9 +9894,9 @@
   "venueType": "street",
   "area": "Ampang Hilir",
   "address": "314, Jln Ampang, 50450 Kuala Lumpur",
-  "lat": 3.1611,
-  "lng": 101.7379,
-  "geoPrecision": "venue",
+  "lat": 3.1596289,
+  "lng": 101.7449237,
+  "geoPrecision": "building",
   "priceLunch": [
    25,
    55
@@ -9906,7 +9906,7 @@
    120
   ],
   "priceConfidence": "概算",
-  "priceNote": "イエメン系マンディ専門店。採用=全エリア取りこぼし監査(2026-08-09・4.2-4.4帯)。",
+  "priceNote": "イエメン系マンディ専門店。採用=全エリア取りこぼし監査(2026-08-09・4.2-4.4帯)。 座標=OSM POI(電話一致)で2026-08-09確定。",
   "editorNote": "アンパン内陸のイエメン人街にあるマンディ(蒸し飯)専門店。大皿のラム/チキンマンディが名物。",
   "vox": {
    "pros": "骨付きラムのマンディが柔らかくスパイスが効いている",
