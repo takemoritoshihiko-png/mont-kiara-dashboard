@@ -84,13 +84,16 @@ export const MARKER_COLORS = {
   dining:     { bg:'#c2185b', border:'#8c1145', radius:'50% 50% 50% 0' },
 };
 
-// A michelin-starred restaurant keeps the dining colour but is ringed in gold,
-// so "there is a starred place here" is readable without opening anything.
-export const MICHELIN_STAR_BORDER = '#c9a227';
-
-// ビブグルマンも縁で読めるように(2026-08-08 ミシュラン網羅と同時採用)。
-// 商業のオレンジ(#e8710a)より暗い橙にして、四角い商業マーカーと混ざらない。
-export const MICHELIN_BIB_BORDER = '#b45309';
+// ミシュランのピンは「縁の色だけ」では見分けられなかった(2026-08-09 竹森さん
+// 指摘)ので、ボディ色+グリフ+サイズの3信号で分離する:
+//   星付き(1★/2★) = 金色ボディ + 黒★ + ひと回り大きい
+//   ビブグルマン   = 琥珀色ボディ + 🍽 + ひと回り大きい
+//   通常           = 従来の暗赤ボディ + 🍽
+// 琥珀は商業の明橙(#e8710a)より暗くし、四角い商業マーカーと混ざらない。
+export const MICHELIN_STAR_BG = '#d4a51f';
+export const MICHELIN_STAR_BORDER = '#7a5a10';
+export const MICHELIN_BIB_BG = '#b45309';
+export const MICHELIN_BIB_BORDER = '#6f3305';
 
 // Cluster bubbles reuse the marker colours so the type stays readable when
 // several markers collapse into one.
@@ -424,10 +427,18 @@ function mkMarker(c) {
     // — the one `.mk-pin-sel>div` scales when the record is selected — keeps a
     // transform of its own. Sharing one element would make the selection ring
     // silently un-rotate the pin.
-    const csz = 22;
     const mb = MICHELIN_BADGES[c.michelin];
-    const border = (c.michelin === '1star' || c.michelin === '2star') ? MICHELIN_STAR_BORDER
-      : c.michelin === 'bib' ? MICHELIN_BIB_BORDER : MARKER_COLORS.dining.border;
+    const isStar = c.michelin === '1star' || c.michelin === '2star';
+    const isBib = c.michelin === 'bib';
+    // ミシュランはボディ色ごと変える+ひと回り大きく(縁だけでは見分け不能だった)
+    const csz = (isStar || isBib) ? 25 : 22;
+    const bg = isStar ? MICHELIN_STAR_BG : isBib ? MICHELIN_BIB_BG : MARKER_COLORS.dining.bg;
+    const border = isStar ? MICHELIN_STAR_BORDER
+      : isBib ? MICHELIN_BIB_BORDER : MARKER_COLORS.dining.border;
+    const glyph = c.catGroup === '屋台街' ? '📍' : isStar ? '★' : '🍽';
+    const glyphStyle = isStar
+      ? 'color:#3d2b00;font-size:13px;font-weight:700;text-shadow:0 1px 1px rgba(255,255,255,0.4)'
+      : 'color:#fff;font-size:10px';
     // 訪問済みの店はピン自体に緑の✓バッジ（2026-08-07 依頼: 地図を見るだけで
     // 「もう行った」が分かるように）。記録が変わると applyFilters→rebuild が
     // 走るので、押した瞬間にバッジも追随する。色は再訪意向「また行く」と同じ
@@ -443,8 +454,8 @@ function mkMarker(c) {
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
       html: `<div role="button" aria-label="飲食店 ${attrEsc(c.name)}${mb ? '、' + mb : ''}${visited ? '、訪問済み' : ''}" style="position:relative;width:${csz}px;height:${csz}px;display:flex;align-items:center;justify-content:center;cursor:pointer">
-        <span aria-hidden="true" style="position:absolute;inset:0;border-radius:${MARKER_COLORS.dining.radius};background:${MARKER_COLORS.dining.bg};border:2px solid ${border};box-shadow:0 2px 6px rgba(0,0,0,0.3);transform:rotate(-45deg)"></span>
-        <span aria-hidden="true" style="position:relative;color:#fff;font-size:10px;line-height:1">${c.catGroup === '屋台街' ? '📍' : '🍽'}</span>${badge}
+        <span aria-hidden="true" style="position:absolute;inset:0;border-radius:${MARKER_COLORS.dining.radius};background:${bg};border:2px solid ${border};box-shadow:0 2px 6px rgba(0,0,0,0.3);transform:rotate(-45deg)"></span>
+        <span aria-hidden="true" style="position:relative;line-height:1;${glyphStyle}">${glyph}</span>${badge}
       </div>`
     });
     return attachMarker(c, icon, c.name.replace(/ \(.*\)/,''), csz);
@@ -557,8 +568,8 @@ export function updateLegend(){
   h+=`<div id="legendBody" style="display:${legendOpen?'block':'none'}">`;
   if(eatout){
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>飲食店</div>`;
-    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-color:${MICHELIN_STAR_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ミシュラン星付き（金の縁）</div>`;
-    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-color:${MICHELIN_BIB_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ビブグルマン（橙の縁）</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_STAR_BG};border-color:${MICHELIN_STAR_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ミシュラン星付き（金色ピン★）</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_BIB_BG};border-color:${MICHELIN_BIB_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ビブグルマン（琥珀色ピン）</div>`;
     h+=`<div class="map-legend-item">数字の丸 = 重なった店。押すと開きます</div>`;
   } else {
     // The condo pin carries year (fill) + tier (letter/ring): explain both
