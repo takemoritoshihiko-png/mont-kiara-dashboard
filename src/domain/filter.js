@@ -349,10 +349,12 @@ export function matchesDining(c, f){
   // `f.personal` is the record map from src/data/personal.js; this function
   // stays pure by being handed it rather than reading storage itself. Absent
   // (住まいモード) it is undefined and both toggles are simply off.
-  if(f.wantOnly || f.undoneOnly){
+  if(f.wantOnly || f.undoneOnly || f.visitedOnly){
     const p = (f.personal && f.personal[c.id]) || null;
     if(f.wantOnly && !(p && p.w === 1)) return false;
     if(f.undoneOnly && p && p.v === 1) return false;
+    // ✓行った店(2026-08-08: 行った店ビューを廃止し、このトグルが代替)
+    if(f.visitedOnly && !(p && p.v === 1)) return false;
   }
   return true;
 }

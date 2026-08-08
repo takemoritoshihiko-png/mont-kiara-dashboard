@@ -131,7 +131,7 @@ describe('B3c: 学費くらべ, the selected marker and the sticky header', () =
     expect(css).toContain('--ring-accent:0 0 0 2px var(--surface), 0 0 0 4.5px var(--accent)');
     const rule = css.slice(css.indexOf('.mk-pin-sel>div{'));
     const body = rule.slice(0, rule.indexOf('}'));
-    expect(body).toContain('transform:scale(1.25)');
+    expect(body).toContain('transform:scale(1.45)');   // 2026-08-08 選択強調の増強
     expect(body).toContain('var(--ring-accent)');
     // The nudge is the shared 150ms, applied to every pin so it animates both
     // on and off.

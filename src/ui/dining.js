@@ -21,7 +21,6 @@ import { recordLayer } from '../domain/filter.js';
 import {
   ledgerScore, scoreBreakdownText, scoreBars, ratingMetaText, BASELINE_STAR,
 } from '../domain/diningScore.js';
-import { visitSummary, groupByRepeat, logMetaText } from '../domain/diningLog.js';
 import * as P from '../data/personal.js';
 import * as FS from '../data/fileStore.js';
 import { stableStringify } from '../domain/fileSync.js';
@@ -224,76 +223,11 @@ export function dineRepeat(id, rv){
  * value is saved (debounced) and the only thing repainted is the 行った店
  * tiles, in place, so the average moves while you type.
  */
-export function dineAmount(id, v){ P.setAmount(id, v); patchLogTiles(); }
+export function dineAmount(id, v){ P.setAmount(id, v); }
 export function dineMemo(id, v){ P.setMemo(id, v); }
 
-// ============================================================
-// 行った店
-// ============================================================
-const TILE_EMPTY = '–';
-
-function tilesData(){
-  const s = visitSummary(diningRecords(), personalMap());
-  return [
-    { id: 'logVisits', label: '訪問した店', value: s.visits ? num(s.visits) : TILE_EMPTY },
-    { id: 'logAgain', label: 'また行く', value: s.again ? num(s.again) : TILE_EMPTY },
-    { id: 'logAvg', label: '平均実額', value: s.avgAmount ? 'RM ' + num(s.avgAmount) : TILE_EMPTY },
-    { id: 'logTotal', label: '記録した支出', value: s.totalAmount ? 'RM ' + num(s.totalAmount) : TILE_EMPTY },
-  ];
-}
-
-function tilesHtml(){
-  return `<div class="log-tiles">` + tilesData().map(t =>
-    `<div class="log-tile"><div class="log-tile-val" id="${t.id}" aria-labelledby="${t.id}L">${esc(t.value)}</div>` +
-    `<div class="log-tile-label" id="${t.id}L">${esc(t.label)}</div></div>`).join('') + `</div>`;
-}
-
-/** Repaint the four figures without touching the markup around them. */
-function patchLogTiles(){
-  if(typeof document === 'undefined') return;
-  tilesData().forEach(t => {
-    const el = document.getElementById(t.id);
-    if(el) el.textContent = t.value;
-  });
-}
-
-function logRowHtml(row){
-  const c = row.record;
-  const score = totalOf(c);
-  const memo = String(row.entry.m || '').trim();
-  // The whole head band opens the detail panel, not just the glyphs of the
-  // name: an inline-block span is a thin target on a phone, and the row's own
-  // padding around it looked clickable while doing nothing. The role stays on
-  // ONE element — the name inside it is a plain span now, because a button
-  // inside a button is operable by neither keyboard nor screen reader.
-  // The visitbox below is left outside the target on purpose: its fields are
-  // edited in place, and a stray tap must not throw the panel open.
-  return `<div class="log-row">` +
-    `<div class="log-row-head" role="button" tabindex="0" aria-label="${esc(c.name)} の詳細を開く"` +
-    ` onclick="selectCondo('${jsStr(c.name)}')">` +
-      `<span class="log-name">${esc(c.name)}</span>` +
-    `</div>` +
-    `<div class="log-sub">${esc([c.catGroup, c.area, c.venue].filter(Boolean).join(' ・ '))}</div>` +
-    `<div class="log-meta">${esc(logMetaText(row, score))}</div>` +
-    (memo ? `<div class="log-memo">${esc(memo)}</div>` : '') +
-    visitBoxHtml(c, 'log') +
-    `</div>`;
-}
-
-function logViewHtml(){
-  const groups = groupByRepeat(diningRecords(), personalMap(), totalOf);
-  if(!groups.length){
-    return tilesHtml() + `<div class="empty-state">` +
-      `<div class="empty-title">まだ訪問記録がありません</div>` +
-      `<div class="empty-sub">台帳で店を開き、「訪問済み」を押すとここに並びます。</div></div>`;
-  }
-  return tilesHtml() + groups.map(g =>
-    `<div class="log-group">` +
-      `<div class="log-group-head" style="border-left-color:var(${g.colorVar})">` +
-        `${esc(g.label)} <span class="log-group-n">${num(g.items.length)}</span></div>` +
-      g.items.map(logRowHtml).join('') +
-    `</div>`).join('');
-}
+// 行った店ビューは 2026-08-08 竹森さん指示で廃止(台帳+「✓行った店」トグルが代替)。
+// 集計・グループ化の純関数(src/domain/diningLog.js)はテスト付きで保持している。
 
 // ============================================================
 // データ
@@ -391,6 +325,7 @@ function dataViewHtml(){
     ? '保存先: このブラウザ（高速キャッシュ）＋ 自動保存ファイル'
     : '保存先: このブラウザ（localStorage）';
   return `<div class="dataview">` +
+    `<button type="button" class="data-btn" style="margin-bottom:var(--s2)" onclick="setView(&quot;ledger&quot;)">← 台帳にもどる</button>` +
     fileSectionHtml() +
     `<section class="data-sec"><h3 class="data-h">保存の状態</h3>` +
       warn +
@@ -524,8 +459,11 @@ export function renderSaveBar(){
   const fb = fileBarText(FS.fileStatus());
   bar.style.display = '';
   bar.classList.toggle('bad', !!st.error || fb.startsWith('⚠'));
-  bar.textContent = st.error ? '⚠ ' + st.error
+  const text = st.error ? '⚠ ' + st.error
     : savedAtText(st) + (fb ? ' ・ ' + fb : '') + ' ・ ' + PRIVACY_TEXT;
+  // データ画面への入口はここ(旧3タブは2026-08-08廃止)。保存の話をする場所に併設。
+  bar.innerHTML = `<span class="savebar-text">${esc(text)}</span>` +
+    `<button type="button" class="savebar-link" onclick="setView('data')">💾 データ管理</button>`;
 }
 
 // ============================================================
@@ -576,7 +514,6 @@ export function dineFileAdoptCache(){ FS.adoptCache(); }
  */
 export function eatoutListHtml(){
   if(!eatoutActive()) return null;
-  if(listView === 'log') return logViewHtml();
   if(listView === 'data') return dataViewHtml();
   return null;
 }

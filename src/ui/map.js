@@ -30,28 +30,26 @@ export function labelModeForZoom(zoom) {
 }
 
 // ============================================================
-// WHAT SELECTING A RECORD DOES TO THE MAP
-// The rule is: do not move what the user just pressed.
-// Below OVERVIEW_ZOOM the map is a city and the pin you tapped is one of a
-// cluster of hundreds — there, zooming in to SELECT_ZOOM is the whole point of
-// the tap. At OVERVIEW_ZOOM and above you have already framed a neighbourhood
-// and are comparing inside it: re-centring would throw that frame away and
-// slide the pin out from under your finger. So the map only pans, and only if
-// the pin would otherwise sit under the detail overlay.
+// WHAT SELECTING A RECORD DOES TO THE MAP (2026-08-08 改定)
+// 旧ルールは「押した物の下から地図を動かさない」だったが、竹森氏の実利用で
+// 「一覧から選んだ店が地図のどこか分からない」が勝った。選択したら
+// DETAIL_ZOOM(=常時ラベルが出るズーム)までその店へ寄り、店名ラベルと
+// 強調ピンで「この店」と指させる。すでに十分寄っているときだけ、
+// 視界を奪わない panInside に留める。
 // ============================================================
-export const OVERVIEW_ZOOM = 14;
-export const SELECT_ZOOM = 15;
-// The detail overlay is 300px wide at the map's top-left (48px below the top of
-// .main). The padding keeps the pin clear of it, plus a small margin.
-export const SELECT_PAN_PADDING = { paddingTopLeft: [320, 60], paddingBottomRight: [20, 20] };
+export const DETAIL_ZOOM = 17;   // = LABEL_ZOOM: 寄った先で店名ラベルが必ず出る
 
 /**
  * Pure helper: what a selection should do to the map at a given zoom.
  * @returns {{action:'setView', zoom:number}|{action:'panInside'}}
  */
 export function focusActionForZoom(zoom) {
-  return zoom < OVERVIEW_ZOOM ? { action: 'setView', zoom: SELECT_ZOOM } : { action: 'panInside' };
+  return zoom < DETAIL_ZOOM ? { action: 'setView', zoom: DETAIL_ZOOM } : { action: 'panInside' };
 }
+
+// The detail overlay is 300px wide at the map's top-left (48px below the top of
+// .main). The padding keeps the pin clear of it, plus a small margin.
+export const SELECT_PAN_PADDING = { paddingTopLeft: [320, 60], paddingBottomRight: [20, 20] };
 
 /**
  * Pure helper: the padding to pan inside, given the map's pixel size.

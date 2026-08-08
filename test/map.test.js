@@ -6,7 +6,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import {
   labelModeForZoom, LABEL_ZOOM, CLUSTER_OFF_ZOOM, pinClassName, AREA_CENTERS,
-  focusActionForZoom, OVERVIEW_ZOOM, SELECT_ZOOM, SELECT_PAN_PADDING, panPaddingFor,
+  focusActionForZoom, DETAIL_ZOOM, SELECT_PAN_PADDING, panPaddingFor,
 } from '../src/ui/map.js';
 
 describe('labelModeForZoom', () => {
@@ -99,26 +99,24 @@ describe('area keys stay in sync across the jump bar, the dropdown and the map',
 // The rule under test: do not move what the user just pressed. Only the pure
 // decision is exercised — map.setView / map.panInside are Leaflet.
 // ============================================================
-describe('focusActionForZoom (selection must not steal the view)', () => {
-  it('zooms in from a city-wide view, where you cannot see what you picked', () => {
-    expect(focusActionForZoom(12)).toEqual({ action: 'setView', zoom: SELECT_ZOOM });
-    expect(focusActionForZoom(OVERVIEW_ZOOM - 0.1)).toEqual({ action: 'setView', zoom: SELECT_ZOOM });
+describe('focusActionForZoom (2026-08-08 改定: 選んだ店へ寄って指させる)', () => {
+  // 旧契約「選択は地図を動かさない」は、実利用の「どの店か地図で分からない」
+  // という竹森氏の指摘で改定された。選択 = DETAIL_ZOOM まで寄る。
+  it('zooms in to DETAIL_ZOOM from anywhere below it', () => {
+    expect(focusActionForZoom(12)).toEqual({ action: 'setView', zoom: DETAIL_ZOOM });
+    expect(focusActionForZoom(15)).toEqual({ action: 'setView', zoom: DETAIL_ZOOM });
+    expect(focusActionForZoom(DETAIL_ZOOM - 0.1)).toEqual({ action: 'setView', zoom: DETAIL_ZOOM });
   });
 
-  it('only pans once you are framing a neighbourhood — the zoom is yours', () => {
-    expect(focusActionForZoom(OVERVIEW_ZOOM)).toEqual({ action: 'panInside' });
-    expect(focusActionForZoom(17)).toEqual({ action: 'panInside' });
-  });
-
-  it('never zooms OUT of a close-up: comparing at 18 stays at 18', () => {
-    for (let z = OVERVIEW_ZOOM; z <= 19; z++) {
+  it('never zooms OUT of a closer view: at 17-19 it only pans', () => {
+    for (let z = DETAIL_ZOOM; z <= 19; z++) {
       expect(focusActionForZoom(z).action).toBe('panInside');
     }
   });
 
-  it('lands short of the un-clustering zoom, so a selection is a nudge not a dive', () => {
-    expect(SELECT_ZOOM).toBeGreaterThan(OVERVIEW_ZOOM - 2);
-    expect(SELECT_ZOOM).toBeLessThan(CLUSTER_OFF_ZOOM);
+  it('lands exactly where the name labels turn permanent — the point is to READ the pin', () => {
+    expect(DETAIL_ZOOM).toBe(LABEL_ZOOM);
+    expect(DETAIL_ZOOM).toBeGreaterThanOrEqual(CLUSTER_OFF_ZOOM);
   });
 
   it('keeps the pin clear of the 300px detail overlay at the map\'s top-left', () => {

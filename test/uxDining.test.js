@@ -349,7 +349,7 @@ describe('the order NAMES which sitting it ran on', () => {
 // MARKUP CONTRACTS
 // ============================================================
 describe('住まいモードの層タブに飲食への入口がある', () => {
-  const seg = html.slice(html.indexOf('id="layerSeg"'), html.indexOf('id="viewSeg"'));
+  const seg = html.slice(html.indexOf('id="layerSeg"'), html.indexOf('id="searchRow"'));
 
   it('offers a fourth button that goes to the dining side', () => {
     expect(seg).toContain('data-layer="dining"');

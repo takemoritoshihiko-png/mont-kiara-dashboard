@@ -56,6 +56,7 @@ export let showKidOkOnly = false;
 // まだ行っていない店" could not be asked for at all.
 export let showWantOnly = false;
 export let showUndoneOnly = false;
+export let showVisitedOnly = false;   // ✓行った店(旧・行った店ビューの代替 2026-08-08)
 // Open by default on desktop — the legend is the only place the pin symbols
 // are explained, and a first-time visitor needs it in the first screen.
 // On a phone the same open legend covers two thirds of the map (measured in
@@ -99,6 +100,7 @@ export function setShowAwardOnly(v) { showAwardOnly = v; }
 export function setShowKidOkOnly(v) { showKidOkOnly = v; }
 export function setShowWantOnly(v) { showWantOnly = v; }
 export function setShowUndoneOnly(v) { showUndoneOnly = v; }
+export function setShowVisitedOnly(v) { showVisitedOnly = v; }
 export function setAppMode(v) { appMode = v; }
 export function setHomeLayer(v) { homeLayer = v; }
 export function setListView(v) { listView = v; }

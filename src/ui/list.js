@@ -4,6 +4,7 @@ import {
   activeLayer, setActiveLayer, moreOpen, setMoreOpen,
   showAwardOnly, setShowAwardOnly, showKidOkOnly, setShowKidOkOnly,
   showWantOnly, setShowWantOnly, showUndoneOnly, setShowUndoneOnly,
+  showVisitedOnly, setShowVisitedOnly,
   appMode, setAppMode, homeLayer, setHomeLayer, listView, setListView,
   diningNear, setDiningNear, dayBudgetBasis, setDayBudgetBasis,
   visibleLayers, setLayerVisible,
@@ -102,7 +103,8 @@ export function readCriteria(){
     if(eatoutActive()){
       c.wantOnly = showWantOnly;
       c.undoneOnly = showUndoneOnly;
-      if(showWantOnly || showUndoneOnly) c.personal = personalMap();
+      c.visitedOnly = showVisitedOnly;
+      if(showWantOnly || showUndoneOnly || showVisitedOnly) c.personal = personalMap();
     }
   } else {
     c.nla = parseR(val('fNla'));
@@ -226,7 +228,8 @@ export function setMode(mode, { silent = false } = {}){
 
 /** 台帳 / 行った店 / データ — the three views of 外食モード. */
 export function setView(view){
-  const next = ['ledger', 'log', 'data'].includes(view) ? view : 'ledger';
+  // 'log'(行った店ビュー)は2026-08-08廃止 — 旧リンクは台帳へ流す
+  const next = view === 'data' ? 'data' : 'ledger';
   if(next === listView){ syncLayerUI(); return; }
   setListView(next);
   syncLayerUI();
@@ -337,12 +340,10 @@ export function syncLayerUI(){
     const nm = ch.querySelector('.chip-name');
     if(nm) nm.setAttribute('aria-current', (ly === activeLayer && appMode === 'home') ? 'true' : 'false');
   });
-  syncSeg('.view-btn', 'view', listView);
-  // The two segmented controls share one slot: 外食モード has no layers to
-  // choose (it IS the 飲食 layer), so its three views take the row instead.
-  const layerSeg = $('layerSeg'), viewSeg = $('viewSeg');
+  // 外食モードは層を選ばない(飲食に固定)ので層セグは隠す。旧3タブ(viewSeg)は
+  // 2026-08-08 竹森さん指示で廃止 — 台帳が常設・行った店はトグル・データは保存バーの入口。
+  const layerSeg = $('layerSeg');
   if(layerSeg) layerSeg.style.display = eatout ? 'none' : '';
-  if(viewSeg) viewSeg.style.display = eatout ? '' : 'none';
 
   // `data-layer-only` takes one layer or a comma-separated list: the エリア row
   // belongs to three layers but not to 飲食, which has its own area control.
@@ -385,6 +386,7 @@ export function syncLayerUI(){
   syncAwardBtn();
   syncKidOkBtn();
   syncDayBudgetBtn();
+  syncVisitedBtn();
   syncWantBtn();
   syncUndoneBtn();
   renderSaveBar();
@@ -492,6 +494,20 @@ function syncUndoneBtn(){
   b.innerHTML = '未訪問';
 }
 
+function syncVisitedBtn(){
+  const b = $('toggleVisited');
+  if(!b) return;
+  b.classList.toggle('active', showVisitedOnly);
+  b.setAttribute('aria-pressed', showVisitedOnly ? 'true' : 'false');
+}
+
+/** ✓行った店 — 旧・行った店ビューの代替(2026-08-08)。訪問記録のある店だけに絞る。 */
+export function toggleVisitedFilter(){
+  setShowVisitedOnly(!showVisitedOnly);
+  syncVisitedBtn();
+  applyFilters();
+}
+
 export function toggleUndoneFilter(){
   setShowUndoneOnly(!showUndoneOnly);
   syncUndoneBtn();
@@ -525,6 +541,7 @@ export function activeChips(){
   // invisible from the list.
   if(activeLayer === 'dining' && dayBudgetBasis) chips.push({ id: 'toggleDayBudget', label: '☀ 昼の予算' });
   if(activeLayer === 'dining' && showKidOkOnly) chips.push({ id: 'toggleKidOk', label: '👶 子連れ◎のみ' });
+  if(eatoutActive() && showVisitedOnly) chips.push({ id: 'toggleVisited', label: '✓ 行った店' });
   if(eatoutActive() && showWantOnly) chips.push({ id: 'toggleWant', label: '♡ 行きたい' });
   if(eatoutActive() && showUndoneOnly) chips.push({ id: 'toggleUndone', label: '未訪問' });
   return chips;
@@ -552,6 +569,7 @@ export function renderChips(){
 export function removeFilter(id){
   if(id === 'toggleAward'){ setShowAwardOnly(false); syncAwardBtn(); }
   else if(id === 'toggleKidOk'){ setShowKidOkOnly(false); syncKidOkBtn(); }
+  else if(id === 'toggleVisited'){ setShowVisitedOnly(false); syncVisitedBtn(); }
   else if(id === 'toggleWant'){ setShowWantOnly(false); syncWantBtn(); }
   else if(id === 'toggleUndone'){ setShowUndoneOnly(false); syncUndoneBtn(); }
   else if(id === 'diningNear'){ setDiningNear(null); }
@@ -568,11 +586,13 @@ export function clearAllFilters(){
   setShowAwardOnly(false);
   setShowKidOkOnly(false);
   setShowWantOnly(false);
+  setShowVisitedOnly(false);
   setShowUndoneOnly(false);
   setDiningNear(null);
   setDayBudgetBasis(false);
   syncAwardBtn();
   syncKidOkBtn();
+  syncVisitedBtn();
   syncWantBtn();
   syncUndoneBtn();
   // Via syncLayerUI so the sort option labels lose 「（昼基準）」 with the basis.

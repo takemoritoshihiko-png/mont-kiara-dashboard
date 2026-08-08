@@ -122,13 +122,12 @@ describe('state is announced, not only drawn', () => {
   // buttons — asserted separately below.
   const SEGMENTS = [
     { id: 'modeSeg', label: 'モードを選ぶ', tabs: 2, sample: 'data-mode="eatout"' },
-    { id: 'viewSeg', label: '外食モードの表示', tabs: 3, sample: 'data-view="log"' },
   ];
 
   it('the layer group carries 4 chips, each a visibility toggle + a name', () => {
     const i = body.indexOf('id="layerSeg"');
     expect(i).toBeGreaterThan(-1);
-    const block = body.slice(i, body.indexOf('id="viewSeg"'));
+    const block = body.slice(i, body.indexOf('id="searchRow"'));
     const open = body.slice(i, body.indexOf('>', i));
     expect(open).toContain('role="group"');
     expect(open).toContain('aria-label="表示する種別"');
@@ -407,7 +406,7 @@ describe('mobile (≤768px)', () => {
       '#fCatGroup', '#fMichelin', '#fPriceBand', '#fDiningArea', '#toggleKidOk',
       // D4: 外食モード — the mode switch, the three views, the extra filters and
       // every control inside a record box.
-      '.mode-btn', '.view-btn', '#fVenueType', '#toggleWant', '#toggleUndone',
+      '.mode-btn', '#toggleVisited', '#fVenueType', '#toggleWant', '#toggleUndone',
       '.vb-toggle', '.vb-rv-btn', '.vb-amt', '.vb-memo', '.data-btn', '.data-area',
       '.card-main', '.visitbox', '.log-name', '.log-tiles', '.savebar', '.toast']){
       expect(mobile, `${sel} was never given a mobile rule`).toContain(sel);
@@ -432,7 +431,7 @@ describe('mobile (≤768px)', () => {
     // three buttons sharing one row — so it is named explicitly.
     expect(mobile).toContain('.vb-toggle,.vb-rv-btn,.vb-amt,.data-btn{min-height:40px}');
     expect(mobile).toContain('.mode-btn{min-height:40px');
-    expect(mobile).toContain('.view-btn{min-height:40px');
+    expect(mobile).toContain('#toggleVisited{min-height:40px');
     expect(mobile).toContain('#fVenueType,#toggleWant,#toggleUndone{min-height:40px}');
     // The chip ✕ grows its hit area, not its glyph — a 40px ✕ is not a pill.
     const x = mobile.slice(mobile.indexOf('.fchip-x::after{'));

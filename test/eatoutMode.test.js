@@ -284,52 +284,20 @@ describe('台帳 / 行った店 / データ', () => {
     expect(eatoutListHtml()).toBeNull();
   });
 
-  it('says so plainly when 行った店 is still empty', () => {
+  // 行った店ビューは 2026-08-08 竹森さん指示で廃止。台帳+「✓行った店」トグルが代替。
+  it('the log view is gone: view=log resolves to the ledger (old links land safely)', () => {
     setup({ mode: 'eatout', view: 'log' });
-    const h = eatoutListHtml();
-    expect(h).toContain('まだ訪問記録がありません');
-    expect(h).toContain('log-tiles');
+    // eatoutListHtml が null = 通常の台帳カード一覧が描かれる、が新契約。
+    expect(eatoutListHtml()).toBeNull();
   });
 
-  it('groups the visits and lets them be edited without going back to 台帳', () => {
-    setup({ mode: 'eatout', view: 'log' });
-    setVisited(DEWAKAN.id, true, new Date(2026, 7, 7));
-    setRepeat(DEWAKAN.id, 'a');
-    setAmount(DEWAKAN.id, '790');
-    setMemo(DEWAKAN.id, 'よかった');
-    const h = eatoutListHtml();
-    expect(h).toContain('また行く');
-    expect(h).toContain('Dewakan');
-    expect(h).toContain('2026-08-07 訪問 ・ 実額 RM 790／人 ・ 台帳スコア 80');
-    expect(h).toContain('よかった');
-    expect(h).toContain('class="visitbox"');            // editable in place
-    expect(h).toContain(`amt-log-${DEWAKAN.id}`);
-  });
-
-  it('opens the panel from the whole head band, not from the glyphs of the name', () => {
-    setup({ mode: 'eatout', view: 'log' });
+  it('✓行った店 narrows the ledger to visited records only', () => {
     setVisited(DEWAKAN.id, true);
-    const h = eatoutListHtml();
-    expect(h).toContain('<div class="log-row-head" role="button" tabindex="0"');
-    // ONE role per row: a button inside a button is operable by neither the
-    // keyboard nor a screen reader.
-    expect(h).toContain('<span class="log-name">');
-    const row = h.slice(h.indexOf('class="log-row-head"'), h.indexOf('class="visitbox"'));
-    expect(row.match(/role="button"/g)).toHaveLength(1);
-    // The editable fields stay outside the target.
-    const box = h.slice(h.indexOf('class="visitbox"'));
-    expect(box).not.toContain('selectCondo');
-  });
-
-  it('puts the four tiles at the top and fills them from the visits only', () => {
-    setup({ mode: 'eatout', view: 'log' });
-    setVisited(DEWAKAN.id, true);
-    setAmount(DEWAKAN.id, '790');
-    toggleWant(LEDGER[1].id);                            // wanted, never visited
-    const h = eatoutListHtml();
-    expect(h).toContain('id="logVisits"');
-    expect(h).toContain('RM 790');
-    expect(h.slice(h.indexOf('id="logVisits"'), h.indexOf('id="logAgain"'))).toContain('>1<');
+    const f = { layer: 'dining', visitedOnly: true, personal: { [DEWAKAN.id]: { v: 1 } } };
+    expect(matchesDining(DEWAKAN, f)).toBe(true);
+    expect(matchesDining(LEDGER[1], f)).toBe(false);   // 記録なし → 落ちる
+    // トグルOFFなら絞らない
+    expect(matchesDining(LEDGER[1], { layer: 'dining', visitedOnly: false })).toBe(true);
   });
 
   it('offers save status, export, import and erase on データ', () => {
@@ -538,11 +506,10 @@ describe('index.html carries the mode', () => {
     expect(body).toContain("onclick=\"setMode('eatout')\"");
   });
 
-  it('gives 外食モード its own three-view segment, hidden by default', () => {
-    const i = body.indexOf('id="viewSeg"');
-    expect(i).toBeGreaterThan(-1);
-    expect(body.slice(i, body.indexOf('>', i))).toContain('style="display:none"');
-    for(const v of ['ledger', 'log', 'data']) expect(body).toContain(`data-view="${v}"`);
+  it('the three-view segment is gone; ✓行った店 toggle and the data door replace it (2026-08-08)', () => {
+    expect(body).not.toContain('id="viewSeg"');
+    expect(body).not.toContain('data-view="log"');
+    expect(body).toContain('id="toggleVisited"');
   });
 
   it('marks the personal filter row as 外食モード-only, hidden by default', () => {

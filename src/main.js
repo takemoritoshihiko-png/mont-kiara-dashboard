@@ -12,7 +12,7 @@ import { calcLedgerScores } from './domain/diningScore.js';
 import { initMap, jumpToArea, toggleLegend, togglePenangAreas, map } from './ui/map.js';
 import {
   applyFilters, applyFiltersDebounced, setSort, setLayer, setMode, setView, syncLayerUI, toggleMore, updateSummary, toggleLayerVisible,
-  toggleAward, toggleKidOk, toggleDayBudget, toggleWantFilter, toggleUndoneFilter,
+  toggleAward, toggleKidOk, toggleDayBudget, toggleWantFilter, toggleUndoneFilter, toggleVisitedFilter,
   togglePanel, clearSearch, removeFilter, clearAllFilters, showLoading,
 } from './ui/list.js';
 import {
@@ -52,6 +52,7 @@ window.toggleAward = toggleAward;
 window.toggleKidOk = toggleKidOk;
 window.toggleDayBudget = toggleDayBudget;
 window.toggleWantFilter = toggleWantFilter;
+window.toggleVisitedFilter = toggleVisitedFilter;
 window.toggleUndoneFilter = toggleUndoneFilter;
 // D4 外食モード: every one of these writes through src/data/personal.js and
 // nothing else. They exist on window for the same reason the rest do — the
