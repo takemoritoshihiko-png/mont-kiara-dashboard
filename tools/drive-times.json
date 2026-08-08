@@ -1840,6 +1840,41 @@
    "km": 14.7,
    "minFree": 21,
    "minJam": 38
+  },
+  "Kampung Dining Signature": {
+   "km": 8.6,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Marco Creative Cuisine": {
+   "km": 8.6,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Bhai Jim Jum @MyTown": {
+   "km": 13.5,
+   "minFree": 18,
+   "minJam": 33
+  },
+  "The Walking Hotpot 火锅杯 @ Sunway Pyramid": {
+   "km": 16.7,
+   "minFree": 20,
+   "minJam": 36
+  },
+  "Donkai - The Exchange TRX": {
+   "km": 13.9,
+   "minFree": 22,
+   "minJam": 39
+  },
+  "Mittoappu Wagyu Steakhouse": {
+   "km": 13.9,
+   "minFree": 22,
+   "minJam": 39
+  },
+  "meriah by Serai Group": {
+   "km": 13.9,
+   "minFree": 22,
+   "minJam": 39
   }
  }
 }

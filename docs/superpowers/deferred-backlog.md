@@ -198,7 +198,7 @@
 
 ## 2026-08-09 KL中心部深掘り調査の保留・発見
 
-- **TRX(The Exchange)**: 飲食119区画のほぼ全部がチェーン新規出店で、独立系は口コミ蓄積不足(2023年11月開業)。採用ゼロは正常。**2027年頃に再走査**するとUpper Palace Teochew(★4.7×471)やDe.Wan 1958 TRX店が採れる見込み
+- ~~TRX 2027年再走査~~ → **2026-08-09に前倒し解決**(口コミ急伸でDonkai/Mittoappu/meriahの独立系3店を採用。Upper Palace/De.Wan TRXは引き続き蓄積待ち)
 - **Maria's Signature(Suria KLCC ★4.8×1,736-1,775)**: 系列5店だが1店は一時休業=営業中実数4店の可能性。チェーン規則の「営業中で数えるか」裁定があれば復活可
 - **Michelangelo's Ristorante Italiano(Pavilion)**: Google件数1,000超の裏取りが2班とも取れず見送り(再検証班で最終確認中)
 - **makan.guruの値の鮮度問題(教訓)**: Win Heng Seng(実4.2未満)・Kim Lian Kee(実★3.5)・Ho Weng Kee(実★2.8)・Yut Kee(実4.1)など、収録時の値が現況と大きくずれる例が多発。**今後の発掘はmakan.guru値を候補生成にのみ使い、採用前にGoogle直読を必須とする**(今回の検証班の作法を標準化)
@@ -211,3 +211,5 @@
 - **監査所見(2026-08-09)**: バンサー/ダマンサラ圏の4.2-4.4×1,000+帯は実勢が薄い(★4.5+と★4.1以下に二極化)。中心部型の帯ギャップはこの地区にはほぼ無し
 - **北KL圏の確認不能9件(CAPTCHA障害)**: Nice Soup Gang/Jia Kopitiam/Sun Thai/iian Cuisine/SRK Borneo麵館/Fish With You/Fujisawa居酒屋/Soybean Factory/QQ BBQ(評価不一致)。次回スイープでGoogle直読再検証
 - **The Social @ Desa ParkCity(★4.3×1,445)**: チェーン店舗数未確証で見送り。店舗数確定なら再検討
+- **Wagyu More(牛摩・The Gardens ★4.3×1,123)**: 台湾発ブランドの海外展開疑いで見送り。多国籍チェーン該当かの確定を次回スイープで
+- **Canton Boy(MyTOWN ★4.8×4,422)**: 国内ちょうど5店で僅差reject。「営業中5店未満」等の基準緩和があれば復活候補

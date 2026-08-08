@@ -179,7 +179,8 @@ const AREA_BUCKET_OF = {
   // Cherasは南東でどの付近にも属さない(北KL行きは2026-08-09に誤りと判明し修正)。
   // Kampung PandanはAmpang Hilirの隣=KLCC付近。いずれもKL中心部深掘りで店が入った。
   'Cheras': 'その他', 'Kampung Pandan': 'KLCC付近', 'Setapak': '北KL付近', 'Sentul': '北KL付近',
-  'Kuchai Lama': 'その他', 'Sri Petaling': 'その他',
+  'Kuchai Lama': 'その他', 'Sri Petaling': 'その他', 'Sunway (PJ)': 'その他',
+  'TRX': 'ブキッビンタン付近',
 };
 /** エリア名→付近バケツ。未登録は「その他」(裁定: A案でカバーできない分の受け皿)。 */
 export function areaBucketOf(area){ return AREA_BUCKET_OF[area] || 'その他'; }

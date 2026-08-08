@@ -29,7 +29,9 @@ const premiumFormula = (r) =>
 describe('record counts', () => {
   it('has the expected dataset sizes (update deliberately when adding data)', () => {
     expect(condos.length).toBeGreaterThanOrEqual(271);
-    expect(commercials.length).toBeGreaterThanOrEqual(88);
+    // 商業は2026-08-09裁定で「KL有名モールTOP10だけ」に絞った(旧88件は
+    // docs/archive-commercial_data-88件-20260809.csv に保全)。ちょうど10を守る。
+    expect(commercials.length).toBe(10);
     expect(schools.length).toBeGreaterThanOrEqual(33);
   });
 });

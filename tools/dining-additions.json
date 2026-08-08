@@ -10843,5 +10843,243 @@
   },
   "verified": "2026-08-09",
   "boundary": false
+ },
+ {
+  "placeId": "pending:kampung-dining-signature-1utama",
+  "name": "Kampung Dining Signature",
+  "nameJa": "カンポン・ダイニング・シグネチャー",
+  "cat": "モダン・マレーシアン",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 3047,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "1 Utama Shopping Centre",
+  "venueType": "mall",
+  "area": "Bandar Utama (PJ)",
+  "address": "LG612, Lower Ground Floor, 1 Utama Shopping Centre, 1 Lebuh Bandar Utama, Bandar Utama, 47800 Petaling Jaya, Selangor",
+  "lat": 3.1503,
+  "lng": 101.6151,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   20,
+   35
+  ],
+  "priceDinner": [
+   25,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "豚肉料理主体のカジュアル食堂価格帯。国内2店舗(Seksyen 17本店+1U)。採用=有名モールTOP10調査(2026-08-09)。",
+  "editorNote": "豚肉料理を主役にした地元発のカジュアル食堂。名物はポークラード・ナシレマ。非ハラル。",
+  "vox": {
+   "pros": "コスパ抜群でボリュームも満点、豚肉好きにはたまらない一皿。",
+   "cons": "非ハラル専門店のため、同行者の食の好みは要確認。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:marco-creative-cuisine-1utama",
+  "name": "Marco Creative Cuisine",
+  "nameJa": "マルコ・クリエイティブ・キュイジーヌ",
+  "cat": "洋食ビストロ",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 1202,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "1 Utama Shopping Centre",
+  "venueType": "mall",
+  "area": "Bandar Utama (PJ)",
+  "address": "Lot G146, Ground Floor (Old Wing), 1 Utama Shopping Centre, Bandar Utama, 47800 Petaling Jaya, Selangor",
+  "lat": 3.1503,
+  "lng": 101.6151,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   35,
+   60
+  ],
+  "priceDinner": [
+   70,
+   110
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "コース中心の価格帯。国内2店舗(1U+The Gardens)。採用=有名モールTOP10調査(2026-08-09)。",
+  "editorNote": "手頃な価格で本格コースが楽しめる地元発の創作洋食店。",
+  "vox": {
+   "pros": "セットメニューのコストパフォーマンスが高く、記念日利用にも人気。",
+   "cons": "混雑時は提供にやや時間がかかるとの声も。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:bhai-jim-jum-mytown",
+  "name": "Bhai Jim Jum @MyTown",
+  "nameJa": "バイ・ジムジャム",
+  "cat": "タイ",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 1106,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "MyTOWN Shopping Centre",
+  "venueType": "mall",
+  "area": "Cheras",
+  "address": "Lot B1-09, Basement 1, MyTOWN Shopping Centre, 6 Jalan Cochrane, Seksyen 90, 55100 Kuala Lumpur",
+  "lat": 3.1332,
+  "lng": 101.7248,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   20,
+   35
+  ],
+  "priceDinner": [
+   25,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "一人前ジムジャム鍋の価格帯。国内4店舗の地元ブランド。閉業の噂は誤りで営業中を確認(2026-08-09)。採用=有名モールTOP10調査(2026-08-09)。",
+  "editorNote": "タイ式一人前ホットポット(ジムジャム鍋)の専門店。閉業疑いは誤報で現役営業中。",
+  "vox": {
+   "pros": "トムヤム・グリーンカレー系スープが選べ、辛さ調整も可能。",
+   "cons": "地下フロアのため場所がやや分かりにくいとの声も。"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:walking-hotpot-sunway-pyramid",
+  "name": "The Walking Hotpot 火锅杯 @ Sunway Pyramid",
+  "nameJa": "ウォーキング・ホットポット",
+  "cat": "火鍋",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 1447,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Sunway Pyramid",
+  "venueType": "mall",
+  "area": "Sunway (PJ)",
+  "address": "F1.AV199, Asian Avenue, Sunway Pyramid, 3, Jalan PJS 11/15, Bandar Sunway, 47500 Petaling Jaya, Selangor",
+  "lat": 3.0726,
+  "lng": 101.6072,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   20,
+   40
+  ],
+  "priceDinner": [
+   20,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "マレーシア発・カップ型一人用火鍋という独自業態(現在2店のみ)。採用=有名モールTOP10調査(2026-08-09)。TOP10モール特例(MKから約15km)。",
+  "editorNote": "「マレーシア初のウォーキングホットポット」を謳う自社発カップ火鍋業態。まだ2店舗のみで巨大チェーン化前の独立系。",
+  "vox": {
+   "pros": "SNS映えする一人用カップ火鍋のビジュアルと具材の豊富さが人気",
+   "cons": "味付けは中華系の定番の範囲内で目新しさは薄いとの声も"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:donkai-the-exchange-trx",
+  "name": "Donkai - The Exchange TRX",
+  "nameJa": "ドンカイ",
+  "cat": "日本料理",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 21966,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "The Exchange TRX",
+  "venueType": "mall",
+  "area": "TRX",
+  "address": "C.90.0, Level Concourse, The Exchange TRX, Persiaran TRX, Tun Razak Exchange, 55188 Kuala Lumpur",
+  "lat": 3.1425,
+  "lng": 101.7186,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   40,
+   60
+  ],
+  "priceDinner": [
+   40,
+   60
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "和牛ハンバーグライス専門のマレーシア発ブランド。国内3店(TRX/Pavilion/BB)。採用=有名モールTOP10調査(2026-08-09)。",
+  "editorNote": "TRX開業後に急成長した和牛ハンバーグライス専門店。前回調査時(口コミ僅少)から一変し2万件超に到達。",
+  "vox": {
+   "pros": "ジューシーな和牛ハンバーグとボリューム満点のライスセットに満足の声多数",
+   "cons": "ランチタイムは行列必至で待ち時間が長い"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:mittoappu-wagyu-steakhouse-trx",
+  "name": "Mittoappu Wagyu Steakhouse",
+  "nameJa": "ミトアップ・ワギュウ・ステーキハウス",
+  "cat": "和牛焼肉",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 1612,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "The Exchange TRX",
+  "venueType": "mall",
+  "area": "TRX",
+  "address": "L1.51.0, Level 1, The Exchange TRX, Persiaran TRX, Tun Razak Exchange, 55188 Kuala Lumpur",
+  "lat": 3.1425,
+  "lng": 101.7186,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   200,
+   260
+  ],
+  "priceDinner": [
+   200,
+   260
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "「マレーシア初のハラル和歌山熊野牛A5食べ放題」を掲げる単独店。採用=有名モールTOP10調査(2026-08-09)。",
+  "editorNote": "TRXの高級和牛ビュッフェ枠。A5和歌山熊野牛の食べ放題を提供する単独ブランド。",
+  "vox": {
+   "pros": "A5和牛食べ放題としては質・量ともに満足度が高い",
+   "cons": "単価が高く週末は予約が取りづらい"
+  },
+  "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:meriah-by-serai-group-trx",
+  "name": "meriah by Serai Group",
+  "nameJa": "メリア・バイ・セライグループ",
+  "cat": "モダン・マレーシアン",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 2439,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "The Exchange TRX",
+  "venueType": "mall",
+  "area": "TRX",
+  "address": "L1.03, Level 1, The Exchange TRX, Persiaran TRX, Tun Razak Exchange, 55188 Kuala Lumpur",
+  "lat": 3.1425,
+  "lng": 101.7186,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   40,
+   90
+  ],
+  "priceDinner": [
+   50,
+   120
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "地元Serai Groupの単独業態(meriahブランドはTRXの1店のみ)。採用=有名モールTOP10調査(2026-08-09)。",
+  "editorNote": "マレー・タイ・インドネシアを横断するヌサンタラ料理をモダンに再構成した単独店。キッズメニューあり。",
+  "vox": {
+   "pros": "東南アジア各国の郷土料理を洗練された盛り付けで楽しめる",
+   "cons": "一皿の量はやや小ぶりで価格の割に物足りないとの声も"
+  },
+  "verified": "2026-08-09"
  }
 ]

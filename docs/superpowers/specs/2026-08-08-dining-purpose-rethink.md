@@ -190,3 +190,10 @@ Eat Drink KL / Malay Mail / Time Out / TastyJournal / Bangsar Babe の2025-26年
 
 台帳362店への「増えすぎでは」を受け実測: 非ミシュランで口コミ1,000件未満=23店(うち9店はTatler/50Best権威枠で存置)。純粋な条件外14店のうち、**採用記録に日本人定番マーカーがある宮武讃岐うどん・Casa Rosaの2店のみ残置**し、残り12店を墓標化(Jhol/Yan Kee/Muska/Kin Gyu/Mercat/Lachér/QingHeGu/VCR MK/Bocado/Napa Thai/Lamei/Ra-Ft)。
 台帳**350店(行367・墓標17)**。これで表示中の非ミシュラン店は権威枠9店+日本人定番2店を除き全店1,000件以上。Yan Keeは件数到達で復活可、除名テストは「4.9の5店が安定ID+全除名に理由必須」形式へ改修。
+
+## 17. 有名モールTOP10(2026-08-09・竹森氏指示)
+
+**商業レイヤーをKL有名モールTOP10だけに絞った**(裁定「商業施設はトップ10だけでいい」)。旧88件は docs/archive-commercial_data-88件-20260809.csv に保全(住まいモードの「周辺」から近隣モールが消える副作用も了承済み)。
+- TOP10: Pavilion/Suria KLCC/Mid Valley/1 Utama/Sunway Pyramid/Berjaya Times Square/The Gardens/The Exchange TRX/LaLaport BBCC/MyTOWN(Lot 10=11位相当・IOI City=KL外で対象外)。Sunway PyramidとTRXの2行を新規作成
+- **モール内飲食を既定条件で補完**: 採用7店(Kampung Dining Signature/Marco Creative/Bhai Jim Jum=閉業疑い晴れ/Walking Hotpot=Sunway特例15km/Donkai 4.8×21,966/Mittoappu/meriah)。**TRXは前回「2027年再走査」所見が一変**し独立系3店が1,000件超え到達=前倒しで解決
+- 整合チェックの防御: The Barn MV・Coliseum Gardens店(ブランド重複)/Luna Luna(★4.9でルール抵触=エージェント見落としをメインが検出)/Wagyu More(台湾系疑い)を除外。台帳**357店(行374)**

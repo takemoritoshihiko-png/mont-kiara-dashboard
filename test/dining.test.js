@@ -77,6 +77,8 @@ describe('restaurants.json', () => {
       'Imperial Chakri Palace', 'ParaThai',   // Suria KLCC(venue精度)
       'Al-Amar Lebanese Restaurant', 'CALIA', 'Quivo', 'Weissbrau German Bistro and Bar',   // Pavilion KL(venue精度)
       'Samba Brazilian Steakhouse', 'Natalina Italian Kitchen',   // Avenue K(venue精度)
+      'Donkai - The Exchange TRX', 'Mittoappu Wagyu Steakhouse', 'meriah by Serai Group',   // The Exchange TRX(venue精度)
+      'Kampung Dining Signature', 'Marco Creative Cuisine',   // 1 Utama(venue精度)
     ];
     const seen = new Map();
     for (const r of restaurants) {
