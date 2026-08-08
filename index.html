@@ -358,6 +358,11 @@ button,input,select{font-family:inherit}
 /* 選択中ピンの波紋(2026-08-08: どの店を選んだか地図上で指させる) */
 .mk-pin-sel>div::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid var(--accent);animation:selpulse 1.6s ease-out infinite;pointer-events:none}
 @keyframes selpulse{0%{transform:scale(.65);opacity:.9}70%{transform:scale(1.2);opacity:0}100%{transform:scale(1.2);opacity:0}}
+/* 同一住所ピンの選び直しポップアップ(2026-08-09) */
+.colo-list{display:flex;flex-direction:column;gap:var(--s1);min-width:180px}
+.colo-item{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-sm);padding:6px var(--s2);font-size:var(--fs-label);text-align:left;cursor:pointer;color:var(--text-1)}
+.colo-item:hover{border-color:var(--accent);color:var(--accent)}
+.colo-item.on{border-color:var(--accent);background:var(--accent-soft)}
 
 .map-legend{position:absolute;bottom:var(--s5);left:var(--s4);z-index:1000;background:var(--surface);padding:var(--s3) var(--s4);border-radius:var(--r-card);box-shadow:var(--shadow-2);border:1px solid var(--hairline)}
 .map-legend-title{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;letter-spacing:.3px;font-weight:700;margin-bottom:var(--s2)}
@@ -583,6 +588,7 @@ button,input,select{font-family:inherit}
 
   /* ---- Touch targets ---- */
   .seg-btn{min-height:40px}
+  .colo-item{min-height:40px}
   .filter-group select,.filter-group input,.sort-select,.sf-age-row select{min-height:40px}
   /* 飲食 (D3/UX2): its four dropdowns, the 子連れ toggle and the 昼の予算 basis
      toggle. The generic rules above already reach them; they are named so this

@@ -343,12 +343,53 @@ export function pinClassName(isSelected) {
 // Selection is a CLASS on the icon so the CSS ring can follow it.
 const pinClass = (c) => pinClassName(c.name === selectedCondo);
 
+// ============================================================
+// 同一住所ピンの選び直し(2026-08-09 竹森さん裁定)
+// 選択ピンはクラスタ外の最前面に出るため、同座標のもう1店が下に隠れて
+// 押せなくなる。選択中ピンの再クリックで同地点の店リストを分岐表示し、
+// どの店にも1タップで乗り換えられるようにする。
+// ============================================================
+const CO_LOCATED_M = 30;   // この距離(m)以内は「同じ場所」— 同番地・同ビル想定
+
+/** Pure-ish: いま地図に描かれている中で、cと同地点にいるレコード(自身含む)。 */
+function coLocatedWith(c){
+  const R = 6371e3, rad = x => x * Math.PI / 180;
+  const near = (a, b) => {
+    const h = Math.sin(rad(b.lat - a.lat) / 2) ** 2 +
+      Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(rad(b.lng - a.lng) / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(h)) <= CO_LOCATED_M;
+  };
+  return Object.values(markers).map(m => m._rec).filter(r => near(c, r));
+}
+
+/** 分岐ポップアップ: 同地点の店を並べ、押した店へ選択を乗り換える。 */
+function openCoLocatedChooser(c){
+  const sibs = coLocatedWith(c);
+  if(sibs.length < 2) return;
+  const box = document.createElement('div');
+  box.className = 'colo-list';
+  for(const r of sibs){
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'colo-item' + (r.name === selectedCondo ? ' on' : '');
+    b.textContent = r.name + (r.cat ? `（${r.cat}）` : '');
+    b.addEventListener('click', () => { map.closePopup(); selectCondo(r.name); });
+    box.appendChild(b);
+  }
+  L.popup({ closeButton: true, offset: [0, -14] })
+    .setLatLng([c.lat, c.lng]).setContent(box).openOn(map);
+}
+
 /** The tail every marker branch shares: build the Leaflet marker, wire the
  *  click, bind the name label. shortName is what the label prints. */
 function attachMarker(c, icon, shortName, size){
   const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
   m._rec = c;
-  m.on('click',()=>selectCondo(c.name));
+  m.on('click',()=>{
+    // 選択中のピンをもう一度押したら、同地点の店を分岐表示して選び直せる
+    if(c.name === selectedCondo){ openCoLocatedChooser(c); return; }
+    selectCondo(c.name);
+  });
   return bindLabel(m, c.name, shortName, size/2+2);
 }
 

@@ -111,3 +111,18 @@ describe('focusActionForZoom — 選択は常に「中心へ・FOCUS_ZOOMで」'
     expect(FOCUS_ZOOM).toBeLessThan(LABEL_ZOOM); // できるだけ広く=常時ラベルより1段引く
   });
 });
+
+// 同一住所ピンの選び直し(2026-08-09): 選択ピン再クリックで同地点の店リストが出る。
+// ロジックはLeaflet依存のため実画面で検証済み。ここでは部品のCSS契約だけ固定する
+// (新UI要素はモバイル40pxブロックにも入れる — CLAUDE.md の作法)。
+describe('同一住所ピンの選び直しポップアップ', () => {
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  it('colo-list/colo-item のスタイルがあり、モバイルのタップ標的も登録済み', () => {
+    expect(html).toContain('.colo-list{');
+    expect(html).toContain('.colo-item{');
+    // モバイルブロック(@media max-width:768px)より後に 40px 標的があること
+    const mobileAt = html.indexOf('@media(max-width:768px)');
+    expect(mobileAt).toBeGreaterThan(-1);
+    expect(html.indexOf('.colo-item{min-height:40px}', mobileAt)).toBeGreaterThan(mobileAt);
+  });
+});
