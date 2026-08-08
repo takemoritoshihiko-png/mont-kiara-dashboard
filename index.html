@@ -116,15 +116,18 @@ button,input,select{font-family:inherit}
 .toggle-panel.collapsed{right:0}
 
 /* ---- Summary tiles ---- */
-.summary-bar{padding:var(--s2);background:var(--bg);border-bottom:1px solid var(--hairline);display:flex;gap:var(--s1);flex-shrink:0}
-.summary-item{flex:1;min-width:0;text-align:center;padding:6px 2px;background:var(--surface);border-radius:var(--r-control);border:1px solid var(--hairline)}
+.summary-bar{padding:var(--s1) var(--s2);background:var(--bg);border-bottom:1px solid var(--hairline);display:flex;gap:var(--s1);flex-shrink:0}
+.summary-item{flex:1;min-width:0;display:flex;align-items:baseline;justify-content:center;gap:4px;padding:3px 2px;background:var(--surface);border-radius:var(--r-control);border:1px solid var(--hairline)}
 /* One line, always: a wrapped 「RM 30,000」 reads as two numbers. */
 .summary-val{font-size:var(--fs-md);font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .summary-label{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
+/* 視覚的にだけ隠す(ラベルを支援技術と関連付けには残す) */
+.vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
 /* ---- Controls ---- */
-.filters{padding:var(--s3);background:var(--surface);border-bottom:1px solid var(--hairline);flex-shrink:1;overflow-y:auto}
-.filter-row{display:flex;gap:var(--s2);margin-bottom:var(--s2)}
+.filters{padding:var(--s2) var(--s2) var(--s1);background:var(--surface);border-bottom:1px solid var(--hairline);flex-shrink:1;overflow-y:auto}
+.filter-row{display:flex;gap:var(--s2);margin-bottom:var(--s1)}
 .filter-group{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
 /* .fg-label is the same caption for a group whose control is a button, not a
    form field: a <label> with nothing to point at is a dangling label. */
@@ -132,17 +135,17 @@ button,input,select{font-family:inherit}
 /* Two toggles under one caption (外食モードの「自分の記録」). A second caption
    would be a <span> with nothing to say — the buttons name themselves. */
 .fg-btns{display:flex;gap:var(--s2);flex-wrap:wrap}
-.filter-group select,.filter-group input{background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:6px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm);min-width:0}
+.filter-group select,.filter-group input{background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:4px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm);min-width:0}
 .filter-group select:focus,.filter-group input:focus,.sort-select:focus,.search-wrap input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(10,108,255,.16)}
-.sort-row{display:flex;gap:var(--s2);align-items:center;margin-top:var(--s2)}
+.sort-row{display:flex;gap:var(--s2);align-items:center;margin-top:var(--s1)}
 .sort-label{font-size:var(--fs-xs);color:var(--text-2);font-weight:600;white-space:nowrap}
-.sort-select{flex:1;min-width:0;background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:6px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm)}
+.sort-select{flex:1;min-width:0;background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:4px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm)}
 .sort-btn{background:var(--surface);border:1px solid var(--hairline);color:var(--text-2);padding:5px var(--s3);border-radius:var(--r-pill);font-size:var(--fs-xs);cursor:pointer;font-weight:600;transition:all var(--dur) var(--ease);white-space:nowrap}
 .sort-btn:hover{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
 .sort-btn.active{background:var(--accent);color:var(--surface);border-color:var(--accent)}
 
 /* ---- Layer segmented control (spec 2.2) ---- */
-.layer-seg{display:flex;background:var(--bg);border-radius:var(--r-control);padding:2px;margin-bottom:var(--s3)}
+.layer-seg{display:flex;background:var(--bg);border-radius:var(--r-control);padding:2px;margin-bottom:var(--s1)}
 /* 層チップ = ☑(表示) + 名前(一覧の切替)。アクティブ層は名前が濃く下線 */
 .layer-chip{display:flex;flex:1;align-items:stretch;border-radius:var(--r-control);overflow:hidden}
 /* 本物のチェックボックスに見えること（「どこで使えるのか分からない」への回答）:
@@ -154,7 +157,7 @@ button,input,select{font-family:inherit}
 .chip-name:hover{color:var(--text)}
 .layer-chip.active{background:var(--surface);box-shadow:var(--shadow-1)}
 .layer-chip.active .chip-name{color:var(--accent)}
-.seg-btn{flex:1;background:transparent;border:none;color:var(--text-2);font-size:var(--fs-sm);font-weight:600;padding:6px var(--s1);border-radius:6px;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
+.seg-btn{flex:1;background:transparent;border:none;color:var(--text-2);font-size:var(--fs-sm);font-weight:600;padding:4px var(--s1);border-radius:6px;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
 .seg-btn:hover{color:var(--text)}
 .seg-btn.active{background:var(--surface);color:var(--accent);box-shadow:var(--shadow-1)}
 
@@ -170,6 +173,7 @@ button,input,select{font-family:inherit}
 
 /* ---- Progressive disclosure ---- */
 .disclosure{background:var(--bg);border:1px solid var(--hairline);border-radius:var(--r-pill);padding:2px var(--s3);color:var(--accent);font-size:var(--fs-xs);font-weight:600;cursor:pointer;padding:var(--s1) 0;margin-top:2px}
+.disclosure{padding:2px 0;margin-top:0}
 .disclosure:hover{text-decoration:underline}
 .chip-toggle{background:var(--surface);border:1px solid var(--hairline);color:var(--text-2);border-radius:var(--r-pill);padding:5px var(--s3);font-size:var(--fs-xs);font-weight:600;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
 .chip-toggle:hover{border-color:var(--accent);color:var(--accent)}
@@ -730,7 +734,7 @@ button,input,select{font-family:inherit}
 
       <div class="filter-row" id="searchRow">
         <div class="filter-group" style="flex:1">
-          <label for="fSearch">検索 / Search</label>
+          <label for="fSearch" class="vh">検索 / Search</label>
           <div class="search-wrap">
             <input type="text" id="fSearch" placeholder="名前・住所で検索" oninput="applyFiltersDebounced()">
             <button type="button" class="search-clear" aria-label="検索をクリア" onclick="clearSearch()">✕</button>
