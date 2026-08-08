@@ -23,6 +23,8 @@ import {
 } from '../domain/diningScore.js';
 import { visitSummary, groupByRepeat, logMetaText } from '../domain/diningLog.js';
 import * as P from '../data/personal.js';
+import * as FS from '../data/fileStore.js';
+import { stableStringify } from '../domain/fileSync.js';
 import { esc, jsStr, num } from './list.js';
 
 // The re-render to run after a record changes. Injected by main.js so this
@@ -291,6 +293,64 @@ const EXPORT_LEAD_TEXT =
   '記録をファイルに保存するか、下のJSONをコピーして控えられます';
 const EXPORT_SUMMARY_TEXT = '書き出した内容（JSON）';
 
+// ---- ファイルDB（A案 2026-08-08）: データビュー先頭の節と保存バーの一言 ----
+
+function fileTimeText(d){
+  if(!d) return '';
+  const p = P.pad2;
+  return `${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+/** 保存バー用の短い一言。'' なら何も足さない。 */
+export function fileBarText(fs){
+  if(!fs.supported || fs.phase === 'off' || fs.phase === 'unsupported') return '';
+  if(fs.phase === 'conflict') return '⚠ ファイル保存が競合（データビューで解決）';
+  if(fs.phase === 'error') return '⚠ ファイル保存に失敗';
+  if(fs.phase === 'reauth') return 'ファイル保存: 再接続待ち';
+  if(fs.phase === 'saving') return 'ファイルへ保存中…';
+  return 'ファイル保存: ' + (fs.lastWriteAt ? fileTimeText(fs.lastWriteAt) + ' ✓' : '接続済み');
+}
+
+/** データビュー先頭「自動保存（ファイル）」の節。状態ごとに言うことが違う。 */
+function fileSectionHtml(){
+  const fs = FS.fileStatus();
+  const head = `<section class="data-sec"><h3 class="data-h">自動保存（ファイル）</h3>`;
+  if(!fs.supported){
+    return head + `<div class="data-note">このブラウザはフォルダへの自動保存に対応していません（Chrome/Edgeで利用できます）。下の「書き出し」でのバックアップをおすすめします。</div></section>`;
+  }
+  if(fs.phase === 'off'){
+    return head +
+      `<div class="data-note">フォルダを一度選ぶと、以後は記録のたび自動でファイルにも保存されます。OneDrive内のフォルダを選べば、ブラウザのデータ消去やPCの故障からも記録が守られます。</div>` +
+      `<div class="data-btns"><button type="button" class="data-btn primary" onclick="dineFileConnect()">フォルダを選んで自動保存を始める</button></div></section>`;
+  }
+  if(fs.phase === 'reauth'){
+    return head +
+      `<div class="data-line">前回の保存先: フォルダ「${esc(fs.dirName)}」</div>` +
+      `<div class="data-note">ブラウザ再起動後のため、再接続の許可が必要です。ダイアログで「毎回許可」を選ぶと次回から表示されません。</div>` +
+      `<div class="data-btns"><button type="button" class="data-btn primary" onclick="dineFileReauth()">再接続する（許可）</button>` +
+      `<button type="button" class="data-btn" onclick="dineFileDisconnect()">自動保存をやめる</button></div></section>`;
+  }
+  if(fs.phase === 'conflict'){
+    return head +
+      `<div class="data-warn">⚠ ${esc(fs.error)}</div>` +
+      `<div class="data-note">別のPCやファイルの手編集で、保存ファイルがこのブラウザの記録と食い違っています。残す方を選んでください（選ぶまで自動保存は止まっています）。</div>` +
+      `<div class="data-btns">` +
+        `<button type="button" class="data-btn primary" onclick="dineFileAdoptFile()">ファイルの内容をこのブラウザに読み込む</button>` +
+        `<button type="button" class="data-btn danger" onclick="dineFileAdoptCache()">このブラウザの記録でファイルを上書き</button>` +
+      `</div></section>`;
+  }
+  const warn = fs.phase === 'error' ? `<div class="data-warn">⚠ ${esc(fs.error)}</div>` : '';
+  return head + warn +
+    `<div class="data-line">保存先: フォルダ「${esc(fs.dirName)}」の ${esc('dining-records.json')}</div>` +
+    `<div class="data-line">${fs.lastWriteAt ? 'ファイルへの最終保存: ' + fileTimeText(fs.lastWriteAt) : '接続済み（まだ書き込みなし）'} ・ 日次バックアップ7世代（backups/）</div>` +
+    `<div class="data-btns">` +
+      (fs.phase === 'error' ? `<button type="button" class="data-btn primary" onclick="dineFileReauth()">再試行</button>` : '') +
+      `<button type="button" class="data-btn" onclick="dineFileDisconnect()">自動保存をやめる</button>` +
+    `</div>` +
+    `<div class="data-note">ファイルは手元に残るので、新しいPCではこの画面から同じフォルダを選び直すだけで復元されます。</div>` +
+  `</section>`;
+}
+
 function dataViewHtml(){
   const st = P.saveStatus();
   const cnt = P.storedCounts();
@@ -305,10 +365,15 @@ function dataViewHtml(){
   // on every screen of 外食モード, and the detail panel carries it beside the
   // record itself. A third copy on the one view the user came to on purpose
   // was the same sentence twice in one glance.
+  const fs = FS.fileStatus();
+  const cacheRole = fs.phase === 'idle' || fs.phase === 'saving'
+    ? '保存先: このブラウザ（高速キャッシュ）＋ 自動保存ファイル'
+    : '保存先: このブラウザ（localStorage）';
   return `<div class="dataview">` +
+    fileSectionHtml() +
     `<section class="data-sec"><h3 class="data-h">保存の状態</h3>` +
       warn +
-      `<div class="data-line">保存先: このブラウザ（localStorage）</div>` +
+      `<div class="data-line">${esc(cacheRole)}</div>` +
       `<div class="data-line">${esc(savedAtText(st))}</div>` +
       inventory +
     `</section>` +
@@ -435,10 +500,50 @@ export function renderSaveBar(){
   if(!bar) return;
   if(!eatoutActive()){ bar.style.display = 'none'; return; }
   const st = P.saveStatus();
+  const fb = fileBarText(FS.fileStatus());
   bar.style.display = '';
-  bar.classList.toggle('bad', !!st.error);
-  bar.textContent = st.error ? '⚠ ' + st.error : savedAtText(st) + ' ・ ' + PRIVACY_TEXT;
+  bar.classList.toggle('bad', !!st.error || fb.startsWith('⚠'));
+  bar.textContent = st.error ? '⚠ ' + st.error
+    : savedAtText(st) + (fb ? ' ・ ' + fb : '') + ' ・ ' + PRIVACY_TEXT;
 }
+
+// ============================================================
+// ファイルDBの配線（main.jsから起動時に1回）とボタンハンドラ
+// ============================================================
+export function initFileDb(){
+  FS.initFileStore({
+    subscribe: P.onPersonalChange,
+    getExportText: () => P.currentExportText(),
+    cacheCount: () => P.storedCounts().stores,
+    sameData: (text) => {
+      try { return stableStringify(JSON.parse(text).data) === stableStringify(P.allEntries()); }
+      catch { return false; }
+    },
+    restore: (text) => {
+      const res = P.parseImport(text, P.buildPlaceIdMap(diningRecords()));
+      if(!res.ok) return res;
+      P.replaceAll(res.data);
+      return { ok: true };
+    },
+    localDate: P.localDate,
+    onRestored: (n) => toast(`保存ファイルから記録 ${num(n)}店ぶんを復元しました`),
+  });
+  FS.onFileChange(() => {
+    renderSaveBar();
+    // データビューを開いているときは状態表示を追随させる
+    if(eatoutActive() && listView === 'data') onChanged();
+  });
+  FS.resumeFileStore();
+}
+
+export function dineFileConnect(){ FS.connectFileStore(); }
+export function dineFileReauth(){ FS.reauthFileStore(); }
+export function dineFileDisconnect(){
+  FS.disconnectFileStore();
+  toast('自動保存をやめました。ファイルは手元に残っています');
+}
+export function dineFileAdoptFile(){ FS.adoptFile(); }
+export function dineFileAdoptCache(){ FS.adoptCache(); }
 
 // ============================================================
 // THE VIEW SWITCH
