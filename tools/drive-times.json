@@ -1641,11 +1641,6 @@
    "minFree": 15,
    "minJam": 27
   },
-  "Eat Drink Thai @ Taman Bukit Desa": {
-   "km": 11.8,
-   "minFree": 17,
-   "minJam": 30
-  },
   "Big Singh Chapati • TTDI": {
    "km": 8.2,
    "minFree": 13,
@@ -1785,6 +1780,66 @@
    "km": 10.1,
    "minFree": 13,
    "minJam": 24
+  },
+  "Baan Thai 2 Seafood & Thai Cuisine": {
+   "km": 14,
+   "minFree": 19,
+   "minJam": 34
+  },
+  "Chapathi Recipes": {
+   "km": 18.1,
+   "minFree": 24,
+   "minJam": 42
+  },
+  "Restoran Mei Keng Fatt": {
+   "km": 16.7,
+   "minFree": 23,
+   "minJam": 41
+  },
+  "Tang Fei Dessert": {
+   "km": 15.2,
+   "minFree": 22,
+   "minJam": 39
+  },
+  "Anne Elizabeth": {
+   "km": 18.2,
+   "minFree": 22,
+   "minJam": 39
+  },
+  "De Maw Restaurant | 地茂館中华美食": {
+   "km": 15.3,
+   "minFree": 19,
+   "minJam": 34
+  },
+  "Thai Chala Restaurant": {
+   "km": 17.7,
+   "minFree": 24,
+   "minJam": 44
+  },
+  "Yuan Yuan Tea Style": {
+   "km": 15,
+   "minFree": 21,
+   "minJam": 38
+  },
+  "Yakitori Haki @ Cheras": {
+   "km": 17.3,
+   "minFree": 22,
+   "minJam": 39
+  },
+  "Shawarma Restaurant": {
+   "km": 18.1,
+   "minFree": 23,
+   "minJam": 42
+  },
+  "D'oro Wine & Dine": {
+   "km": 17.3,
+   "minFree": 22,
+   "minJam": 39
+  },
+  "Ban Bu Dian @ Kuchai Lama": {
+   "km": 14.7,
+   "minFree": 21,
+   "minJam": 38
   }
  }
 }

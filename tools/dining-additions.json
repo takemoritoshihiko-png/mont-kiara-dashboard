@@ -9462,40 +9462,6 @@
   "verified": "2026-08-09"
  },
  {
-  "placeId": "pending:eat-drink-thai-taman-bukit-desa",
-  "name": "Eat Drink Thai @ Taman Bukit Desa",
-  "nameJa": "イート・ドリンク・タイ",
-  "cat": "タイ",
-  "michelin": "none",
-  "rating": 4.8,
-  "reviewCount": 1505,
-  "natCode": 2,
-  "kidOk": 1,
-  "venue": "路面店",
-  "venueType": "street",
-  "area": "Taman Desa",
-  "address": "7, Jalan Bukit Desa 5, Taman Bukit Desa, 58100 Kuala Lumpur",
-  "lat": 3.110673,
-  "lng": 101.68478,
-  "geoPrecision": "building",
-  "priceLunch": [
-   20,
-   40
-  ],
-  "priceDinner": [
-   20,
-   40
-  ],
-  "priceConfidence": "概算",
-  "priceNote": "Google表示RM20〜40を採用。採用=全エリア取りこぼし監査(2026-08-09)。",
-  "editorNote": "タマン・ブキッ・デサの実力派タイ料理店。南部風サワーカレーが名物。",
-  "vox": {
-   "pros": "本格的な辛さとボリューム、手頃な価格が高評価。",
-   "cons": "住宅街の店舗でアクセスはやや不便。"
-  },
-  "verified": "2026-08-09"
- },
- {
   "placeId": "pending:big-singh-chapati-ttdi",
   "name": "Big Singh Chapati • TTDI",
   "nameJa": "ビッグ・シン・チャパティ TTDI",
@@ -10446,5 +10412,425 @@
    "cons": "座席数が限られイベント利用時は一般客が入りにくい場合も"
   },
   "verified": "2026-08-09"
+ },
+ {
+  "placeId": "pending:baan-thai-2-kuchai-lama",
+  "name": "Baan Thai 2 Seafood & Thai Cuisine",
+  "nameJa": "バーンタイ2 シーフード&タイクイジーン",
+  "cat": "タイ",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 8951,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Kuchai Lama",
+  "address": "Lot PT 15288A, Jalan Kuchai Lama, 58200 Kuala Lumpur",
+  "lat": 3.09269,
+  "lng": 101.684891,
+  "geoPrecision": "building",
+  "priceLunch": [
+   25,
+   35
+  ],
+  "priceDinner": [
+   35,
+   60
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "クチャイラマの大箱タイ・シーフード店。カラオケ設備もあり宴会利用も多い人気店。",
+  "vox": {
+   "pros": "新鮮なシーフードと本格タイ料理が高評価",
+   "cons": "大箱で賑やかなため静かな食事向きではない"
+  },
+  "verified": "2026-08-09",
+  "boundary": false
+ },
+ {
+  "placeId": "pending:chapathi-recipes-cheras",
+  "name": "Chapathi Recipes",
+  "nameJa": "チャパティ・レシピーズ",
+  "cat": "北インド",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 6005,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "5, Jalan Menara Gading 1, Taman Connaught, 56000 Cheras, Kuala Lumpur",
+  "lat": 3.080825,
+  "lng": 101.733337,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   30
+  ],
+  "priceDinner": [
+   25,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "タマンコノートの北インド料理店。手作りチャパティとカレーが評判で口コミ6000件超。",
+  "vox": {
+   "pros": "本格インドカレーとふわふわチャパティが名物",
+   "cons": "ピーク時は行列ができる"
+  },
+  "verified": "2026-08-09",
+  "boundary": true
+ },
+ {
+  "placeId": "pending:mei-keng-fatt-sri-petaling",
+  "name": "Restoran Mei Keng Fatt",
+  "nameJa": "レストラン・メイケンファット",
+  "cat": "広東・点心",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 4128,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Sri Petaling",
+  "address": "Jalan 5/149J, Zon L, Sri Petaling, 57000 Kuala Lumpur",
+  "lat": 3.069218,
+  "lng": 101.687428,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   15,
+   30
+  ],
+  "priceDinner": [
+   15,
+   30
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。号地番未確定のためgeoPrecisionはvenue扱い。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "スリプタリンの朝食・飲茶で知られる中華食堂。同名の別経営店(アンパン)と混同注意。",
+  "vox": {
+   "pros": "朝から楽しめる本格飲茶が地元で人気",
+   "cons": "号地番の正確な住所は要現地確認"
+  },
+  "verified": "2026-08-09",
+  "boundary": false
+ },
+ {
+  "placeId": "pending:tang-fei-dessert-kuchai-lama",
+  "name": "Tang Fei Dessert",
+  "nameJa": "タンフェイ・デザート",
+  "cat": "デザート",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 3589,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Kuchai Entrepreneurs Park",
+  "venueType": "street",
+  "area": "Kuchai Lama",
+  "address": "27, Jalan Kuchai Maju, Kuchai Entrepreneurs Park, 58200 Kuala Lumpur",
+  "lat": 3.089501,
+  "lng": 101.689433,
+  "geoPrecision": "building",
+  "priceLunch": [
+   10,
+   20
+  ],
+  "priceDinner": [
+   10,
+   20
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "深夜まで営業するクチャイラマの人気中華デザート専門店。",
+  "vox": {
+   "pros": "種類豊富な中華デザートが手頃な価格で楽しめる",
+   "cons": "座席数が少なくピーク時は相席になりやすい"
+  },
+  "verified": "2026-08-09",
+  "boundary": false
+ },
+ {
+  "placeId": "pending:anne-elizabeth-cheras",
+  "name": "Anne Elizabeth",
+  "nameJa": "アン・エリザベス",
+  "cat": "ステーキ",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 3133,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "1, Jalan Manis 4, Taman Bukit Segar, 56100 Kuala Lumpur",
+  "lat": 3.088555,
+  "lng": 101.743695,
+  "geoPrecision": "building",
+  "priceLunch": [
+   40,
+   80
+  ],
+  "priceDinner": [
+   50,
+   120
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "タマンブキットスガーの老舗カジュアルステーキハウス。ファミリー層に長年支持される味。",
+  "vox": {
+   "pros": "手頃な価格でボリューム満点のステーキが楽しめる",
+   "cons": "ピーク時は待ち時間が発生することも"
+  },
+  "verified": "2026-08-09",
+  "boundary": true
+ },
+ {
+  "placeId": "pending:de-maw-restaurant-cheras",
+  "name": "De Maw Restaurant | 地茂館中华美食",
+  "nameJa": "デーマオ・レストラン(地茂館)",
+  "cat": "広東（老舗）",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 3327,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "PGRM",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "18, Jalan Pudu Ulu, Cheras, 56100 Kuala Lumpur",
+  "lat": 3.121127,
+  "lng": 101.72952,
+  "geoPrecision": "building",
+  "priceLunch": [
+   40,
+   80
+  ],
+  "priceDinner": [
+   40,
+   80
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ディナー営業のみ(18時開店)のため昼夜同一レンジで概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "チェラス・プドゥウルの老舗広東料理店。北京ダックなど昔ながらの一品料理が名物(ディナーのみ営業)。",
+  "vox": {
+   "pros": "本格的な広東料理と北京ダックが評判",
+   "cons": "ディナーのみの営業で開店は18時から"
+  },
+  "verified": "2026-08-09",
+  "boundary": false
+ },
+ {
+  "placeId": "pending:thai-chala-sri-petaling",
+  "name": "Thai Chala Restaurant",
+  "nameJa": "タイチャラ・レストラン",
+  "cat": "タイ",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 2530,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Sri Petaling",
+  "address": "15, Jalan Radin Tengah, Bandar Baru Sri Petaling, 57000 Kuala Lumpur",
+  "lat": 3.068763,
+  "lng": 101.694123,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   30
+  ],
+  "priceDinner": [
+   25,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "スリプタリンの実力派タイ料理食堂。地元客に長年愛される家庭的な味。",
+  "vox": {
+   "pros": "本格的な家庭的タイ料理をカジュアルに楽しめる",
+   "cons": "内装はシンプルな食堂スタイル"
+  },
+  "verified": "2026-08-09",
+  "boundary": false
+ },
+ {
+  "placeId": "pending:yuan-yuan-tea-style-kuchai-lama",
+  "name": "Yuan Yuan Tea Style",
+  "nameJa": "ユアンユアン・ティースタイル",
+  "cat": "広東・点心",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 2054,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Kuchai Lama",
+  "address": "59, Jalan Kuchai Maju 1, Kuchai Lama, 58200 Kuala Lumpur",
+  "lat": 3.090934,
+  "lng": 101.687366,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   35
+  ],
+  "priceDinner": [
+   20,
+   35
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "営業は18時開始のため昼夜同一レンジで概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "クチャイラマの点心専門店。夕方から夜にかけて楽しめる飲茶が名物。",
+  "vox": {
+   "pros": "点心の種類が豊富でコストパフォーマンスが良い",
+   "cons": "営業は夕方以降のみ"
+  },
+  "verified": "2026-08-09",
+  "boundary": false
+ },
+ {
+  "placeId": "pending:yakitori-haki-cheras",
+  "name": "Yakitori Haki @ Cheras",
+  "nameJa": "ヤキトリ・ハキ(チェラス)",
+  "cat": "居酒屋",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 1990,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Cheras Business Centre",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "34G, Jalan 5/101c, Cheras Business Centre, 56100 Kuala Lumpur",
+  "lat": 3.101075,
+  "lng": 101.740047,
+  "geoPrecision": "building",
+  "priceLunch": [
+   35,
+   45
+  ],
+  "priceDinner": [
+   60,
+   100
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "チェラス・ビジネスセンターの本格焼き鳥居酒屋。串焼きから寿司まで幅広いメニュー。",
+  "vox": {
+   "pros": "炭火焼きの焼き鳥と刺身が本格的",
+   "cons": "ディナーは単価がやや高め"
+  },
+  "verified": "2026-08-09",
+  "boundary": false
+ },
+ {
+  "placeId": "pending:shawarma-restaurant-cheras",
+  "name": "Shawarma Restaurant",
+  "nameJa": "シャワルマ・レストラン",
+  "cat": "中東",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 1591,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "10, Jalan Menara Gading 1, Taman Connaught, 56000 Cheras, Kuala Lumpur",
+  "lat": 3.08065,
+  "lng": 101.733154,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   25
+  ],
+  "priceDinner": [
+   25,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "タマンコノートの本格シャワルマ専門店。中東料理ファンに支持される名店。",
+  "vox": {
+   "pros": "ジューシーなシャワルマとフムスが評判",
+   "cons": "座席数が限られピーク時は混雑"
+  },
+  "verified": "2026-08-09",
+  "boundary": true
+ },
+ {
+  "placeId": "pending:doro-wine-dine-cheras",
+  "name": "D'oro Wine & Dine",
+  "nameJa": "ドーロ・ワイン&ダイン",
+  "cat": "洋食ビストロ",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 1214,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Cheras Business Centre",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "40G Block E, Jalan 1/101c, Cheras Business Centre, 56100 Kuala Lumpur",
+  "lat": 3.098651,
+  "lng": 101.739077,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   30
+  ],
+  "priceDinner": [
+   30,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "チェラス・ビジネスセンターのカジュアル洋食ビストロ。ステーキやソーセージが手頃な価格で楽しめる。",
+  "vox": {
+   "pros": "手頃な価格の洋食とワインが楽しめる",
+   "cons": "ビジネスセンター内でやや分かりにくい立地"
+  },
+  "verified": "2026-08-09",
+  "boundary": false
+ },
+ {
+  "placeId": "pending:ban-bu-dian-kuchai-lama",
+  "name": "Ban Bu Dian @ Kuchai Lama",
+  "nameJa": "バンブーディエン(クチャイラマ)",
+  "cat": "中華（モダン）",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 1067,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "Kuchai Entrepreneurs Park",
+  "venueType": "street",
+  "area": "Kuchai Lama",
+  "address": "1, Jalan Kuchai Maju 7, Kuchai Entrepreneurs Park, Kuala Lumpur",
+  "lat": 3.090454,
+  "lng": 101.686526,
+  "geoPrecision": "building",
+  "priceLunch": [
+   30,
+   50
+  ],
+  "priceDinner": [
+   50,
+   80
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "価格帯はSNS等の類似業態相場から推定。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "武侠(カンフー)テーマの四川系モダン中華酒場。江湖菜と痺れ系炒め物が名物。",
+  "vox": {
+   "pros": "痺れ系四川料理とユニークな武侠テーマの内装が話題",
+   "cons": "バー的な社交色が強く子供連れにはやや不向き"
+  },
+  "verified": "2026-08-09",
+  "boundary": false
  }
 ]

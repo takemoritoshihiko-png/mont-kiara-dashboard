@@ -181,3 +181,7 @@ Eat Drink KL / Malay Mail / Time Out / TastyJournal / Bangsar Babe の2025-26年
 - 検証防御: チェーン検出(Tea Garden 27店/Young Sanna 7店/Kenny Hills 6店等)・臨時休業(NALE)・ブランド重複(Pak Punjab/Tasty Chapathi/Maya/Chef Wan系列)・確認不能9件は正直にreject→バックログ
 - 新エリア: Sentul/Setapak/Kampung Pandan/Keramatが台帳入り(バケツ対応表に登録済み)
 - **モデル選択新ルールの初運用実績: sonnet 6体でopus班と同水準の検証品質を確認**(チェーン全数カウント・閉店検出・未確証の正直な棄却)
+
+### §15追補(南KL境界班の帰還・2026-08-09)
+南KL(Kuchai Lama/Sri Petaling/Cheras内側)12店を追加し**台帳362店(行367)**で監査完結。Baan Thai 2(★4.8×8,951)・Chapathi Recipes・De Maw地茂館など。境界13-14kmの3店はboundary付きで採用。
+**矛盾検出の防御実績**: バンサー班が単独店として採用したEat Drink Thaiを南KL班が5店超チェーンと確定→台帳から除去(2班のクロスチェックが機能)。新エリアKuchai Lama/Sri Petalingは「その他」バケツへ。

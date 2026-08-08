@@ -13487,47 +13487,6 @@
  },
  {
   "id": "R0328",
-  "placeId": "pending:eat-drink-thai-taman-bukit-desa",
-  "name": "Eat Drink Thai @ Taman Bukit Desa",
-  "nameJa": "イート・ドリンク・タイ",
-  "cat": "タイ",
-  "michelin": "none",
-  "rating": 4.8,
-  "reviewCount": 1505,
-  "natCode": 2,
-  "kidOk": 1,
-  "venue": "路面店",
-  "venueType": "street",
-  "area": "Taman Desa",
-  "address": "7, Jalan Bukit Desa 5, Taman Bukit Desa, 58100 Kuala Lumpur",
-  "lat": 3.110673,
-  "lng": 101.68478,
-  "geoPrecision": "building",
-  "priceLunch": [
-   20,
-   40
-  ],
-  "priceDinner": [
-   20,
-   40
-  ],
-  "priceConfidence": "概算",
-  "priceNote": "Google表示RM20〜40を採用。採用=全エリア取りこぼし監査(2026-08-09)。",
-  "editorNote": "タマン・ブキッ・デサの実力派タイ料理店。南部風サワーカレーが名物。",
-  "vox": {
-   "pros": "本格的な辛さとボリューム、手頃な価格が高評価。",
-   "cons": "住宅街の店舗でアクセスはやや不便。"
-  },
-  "verified": "2026-08-09",
-  "catGroup": "日本・その他アジア",
-  "tier": 0,
-  "extraFlags": [],
-  "driveKm": 11.8,
-  "driveMinFree": 17,
-  "driveMinJam": 30
- },
- {
-  "id": "R0329",
   "placeId": "pending:big-singh-chapati-ttdi",
   "name": "Big Singh Chapati • TTDI",
   "nameJa": "ビッグ・シン・チャパティ TTDI",
@@ -13568,7 +13527,7 @@
   "driveMinJam": 23
  },
  {
-  "id": "R0330",
+  "id": "R0329",
   "placeId": "pending:bedouin-arabian-cuisine",
   "name": "Bedouin Arabian Cuisine",
   "nameJa": "ベドウィン・アラビアン・キュイジーヌ",
@@ -13609,7 +13568,7 @@
   "driveMinJam": 22
  },
  {
-  "id": "R0331",
+  "id": "R0330",
   "placeId": "pending:team-udon-ttdi",
   "name": "Team Udon TTDI",
   "nameJa": "チームうどん TTDI",
@@ -13650,7 +13609,7 @@
   "driveMinJam": 23
  },
  {
-  "id": "R0332",
+  "id": "R0331",
   "placeId": "pending:don-omakase-ttdi",
   "name": "Don Omakase TTDI",
   "nameJa": "ドン・おまかせ TTDI",
@@ -13691,7 +13650,7 @@
   "driveMinJam": 20
  },
  {
-  "id": "R0333",
+  "id": "R0332",
   "placeId": "pending:corks-out-ttdi",
   "name": "Corks Out TTDI",
   "nameJa": "コークス・アウト TTDI",
@@ -13732,7 +13691,7 @@
   "driveMinJam": 19
  },
  {
-  "id": "R0334",
+  "id": "R0333",
   "placeId": "pending:fan-hua-ttdi",
   "name": "Fan Hua 繁華",
   "nameJa": "ファン・ホア（繁華）",
@@ -13773,7 +13732,7 @@
   "driveMinJam": 22
  },
  {
-  "id": "R0335",
+  "id": "R0334",
   "placeId": "pending:peko-peko-ttdi",
   "name": "Peko Peko TTDI - Japas and Sake",
   "nameJa": "ペコペコ TTDI",
@@ -13814,7 +13773,7 @@
   "driveMinJam": 22
  },
  {
-  "id": "R0336",
+  "id": "R0335",
   "placeId": "pending:the-bread-bar-ttdi",
   "name": "The Bread Bar TTDI",
   "nameJa": "ザ・ブレッド・バー TTDI",
@@ -13855,7 +13814,7 @@
   "driveMinJam": 19
  },
  {
-  "id": "R0337",
+  "id": "R0336",
   "placeId": "pending:baker-next-door-desaparkcity",
   "name": "Baker Next Door",
   "nameJa": "ベイカー・ネクスト・ドア",
@@ -13896,7 +13855,7 @@
   "driveMinJam": 18
  },
  {
-  "id": "R0338",
+  "id": "R0337",
   "placeId": "pending:fowlboys-diner-met-corporate-towers",
   "name": "Fowlboys Diner @ The MET Corporate Towers",
   "nameJa": "ファウルボーイズ・ダイナー",
@@ -13937,7 +13896,7 @@
   "driveMinJam": 19
  },
  {
-  "id": "R0339",
+  "id": "R0338",
   "placeId": "pending:cocoon-plus-kids-cafe-desaparkcity",
   "name": "Cocoon+ Kids Cafe - Desa ParkCity KL",
   "nameJa": "コクーンプラス・キッズカフェ",
@@ -13978,7 +13937,7 @@
   "driveMinJam": 19
  },
  {
-  "id": "R0340",
+  "id": "R0339",
   "placeId": "pending:hokkaido-seafood-kl-main-branch",
   "name": "Hokkaido Seafood KL Main Branch",
   "nameJa": "ホッカイドウ・シーフード（KL本店）",
@@ -14019,7 +13978,7 @@
   "driveMinJam": 22
  },
  {
-  "id": "R0341",
+  "id": "R0340",
   "placeId": "pending:hadramawt-kitchen-ampang",
   "name": "Hadramawt Kitchen - Ampang",
   "nameJa": "ハドラマウト・キッチン（アンパン）",
@@ -14060,7 +14019,7 @@
   "driveMinJam": 32
  },
  {
-  "id": "R0342",
+  "id": "R0341",
   "placeId": "pending:lau-heong-seafood-sentul",
   "name": "Lau Heong Seafood Restaurant",
   "nameJa": "ラウ・ヒョン・シーフード",
@@ -14101,7 +14060,7 @@
   "driveMinJam": 26
  },
  {
-  "id": "R0343",
+  "id": "R0342",
   "placeId": "pending:yahala-restaurant-ampang",
   "name": "YaHala Restaurant - Ampang",
   "nameJa": "ヤハラ・レストラン（アンパン）",
@@ -14142,7 +14101,7 @@
   "driveMinJam": 34
  },
  {
-  "id": "R0344",
+  "id": "R0343",
   "placeId": "pending:qasar-balqis-ampang",
   "name": "Qasar Balqis Restaurant (Ampang)",
   "nameJa": "カサル・バルキス（アンパン）",
@@ -14183,7 +14142,7 @@
   "driveMinJam": 36
  },
  {
-  "id": "R0345",
+  "id": "R0344",
   "placeId": "pending:tastebud-sentul",
   "name": "TasteBud Sentul",
   "nameJa": "テイストバッド・セントゥール",
@@ -14224,7 +14183,7 @@
   "driveMinJam": 21
  },
  {
-  "id": "R0346",
+  "id": "R0345",
   "placeId": "pending:sahara-tent-jalan-ampang",
   "name": "Sahara Tent Restaurant • Jalan Ampang",
   "nameJa": "サハラ・テント",
@@ -14265,7 +14224,7 @@
   "driveMinJam": 32
  },
  {
-  "id": "R0347",
+  "id": "R0346",
   "placeId": "pending:haha-buffet-steamboat-bbq-kepong",
   "name": "HAHA Buffet Steamboat BBQ Kepong",
   "nameJa": "ハハ・ビュッフェ・スチームボートBBQ",
@@ -14306,7 +14265,7 @@
   "driveMinJam": 25
  },
  {
-  "id": "R0348",
+  "id": "R0347",
   "placeId": "pending:fullwealth-seafood-restaurant",
   "name": "Fullwealth Seafood Restaurant",
   "nameJa": "フルウェルス・シーフード",
@@ -14347,7 +14306,7 @@
   "driveMinJam": 23
  },
  {
-  "id": "R0349",
+  "id": "R0348",
   "placeId": "pending:ai-authentic-dim-sum",
   "name": "爱点心茶楼 Ai Authentic Dim Sum Restaurant",
   "nameJa": "アイ・オーセンティック点心茶楼",
@@ -14388,7 +14347,7 @@
   "driveMinJam": 28
  },
  {
-  "id": "R0350",
+  "id": "R0349",
   "placeId": "pending:qhouse-setapak",
   "name": "QHouse 港湾茶餐厅 Setapak",
   "nameJa": "キューハウス港湾茶餐廳",
@@ -14429,7 +14388,7 @@
   "driveMinJam": 30
  },
  {
-  "id": "R0351",
+  "id": "R0350",
   "placeId": "pending:mafuji-kepong",
   "name": "Mafuji Malaysia 马服记火锅馆",
   "nameJa": "マフージー（馬服記火鍋館）",
@@ -14470,7 +14429,7 @@
   "driveMinJam": 25
  },
  {
-  "id": "R0352",
+  "id": "R0351",
   "placeId": "pending:ai-delicious-cafe-setapak",
   "name": "Ai Delicious Cafe",
   "nameJa": "アイ・デリシャス・カフェ",
@@ -14511,7 +14470,7 @@
   "driveMinJam": 30
  },
  {
-  "id": "R0353",
+  "id": "R0352",
   "placeId": "pending:baj-cafe-setapak",
   "name": "B.A.J Cafe",
   "nameJa": "ビー・エー・ジェイ・カフェ",
@@ -14552,7 +14511,7 @@
   "driveMinJam": 30
  },
  {
-  "id": "R0354",
+  "id": "R0353",
   "placeId": "pending:jialimian-plus-kepong",
   "name": "家里面食馆+ JiaLiMian Plus Kepong",
   "nameJa": "ジャーリーミェン・プラス（家里面食館+）",
@@ -14593,7 +14552,7 @@
   "driveMinJam": 23
  },
  {
-  "id": "R0355",
+  "id": "R0354",
   "placeId": "pending:surawon-korean-bbq-setapak",
   "name": "Surawon Korean BBQ Restaurant",
   "nameJa": "スラウォン韓国式焼肉",
@@ -14634,7 +14593,7 @@
   "driveMinJam": 33
  },
  {
-  "id": "R0356",
+  "id": "R0355",
   "placeId": "pending:manjalis-indian-sentul",
   "name": "Manjalis Indian Cuisine, Sentul",
   "nameJa": "マンジャリス・インディアン",
@@ -14673,5 +14632,509 @@
   "driveKm": 10.1,
   "driveMinFree": 13,
   "driveMinJam": 24
+ },
+ {
+  "id": "R0356",
+  "placeId": "pending:baan-thai-2-kuchai-lama",
+  "name": "Baan Thai 2 Seafood & Thai Cuisine",
+  "nameJa": "バーンタイ2 シーフード&タイクイジーン",
+  "cat": "タイ",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 8951,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Kuchai Lama",
+  "address": "Lot PT 15288A, Jalan Kuchai Lama, 58200 Kuala Lumpur",
+  "lat": 3.09269,
+  "lng": 101.684891,
+  "geoPrecision": "building",
+  "priceLunch": [
+   25,
+   35
+  ],
+  "priceDinner": [
+   35,
+   60
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "クチャイラマの大箱タイ・シーフード店。カラオケ設備もあり宴会利用も多い人気店。",
+  "vox": {
+   "pros": "新鮮なシーフードと本格タイ料理が高評価",
+   "cons": "大箱で賑やかなため静かな食事向きではない"
+  },
+  "verified": "2026-08-09",
+  "boundary": false,
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 14,
+  "driveMinFree": 19,
+  "driveMinJam": 34
+ },
+ {
+  "id": "R0357",
+  "placeId": "pending:chapathi-recipes-cheras",
+  "name": "Chapathi Recipes",
+  "nameJa": "チャパティ・レシピーズ",
+  "cat": "北インド",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 6005,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "5, Jalan Menara Gading 1, Taman Connaught, 56000 Cheras, Kuala Lumpur",
+  "lat": 3.080825,
+  "lng": 101.733337,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   30
+  ],
+  "priceDinner": [
+   25,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "タマンコノートの北インド料理店。手作りチャパティとカレーが評判で口コミ6000件超。",
+  "vox": {
+   "pros": "本格インドカレーとふわふわチャパティが名物",
+   "cons": "ピーク時は行列ができる"
+  },
+  "verified": "2026-08-09",
+  "boundary": true,
+  "catGroup": "インド・スリランカ",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 18.1,
+  "driveMinFree": 24,
+  "driveMinJam": 42
+ },
+ {
+  "id": "R0358",
+  "placeId": "pending:mei-keng-fatt-sri-petaling",
+  "name": "Restoran Mei Keng Fatt",
+  "nameJa": "レストラン・メイケンファット",
+  "cat": "広東・点心",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 4128,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Sri Petaling",
+  "address": "Jalan 5/149J, Zon L, Sri Petaling, 57000 Kuala Lumpur",
+  "lat": 3.069218,
+  "lng": 101.687428,
+  "geoPrecision": "venue",
+  "priceLunch": [
+   15,
+   30
+  ],
+  "priceDinner": [
+   15,
+   30
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。号地番未確定のためgeoPrecisionはvenue扱い。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "スリプタリンの朝食・飲茶で知られる中華食堂。同名の別経営店(アンパン)と混同注意。",
+  "vox": {
+   "pros": "朝から楽しめる本格飲茶が地元で人気",
+   "cons": "号地番の正確な住所は要現地確認"
+  },
+  "verified": "2026-08-09",
+  "boundary": false,
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 16.7,
+  "driveMinFree": 23,
+  "driveMinJam": 41
+ },
+ {
+  "id": "R0359",
+  "placeId": "pending:tang-fei-dessert-kuchai-lama",
+  "name": "Tang Fei Dessert",
+  "nameJa": "タンフェイ・デザート",
+  "cat": "デザート",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 3589,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Kuchai Entrepreneurs Park",
+  "venueType": "street",
+  "area": "Kuchai Lama",
+  "address": "27, Jalan Kuchai Maju, Kuchai Entrepreneurs Park, 58200 Kuala Lumpur",
+  "lat": 3.089501,
+  "lng": 101.689433,
+  "geoPrecision": "building",
+  "priceLunch": [
+   10,
+   20
+  ],
+  "priceDinner": [
+   10,
+   20
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "深夜まで営業するクチャイラマの人気中華デザート専門店。",
+  "vox": {
+   "pros": "種類豊富な中華デザートが手頃な価格で楽しめる",
+   "cons": "座席数が少なくピーク時は相席になりやすい"
+  },
+  "verified": "2026-08-09",
+  "boundary": false,
+  "catGroup": "カフェ・デザート",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 15.2,
+  "driveMinFree": 22,
+  "driveMinJam": 39
+ },
+ {
+  "id": "R0360",
+  "placeId": "pending:anne-elizabeth-cheras",
+  "name": "Anne Elizabeth",
+  "nameJa": "アン・エリザベス",
+  "cat": "ステーキ",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 3133,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "1, Jalan Manis 4, Taman Bukit Segar, 56100 Kuala Lumpur",
+  "lat": 3.088555,
+  "lng": 101.743695,
+  "geoPrecision": "building",
+  "priceLunch": [
+   40,
+   80
+  ],
+  "priceDinner": [
+   50,
+   120
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "タマンブキットスガーの老舗カジュアルステーキハウス。ファミリー層に長年支持される味。",
+  "vox": {
+   "pros": "手頃な価格でボリューム満点のステーキが楽しめる",
+   "cons": "ピーク時は待ち時間が発生することも"
+  },
+  "verified": "2026-08-09",
+  "boundary": true,
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 18.2,
+  "driveMinFree": 22,
+  "driveMinJam": 39
+ },
+ {
+  "id": "R0361",
+  "placeId": "pending:de-maw-restaurant-cheras",
+  "name": "De Maw Restaurant | 地茂館中华美食",
+  "nameJa": "デーマオ・レストラン(地茂館)",
+  "cat": "広東（老舗）",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 3327,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "PGRM",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "18, Jalan Pudu Ulu, Cheras, 56100 Kuala Lumpur",
+  "lat": 3.121127,
+  "lng": 101.72952,
+  "geoPrecision": "building",
+  "priceLunch": [
+   40,
+   80
+  ],
+  "priceDinner": [
+   40,
+   80
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "ディナー営業のみ(18時開店)のため昼夜同一レンジで概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "チェラス・プドゥウルの老舗広東料理店。北京ダックなど昔ながらの一品料理が名物(ディナーのみ営業)。",
+  "vox": {
+   "pros": "本格的な広東料理と北京ダックが評判",
+   "cons": "ディナーのみの営業で開店は18時から"
+  },
+  "verified": "2026-08-09",
+  "boundary": false,
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 15.3,
+  "driveMinFree": 19,
+  "driveMinJam": 34
+ },
+ {
+  "id": "R0362",
+  "placeId": "pending:thai-chala-sri-petaling",
+  "name": "Thai Chala Restaurant",
+  "nameJa": "タイチャラ・レストラン",
+  "cat": "タイ",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 2530,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Sri Petaling",
+  "address": "15, Jalan Radin Tengah, Bandar Baru Sri Petaling, 57000 Kuala Lumpur",
+  "lat": 3.068763,
+  "lng": 101.694123,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   30
+  ],
+  "priceDinner": [
+   25,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "スリプタリンの実力派タイ料理食堂。地元客に長年愛される家庭的な味。",
+  "vox": {
+   "pros": "本格的な家庭的タイ料理をカジュアルに楽しめる",
+   "cons": "内装はシンプルな食堂スタイル"
+  },
+  "verified": "2026-08-09",
+  "boundary": false,
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 17.7,
+  "driveMinFree": 24,
+  "driveMinJam": 44
+ },
+ {
+  "id": "R0363",
+  "placeId": "pending:yuan-yuan-tea-style-kuchai-lama",
+  "name": "Yuan Yuan Tea Style",
+  "nameJa": "ユアンユアン・ティースタイル",
+  "cat": "広東・点心",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 2054,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Kuchai Lama",
+  "address": "59, Jalan Kuchai Maju 1, Kuchai Lama, 58200 Kuala Lumpur",
+  "lat": 3.090934,
+  "lng": 101.687366,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   35
+  ],
+  "priceDinner": [
+   20,
+   35
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "営業は18時開始のため昼夜同一レンジで概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "クチャイラマの点心専門店。夕方から夜にかけて楽しめる飲茶が名物。",
+  "vox": {
+   "pros": "点心の種類が豊富でコストパフォーマンスが良い",
+   "cons": "営業は夕方以降のみ"
+  },
+  "verified": "2026-08-09",
+  "boundary": false,
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 15,
+  "driveMinFree": 21,
+  "driveMinJam": 38
+ },
+ {
+  "id": "R0364",
+  "placeId": "pending:yakitori-haki-cheras",
+  "name": "Yakitori Haki @ Cheras",
+  "nameJa": "ヤキトリ・ハキ(チェラス)",
+  "cat": "居酒屋",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 1990,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Cheras Business Centre",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "34G, Jalan 5/101c, Cheras Business Centre, 56100 Kuala Lumpur",
+  "lat": 3.101075,
+  "lng": 101.740047,
+  "geoPrecision": "building",
+  "priceLunch": [
+   35,
+   45
+  ],
+  "priceDinner": [
+   60,
+   100
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "チェラス・ビジネスセンターの本格焼き鳥居酒屋。串焼きから寿司まで幅広いメニュー。",
+  "vox": {
+   "pros": "炭火焼きの焼き鳥と刺身が本格的",
+   "cons": "ディナーは単価がやや高め"
+  },
+  "verified": "2026-08-09",
+  "boundary": false,
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 17.3,
+  "driveMinFree": 22,
+  "driveMinJam": 39
+ },
+ {
+  "id": "R0365",
+  "placeId": "pending:shawarma-restaurant-cheras",
+  "name": "Shawarma Restaurant",
+  "nameJa": "シャワルマ・レストラン",
+  "cat": "中東",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 1591,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "10, Jalan Menara Gading 1, Taman Connaught, 56000 Cheras, Kuala Lumpur",
+  "lat": 3.08065,
+  "lng": 101.733154,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   25
+  ],
+  "priceDinner": [
+   25,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "タマンコノートの本格シャワルマ専門店。中東料理ファンに支持される名店。",
+  "vox": {
+   "pros": "ジューシーなシャワルマとフムスが評判",
+   "cons": "座席数が限られピーク時は混雑"
+  },
+  "verified": "2026-08-09",
+  "boundary": true,
+  "catGroup": "中東",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 18.1,
+  "driveMinFree": 23,
+  "driveMinJam": 42
+ },
+ {
+  "id": "R0366",
+  "placeId": "pending:doro-wine-dine-cheras",
+  "name": "D'oro Wine & Dine",
+  "nameJa": "ドーロ・ワイン&ダイン",
+  "cat": "洋食ビストロ",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 1214,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "Cheras Business Centre",
+  "venueType": "street",
+  "area": "Cheras",
+  "address": "40G Block E, Jalan 1/101c, Cheras Business Centre, 56100 Kuala Lumpur",
+  "lat": 3.098651,
+  "lng": 101.739077,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   30
+  ],
+  "priceDinner": [
+   30,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Google公式価格帯表示・レビュー記載を基に概算。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "チェラス・ビジネスセンターのカジュアル洋食ビストロ。ステーキやソーセージが手頃な価格で楽しめる。",
+  "vox": {
+   "pros": "手頃な価格の洋食とワインが楽しめる",
+   "cons": "ビジネスセンター内でやや分かりにくい立地"
+  },
+  "verified": "2026-08-09",
+  "boundary": false,
+  "catGroup": "洋食・グリル",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 17.3,
+  "driveMinFree": 22,
+  "driveMinJam": 39
+ },
+ {
+  "id": "R0367",
+  "placeId": "pending:ban-bu-dian-kuchai-lama",
+  "name": "Ban Bu Dian @ Kuchai Lama",
+  "nameJa": "バンブーディエン(クチャイラマ)",
+  "cat": "中華（モダン）",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 1067,
+  "natCode": 2,
+  "kidOk": 0,
+  "venue": "Kuchai Entrepreneurs Park",
+  "venueType": "street",
+  "area": "Kuchai Lama",
+  "address": "1, Jalan Kuchai Maju 7, Kuchai Entrepreneurs Park, Kuala Lumpur",
+  "lat": 3.090454,
+  "lng": 101.686526,
+  "geoPrecision": "building",
+  "priceLunch": [
+   30,
+   50
+  ],
+  "priceDinner": [
+   50,
+   80
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "価格帯はSNS等の類似業態相場から推定。採用=全エリア取りこぼし監査(2026-08-09)。",
+  "editorNote": "武侠(カンフー)テーマの四川系モダン中華酒場。江湖菜と痺れ系炒め物が名物。",
+  "vox": {
+   "pros": "痺れ系四川料理とユニークな武侠テーマの内装が話題",
+   "cons": "バー的な社交色が強く子供連れにはやや不向き"
+  },
+  "verified": "2026-08-09",
+  "boundary": false,
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 14.7,
+  "driveMinFree": 21,
+  "driveMinJam": 38
  }
 ]
