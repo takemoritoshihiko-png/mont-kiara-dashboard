@@ -469,3 +469,18 @@ describe('parseRestaurants carries the drive-time columns', () => {
     expect(b.driveMinJam).toBeNull();
   });
 });
+
+// ── 屋台街=エリアの明示マーク(2026-08-08 竹森さん指摘: Jalan Alorは店ではない) ──
+describe('a hawker-street entry declares itself an AREA, not a restaurant', () => {
+  it('swaps the category chip for the 📍 area mark', () => {
+    const h = cardBodyHtml(eat({ name: 'Jalan Alor', catGroup: '屋台街', cat: '屋台街' }));
+    expect(h).toContain('chip-area-mark');
+    expect(h).toContain('個別の店ではありません');
+    expect(h).not.toContain('chip-dining">屋台街');
+  });
+  it('an ordinary restaurant keeps the normal category chip', () => {
+    const h = cardBodyHtml(eat());
+    expect(h).not.toContain('chip-area-mark');
+    expect(h).toContain('chip-dining');
+  });
+});

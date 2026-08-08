@@ -742,7 +742,10 @@ function diningCard(c){
   if(mb) chips.push(`<span class="card-chip chip-michelin">${esc(mb)}</span>`);
   const rb = eatoutRecBadgeHtml(c);
   if(rb) chips.push(rb);
-  if(c.catGroup) chips.push(`<span class="card-chip chip-dining">${esc(c.catGroup)}</span>`);
+  // 屋台街はエリア(通り全体)であって個別の店ではない — 取り違えないよう
+  // 専用マークで名乗る(2026-08-08 竹森さん指摘: Jalan Alor)。
+  if(c.catGroup === '屋台街') chips.push(`<span class="card-chip chip-area-mark">📍 屋台街エリア（通り全体・個別の店ではありません）</span>`);
+  else if(c.catGroup) chips.push(`<span class="card-chip chip-dining">${esc(c.catGroup)}</span>`);
   const hero = diningHeroText(c);
   const meta = [];
   // 外食モード prints the star with its sample size and its shrunk value on its

@@ -442,7 +442,7 @@ function mkMarker(c) {
       iconAnchor: [csz/2, csz/2],
       html: `<div role="button" aria-label="飲食店 ${attrEsc(c.name)}${mb ? '、' + mb : ''}${visited ? '、訪問済み' : ''}" style="position:relative;width:${csz}px;height:${csz}px;display:flex;align-items:center;justify-content:center;cursor:pointer">
         <span aria-hidden="true" style="position:absolute;inset:0;border-radius:${MARKER_COLORS.dining.radius};background:${MARKER_COLORS.dining.bg};border:2px solid ${border};box-shadow:0 2px 6px rgba(0,0,0,0.3);transform:rotate(-45deg)"></span>
-        <span aria-hidden="true" style="position:relative;color:#fff;font-size:10px;line-height:1">🍽</span>${badge}
+        <span aria-hidden="true" style="position:relative;color:#fff;font-size:10px;line-height:1">${c.catGroup === '屋台街' ? '📍' : '🍽'}</span>${badge}
       </div>`
     });
     return attachMarker(c, icon, c.name.replace(/ \(.*\)/,''), csz);
