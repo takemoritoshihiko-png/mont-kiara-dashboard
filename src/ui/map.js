@@ -30,63 +30,26 @@ export function labelModeForZoom(zoom) {
 }
 
 // ============================================================
-// WHAT SELECTING A RECORD DOES TO THE MAP (2026-08-08 改定)
-// 旧ルールは「押した物の下から地図を動かさない」だったが、竹森氏の実利用で
-// 「一覧から選んだ店が地図のどこか分からない」が勝った。選択したら
-// DETAIL_ZOOM(=常時ラベルが出るズーム)までその店へ寄り、店名ラベルと
-// 強調ピンで「この店」と指させる。すでに十分寄っているときだけ、
-// 視界を奪わない panInside に留める。
+// WHAT SELECTING A RECORD DOES TO THE MAP (2026-08-08 再改定・竹森氏の条件値)
+// ルールは1本だけ: 選択 = その店を中心に、常に FOCUS_ZOOM で表示する。
+//   ・必ず中心に来る(以前の panInside は「中心に来ないことがある」)
+//   ・縮尺は毎回同じ(選択のたびに13や17がバラバラに混ざらない)
+//   ・FOCUS_ZOOM = CLUSTER_OFF_ZOOM(16): クラスタの数字玉が解けて全店が
+//     個別ピンになる、いちばん引いた縮尺。これより寄る(17)と周りが見えず、
+//     引く(15)と選んだ店の周りが「13」「2」の玉に化ける。
+// 選ばれたピン自身は常にクラスタ外+拡大+波紋(mk-pin-sel)で指させる。
 // ============================================================
-export const DETAIL_ZOOM = 17;   // = LABEL_ZOOM: 寄った先で店名ラベルが必ず出る
+export const FOCUS_ZOOM = CLUSTER_OFF_ZOOM;
 
-/**
- * Pure helper: what a selection should do to the map at a given zoom.
- * @returns {{action:'setView', zoom:number}|{action:'panInside'}}
- */
-export function focusActionForZoom(zoom) {
-  return zoom < DETAIL_ZOOM ? { action: 'setView', zoom: DETAIL_ZOOM } : { action: 'panInside' };
+/** Pure helper: 選択が地図に指示する内容。常に「中心へ・FOCUS_ZOOMで」。 */
+export function focusActionForZoom() {
+  return { action: 'setView', zoom: FOCUS_ZOOM };
 }
 
-// The detail overlay is 300px wide at the map's top-left (48px below the top of
-// .main). The padding keeps the pin clear of it, plus a small margin.
-export const SELECT_PAN_PADDING = { paddingTopLeft: [320, 60], paddingBottomRight: [20, 20] };
-
-/**
- * Pure helper: the padding to pan inside, given the map's pixel size.
- *
- * The overlay's 320px is a desktop measurement. On a 360px phone it would leave
- * a 20px strip — and on anything narrower the padded rectangle would invert,
- * which makes Leaflet's offset arithmetic pan the map somewhere arbitrary. So
- * the padding never claims more than 60% of the width or 40% of the height:
- * below that the pin may end up under the panel, which is recoverable, while a
- * map that jumps is not.
- *
- * @param {{x:number,y:number}} size  map.getSize()
- */
-export function panPaddingFor(size) {
-  const [x, y] = SELECT_PAN_PADDING.paddingTopLeft;
-  return {
-    paddingTopLeft: [
-      Math.min(x, Math.floor((size.x || 0) * 0.6)),
-      Math.min(y, Math.floor((size.y || 0) * 0.4)),
-    ],
-    paddingBottomRight: SELECT_PAN_PADDING.paddingBottomRight,
-  };
-}
-
-/**
- * Bring a record into view without stealing the view the user built.
- * Applies focusActionForZoom(); panInside() is Leaflet 1.9's "move the least
- * amount that makes this point visible inside these paddings".
- */
+/** その店を中心に、決められた縮尺で見せる。 */
 export function focusOnRecord(lat, lng) {
   if (!map) return;
-  const plan = focusActionForZoom(map.getZoom());
-  if (plan.action === 'setView') { map.setView([lat, lng], plan.zoom); return; }
-  // Guard against a CDN version without panInside: falling back to panTo still
-  // never changes the zoom, which is the part that must not be lost.
-  if (typeof map.panInside === 'function') map.panInside([lat, lng], panPaddingFor(map.getSize()));
-  else map.panTo([lat, lng]);
+  map.setView([lat, lng], FOCUS_ZOOM);
 }
 
 // Live binding: other modules import `map` and always see the current value.

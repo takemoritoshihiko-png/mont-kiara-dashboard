@@ -6,7 +6,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import {
   labelModeForZoom, LABEL_ZOOM, CLUSTER_OFF_ZOOM, pinClassName, AREA_CENTERS,
-  focusActionForZoom, DETAIL_ZOOM, SELECT_PAN_PADDING, panPaddingFor,
+  focusActionForZoom, FOCUS_ZOOM,
 } from '../src/ui/map.js';
 
 describe('labelModeForZoom', () => {
@@ -95,57 +95,19 @@ describe('area keys stay in sync across the jump bar, the dropdown and the map',
 });
 
 // ============================================================
-// WHAT A SELECTION DOES TO THE MAP
-// The rule under test: do not move what the user just pressed. Only the pure
-// decision is exercised — map.setView / map.panInside are Leaflet.
+// WHAT A SELECTION DOES TO THE MAP (2026-08-08 再改定)
+// 竹森氏の条件値: 選択=必ず中心+毎回同じ縮尺。縮尺は「全店が個別ピンに
+// なる、いちばん引いたズーム」= CLUSTER_OFF_ZOOM。
 // ============================================================
-describe('focusActionForZoom (2026-08-08 改定: 選んだ店へ寄って指させる)', () => {
-  // 旧契約「選択は地図を動かさない」は、実利用の「どの店か地図で分からない」
-  // という竹森氏の指摘で改定された。選択 = DETAIL_ZOOM まで寄る。
-  it('zooms in to DETAIL_ZOOM from anywhere below it', () => {
-    expect(focusActionForZoom(12)).toEqual({ action: 'setView', zoom: DETAIL_ZOOM });
-    expect(focusActionForZoom(15)).toEqual({ action: 'setView', zoom: DETAIL_ZOOM });
-    expect(focusActionForZoom(DETAIL_ZOOM - 0.1)).toEqual({ action: 'setView', zoom: DETAIL_ZOOM });
-  });
-
-  it('never zooms OUT of a closer view: at 17-19 it only pans', () => {
-    for (let z = DETAIL_ZOOM; z <= 19; z++) {
-      expect(focusActionForZoom(z).action).toBe('panInside');
+describe('focusActionForZoom — 選択は常に「中心へ・FOCUS_ZOOMで」', () => {
+  it('returns the same instruction at every starting zoom (縮尺が混ざらない)', () => {
+    for (let z = 10; z <= 19; z++) {
+      expect(focusActionForZoom(z)).toEqual({ action: 'setView', zoom: FOCUS_ZOOM });
     }
   });
 
-  it('lands exactly where the name labels turn permanent — the point is to READ the pin', () => {
-    expect(DETAIL_ZOOM).toBe(LABEL_ZOOM);
-    expect(DETAIL_ZOOM).toBeGreaterThanOrEqual(CLUSTER_OFF_ZOOM);
-  });
-
-  it('keeps the pin clear of the 300px detail overlay at the map\'s top-left', () => {
-    const [x, y] = SELECT_PAN_PADDING.paddingTopLeft;
-    expect(x).toBeGreaterThanOrEqual(300);
-    expect(y).toBeGreaterThanOrEqual(48);
-    expect(SELECT_PAN_PADDING.paddingBottomRight).toEqual([20, 20]);
-  });
-});
-
-describe('panPaddingFor (the padding has to fit the screen it is on)', () => {
-  it('uses the overlay width in full on a desktop map', () => {
-    expect(panPaddingFor({ x: 1264, y: 900 }).paddingTopLeft).toEqual([320, 60]);
-  });
-
-  it('shrinks it on a phone rather than inverting the padded rectangle', () => {
-    const p = panPaddingFor({ x: 390, y: 450 });
-    expect(p.paddingTopLeft[0]).toBe(234);
-    expect(p.paddingBottomRight).toEqual([20, 20]);
-  });
-
-  it('always leaves a usable area, at every width the app is used at', () => {
-    for (const x of [280, 320, 360, 390, 768, 1440]) {
-      const [px] = panPaddingFor({ x, y: 400 }).paddingTopLeft;
-      expect(px + 20, `padding must not exceed the map at ${x}px`).toBeLessThan(x);
-    }
-  });
-
-  it('survives a zero-size map (called before the first layout)', () => {
-    expect(panPaddingFor({ x: 0, y: 0 }).paddingTopLeft).toEqual([0, 0]);
+  it('FOCUS_ZOOM is exactly where clusters dissolve into individual pins — and no closer', () => {
+    expect(FOCUS_ZOOM).toBe(CLUSTER_OFF_ZOOM);   // 15だと数字玉に混ざり、17だと周りが見えない
+    expect(FOCUS_ZOOM).toBeLessThan(LABEL_ZOOM); // できるだけ広く=常時ラベルより1段引く
   });
 });
