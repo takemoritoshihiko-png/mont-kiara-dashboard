@@ -135,13 +135,12 @@ export function applyFilters(){
   syncUrl({ replace: true });
 }
 
-/** ☑の切替: 地図にその層を出す/消す。アクティブ層(一覧が従う層)は消せない。 */
+/**
+ * ☑の切替: 地図にその層を出す/消す。アクティブ層も消せる(2026-08-09 竹森さん裁定:
+ * 「コンドミニアムを消してよい仕様に」— 一覧はアクティブ層のまま、地図のピンだけ消える。
+ * 旧仕様の「一覧に表示中の種別は消せない」ガードは撤廃)。
+ */
 export function toggleLayerVisible(layer){
-  if(layer === activeLayer && visibleLayers[layer] && appMode === 'home'){
-    toast('一覧に表示中の種別は地図から消せません（先に別の種別へ切り替えてください）');
-    syncLayerUI();
-    return;
-  }
   setLayerVisible(layer, !visibleLayers[layer]);
   syncLayerUI();
   rebuild();
