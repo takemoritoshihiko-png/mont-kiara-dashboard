@@ -195,3 +195,11 @@
 - ~~Hot Bird~~ → **2026-08-09裁定: 採用**(個別裁定・台帳追加済み。チェーン基準自体は5店以上除外のまま)
 - ~~中東カテゴリの独立~~ → **2026-08-09裁定: 分離実施**(11分類目。convertのベース50行catGroup再導出バグも同時修正)
 - **その他KLの18物件(Hartamas 3/Seputeh 3/Sungai Buloh 4/Sri Damansara 6/Segambut 1/Setia 1)**: 2026-08-09のMont Kiara厳密化で受け皿から出た物件群。エリアチップを個別に立てるかは物件数が増えたら再検討
+
+## 2026-08-09 KL中心部深掘り調査の保留・発見
+
+- **TRX(The Exchange)**: 飲食119区画のほぼ全部がチェーン新規出店で、独立系は口コミ蓄積不足(2023年11月開業)。採用ゼロは正常。**2027年頃に再走査**するとUpper Palace Teochew(★4.7×471)やDe.Wan 1958 TRX店が採れる見込み
+- **Maria's Signature(Suria KLCC ★4.8×1,736-1,775)**: 系列5店だが1店は一時休業=営業中実数4店の可能性。チェーン規則の「営業中で数えるか」裁定があれば復活可
+- **Michelangelo's Ristorante Italiano(Pavilion)**: Google件数1,000超の裏取りが2班とも取れず見送り(再検証班で最終確認中)
+- **makan.guruの値の鮮度問題(教訓)**: Win Heng Seng(実4.2未満)・Kim Lian Kee(実★3.5)・Ho Weng Kee(実★2.8)・Yut Kee(実4.1)など、収録時の値が現況と大きくずれる例が多発。**今後の発掘はmakan.guru値を候補生成にのみ使い、採用前にGoogle直読を必須とする**(今回の検証班の作法を標準化)
+- **閉店検出**: Ho Min San Pavilion店(2026-06-25移転閉店)・DayOne DayOne Pavilion店(2026-04-12閉店)・WaaronKuus(Tamu Kopitiamに改称の上一時閉業)・Bhai Jim Jum MyTown(閉業可能性表示)

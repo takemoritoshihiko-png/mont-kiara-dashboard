@@ -1250,6 +1250,251 @@
    "km": 6.8,
    "minFree": 10,
    "minJam": 19
+  },
+  "Hut Dining Buffet": {
+   "km": 13.1,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "Mollagaa Restaurant": {
+   "km": 10.8,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Halab KL Arabic Restaurant": {
+   "km": 12.7,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Al-Sultan Restaurant - Bukit Bintang": {
+   "km": 12.4,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "FWF Hotpot": {
+   "km": 12.7,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "The Tokyo Restaurant": {
+   "km": 12.6,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "Yaki Soul": {
+   "km": 12.5,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Indian Empire": {
+   "km": 12.4,
+   "minFree": 16,
+   "minJam": 30
+  },
+  "Bombay Talkies Restaurant": {
+   "km": 9.3,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Royal Dream Restaurant": {
+   "km": 12.4,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "Pik Wah Bar & Cafe": {
+   "km": 12.1,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Claypot Sifu": {
+   "km": 12.8,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Restoran Grand Harbour": {
+   "km": 12.7,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "Pampas Steakhouse at Old Malaya": {
+   "km": 11.8,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Lazeez Arabic Restaurant and Grill": {
+   "km": 12.5,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Boleh Seafood Pot": {
+   "km": 12.4,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "Super Boring Club": {
+   "km": 12.5,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Hai Kee Fried Beef Bun": {
+   "km": 11.6,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "BLACK Market (Kampung Pandan)": {
+   "km": 13.7,
+   "minFree": 18,
+   "minJam": 33
+  },
+  "RasaNya Seafood and Steamboat": {
+   "km": 11.7,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "Yamaguchi Fish Market 海鲜餐厅": {
+   "km": 13.8,
+   "minFree": 19,
+   "minJam": 33
+  },
+  "Spice Guys BLR - Suria KLCC": {
+   "km": 14.2,
+   "minFree": 19,
+   "minJam": 35
+  },
+  "Sabayon at EQ": {
+   "km": 11.2,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Jabbar Bhai Authentic Biriyani Restaurant": {
+   "km": 9.6,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "WIP On The Park": {
+   "km": 11.4,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "TAZYEEN": {
+   "km": 9.4,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Cafe ETC": {
+   "km": 11.8,
+   "minFree": 15,
+   "minJam": 28
+  },
+  "无厘头啦啦米 Wu Li Tou Drunken Clam Noodle": {
+   "km": 11.4,
+   "minFree": 15,
+   "minJam": 26
+  },
+  "Raw (formerly Raw Kitchen Hall)": {
+   "km": 12.1,
+   "minFree": 15,
+   "minJam": 28
+  },
+  "IQAN BAKAR CHERAS": {
+   "km": 13.4,
+   "minFree": 18,
+   "minJam": 32
+  },
+  "Mantap Mee Tarik • Bukit Bintang": {
+   "km": 12.6,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "好時節 | Restaurant Good Timing": {
+   "km": 12.7,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Ciccio Bar Pizzeria": {
+   "km": 12.1,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "隆江猪脚饭 Long Jiang Pork Rice • Pudu": {
+   "km": 12.1,
+   "minFree": 16,
+   "minJam": 28
+  },
+  "BAAN26": {
+   "km": 12.1,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "D Empire | Dry Aged Steak - Pavilion Bukit Bintang": {
+   "km": 12,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Elite YouMiQi 有米氣": {
+   "km": 13.1,
+   "minFree": 19,
+   "minJam": 34
+  },
+  "UpperDeck KL": {
+   "km": 12,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Reuben's KL": {
+   "km": 12.5,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "好家婆 Best Ah Ma Cafe Pudu": {
+   "km": 12.8,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Kusa Vegan - Bukit Bintang": {
+   "km": 12.6,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "甘發茶樓 Kam Fatt Restaurant": {
+   "km": 12.2,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "Imperial Chakri Palace": {
+   "km": 12.7,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "ParaThai": {
+   "km": 12.7,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "Al-Amar Lebanese Restaurant": {
+   "km": 12.1,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "CALIA": {
+   "km": 12.1,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Quivo": {
+   "km": 12.1,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Weissbrau German Bistro and Bar": {
+   "km": 12.1,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Moggumung BBQ": {
+   "km": 2.2,
+   "minFree": 4,
+   "minJam": 7
   }
  }
 }

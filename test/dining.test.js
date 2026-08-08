@@ -73,6 +73,9 @@ describe('restaurants.json', () => {
       'Muska',   // Verve Shops(Cottaと同建物venue精度)
       'Cotta',
       'Restaurant Jie', 'Reka:Bar',   // Jalan Setia Bakti — 双方とも街レベル精度の同街区
+      'Nipah (EQ Kuala Lumpur)', 'Sabayon at EQ',   // EQホテル同棟(1F/51F)
+      'Imperial Chakri Palace', 'ParaThai',   // Suria KLCC(venue精度)
+      'Al-Amar Lebanese Restaurant', 'CALIA', 'Quivo', 'Weissbrau German Bistro and Bar',   // Pavilion KL(venue精度)
     ];
     const seen = new Map();
     for (const r of restaurants) {
