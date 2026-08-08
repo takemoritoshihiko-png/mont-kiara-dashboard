@@ -10,7 +10,7 @@ const restaurants = JSON.parse(readFileSync(join(root, 'restaurants.json'), 'utf
 
 const CAT_GROUPS = [
   'マレーシア料理', '洋食・グリル', '中華', 'インド・スリランカ',
-  '鶏飯・ご飯もの', '麺・肉骨茶', '日本・その他アジア', '屋台街',
+  '鶏飯・ご飯もの', '麺・肉骨茶', '日本・その他アジア', '中東', '屋台街',
   'カフェ・デザート', // ruled 2026-08-07 evening (E-1)
   'バー',           // ruled 2026-08-08 (Asia's 50 Best Bars 6店の受け皿)
 ];

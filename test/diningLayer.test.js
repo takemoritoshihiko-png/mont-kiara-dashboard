@@ -153,9 +153,9 @@ describe('matchesDining', () => {
     expect(matchesDining(eat(), { catGroup: '' })).toBe(true);
   });
 
-  it('offers the ten ruled groups and nothing else', () => {
-    expect(CAT_GROUPS).toHaveLength(10);
-    expect(new Set(CAT_GROUPS).size).toBe(10);
+  it('offers the eleven ruled groups and nothing else (2026-08-09: 中東を独立)', () => {
+    expect(CAT_GROUPS).toHaveLength(11);
+    expect(new Set(CAT_GROUPS).size).toBe(11);
     expect(CAT_GROUPS).toContain('屋台街');
   });
 

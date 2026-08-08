@@ -155,3 +155,7 @@ Eat Drink KL / Malay Mail / Time Out / TastyJournal / Bangsar Babe の2025-26年
 - 座標: 全候補をNominatim機械パス→フラグ7件を検証体で裁定→実誤り2件修正(Kin Kin 543m/Coliseum 361m)・偽陽性5件
 - テスト: スコア分布テストの min/max 完全一致ピンをデータ拡大に耐える分布アサーションへ改修。685件green
 - 併せて評価下限フィルタ(★4.3以上/4.5以上)を実装(§12裁定と同日の竹森さん依頼)
+
+### §13補足(2026-08-09・裁定4件反映)
+竹森さん裁定: ①Hot Bird採用(個別裁定・6店舗でも数値優先) ②One Dish One Taste採用 ③**中東カテゴリ独立**(11分類目・中東6店: Leen's/Damascus/Rehan/Samad/Shawarma City/Marrakesh) ④K KL（圭）残留確定。
+③の実装でconvertの潜在バグを発見修正: ベース50行はcatGroupを保存値で使い回していたため、グループ再編がR0001-50だけ効かない(Leen'sが旧グループに残る)。cat→group導出をベース側にも毎回適用に変更。台帳**249行(表示244)**・テスト685件green。

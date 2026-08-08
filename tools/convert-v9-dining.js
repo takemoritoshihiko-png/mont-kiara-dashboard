@@ -24,7 +24,7 @@ const CAT_GROUP = {
   'バナナリーフ': 'インド・スリランカ', 'スリランカ': 'インド・スリランカ',
   '土鍋鶏飯': '鶏飯・ご飯もの', '海南鶏飯': '鶏飯・ご飯もの',
   '麺': '麺・肉骨茶', '肉骨茶': '麺・肉骨茶', '魚頭麺': '麺・肉骨茶',
-  '日本料理': '日本・その他アジア', 'タイ': '日本・その他アジア', 'ベトナム': '日本・その他アジア', '中東': '日本・その他アジア',
+  '日本料理': '日本・その他アジア', 'タイ': '日本・その他アジア', 'ベトナム': '日本・その他アジア', '中東': '中東',   // 2026-08-09裁定: 8店超で独立カテゴリ化
   '屋台街': '屋台街',
   // 拡充分（2026-08-07 D6）で使う cat
   '和牛焼肉': '日本・その他アジア', 'すき焼き・和牛': '日本・その他アジア', '居酒屋': '日本・その他アジア',
@@ -100,6 +100,13 @@ if (fs.existsSync(V9_PATH)) {
 } else {
   out = JSON.parse(fs.readFileSync(OUT, 'utf8')).slice(0, 50);
   if (out.length !== 50 || out[0].id !== 'R0001') throw new Error('restaurants.json base is not the expected 50 v9 records');
+  // catGroup は cat から毎回導出し直す(catがSSOT)。保存値を使い回すと、
+  // グループ再編(例: 2026-08-09 中東の独立)がベース50行だけ効かない事故になる。
+  for (const r of out) {
+    const g = CAT_GROUP[r.cat];
+    if (!g) throw new Error(`unknown cat "${r.cat}" (${r.name})`);
+    r.catGroup = g;
+  }
   console.log('v9原本なし → 既存 restaurants.json の R0001-R0050 をベースに再生成');
 }
 

@@ -1240,6 +1240,16 @@
    "km": 11,
    "minFree": 14,
    "minJam": 26
+  },
+  "Hot Bird": {
+   "km": 11,
+   "minFree": 16,
+   "minJam": 29
+  },
+  "One Dish One Taste Chongqing Hotpot": {
+   "km": 6.8,
+   "minFree": 10,
+   "minJam": 19
   }
  }
 }
