@@ -146,6 +146,42 @@ export const CAT_GROUPS = [
   'バー',   // 10分類目(2026-08-08裁定: Asia's 50 Best Bars 6店の受け皿)
 ];
 
+// ============================================================
+// エリア「〜付近」バケツ(2026-08-09 竹森さん裁定・A案)
+// 台帳の細かいエリア名(43個・3店以下が過半)は選ぶには多すぎるため、
+// 選択UIは8つの「〜付近」+その他に束ねる。細名はデータ・カード・詳細に残る。
+// 対応表がSSOT: 新しいエリア名が台帳に入ると未登録=「その他」に落ち、
+// test/diningLayer.test.js が「意図せぬその他行き」を検出する。
+// ============================================================
+export const AREA_BUCKETS = [
+  'モントキアラ付近', 'KLCC付近', 'ブキッビンタン付近', 'ダマンサラ・TTDI付近',
+  'バンサー付近', 'PJ付近', '旧市街付近', '北KL付近', 'その他',
+];
+const AREA_BUCKET_OF = {
+  'Mont Kiara': 'モントキアラ付近', 'Desa Sri Hartamas': 'モントキアラ付近',
+  'Sri Hartamas': 'モントキアラ付近', 'KL Metropolis': 'モントキアラ付近',
+  'Segambut': 'モントキアラ付近', 'Sungai Penchala': 'モントキアラ付近',
+  'KLCC': 'KLCC付近', 'Kampung Baru': 'KLCC付近', 'Jalan Tun Razak': 'KLCC付近',
+  'Ampang Hilir': 'KLCC付近', 'Keramat': 'KLCC付近',
+  'Bukit Bintang': 'ブキッビンタン付近', 'Imbi': 'ブキッビンタン付近', 'Pudu': 'ブキッビンタン付近',
+  'Damansara Heights': 'ダマンサラ・TTDI付近', 'TTDI': 'ダマンサラ・TTDI付近',
+  'Damansara Utama': 'ダマンサラ・TTDI付近', 'Damansara Utama (PJ)': 'ダマンサラ・TTDI付近',
+  'Damansara Jaya (PJ)': 'ダマンサラ・TTDI付近', 'Damansara Kim (PJ)': 'ダマンサラ・TTDI付近',
+  'Bandar Utama (PJ)': 'ダマンサラ・TTDI付近',
+  'Bangsar': 'バンサー付近', 'Brickfields': 'バンサー付近', 'KL Sentral': 'バンサー付近',
+  'Taman Desa': 'バンサー付近', 'Lake Gardens': 'バンサー付近', 'Old Klang Road': 'バンサー付近',
+  'Seksyen 17 (PJ)': 'PJ付近', 'SS2 (PJ)': 'PJ付近', 'Seksyen 19 (PJ)': 'PJ付近',
+  'Taman Paramount (PJ)': 'PJ付近', 'PJ New Town': 'PJ付近',
+  'Chinatown': '旧市街付近', 'Masjid India': '旧市街付近', 'Chow Kit': '旧市街付近',
+  'Merdeka 118': '旧市街付近', 'Kampung Attap': '旧市街付近',
+  'Bamboo Hills': '北KL付近', 'Kepong': '北KL付近', 'Desa ParkCity': '北KL付近',
+  'Jalan Ipoh': '北KL付近', 'Titiwangsa': '北KL付近', 'Cheras': '北KL付近',
+};
+/** エリア名→付近バケツ。未登録は「その他」(裁定: A案でカバーできない分の受け皿)。 */
+export function areaBucketOf(area){ return AREA_BUCKET_OF[area] || 'その他'; }
+/** テスト用: 明示的に対応表へ登録済みのエリア名か(その他行きが意図的かの検査)。 */
+export function isBucketedArea(area){ return area in AREA_BUCKET_OF; }
+
 /** Michelin filter values. 'star' covers both star levels; '' is everything. */
 export const MICHELIN_FILTERS = [
   { value: 'star', label: '星付き（★1・★2）' },
@@ -351,7 +387,12 @@ export function matchesDining(c, f){
   if(!matchesPriceBand(c, f.priceBand, f.priceBasis)) return false;
   // The ledger's own `area` field (KLCC / Bangsar / Chinatown …). Exact match:
   // it is a controlled value, not free text.
-  if(f.diningArea && c.area !== f.diningArea) return false;
+  // エリアは「〜付近」バケツ一致(2026-08-09 A案)。旧URLの細かいエリア名が
+  // 来ても壊さない: バケツ名でなければ従来どおりの完全一致として扱う。
+  if(f.diningArea){
+    const wantBucket = AREA_BUCKETS.includes(f.diningArea);
+    if(wantBucket ? areaBucketOf(c.area) !== f.diningArea : c.area !== f.diningArea) return false;
+  }
   // 「近く: Mont Kiara」 — a SECOND, independent axis from f.diningArea above.
   // The two coexist on purpose: the label answers "which district is this
   // place in", the radius answers "what can we get to from here", and the

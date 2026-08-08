@@ -14,6 +14,7 @@ import { TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
 import {
   parseR, matchesFilters, recordLayer, LAYER_LABELS, CURRICULA,
   CAT_GROUPS, MICHELIN_FILTERS, VENUE_TYPES, diningPriceCeiling, budgetBasisOf,
+  AREA_BUCKETS, areaBucketOf,
 } from '../domain/filter.js';
 import { sortOptionsFor, comparatorFor, sortOnArrival } from '../domain/sort.js';
 import { map, rebuild } from './map.js';
@@ -293,15 +294,17 @@ function populateDiningFilters(){
   }
   const area = $('fDiningArea');
   if(area && !area.dataset.filled){
+    // 選択肢は「〜付近」バケツ(2026-08-09 A案: 細エリア43個は選ぶには多すぎる)。
+    // 細かいエリア名はカード・詳細に残る。並びは AREA_BUCKETS の定義順(地理順)で、
+    // 店が1軒もないバケツは出さない。
     const counts = new Map();
-    CONDOS.filter(c => recordLayer(c) === 'dining' && c.area)
-      .forEach(c => counts.set(c.area, (counts.get(c.area) || 0) + 1));
+    CONDOS.filter(c => recordLayer(c) === 'dining' && c.area && !c.delisted)
+      .forEach(c => { const b = areaBucketOf(c.area); counts.set(b, (counts.get(b) || 0) + 1); });
     if(!counts.size) return;   // data has not arrived yet
     const keep = area.value;
     area.innerHTML = '<option value="">すべて</option>' +
-      [...counts.entries()]
-        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-        .map(([k, n]) => `<option value="${esc(k)}">${esc(k)} (${n})</option>`).join('');
+      AREA_BUCKETS.filter(b => counts.has(b))
+        .map(b => `<option value="${esc(b)}">${esc(b)} (${counts.get(b)})</option>`).join('');
     area.value = keep;
     area.dataset.filled = '1';
   }

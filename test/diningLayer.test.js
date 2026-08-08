@@ -5,6 +5,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import {
   matchesFilters, matchesDining, matchesMichelin, matchesPriceBand,
+  AREA_BUCKETS, areaBucketOf, isBucketedArea,
   diningPriceCeiling, recordLayer, LAYERS, LAYER_LABELS, CAT_GROUPS, MICHELIN_FILTERS,
 } from '../src/domain/filter.js';
 import { SORT_OPTIONS, defaultSortFor, sortAvailable, sortRecords } from '../src/domain/sort.js';
@@ -532,5 +533,36 @@ describe('minRating — Google評価の下限', () => {
     expect(html).toContain('★4.3以上');
     expect(html).toContain('★4.5以上');
     expect(html).toMatch(/#fMinRating[^{]*{min-height:40px}/);
+  });
+});
+
+// ============================================================
+// エリア「〜付近」バケツ(2026-08-09 A案)
+// ============================================================
+describe('エリア付近バケツ', () => {
+  const recs = parseRestaurants(raw);
+
+  it('台帳の全エリア名が対応表に明示登録されている(意図せぬ「その他」行きの検出)', () => {
+    const unmapped = [...new Set(recs.filter(r => !r.delisted && r.area).map(r => r.area))]
+      .filter(a => !isBucketedArea(a));
+    // 新調査でエリア名を増やしたら対応表にも足す。ここに出る=未裁定の「その他」行き。
+    expect(unmapped).toEqual([]);
+  });
+
+  it('バケツ名でのフィルタは付近全体を通し、細エリア名(旧URL)は従来の完全一致', () => {
+    const mk = eat({ area: 'Mont Kiara' });
+    const hartamas = eat({ area: 'Desa Sri Hartamas' });
+    const bangsar = eat({ area: 'Bangsar' });
+    expect(matchesDining(mk, { diningArea: 'モントキアラ付近' })).toBe(true);
+    expect(matchesDining(hartamas, { diningArea: 'モントキアラ付近' })).toBe(true);
+    expect(matchesDining(bangsar, { diningArea: 'モントキアラ付近' })).toBe(false);
+    // 旧URL互換: 細エリア名が来たら完全一致で絞る
+    expect(matchesDining(mk, { diningArea: 'Mont Kiara' })).toBe(true);
+    expect(matchesDining(hartamas, { diningArea: 'Mont Kiara' })).toBe(false);
+  });
+
+  it('未登録エリアは「その他」に落ちる', () => {
+    expect(areaBucketOf('新開拓エリアXYZ')).toBe('その他');
+    expect(AREA_BUCKETS[AREA_BUCKETS.length - 1]).toBe('その他');
   });
 });
