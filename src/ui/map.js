@@ -435,9 +435,13 @@ function mkMarker(c) {
     const bg = isStar ? MICHELIN_STAR_BG : isBib ? MICHELIN_BIB_BG : MARKER_COLORS.dining.bg;
     const border = isStar ? MICHELIN_STAR_BORDER
       : isBib ? MICHELIN_BIB_BORDER : MARKER_COLORS.dining.border;
-    const glyph = c.catGroup === '屋台街' ? '📍' : isStar ? '★' : '🍽';
+    // 星の数をそのまま描く(2026-08-09 竹森さん指示: 2つ星・3つ星は★を増やす)。
+    // KLは現在2★が最高だが、'3star'が来ても自動で3つ並ぶ。
+    const starCount = c.michelin === '1star' ? 1 : c.michelin === '2star' ? 2 : c.michelin === '3star' ? 3 : 0;
+    const glyph = c.catGroup === '屋台街' ? '📍' : isStar ? '★'.repeat(starCount) : '🍽';
+    const starFs = starCount >= 3 ? 7.5 : starCount === 2 ? 9.5 : 13;
     const glyphStyle = isStar
-      ? 'color:#3d2b00;font-size:13px;font-weight:700;text-shadow:0 1px 1px rgba(255,255,255,0.4)'
+      ? `color:#3d2b00;font-size:${starFs}px;font-weight:700;letter-spacing:-1px;white-space:nowrap;text-shadow:0 1px 1px rgba(255,255,255,0.4)`
       : 'color:#fff;font-size:10px';
     // 訪問済みの店はピン自体に緑の✓バッジ（2026-08-07 依頼: 地図を見るだけで
     // 「もう行った」が分かるように）。記録が変わると applyFilters→rebuild が
@@ -568,7 +572,7 @@ export function updateLegend(){
   h+=`<div id="legendBody" style="display:${legendOpen?'block':'none'}">`;
   if(eatout){
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>飲食店</div>`;
-    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_STAR_BG};border-color:${MICHELIN_STAR_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ミシュラン星付き（金色ピン★）</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_STAR_BG};border-color:${MICHELIN_STAR_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ミシュラン星付き（金色ピン・★の数=星の数）</div>`;
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_BIB_BG};border-color:${MICHELIN_BIB_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ビブグルマン（琥珀色ピン）</div>`;
     h+=`<div class="map-legend-item">数字の丸 = 重なった店。押すと開きます</div>`;
   } else {
