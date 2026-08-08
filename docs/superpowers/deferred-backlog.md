@@ -220,3 +220,13 @@
 - リファクタ3点セット済み: コード(readCriteriaの入れ子整理)/資料(README件数の陳腐化修正・本ファイル整頓)/AIメモリ(現在地を2026-08-09版に刷新)
 - エラーチェック済み: vitest 689件green・console無エラー・データ健全性(同名重複0/帯域違反0/価格逆転0/座標null 0)
 - **座標ダブルチェック完了(2026-08-09就寝前)**: 本日追加分111件を機械パス→フラグ10件→メイン照合で3件決着(偽陽性2+閉店1)→haiku裁定(3件確定・4件は証拠不足でsonnetへエスカレーション)→sonnet裁定で**実誤り1件のみ**(Hadramawt Kitchen=OSM POI電話一致で修正済み)。残り全て登録座標が正と確認。モデル4層ルールのエスカレーション則が実地で機能した初事例
+- **GM Klang Wholesale City(2,500店超・卸売業態)**: 店舗数はクランバレー最大級だが「卸売モール」で一般小売モールと性質が異なる+開業年/NLA/デベロッパーの一次資料未確認。商業レイヤーに入れるかは竹森さん裁定事項
+
+## 2026-08-09 商業モール全数調査(200店×MK車1時間圏)の保留・要裏取り
+
+- **弱出典で今回見送った4モール(200店の可能性あり・次回一次確認)**: Atria Shopping Gallery(集計サイトが200超/175を併記)・The Starling(集計サイトのみ200)・Encorp Strand Mall(The Edge旧記事「over 200 shops」だが稼働低迷の報道あり)・IOI Mall Damansara 旧Tropicana Gardens(出典間で160/250/300/457と矛盾・NLA105万sqftで蓋然性は高い)
+- **店数の一次資料に到達できなかった大型候補**: Quill City Mall(NLA75万sqft)・EkoCheras・SOGO KL・Sunway Geo Avenue(1出典のみ200)・Avenue K・Intermark Mall ほか(KL班notesに全リスト)
+- **KL East Mallの開業年2020・NLA 380,000sqftは手元知識の暫定値**(店数200+は公式サイト確認済み。開業年/NLAのみ次回裏取り)
+- **Melawati Mall=200店採用の根拠**: KL班が公式サイトmelawatimall.com「more than 200 retail shops」を直読。リスト班・南東班は未到達(反証なし)のため出典の強い方を採用
+- **1時間圏の判定基準**: OSRM実測(空いている時間帯)で全32施設が60分以内(最遠=AEON Bukit Tinggi 42分)。渋滞込み×1.8ではIOI City/Setia City/Central i-City/AEON BT/Klang Paradeが60分超になる点は要注意(基準変更の裁定があれば5件除外)
+- **GM Klang Wholesale City**: 上記スナップショット記載のとおり竹森さん裁定待ち(卸売業態)

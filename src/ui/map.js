@@ -471,14 +471,21 @@ function mkMarker(c) {
     // the protagonist, and the saturated orange square already carries far
     // more visual weight per pixel than the muted condo circles.
     const nla = c.sizeMin || 0;
-    const csz = nla >= 200000 ? 22 : nla >= 50000 ? 18 : 14;
-    const fsz = nla >= 200000 ? 11 : nla >= 50000 ? 10 : 8;
+    // サイズ感はNLA(面積)で、中の数字はテナント数の目安(2026-08-09 竹森さん指示:
+    // 123店なら「100」・350店なら「300」= 百の位への切り捨て。パッと見で規模が
+    // 分かるように🛒グリフを数字に置換)。数字が読めるようひと回り拡大。
+    const csz = nla >= 1000000 ? 30 : nla >= 400000 ? 26 : 22;
+    const tenants = c.units || 0;
+    // 100未満(MK付近の50店基準モール)は切り捨てると「0」になるので実数のまま。
+    const rounded = tenants >= 100 ? Math.floor(tenants / 100) * 100 : tenants;
+    const glyph = tenants > 0 ? String(rounded) : '🛒';
+    const fsz = glyph.length >= 4 ? 9 : 10;
     const icon = L.divIcon({
       className: pinClass(c),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
-      html: `<div role="button" aria-label="商業施設 ${attrEsc(c.name)}" style="width:${csz}px;height:${csz}px;border-radius:${MARKER_COLORS.commercial.radius};background:${MARKER_COLORS.commercial.bg};border:2px solid ${MARKER_COLORS.commercial.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer">
-        <span aria-hidden="true" style="color:#fff;font-size:${fsz}px">🛒</span>
+      html: `<div role="button" aria-label="商業施設 ${attrEsc(c.name)}${tenants ? '、店舗数の目安' + rounded : ''}" style="width:${csz}px;height:${csz}px;border-radius:${MARKER_COLORS.commercial.radius};background:${MARKER_COLORS.commercial.bg};border:2px solid ${MARKER_COLORS.commercial.border};display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.3);cursor:pointer">
+        <span aria-hidden="true" style="color:#fff;font-size:${fsz}px;font-weight:700;letter-spacing:-0.5px;text-shadow:0 1px 2px rgba(0,0,0,0.3)">${glyph}</span>
       </div>`
     });
     return attachMarker(c, icon, c.name.replace(/ \(.*\)/,''), csz);
@@ -594,7 +601,7 @@ export function updateLegend(){
     h+=`<div class="map-legend-section"><div class="map-legend-title">種別</div>`;
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.condo.bg}"></div>物件</div>`;
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.school.bg}"></div>学校</div>`;
-    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.commercial.bg};border-radius:4px"></div>商業施設</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.commercial.bg};border-radius:4px"></div>商業施設（数字＝店舗数の目安・大きさ＝面積）</div>`;
     h+=`<div class="map-legend-item">数字の丸 = まとまり。押すと開きます</div>`;
     h+=`</div>`;
   }

@@ -335,7 +335,8 @@ describe('map markers', () => {
 
   it('names every marker and every cluster bubble', () => {
     expect(map).toContain('aria-label="学校 ${attrEsc(c.name)}"');
-    expect(map).toContain('aria-label="商業施設 ${attrEsc(c.name)}"');
+    // 商業は店舗数の目安もラベルに含む(2026-08-09 マーカー数字化)
+    expect(map).toContain('aria-label="商業施設 ${attrEsc(c.name)}${tenants ?');
     expect(map).toContain('aria-label="飲食店 ${attrEsc(c.name)}');
     expect(map).toContain('aria-label="${a11yLabel}"');
     expect(map).toContain('aria-label="${CLUSTER_LABELS[type]} ${n}件');

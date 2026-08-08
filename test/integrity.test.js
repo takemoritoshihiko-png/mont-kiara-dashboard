@@ -29,9 +29,11 @@ const premiumFormula = (r) =>
 describe('record counts', () => {
   it('has the expected dataset sizes (update deliberately when adding data)', () => {
     expect(condos.length).toBeGreaterThanOrEqual(271);
-    // 商業は2026-08-09裁定で「KL有名モールTOP10だけ」に絞った(旧88件は
-    // docs/archive-commercial_data-88件-20260809.csv に保全)。ちょうど10を守る。
-    expect(commercials.length).toBe(10);
+    // 商業は2026-08-09裁定で再構成: KL有名モールTOP10 + 「200店以上×MKから
+    // 車1時間圏」の全数調査16件 + MK付近(50店以上に緩和)6件 = 32。
+    // 一次出典(公式サイト/Wikipedia infobox/報道)で店数確認済みのみ。旧88件は
+    // docs/archive-commercial_data-88件-20260809.csv に保全。ちょうど32を守る。
+    expect(commercials.length).toBe(32);
     expect(schools.length).toBeGreaterThanOrEqual(33);
   });
 });
