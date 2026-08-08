@@ -195,9 +195,14 @@ describe('the 台帳 card in 外食モード', () => {
 
   it('keeps the record controls OUTSIDE the role="button" element', () => {
     // A button containing buttons is not operable by keyboard or screen reader.
+    // 記録欄の器は 訪問済み=visitbox / 未訪問=vb-line(1行ミニ・2026-08-08 密度改善)
+    // のどちらか — いずれにせよ card-main の外に居なければならない。
     const h = cardHtml(DEWAKAN);
     const opener = h.slice(h.indexOf('<div class="card-main"'));
-    const mainEnd = opener.indexOf('class="visitbox"');
+    const box = ['class="visitbox"', 'class="vb-line"']
+      .map(s => opener.indexOf(s)).filter(i => i >= 0);
+    expect(box.length, 'record box missing entirely').toBeGreaterThan(0);
+    const mainEnd = Math.min(...box);
     expect(h).toContain('class="card-main"');
     expect(opener.slice(0, mainEnd)).not.toContain('<button');
     expect(h).toContain('role="button"');

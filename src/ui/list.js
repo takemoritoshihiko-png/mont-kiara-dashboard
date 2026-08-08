@@ -6,7 +6,6 @@ import {
   showWantOnly, setShowWantOnly, showUndoneOnly, setShowUndoneOnly,
   appMode, setAppMode, homeLayer, setHomeLayer, listView, setListView,
   diningNear, setDiningNear, dayBudgetBasis, setDayBudgetBasis,
-  recLensOn, setRecLensOn,
   visibleLayers, setLayerVisible,
   lastSortByLayer, setLastSortForLayer,
 } from '../state.js';
@@ -93,9 +92,6 @@ export function readCriteria(){
     c.priceBasis = currentBudgetBasis();
     c.diningArea = val('fDiningArea');
     c.driveTime = val('fDriveTime');
-    // 推奨レンズは外食モード限定(住まいモードの飲食☑は網羅の文脈ビュー)
-    c.recLens = eatoutActive() && recLensOn;
-    if(c.recLens) c.personalRec = personalMap();
     // 「近く: Mont Kiara」 lives in state, not in a control: it is set by the
     // map's area jump, and the chip is what removes it again.
     c.near = diningNear;
@@ -388,7 +384,6 @@ export function syncLayerUI(){
   }
   syncAwardBtn();
   syncKidOkBtn();
-  syncRecLensBtn();
   syncDayBudgetBtn();
   syncWantBtn();
   syncUndoneBtn();
@@ -433,32 +428,6 @@ export function toggleAward(){
 
 // 「👶 子連れ◎のみ」 is the dining layer's 受賞のみ: a one-way narrowing toggle,
 // so it follows the same pattern rather than inventing a second one.
-function syncRecLensBtn(){
-  const b = $('toggleRecLens');
-  if(!b) return;
-  b.classList.toggle('active', recLensOn);
-  b.setAttribute('aria-pressed', recLensOn ? 'true' : 'false');
-}
-
-/** ⭐推奨レンズ(既定ON)。OFF=全掲載(網羅の索引)を見る。 */
-export function toggleRecLens(){
-  setRecLensOn(!recLensOn);
-  syncRecLensBtn();
-  applyFilters();
-  toast(recLensOn ? '推奨店だけを表示しています' : '全掲載を表示しています(要注意・未確証・閉店も含む)');
-}
-
-/** 🌙今夜どこ行く: 推奨×子連れ◎×車30分×〜RM150 を1タップで組む(2026-08-08裁定)。 */
-export function presetTonight(){
-  setRecLensOn(true);
-  setShowKidOkOnly(true);
-  const dt = $('fDriveTime'); if(dt) dt.value = '30';
-  const pb = $('fPriceBand'); if(pb) pb.value = '0-150';
-  syncLayerUI();
-  applyFilters();
-  toast('今夜の候補: 推奨 × 子連れ◎ × 車30分 × 〜RM150');
-}
-
 function syncKidOkBtn(){
   const b = $('toggleKidOk');
   if(!b) return;
@@ -583,7 +552,6 @@ export function renderChips(){
 export function removeFilter(id){
   if(id === 'toggleAward'){ setShowAwardOnly(false); syncAwardBtn(); }
   else if(id === 'toggleKidOk'){ setShowKidOkOnly(false); syncKidOkBtn(); }
-  else if(id === 'toggleRecLens'){ setRecLensOn(false); syncRecLensBtn(); }
   else if(id === 'toggleWant'){ setShowWantOnly(false); syncWantBtn(); }
   else if(id === 'toggleUndone'){ setShowUndoneOnly(false); syncUndoneBtn(); }
   else if(id === 'diningNear'){ setDiningNear(null); }
@@ -783,11 +751,12 @@ function diningCard(c){
   const rating = eatoutActive() ? '' : ratingText(c);
   if(rating) meta.push(rating);
   if(c.area) meta.push(c.area);
+  // 2026-08-08 密度改善: 住所は詳細パネルの領分(一覧では1行のメタに エリア・車時間)。
+  if(c.driveMinJam != null) meta.push(`🚗約${c.driveMinJam}分`);
   return eatoutCardScoreHtml(c) +
     cardHead(c, badge, '', 'card-name-wrap') +
     (chips.length ? `<div class="card-chips">${chips.join('')}</div>` : '') +
     `<div class="card-hero">${hero}</div>` +
-    `<div class="card-addr">${esc(c.addr)}</div>` +
     (meta.length ? `<div class="card-meta">${esc(meta.join(' ・ '))}</div>` : '');
 }
 

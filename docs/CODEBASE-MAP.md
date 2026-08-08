@@ -17,7 +17,7 @@
 | `src/main.js` | 起動: 地図生成 → UI初期化 → CSV/JSON読込 → 初回描画 → URL状態の復元。インライン`onclick`用に関数を`window`へ公開 |
 | `src/state.js` | 共有する可変状態（データ・絞り込み結果・選択中・アクティブ層/タブ・**モード(住まい/外食)**・**外食の3ビュー**・各トグル・**飲食の「近く」中心(diningNear)**・**予算の昼夜基準(dayBudgetBasis)**）。書き込みは全てセッター経由 |
 | `src/domain/fileSync.js` | ファイルDB(A案)の判断だけ: 突合(reconcile)・書き込み前スタンプ照合・バックアップ剪定・安定直列化。FSAには触れない純ロジック |
-| `src/domain/recommend.js` | 推奨軸(⭐・2026-08-08): 家族>二重確証>通好み…のカテゴリ導出。数値合成なし・保存は素材(recDivergence/closed/verified)のみ。経緯=specs/2026-08-08-dining-purpose-rethink.md |
+| `src/domain/recommend.js` | 推奨軸(2026-08-08): 家族>二重確証>通好み…のカテゴリ導出=**バッジ表示専用**(レンズ絞り込みは同日夜の裁定で撤去)。数値合成なし・保存は素材(recDivergence/closed/verified)のみ。経緯=specs/2026-08-08-dining-purpose-rethink.md |
 | `src/data/fileStore.js` | File System Access APIに触る唯一の場所。フォルダ握手・ハンドルのIndexedDB保存・書きスルー・日次7世代バックアップ。personal.jsはonPersonalChange購読で駆動され無改変 |
 | `src/format.js` | num/esc/jsStrの唯一の実装(ui/とdomain/の両方から使うためui外に置く)。jsStrはJSエスケープ+HTML属性エスケープの2層 |
 

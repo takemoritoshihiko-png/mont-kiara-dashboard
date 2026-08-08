@@ -98,22 +98,24 @@ function toggleBtn(cls, on, label, call){
  * @param {object} c    the dining record
  * @param {string} ctx  'led' | 'log' | 'info' — element-id namespace
  */
+// 訪問済み/行きたい の2ボタン。visitBoxHtml(展開記録欄)と、一覧カードの
+// 1行ミニ表示(eatoutCardExtraHtml)が同じ実装を共有する — 文言・状態表現を
+// 2箇所に書かない(2026-08-08 密度改善で分離)。
+//
+// Both labels are FIXED — the state is carried by the colour (.on) and by
+// aria-pressed, not by rewording the button. The heart is deliberate: ★
+// belongs to the Google rating and to nothing else in this app.
+function vbHeadButtons(id, e){
+  return toggleBtn('vb-visit', e.v === 1, e.v === 1 ? '✓ 訪問済み' : '訪問済み', `dineVisit('${jsStr(id)}')`) +
+    toggleBtn('vb-want', e.w === 1, e.w === 1 ? '♥ 行きたい' : '♡ 行きたい', `dineWant('${jsStr(id)}')`);
+}
+
 export function visitBoxHtml(c, ctx = 'led'){
   const id = c.id;
   if(!id) return '';
   const e = P.getEntry(id);
   const key = `${ctx}-${jsStr(id)}`;
-  // Both labels are FIXED — the state is carried by the colour (.on) and by
-  // aria-pressed, not by rewording the button. A control whose name changes
-  // when you press it reads as a different control, and the reader can no
-  // longer tell whether the word describes what IS or what WILL BE.
-  //
-  // The heart is deliberate: ★ belongs to the Google rating and to nothing
-  // else in this app, so 行きたい gets ♡/♥ instead of a second star.
-  const head = `<div class="vb-head">` +
-    toggleBtn('vb-visit', e.v === 1, e.v === 1 ? '✓ 訪問済み' : '訪問済み', `dineVisit('${jsStr(id)}')`) +
-    toggleBtn('vb-want', e.w === 1, e.w === 1 ? '♥ 行きたい' : '♡ 行きたい', `dineWant('${jsStr(id)}')`) +
-    `</div>`;
+  const head = `<div class="vb-head">${vbHeadButtons(id, e)}</div>`;
   if(e.v !== 1) return `<div class="visitbox">${head}</div>`;
 
   const rv = `<div class="vb-rv" role="group" aria-label="また行きたいか">` +
@@ -140,6 +142,13 @@ export function visitBoxHtml(c, ctx = 'led'){
 /** The block a 台帳 card grows in 外食モード. '' everywhere else. */
 export function eatoutCardExtraHtml(c){
   if(!eatoutActive() || recordLayer(c) !== 'dining') return '';
+  const e = c.id ? P.getEntry(c.id) : null;
+  // 未訪問カードは「評価 + 2ボタン」を1行に畳む(2026-08-08 密度改善:
+  // カード307px→大幅圧縮の主部品)。訪問済みは記録欄が要るので従来の展開。
+  if(!e || e.v !== 1){
+    return `<div class="vb-line">${ratingLineHtml(c)}` +
+      `<div class="vb-mini">${c.id ? vbHeadButtons(c.id, e || P.getEntry(c.id)) : ''}</div></div>`;
+  }
   return ratingLineHtml(c) + visitBoxHtml(c, 'led');
 }
 

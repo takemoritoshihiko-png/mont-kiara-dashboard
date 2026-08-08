@@ -5,7 +5,6 @@
 // A record never matches a layer it does not belong to.
 
 import { haversineKm } from './geo.js';
-import { isRecommended } from './recommend.js';
 
 export function parseR(v){if(!v)return null;const[a,b]=v.split('-').map(Number);return{min:a,max:b}}
 export const TIER_ORDER = {S:5, A:4, B:3, C:2, D:1};
@@ -341,9 +340,6 @@ export function matchesDining(c, f){
   if(!matchesDiningNear(c, f.near)) return false;
   if(f.venueType && c.venueType !== f.venueType) return false;
   if(!matchesDriveTime(c, f.driveTime)) return false;
-  // 推奨レンズ(⭐・2026-08-08): 本当に美味しい確証のある店だけに絞る。
-  // 家族の記録(また行く=鉄板/もういい=拒否権)は f.personalRec 経由で純関数のまま受け取る。
-  if(f.recLens && !isRecommended(c, f.personalRec ? f.personalRec[c.id] : undefined)) return false;
   // kidOk is 0/1 in restaurants.json. The filter is one-way — 「子連れ◎のみ」
   // narrows, it never asks for the places that are NOT child-friendly.
   if(f.kidOnly && c.kidOk !== 1) return false;

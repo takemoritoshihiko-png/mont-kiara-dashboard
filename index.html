@@ -125,7 +125,7 @@ button,input,select{font-family:inherit}
 /* 視覚的にだけ隠す(ラベルを支援技術と関連付けには残す) */
 .vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-.rec-badge{display:inline-flex;align-items:center;gap:2px;font-size:var(--fs-label);font-weight:700;color:var(--text-2);background:var(--bg);border:1px solid var(--hairline);border-radius:var(--r-pill);padding:1px var(--s2);white-space:nowrap}
+.rec-badge{display:inline-flex;align-items:center;gap:2px;font-size:var(--fs-label);font-weight:600;color:var(--text-2);background:var(--bg);border-radius:var(--r-pill);padding:1px var(--s2);white-space:nowrap;line-height:1.5}
 .rec-line{margin-bottom:var(--s2)}
 
 /* ---- Controls ---- */
@@ -138,11 +138,11 @@ button,input,select{font-family:inherit}
 /* Two toggles under one caption (外食モードの「自分の記録」). A second caption
    would be a <span> with nothing to say — the buttons name themselves. */
 .fg-btns{display:flex;gap:var(--s2);flex-wrap:wrap}
-.filter-group select,.filter-group input{background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:4px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm);min-width:0}
+.filter-group select,.filter-group input{background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:3px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm);min-width:0}
 .filter-group select:focus,.filter-group input:focus,.sort-select:focus,.search-wrap input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(10,108,255,.16)}
 .sort-row{display:flex;gap:var(--s2);align-items:center;margin-top:var(--s1)}
 .sort-label{font-size:var(--fs-xs);color:var(--text-2);font-weight:600;white-space:nowrap}
-.sort-select{flex:1;min-width:0;background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:4px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm)}
+.sort-select{flex:1;min-width:0;background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:3px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm)}
 .sort-btn{background:var(--surface);border:1px solid var(--hairline);color:var(--text-2);padding:5px var(--s3);border-radius:var(--r-pill);font-size:var(--fs-xs);cursor:pointer;font-weight:600;transition:all var(--dur) var(--ease);white-space:nowrap}
 .sort-btn:hover{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
 .sort-btn.active{background:var(--accent);color:var(--surface);border-color:var(--accent)}
@@ -160,7 +160,7 @@ button,input,select{font-family:inherit}
 .chip-name:hover{color:var(--text)}
 .layer-chip.active{background:var(--surface);box-shadow:var(--shadow-1)}
 .layer-chip.active .chip-name{color:var(--accent)}
-.seg-btn{flex:1;background:transparent;border:none;color:var(--text-2);font-size:var(--fs-sm);font-weight:600;padding:4px var(--s1);border-radius:6px;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
+.seg-btn{flex:1;background:transparent;border:none;color:var(--text-2);font-size:var(--fs-sm);font-weight:600;padding:3px var(--s1);border-radius:6px;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
 .seg-btn:hover{color:var(--text)}
 .seg-btn.active{background:var(--surface);color:var(--accent);box-shadow:var(--shadow-1)}
 
@@ -206,7 +206,7 @@ button,input,select{font-family:inherit}
    second line rather than cut it off. Capped at two so cards stay uniform. */
 .card-name-wrap{white-space:normal;text-overflow:clip;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .card-ja{font-size:var(--fs-xs);color:var(--text-2);margin-bottom:var(--s1)}
-.card-hero{font-size:var(--fs-lg);font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.3px;margin:var(--s1) 0}
+.card-hero{font-size:var(--fs-md);font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.3px;margin:2px 0}
 .card-hero-muted{color:var(--text-2);font-weight:500}
 .card-addr{font-size:var(--fs-xs);color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .card-meta{font-size:var(--fs-xs);color:var(--text-2);font-variant-numeric:tabular-nums;margin-top:2px}
@@ -215,7 +215,7 @@ button,input,select{font-family:inherit}
 .card-chip{margin-left:auto;font-size:var(--fs-label);padding:1px var(--s2);border-radius:var(--r-pill);font-weight:600;white-space:nowrap;max-width:45%;overflow:hidden;text-overflow:ellipsis}
 /* School cards give the name the whole line and drop the chip underneath, so a
    long school name is not cut to 55% of the card. */
-.card-chips{margin:2px 0 var(--s1)}
+.card-chips{margin:2px 0 var(--s1);display:flex;flex-wrap:wrap;gap:var(--s1);align-items:center}
 .card-chips .card-chip{display:inline-block;margin-left:0;margin-right:var(--s1);max-width:100%}
 .chip-school{background:var(--accent-soft);color:var(--type-school)}
 /* 飲食: the michelin standing is the stronger signal, so it is the filled chip
@@ -245,7 +245,7 @@ button,input,select{font-family:inherit}
 .btn-clear-all:hover{background:var(--accent-strong)}
 
 /* ---- Panel footer: where the numbers come from (spec 2.1) ---- */
-.panel-footer{padding:var(--s2) var(--s3);font-size:var(--fs-label);color:var(--text-2);border-top:1px solid var(--hairline);background:var(--bg);line-height:1.5;flex-shrink:0}
+.panel-footer{padding:2px var(--s3);font-size:var(--fs-label);color:var(--text-2);border-top:1px solid var(--hairline);background:var(--bg);line-height:1.35;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* ============================================================
    DETAIL OVERLAY (spec 2.6)
@@ -419,13 +419,20 @@ button,input,select{font-family:inherit}
 
 /* ---- The card splits in two: an openable half and the record controls ---- */
 .record-card{padding:0}
-.card-main{padding:var(--s3);cursor:pointer;border-radius:var(--r-card) var(--r-card) 0 0}
+.card-main{padding:var(--s2) var(--s3);cursor:pointer;border-radius:var(--r-card) var(--r-card) 0 0}
 /* 訪問済みは一覧で沈む。沈むのは「店の説明」だけで、下の記録欄は編集するための
    ものなので薄くしない。 */
 .record-card.visited .card-main{opacity:var(--visited-dim)}
 .record-card.visited:hover .card-main,.record-card.visited:focus-within .card-main{opacity:1}
 
 /* ---- 台帳スコア ---- */
+/* 一覧カードでは1行ミニ表示(2026-08-08 密度改善)。内訳バーの意味は詳細パネルが正 */
+.record-card .scorebox{margin-bottom:var(--s1);padding-bottom:var(--s1);gap:var(--s2)}
+.record-card .sc-num{font-size:var(--fs-lg)}
+.record-card .sc-break{display:none}
+.record-card .sc-bars{flex-direction:row;gap:var(--s1)}
+.record-card .sc-bar{flex:1}
+.record-card .sc-bar-label{display:none}
 .scorebox{display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s2);padding-bottom:var(--s2);border-bottom:1px solid var(--hairline)}
 .sc-total{display:flex;align-items:baseline;gap:2px;flex-shrink:0}
 .sc-num{font-size:var(--fs-xl);font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-1px}
@@ -442,7 +449,11 @@ button,input,select{font-family:inherit}
 /* ---- 記録欄 (visitbox) ---- */
 .visitbox{padding:var(--s2) var(--s3) var(--s3);border-top:1px solid var(--hairline);background:var(--bg);border-radius:0 0 var(--r-card) var(--r-card)}
 .vb-head{display:flex;gap:var(--s2);flex-wrap:wrap}
-.vb-toggle{flex:1;min-width:0;background:var(--surface);border:1px solid var(--hairline);color:var(--text-2);border-radius:var(--r-pill);padding:6px var(--s2);font-size:var(--fs-xs);font-weight:600;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
+.vb-line{display:flex;align-items:center;gap:var(--s2);padding:0 var(--s3) var(--s2)}
+.vb-line .sc-rating{padding:0;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vb-mini{display:flex;gap:var(--s1);flex-shrink:0}
+.vb-mini .vb-toggle{flex:none;padding:3px var(--s2);font-size:var(--fs-label)}
+.vb-toggle{flex:1;min-width:0;background:var(--surface);border:1px solid var(--hairline);color:var(--text-2);border-radius:var(--r-pill);padding:4px var(--s2);font-size:var(--fs-xs);font-weight:600;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
 .vb-toggle:hover{border-color:var(--accent);color:var(--accent)}
 .vb-visit.on{background:var(--rv-again);border-color:var(--rv-again);color:var(--surface)}
 .vb-want.on{background:var(--accent);border-color:var(--rv-maybe);color:var(--surface)}
@@ -496,7 +507,7 @@ button,input,select{font-family:inherit}
 .data-result.bad{color:var(--rv-never)}
 
 /* ---- 保存バー / toast ---- */
-.savebar{font-size:var(--fs-label);color:var(--text-2);background:var(--surface);border-top:1px solid var(--hairline);padding:var(--s1) var(--s2);line-height:1.4;flex-shrink:0}
+.savebar{font-size:var(--fs-label);color:var(--text-2);background:var(--surface);border-top:1px solid var(--hairline);padding:2px var(--s2);line-height:1.35;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .savebar.bad{color:var(--surface);background:var(--rv-never)}
 .toast{position:fixed;left:50%;bottom:var(--s5);transform:translateX(-50%) translateY(8px);background:var(--text);color:var(--surface);font-size:var(--fs-xs);padding:var(--s2) var(--s4);border-radius:var(--r-pill);box-shadow:var(--shadow-2);opacity:0;pointer-events:none;z-index:2000;transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease);max-width:80vw;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -583,7 +594,7 @@ button,input,select{font-family:inherit}
   /* 飲食 (D3/UX2): its four dropdowns, the 子連れ toggle and the 昼の予算 basis
      toggle. The generic rules above already reach them; they are named so this
      block visibly covers the layer. */
-  #fCatGroup,#fMichelin,#fPriceBand,#fDiningArea,#fDriveTime,#toggleKidOk,#toggleDayBudget,#toggleRecLens,#presetTonight{min-height:40px}
+  #fCatGroup,#fMichelin,#fPriceBand,#fDiningArea,#fDriveTime,#toggleKidOk,#toggleDayBudget{min-height:40px}
   /* Two chips (michelin + category) now share the row under a dining name. */
   .card-chips .card-chip{max-width:calc(50% - var(--s1))}
 
@@ -766,16 +777,6 @@ button,input,select{font-family:inherit}
         <div class="filter-group"><label for="fMichelin">ミシュラン</label><select id="fMichelin" onchange="applyFilters()"><option value="">すべて</option></select></div>
       </div>
 
-      <!-- 推奨レンズ(⭐既定ON)と今夜プリセット: 折りたたみの外=常時見える位置に置く。
-           1タップが売りの機能を畳んだら本末転倒(2026-08-08実画面検証で移動)。 -->
-      <div class="filter-row" data-mode-only="eatout" style="display:none">
-        <div class="filter-group"><span class="fg-label">見る範囲</span>
-          <div class="fg-btns">
-            <button type="button" class="chip-toggle" id="toggleRecLens" aria-pressed="true" onclick="toggleRecLens()" title="本当に美味しい確証のある店だけに絞る(既定)。外すと全掲載(索引)表示">⭐ 推奨のみ</button>
-            <button type="button" class="chip-toggle" id="presetTonight" aria-pressed="false" onclick="presetTonight()" title="推奨×子連れ◎×車30分×〜RM150 を1タップで">🌙 今夜どこ行く</button>
-          </div>
-        </div>
-      </div>
 
       <button type="button" class="disclosure" id="moreToggle" onclick="toggleMore()" aria-controls="moreFilters" aria-expanded="false">絞り込み ⌄</button>
 
