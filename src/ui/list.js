@@ -107,8 +107,8 @@ export function readCriteria(){
       c.wantOnly = showWantOnly;
       c.undoneOnly = showUndoneOnly;
       c.visitedOnly = showVisitedOnly;
-    // 非表示(オーナー除外)は外食モードでは常時適用
-    if(eatoutActive()) c.hiddenIds = hiddenIdsSet();
+      // 非表示(オーナー除外)は外食モードでは常時適用
+      c.hiddenIds = hiddenIdsSet();
       if(showWantOnly || showUndoneOnly || showVisitedOnly) c.personal = personalMap();
     }
   } else {

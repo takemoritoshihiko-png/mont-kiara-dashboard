@@ -1,6 +1,6 @@
 # Mont Kiara Dashboard — KL・ペナン 暮らしの地図
 
-クアラルンプールとペナンの**コンドミニアム271・学校33・商業施設88・飲食店131**を、1枚の地図で見くらべるためのダッシュボード。「住まいモード」と、飲食店の訪問記録をつけられる「外食モード」の2モード。
+クアラルンプールとペナンの**コンドミニアム271・学校33・商業施設10(KL有名モールTOP10)・飲食店357**を、1枚の地図で見くらべるためのダッシュボード。「住まいモード」と、飲食店の訪問記録をつけられる「外食モード」の2モード。
 
 **本番**: https://takemoritoshihiko-png.github.io/mont-kiara-dashboard/
 （GitHub Pages・masterへのpush＝本番反映）
@@ -34,9 +34,9 @@ npm run hooks:install  # pre-pushフック導入（push既定拒否・GIC_ALLOW_
 | `src/domain/` | `luxury.js` ラグジュアリー指数 ／ `filter.js` 絞り込み判定 ／ `sort.js` 並び替え ／ `geo.js` 距離 ／ `nearby.js` 周辺＝距離バケット ／ `fees.js` 年齢→学年→年間学費 |
 | `src/ui/` | `map.js` 地図・マーカー・凡例 ／ `list.js` 一覧・絞り込みUI・サマリー ／ `info.js` 詳細パネル ／ `urlState.js` URL＝画面状態 ／ `schoolFinder.js` 学費くらべ ／ `a11y.js` キーボード操作 |
 | `condos_data.csv` | 物件271件（28列） |
-| `commercial_data.csv` | 商業施設88件（11列） |
+| `commercial_data.csv` | 商業施設10件=KL有名モールTOP10（11列・旧88件は docs/archive に保全） |
 | `schools_data.csv` / `schools_detail.json` | 学校33件 ／ その詳細（学年別の年間学費表を含む） |
-| `restaurants.json` | 飲食店131件（ミシュラン系50＋検証済み拡充43・9分類）。`tools/convert-v9-dining.js` が生成 |
+| `restaurants.json` | 飲食店374行(表示357・墓標17)。ミシュラン全掲載75＋新Google条件(★4.2-4.9未満×口コミ1,000件+)の検証済み拡充・11分類。`tools/convert-v9-dining.js` が生成 |
 | `test/` | 20ファイル・670件。`integrity.test.js` が**データ整合性の契約** |
 | `docs/CODEBASE-MAP.md` | どのファイルが何をするかの一覧 |
 | `docs/superpowers/` | 設計プラン・deferred-backlog |
