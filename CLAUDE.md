@@ -2,7 +2,7 @@
 
 ## これは何か
 
-KLとペナンの**コンドミニアム271・学校33・商業施設88・飲食店114**を1枚の地図で見くらべる、日本人向けの住まい探しダッシュボード。
+KLとペナンの**コンドミニアム271・学校33・商業施設88・飲食店120**を1枚の地図で見くらべる、日本人向けの住まい探しダッシュボード。
 公開サイト: https://takemoritoshihiko-png.github.io/mont-kiara-dashboard/
 
 ## 技術構成
@@ -15,7 +15,7 @@ KLとペナンの**コンドミニアム271・学校33・商業施設88・飲食
 ```bash
 npm install
 npm run dev            # http://localhost:5173
-npm test               # 661件
+npm test               # 677件
 npm run hooks:install  # pre-push フックを .git/hooks へ
 ```
 
@@ -35,6 +35,7 @@ npm run hooks:install  # pre-push フックを .git/hooks へ
 | UI/UXの設計方針・実行バッチ | `docs/superpowers/specs/2026-08-07-uiux-refined-plan.md` |
 | 情報設計・地図の可読性の判断根拠 | 同フォルダの `b3-information-architecture.md` / `b2-map-readability.md` |
 | 飲食店の追加計画・調査結果 | 同フォルダの `dining-integration-plan.md` / `dining-research-30min.md` |
+| **推奨軸(⭐)の設計根拠と裁定経緯** | `docs/superpowers/specs/2026-08-08-dining-purpose-rethink.md` |
 | **飲食店を増やすときの恒久ルール**（品質バー★4.3×300・MK12km圏・チェーン規則・90-100店上限） | `docs/superpowers/specs/2026-08-07-dining-discovery-logic.md` |
 | 保留にした課題（append-only） | `docs/superpowers/deferred-backlog.md` |
 | どのファイルが何をするか | `docs/CODEBASE-MAP.md` |

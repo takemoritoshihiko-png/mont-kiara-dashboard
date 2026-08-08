@@ -14,3 +14,4 @@
 | Heun Kee Claypot(移転先疑い) | Cheras Taman Connaught | 煲仔飯 | TastyJournal 2026-06 | 台帳の閉店判定の再検証対象 |
 | Grumpy Bagels | Off Jalan Imbi | ベーグル | TastyJournal 2025-11 | D7次点+2次ソース到着 |
 | (ほか38店は上記spec出典の一覧から随時ここへ昇格記載) | | | | |
+| Heun Kee Claypot(Taman Connaught支店) | Cheras | 煲仔飯 | FB公式告知+TastyJournal 2026-06 | Pudu本店閉店後も同一経営で継続。20 Jalan Cerdik。Google値未取得 |

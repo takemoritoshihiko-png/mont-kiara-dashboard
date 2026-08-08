@@ -72,6 +72,10 @@ export let diningNear = null;
 // band, the budget sort and the 予算中央値 tile alike — see budgetBasisOf() in
 // src/domain/filter.js for why there is no pair of 昼/夜 filters instead.
 export let dayBudgetBasis = false;
+// 推奨レンズ(⭐・2026-08-08裁定: 既定ON)。外食モードの一覧/地図を「本当に美味しい」
+// 確証のある店だけに絞る。OFF=全掲載(網羅の索引)。
+export let recLensOn = true;
+export function setRecLensOn(v){ recLensOn = !!v; }
 
 export let sfActive = false;
 export let sfSelectedSchool = null;

@@ -1,6 +1,6 @@
 # Mont Kiara Dashboard — KL・ペナン 暮らしの地図
 
-クアラルンプールとペナンの**コンドミニアム271・学校33・商業施設88・飲食店114**を、1枚の地図で見くらべるためのダッシュボード。「住まいモード」と、飲食店の訪問記録をつけられる「外食モード」の2モード。
+クアラルンプールとペナンの**コンドミニアム271・学校33・商業施設88・飲食店120**を、1枚の地図で見くらべるためのダッシュボード。「住まいモード」と、飲食店の訪問記録をつけられる「外食モード」の2モード。
 
 **本番**: https://takemoritoshihiko-png.github.io/mont-kiara-dashboard/
 （GitHub Pages・masterへのpush＝本番反映）
@@ -19,7 +19,7 @@
 ```bash
 npm install
 npm run dev            # ローカル開発サーバー (Vite)
-npm test               # テスト 661件（データ整合性の契約を含む）
+npm test               # テスト 677件（データ整合性の契約を含む）
 npm run hooks:install  # pre-pushフック導入（push既定拒否・GIC_ALLOW_PUSH=1で許可）
 ```
 
@@ -36,8 +36,8 @@ npm run hooks:install  # pre-pushフック導入（push既定拒否・GIC_ALLOW_
 | `condos_data.csv` | 物件271件（28列） |
 | `commercial_data.csv` | 商業施設88件（11列） |
 | `schools_data.csv` / `schools_detail.json` | 学校33件 ／ その詳細（学年別の年間学費表を含む） |
-| `restaurants.json` | 飲食店114件（ミシュラン系50＋検証済み拡充43・9分類）。`tools/convert-v9-dining.js` が生成 |
-| `test/` | 20ファイル・661件。`integrity.test.js` が**データ整合性の契約** |
+| `restaurants.json` | 飲食店120件（ミシュラン系50＋検証済み拡充43・9分類）。`tools/convert-v9-dining.js` が生成 |
+| `test/` | 20ファイル・677件。`integrity.test.js` が**データ整合性の契約** |
 | `docs/CODEBASE-MAP.md` | どのファイルが何をするかの一覧 |
 | `docs/superpowers/` | 設計プラン・deferred-backlog |
 | `archive/` | 参照されなくなったファイル（削除せず保管） |

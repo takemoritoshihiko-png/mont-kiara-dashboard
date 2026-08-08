@@ -510,6 +510,8 @@ export function rebuild(){
     // whose checkbox is on (2026-08-07 ruling: the layer tabs became
     // check-boxes — one, two or all four at once). What is checked is shown
     // at full strength: opt-in context does not need ghosting.
+    // 閉店・休業の店はピンを出さない(地図は「行く」ための面。台帳一覧には残る)
+    if(c.closed) return;
     if(appMode==='eatout'){ if(type!=='dining') return; }
     else if(!visibleLayers[type]) return;
     const isActive=type===activeLayer;

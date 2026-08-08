@@ -12,6 +12,7 @@ const CAT_GROUPS = [
   'マレーシア料理', '洋食・グリル', '中華', 'インド・スリランカ',
   '鶏飯・ご飯もの', '麺・肉骨茶', '日本・その他アジア', '屋台街',
   'カフェ・デザート', // ruled 2026-08-07 evening (E-1)
+  'バー',           // ruled 2026-08-08 (Asia's 50 Best Bars 6店の受け皿)
 ];
 const MICHELIN = ['2star', '1star', 'bib', 'sel', 'none'];
 const VENUE_TYPES = ['mall', 'hotel', 'tower', 'street', 'stall'];
@@ -35,7 +36,7 @@ describe('restaurants.json', () => {
     }
   });
 
-  it('every catGroup is one of the 8 ruled groups', () => {
+  it('every catGroup is one of the ruled groups', () => {
     const bad = restaurants.filter((r) => !CAT_GROUPS.includes(r.catGroup));
     expect(bad.map((r) => `${r.name}:${r.catGroup}`)).toEqual([]);
   });
@@ -67,6 +68,7 @@ describe('restaurants.json', () => {
       'Yun House', 'Nadodi',
       'Jhol KL', 'Lachér Patisserie',
       'Jwala', 'Seed',   // The Five@KPD Block E — 同一複合の同座標
+      'Restaurant Jie', 'Reka:Bar',   // Jalan Setia Bakti — 双方とも街レベル精度の同街区
     ];
     const seen = new Map();
     for (const r of restaurants) {

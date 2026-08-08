@@ -6,6 +6,7 @@ import {
   showWantOnly, setShowWantOnly, showUndoneOnly, setShowUndoneOnly,
   appMode, setAppMode, homeLayer, setHomeLayer, listView, setListView,
   diningNear, setDiningNear, dayBudgetBasis, setDayBudgetBasis,
+  recLensOn, setRecLensOn,
   visibleLayers, setLayerVisible,
   lastSortByLayer, setLastSortForLayer,
 } from '../state.js';
@@ -18,7 +19,7 @@ import { sortOptionsFor, comparatorFor, sortOnArrival } from '../domain/sort.js'
 import { map, rebuild } from './map.js';
 import { syncUrl } from './urlState.js';
 import {
-  eatoutActive, eatoutCardExtraHtml, eatoutCardScoreHtml, eatoutListHtml,
+  eatoutActive, eatoutCardExtraHtml, eatoutCardScoreHtml, eatoutListHtml, eatoutRecBadgeHtml,
   isVisited, personalMap, renderSaveBar, toast,
 } from './dining.js';
 
@@ -92,6 +93,9 @@ export function readCriteria(){
     c.priceBasis = currentBudgetBasis();
     c.diningArea = val('fDiningArea');
     c.driveTime = val('fDriveTime');
+    // 推奨レンズは外食モード限定(住まいモードの飲食☑は網羅の文脈ビュー)
+    c.recLens = eatoutActive() && recLensOn;
+    if(c.recLens) c.personalRec = personalMap();
     // 「近く: Mont Kiara」 lives in state, not in a control: it is set by the
     // map's area jump, and the chip is what removes it again.
     c.near = diningNear;
@@ -384,6 +388,7 @@ export function syncLayerUI(){
   }
   syncAwardBtn();
   syncKidOkBtn();
+  syncRecLensBtn();
   syncDayBudgetBtn();
   syncWantBtn();
   syncUndoneBtn();
@@ -428,6 +433,32 @@ export function toggleAward(){
 
 // 「👶 子連れ◎のみ」 is the dining layer's 受賞のみ: a one-way narrowing toggle,
 // so it follows the same pattern rather than inventing a second one.
+function syncRecLensBtn(){
+  const b = $('toggleRecLens');
+  if(!b) return;
+  b.classList.toggle('active', recLensOn);
+  b.setAttribute('aria-pressed', recLensOn ? 'true' : 'false');
+}
+
+/** ⭐推奨レンズ(既定ON)。OFF=全掲載(網羅の索引)を見る。 */
+export function toggleRecLens(){
+  setRecLensOn(!recLensOn);
+  syncRecLensBtn();
+  applyFilters();
+  toast(recLensOn ? '推奨店だけを表示しています' : '全掲載を表示しています(要注意・未確証・閉店も含む)');
+}
+
+/** 🌙今夜どこ行く: 推奨×子連れ◎×車30分×〜RM150 を1タップで組む(2026-08-08裁定)。 */
+export function presetTonight(){
+  setRecLensOn(true);
+  setShowKidOkOnly(true);
+  const dt = $('fDriveTime'); if(dt) dt.value = '30';
+  const pb = $('fPriceBand'); if(pb) pb.value = '0-150';
+  syncLayerUI();
+  applyFilters();
+  toast('今夜の候補: 推奨 × 子連れ◎ × 車30分 × 〜RM150');
+}
+
 function syncKidOkBtn(){
   const b = $('toggleKidOk');
   if(!b) return;
@@ -552,6 +583,7 @@ export function renderChips(){
 export function removeFilter(id){
   if(id === 'toggleAward'){ setShowAwardOnly(false); syncAwardBtn(); }
   else if(id === 'toggleKidOk'){ setShowKidOkOnly(false); syncKidOkBtn(); }
+  else if(id === 'toggleRecLens'){ setRecLensOn(false); syncRecLensBtn(); }
   else if(id === 'toggleWant'){ setShowWantOnly(false); syncWantBtn(); }
   else if(id === 'toggleUndone'){ setShowUndoneOnly(false); syncUndoneBtn(); }
   else if(id === 'diningNear'){ setDiningNear(null); }
@@ -644,6 +676,7 @@ export function priceRangeText(range){
  * twice is the "same information in two places" the visual system forbids.
  */
 function diningHeroText(c){
+  if(c.closed) return '【閉店・休業】';
   const lunch = priceRangeText(c.priceLunch);
   const dinner = priceRangeText(c.priceDinner);
   if(lunch && dinner) return lunch === dinner ? `昼夜 ${lunch}` : `昼 ${lunch} ・ 夜 ${dinner}`;
@@ -739,6 +772,8 @@ function diningCard(c){
   // looking for and must not be cut to half a card by chips beside it.
   const chips = [];
   if(mb) chips.push(`<span class="card-chip chip-michelin">${esc(mb)}</span>`);
+  const rb = eatoutRecBadgeHtml(c);
+  if(rb) chips.push(rb);
   if(c.catGroup) chips.push(`<span class="card-chip chip-dining">${esc(c.catGroup)}</span>`);
   const hero = diningHeroText(c);
   const meta = [];

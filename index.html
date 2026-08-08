@@ -125,6 +125,9 @@ button,input,select{font-family:inherit}
 /* 視覚的にだけ隠す(ラベルを支援技術と関連付けには残す) */
 .vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
+.rec-badge{display:inline-flex;align-items:center;gap:2px;font-size:var(--fs-label);font-weight:700;color:var(--text-2);background:var(--bg);border:1px solid var(--hairline);border-radius:var(--r-pill);padding:1px var(--s2);white-space:nowrap}
+.rec-line{margin-bottom:var(--s2)}
+
 /* ---- Controls ---- */
 .filters{padding:var(--s2) var(--s2) var(--s1);background:var(--surface);border-bottom:1px solid var(--hairline);flex-shrink:1;overflow-y:auto}
 .filter-row{display:flex;gap:var(--s2);margin-bottom:var(--s1)}
@@ -580,7 +583,7 @@ button,input,select{font-family:inherit}
   /* 飲食 (D3/UX2): its four dropdowns, the 子連れ toggle and the 昼の予算 basis
      toggle. The generic rules above already reach them; they are named so this
      block visibly covers the layer. */
-  #fCatGroup,#fMichelin,#fPriceBand,#fDiningArea,#fDriveTime,#toggleKidOk,#toggleDayBudget{min-height:40px}
+  #fCatGroup,#fMichelin,#fPriceBand,#fDiningArea,#fDriveTime,#toggleKidOk,#toggleDayBudget,#toggleRecLens,#presetTonight{min-height:40px}
   /* Two chips (michelin + category) now share the row under a dining name. */
   .card-chips .card-chip{max-width:calc(50% - var(--s1))}
 
@@ -763,6 +766,17 @@ button,input,select{font-family:inherit}
         <div class="filter-group"><label for="fMichelin">ミシュラン</label><select id="fMichelin" onchange="applyFilters()"><option value="">すべて</option></select></div>
       </div>
 
+      <!-- 推奨レンズ(⭐既定ON)と今夜プリセット: 折りたたみの外=常時見える位置に置く。
+           1タップが売りの機能を畳んだら本末転倒(2026-08-08実画面検証で移動)。 -->
+      <div class="filter-row" data-mode-only="eatout" style="display:none">
+        <div class="filter-group"><span class="fg-label">見る範囲</span>
+          <div class="fg-btns">
+            <button type="button" class="chip-toggle" id="toggleRecLens" aria-pressed="true" onclick="toggleRecLens()" title="本当に美味しい確証のある店だけに絞る(既定)。外すと全掲載(索引)表示">⭐ 推奨のみ</button>
+            <button type="button" class="chip-toggle" id="presetTonight" aria-pressed="false" onclick="presetTonight()" title="推奨×子連れ◎×車30分×〜RM150 を1タップで">🌙 今夜どこ行く</button>
+          </div>
+        </div>
+      </div>
+
       <button type="button" class="disclosure" id="moreToggle" onclick="toggleMore()" aria-controls="moreFilters" aria-expanded="false">絞り込み ⌄</button>
 
       <div id="moreFilters" style="display:none">
@@ -792,7 +806,7 @@ button,input,select{font-family:inherit}
              フィルタと食い違う）。基準を1つ切り替える形なので、価格帯・並び替え・
              予算中央値は必ず同じ数字を読む。ラベルの「夜基準/昼基準」はJSが書き換える。 -->
         <div class="filter-row" data-layer-only="dining" style="display:none">
-          <div class="filter-group"><label id="fPriceBandLabel" for="fPriceBand">価格帯 (1人・夜基準)</label><select id="fPriceBand" onchange="applyFilters()"><option value="">すべて</option><option value="0-50">〜RM50</option><option value="50-150">RM50-150</option><option value="150-400">RM150-400</option><option value="400-">RM400〜</option></select></div>
+          <div class="filter-group"><label id="fPriceBandLabel" for="fPriceBand">価格帯 (1人・夜基準)</label><select id="fPriceBand" onchange="applyFilters()"><option value="">すべて</option><option value="0-50">〜RM50</option><option value="0-150">〜RM150</option><option value="50-150">RM50-150</option><option value="150-400">RM150-400</option><option value="400-">RM400〜</option></select></div>
           <div class="filter-group"><span class="fg-label">予算の基準</span><button type="button" class="chip-toggle" id="toggleDayBudget" aria-pressed="false" onclick="toggleDayBudget()" title="価格帯・並び替え・予算中央値を、夜ではなく昼の上限で見る">☀ 昼の予算</button></div>
         </div>
         <!-- エリア options are built from restaurants.json, NOT from the fArea
@@ -804,7 +818,7 @@ button,input,select{font-family:inherit}
           <div class="filter-group"><label for="fDiningArea">エリア</label><select id="fDiningArea" onchange="applyFilters()"><option value="">すべて</option></select></div><div class="filter-group"><label for="fDriveTime" title="Mont Kiaraから車・渋滞込み目安">車で(MKから)</label><select id="fDriveTime" onchange="applyFilters()"><option value="">すべて</option><option value="15">〜15分</option><option value="30">〜30分</option><option value="45">〜45分</option></select></div>
           <div class="filter-group"><label for="fVenueType">施設タイプ</label><select id="fVenueType" onchange="applyFilters()"><option value="">すべて</option></select></div>
         </div>
-        <div class="filter-row" data-layer-only="dining" style="display:none">
+                <div class="filter-row" data-layer-only="dining" style="display:none">
           <div class="filter-group"><span class="fg-label">子連れ</span>
             <div class="fg-btns">
               <button type="button" class="chip-toggle" id="toggleKidOk" aria-pressed="false" onclick="toggleKidOk()" title="子ども連れで行きやすい店だけに絞る">👶 子連れ◎のみ</button>

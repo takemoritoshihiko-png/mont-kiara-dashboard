@@ -153,6 +153,11 @@ export function parseRestaurants(jsonText) {
       venue: r.venue || '',
       venueType: r.venueType || '',
       area: r.area || '',
+      // 推奨軸(2026-08-08)の素材。ティアは domain/recommend.js が毎回導出する。
+      closed: r.closed === true,
+      recDivergence: r.recDivergence || '',
+      recNote: r.recNote || '',
+      verified: r.verified || '',
       // Mont Kiaraからの車所要時間(tools/gen-drive-times.jsの焼き込み)。
       // 無い店は null のまま通す — 0 に潰すと「0分=すぐそこ」という嘘になる。
       driveKm: r.driveKm ?? null,

@@ -20,7 +20,7 @@ import { recordLayer } from '../domain/filter.js';
 import { nearby, formatDistance, BUCKET_LABELS, NEARBY_BUCKETS } from '../domain/nearby.js';
 import { focusOnRecord, rebuild } from './map.js';
 import { renderList, setLayer, setMode, applyFilters, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
-import { eatoutDetailHtml } from './dining.js';
+import { eatoutDetailHtml, eatoutRecBadgeHtml } from './dining.js';
 import { syncUrl, withUrlWritesSuspended, applyFilterParam } from './urlState.js';
 
 // The record the overlay is currently showing. Kept so a tab switch can
@@ -197,7 +197,12 @@ function diningDetail(c){
     ? `<a class="kv-link" href="${esc(gm)}" target="_blank" rel="noopener"` +
       ` title="Googleマップでレビューを見る">${esc(ratingText(c))} ↗</a>`
     : esc(ratingText(c) || '—');
-  let h = kvGrid([
+  // 推奨バッジ(⭐軸)。外食モード限定ヘルパーが自分でガードするので此処は素通し。
+  // 裁定注記(recNote)は「なぜこの区分か」を1行で読者に言う。
+  const recB = eatoutRecBadgeHtml(c);
+  const recLine = recB
+    ? `<div class="info-sec-body rec-line">${recB}${c.recNote ? ' — ' + esc(c.recNote) : ''}</div>` : '';
+  let h = recLine + kvGrid([
     kv('ミシュラン', esc(MICHELIN_LABELS[c.michelin] || '—'), c.michelin === 'none' || !c.michelin),
     kv('Google評価', ratingCell, !(c.rating > 0)),
     kv('昼 / 1人', esc(lunch || '—'), !lunch),

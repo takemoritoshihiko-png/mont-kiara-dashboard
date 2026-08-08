@@ -45,6 +45,7 @@ export const TIER_POINTS = { 4: 25, 3: 19, 2: 12, 1: 6, 0: 0 };
  */
 export const EX_TAG_POINTS = {
   '国際評価': 3,
+  "Asia's 50 Best Bars": 4,   // Deloitte監査つき業界投票(2026-08-08採用)
   'Tatler Best 20': 4,
   'Tatler Best-in-Class': 2,
   '2026 Service Award': 2,

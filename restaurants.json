@@ -39,7 +39,10 @@
   },
   "driveKm": 13.6,
   "driveMinFree": 17,
-  "driveMinJam": 30
+  "driveMinJam": 30,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "価格期待値ギャップ+挑戦的な創作。専門筋の支持は最強・味の劣化なし(2026-08-08実勢調査)"
  },
  {
   "id": "R0002",
@@ -79,7 +82,8 @@
   },
   "driveKm": 8,
   "driveMinFree": 12,
-  "driveMinJam": 22
+  "driveMinJam": 22,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0003",
@@ -121,7 +125,8 @@
   },
   "driveKm": 11.8,
   "driveMinFree": 16,
-  "driveMinJam": 29
+  "driveMinJam": 29,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0004",
@@ -161,7 +166,8 @@
   },
   "driveKm": 7.4,
   "driveMinFree": 11,
-  "driveMinJam": 20
+  "driveMinJam": 20,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0005",
@@ -201,7 +207,8 @@
   },
   "driveKm": 7.3,
   "driveMinFree": 11,
-  "driveMinJam": 19
+  "driveMinJam": 19,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0006",
@@ -241,7 +248,8 @@
   },
   "driveKm": 13,
   "driveMinFree": 19,
-  "driveMinJam": 33
+  "driveMinJam": 33,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0007",
@@ -283,7 +291,8 @@
   },
   "driveKm": 10.3,
   "driveMinFree": 14,
-  "driveMinJam": 25
+  "driveMinJam": 25,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0008",
@@ -323,7 +332,8 @@
   },
   "driveKm": 13,
   "driveMinFree": 16,
-  "driveMinJam": 30
+  "driveMinJam": 30,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0009",
@@ -363,7 +373,8 @@
   },
   "driveKm": 13.6,
   "driveMinFree": 17,
-  "driveMinJam": 30
+  "driveMinJam": 30,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0010",
@@ -403,7 +414,8 @@
   },
   "driveKm": 4.8,
   "driveMinFree": 8,
-  "driveMinJam": 14
+  "driveMinJam": 14,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0011",
@@ -445,7 +457,8 @@
   },
   "driveKm": 12.5,
   "driveMinFree": 15,
-  "driveMinJam": 27
+  "driveMinJam": 27,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0012",
@@ -487,7 +500,8 @@
   },
   "driveKm": 10.8,
   "driveMinFree": 15,
-  "driveMinJam": 27
+  "driveMinJam": 27,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0013",
@@ -529,7 +543,8 @@
   },
   "driveKm": 12.3,
   "driveMinFree": 17,
-  "driveMinJam": 30
+  "driveMinJam": 30,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0014",
@@ -572,7 +587,8 @@
   },
   "driveKm": 13,
   "driveMinFree": 16,
-  "driveMinJam": 29
+  "driveMinJam": 29,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0015",
@@ -612,7 +628,10 @@
   },
   "driveKm": 12.8,
   "driveMinFree": 17,
-  "driveMinJam": 30
+  "driveMinJam": 30,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "ビブ大衆系。立地・混雑由来の低評価と同型(暫定裁定)"
  },
  {
   "id": "R0016",
@@ -652,7 +671,10 @@
   },
   "driveKm": 12.9,
   "driveMinFree": 17,
-  "driveMinJam": 31
+  "driveMinJam": 31,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "1日3時間営業に需要集中=行列・提供待ちが主因。味は「変わらず美味しい」が多数派(条件: 開店直後に行く)"
  },
  {
   "id": "R0017",
@@ -692,7 +714,8 @@
   },
   "driveKm": 12.8,
   "driveMinFree": 18,
-  "driveMinJam": 32
+  "driveMinJam": 32,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0018",
@@ -732,7 +755,8 @@
   },
   "driveKm": 6.8,
   "driveMinFree": 10,
-  "driveMinJam": 18
+  "driveMinJam": 18,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0019",
@@ -772,7 +796,8 @@
   },
   "driveKm": 9.4,
   "driveMinFree": 14,
-  "driveMinJam": 25
+  "driveMinJam": 25,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0020",
@@ -812,7 +837,8 @@
   },
   "driveKm": 13.2,
   "driveMinFree": 17,
-  "driveMinJam": 30
+  "driveMinJam": 30,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0021",
@@ -852,7 +878,10 @@
   },
   "driveKm": 9,
   "driveMinFree": 14,
-  "driveMinJam": 26
+  "driveMinJam": 26,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "混雑・駐車の構造不満(暫定裁定・次回スイープで再確認)"
  },
  {
   "id": "R0022",
@@ -892,7 +921,8 @@
   },
   "driveKm": 12.2,
   "driveMinFree": 16,
-  "driveMinJam": 29
+  "driveMinJam": 29,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0023",
@@ -932,7 +962,8 @@
   },
   "driveKm": 17.6,
   "driveMinFree": 23,
-  "driveMinJam": 41
+  "driveMinJam": 41,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0024",
@@ -972,7 +1003,8 @@
   },
   "driveKm": 12.4,
   "driveMinFree": 16,
-  "driveMinJam": 28
+  "driveMinJam": 28,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0025",
@@ -1012,7 +1044,8 @@
   },
   "driveKm": 13.1,
   "driveMinFree": 18,
-  "driveMinJam": 32
+  "driveMinJam": 32,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0026",
@@ -1052,7 +1085,10 @@
   },
   "driveKm": 8.8,
   "driveMinFree": 13,
-  "driveMinJam": 23
+  "driveMinJam": 23,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "ビブ大衆系・同型(暫定裁定)"
  },
  {
   "id": "R0027",
@@ -1085,14 +1121,16 @@
   ],
   "priceConfidence": "概算",
   "priceNote": "支払いは現金かTouch'n GoのQRのみ。ピークは45分待ち。近隣の駐車はRM5前後。入口が分かりにくい。",
-  "editorNote": "炭火の土鍋が並ぶ光景そのものが目的地。 【閉店】2023-2025ビブグルマンだったが、2026年版ガイドでClosed表記(Wikipedia照合2026-08-08)。訪問不可。IDを保持するため行は残す(追い番規則)。再開情報が出たら更新。",
+  "editorNote": "【閉店】Pudu本店は2026年1月に閉店(82歳の店主が約40年の営業を終え引退・FB公式告知を確認 2026-08-08)。同一経営のTaman Connaught支店(20 Jalan Cerdik)は営業継続=候補箱に記載。IDを保持するため行は残す。",
   "vox": {
    "pros": "炭火の土鍋のおこげと香り。45分待ちでも整理券の仕組みは機能している。",
    "cons": "「50/50で好みが分かれる」「腸詰の匂いが強い」「豚の胃のスープは冷めていた」。現金かTnGのみ。"
   },
   "driveKm": 13.4,
   "driveMinFree": 17,
-  "driveMinJam": 31
+  "driveMinJam": 31,
+  "verified": "2026-08-08",
+  "closed": true
  },
  {
   "id": "R0028",
@@ -1132,7 +1170,8 @@
   },
   "driveKm": 4.2,
   "driveMinFree": 7,
-  "driveMinJam": 13
+  "driveMinJam": 13,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0029",
@@ -1172,7 +1211,10 @@
   },
   "driveKm": 14,
   "driveMinFree": 21,
-  "driveMinJam": 38
+  "driveMinJam": 38,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "ビブ大衆系・同型(暫定裁定)"
  },
  {
   "id": "R0030",
@@ -1212,7 +1254,10 @@
   },
   "driveKm": 12.1,
   "driveMinFree": 16,
-  "driveMinJam": 28
+  "driveMinJam": 28,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "ノンエアコン等の施設不満。1948年からの味は維持が多数派"
  },
  {
   "id": "R0031",
@@ -1252,7 +1297,10 @@
   },
   "driveKm": 9.7,
   "driveMinFree": 14,
-  "driveMinJam": 25
+  "driveMinJam": 25,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "ビブ大衆系・同型(暫定裁定)"
  },
  {
   "id": "R0032",
@@ -1292,7 +1340,10 @@
   },
   "driveKm": 12.4,
   "driveMinFree": 16,
-  "driveMinJam": 28
+  "driveMinJam": 28,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "ビブ大衆系・同型(暫定裁定)"
  },
  {
   "id": "R0033",
@@ -1332,7 +1383,10 @@
   },
   "driveKm": 13.5,
   "driveMinFree": 17,
-  "driveMinJam": 30
+  "driveMinJam": 30,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "ビブ大衆系・同型(暫定裁定)"
  },
  {
   "id": "R0034",
@@ -1372,7 +1426,10 @@
   },
   "driveKm": 7.6,
   "driveMinFree": 11,
-  "driveMinJam": 20
+  "driveMinJam": 20,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "ビブ大衆系・同型(暫定裁定)"
  },
  {
   "id": "R0035",
@@ -1412,7 +1469,8 @@
   },
   "driveKm": 12.4,
   "driveMinFree": 16,
-  "driveMinJam": 28
+  "driveMinJam": 28,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0036",
@@ -1452,7 +1510,8 @@
   },
   "driveKm": 4.7,
   "driveMinFree": 8,
-  "driveMinJam": 14
+  "driveMinJam": 14,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0037",
@@ -1492,7 +1551,10 @@
   },
   "driveKm": 1.9,
   "driveMinFree": 4,
-  "driveMinJam": 7
+  "driveMinJam": 7,
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "2026年6月移転直後で評価母数リセット中。6ヶ月観察"
  },
  {
   "id": "R0038",
@@ -1532,7 +1594,8 @@
   },
   "driveKm": 11.5,
   "driveMinFree": 16,
-  "driveMinJam": 28
+  "driveMinJam": 28,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0039",
@@ -1572,7 +1635,8 @@
   },
   "driveKm": 13.6,
   "driveMinFree": 17,
-  "driveMinJam": 30
+  "driveMinJam": 30,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0040",
@@ -1612,7 +1676,8 @@
   },
   "driveKm": 10,
   "driveMinFree": 14,
-  "driveMinJam": 26
+  "driveMinJam": 26,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0041",
@@ -1652,7 +1717,8 @@
   },
   "driveKm": 11.1,
   "driveMinFree": 15,
-  "driveMinJam": 27
+  "driveMinJam": 27,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0042",
@@ -1692,7 +1758,8 @@
   },
   "driveKm": 13.3,
   "driveMinFree": 16,
-  "driveMinJam": 29
+  "driveMinJam": 29,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0043",
@@ -1732,7 +1799,8 @@
   },
   "driveKm": 11.1,
   "driveMinFree": 15,
-  "driveMinJam": 27
+  "driveMinJam": 27,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0044",
@@ -1772,7 +1840,8 @@
   },
   "driveKm": 6.3,
   "driveMinFree": 9,
-  "driveMinJam": 17
+  "driveMinJam": 17,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0045",
@@ -1812,7 +1881,8 @@
   },
   "driveKm": 11.6,
   "driveMinFree": 16,
-  "driveMinJam": 29
+  "driveMinJam": 29,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0046",
@@ -1852,7 +1922,8 @@
   },
   "driveKm": 13.6,
   "driveMinFree": 17,
-  "driveMinJam": 30
+  "driveMinJam": 30,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0047",
@@ -1894,7 +1965,8 @@
   },
   "driveKm": 9.4,
   "driveMinFree": 15,
-  "driveMinJam": 27
+  "driveMinJam": 27,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0048",
@@ -1936,7 +2008,8 @@
   },
   "driveKm": 11.8,
   "driveMinFree": 16,
-  "driveMinJam": 28
+  "driveMinJam": 28,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0049",
@@ -1976,7 +2049,8 @@
   },
   "driveKm": 12.5,
   "driveMinFree": 18,
-  "driveMinJam": 32
+  "driveMinJam": 32,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0050",
@@ -2016,7 +2090,8 @@
   },
   "driveKm": 10.5,
   "driveMinFree": 14,
-  "driveMinJam": 25
+  "driveMinJam": 25,
+  "verified": "2026-08-08"
  },
  {
   "id": "R0051",
@@ -2051,6 +2126,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -2091,6 +2167,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -2131,6 +2208,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "中華",
   "tier": 0,
   "extraFlags": [],
@@ -2171,6 +2249,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -2211,6 +2290,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -2251,6 +2331,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "カフェ・デザート",
   "tier": 0,
   "extraFlags": [],
@@ -2291,6 +2372,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "カフェ・デザート",
   "tier": 0,
   "extraFlags": [],
@@ -2331,6 +2413,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "インド・スリランカ",
   "tier": 0,
   "extraFlags": [],
@@ -2371,6 +2454,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -2411,6 +2495,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "中華",
   "tier": 0,
   "extraFlags": [],
@@ -2451,6 +2536,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "インド・スリランカ",
   "tier": 0,
   "extraFlags": [],
@@ -2491,6 +2577,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -2531,6 +2618,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "マレーシア料理",
   "tier": 0,
   "extraFlags": [],
@@ -2571,6 +2659,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -2611,6 +2700,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -2651,6 +2741,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -2691,6 +2782,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "カフェ・デザート",
   "tier": 0,
   "extraFlags": [],
@@ -2731,6 +2823,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "カフェ・デザート",
   "tier": 0,
   "extraFlags": [],
@@ -2771,6 +2864,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "インド・スリランカ",
   "tier": 0,
   "extraFlags": [],
@@ -2811,6 +2905,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -2851,6 +2946,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "マレーシア料理",
   "tier": 0,
   "extraFlags": [],
@@ -2891,6 +2987,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "マレーシア料理",
   "tier": 0,
   "extraFlags": [],
@@ -2931,6 +3028,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "マレーシア料理",
   "tier": 0,
   "extraFlags": [],
@@ -2971,6 +3069,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -3011,6 +3110,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -3051,6 +3151,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "カフェ・デザート",
   "tier": 0,
   "extraFlags": [],
@@ -3091,6 +3192,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -3131,6 +3233,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -3171,6 +3274,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -3211,6 +3315,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "カフェ・デザート",
   "tier": 0,
   "extraFlags": [],
@@ -3251,6 +3356,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "カフェ・デザート",
   "tier": 0,
   "extraFlags": [],
@@ -3291,6 +3397,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "カフェ・デザート",
   "tier": 0,
   "extraFlags": [],
@@ -3331,6 +3438,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -3371,6 +3479,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -3411,6 +3520,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -3451,6 +3561,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "中華",
   "tier": 0,
   "extraFlags": [],
@@ -3491,6 +3602,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -3531,6 +3643,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "中華",
   "tier": 0,
   "extraFlags": [],
@@ -3571,6 +3684,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -3614,6 +3728,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "driveKm": 6.5,
@@ -3656,6 +3771,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "driveKm": 11.3,
@@ -3698,6 +3814,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "driveKm": 9.5,
@@ -3740,6 +3857,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "driveKm": 8.8,
@@ -3779,6 +3897,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -3819,6 +3938,9 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
+  "recDivergence": "recheck",
+  "recNote": "生存確認済み(公式サイト稼働・TA4.1×169・閉店情報なし 2026-08-08)。ただしGoogle実値と直近一次レビューが薄く未確証のまま。次回スイープで再調査",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -3859,6 +3981,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -3899,6 +4022,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "インド・スリランカ",
   "tier": 0,
   "extraFlags": [],
@@ -3939,6 +4063,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -3979,6 +4104,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "インド・スリランカ",
   "tier": 0,
   "extraFlags": [],
@@ -4019,6 +4145,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "インド・スリランカ",
   "tier": 0,
   "extraFlags": [],
@@ -4059,6 +4186,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -4099,6 +4227,9 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "祝祭ビュッフェの品質ブレが低評価の主因。通常の点心・アラカルトはTA4.5(条件: 祝祭ビュッフェを避ける)",
   "catGroup": "中華",
   "tier": 0,
   "extraFlags": [],
@@ -4139,6 +4270,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -4179,6 +4311,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -4219,6 +4352,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "インド・スリランカ",
   "tier": 0,
   "extraFlags": [],
@@ -4259,6 +4393,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -4299,6 +4434,9 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
+  "recDivergence": "tsuu",
+  "recNote": "ホテル価格vs一般客の価格感覚。劣化兆候なし(2026/2「人生最高の小籠包」)",
   "catGroup": "中華",
   "tier": 0,
   "extraFlags": [],
@@ -4339,6 +4477,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -4379,6 +4518,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -4419,6 +4559,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "マレーシア料理",
   "tier": 0,
   "extraFlags": [],
@@ -4459,6 +4600,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
@@ -4499,6 +4641,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "中華",
   "tier": 0,
   "extraFlags": [],
@@ -4539,6 +4682,7 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "洋食・グリル",
   "tier": 0,
   "extraFlags": [],
@@ -4579,11 +4723,270 @@
    "pros": "",
    "cons": ""
   },
+  "verified": "2026-08-08",
   "catGroup": "日本・その他アジア",
   "tier": 0,
   "extraFlags": [],
   "driveKm": 8.8,
   "driveMinFree": 12,
   "driveMinJam": 22
+ },
+ {
+  "id": "R0115",
+  "placeId": "ChIJd4DkNK9JzDERPutnazW1VtU",
+  "name": "Three X Co",
+  "nameJa": "スリー・エックス・コー",
+  "cat": "バー",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 221,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Bangsar Shopping Centre",
+  "venueType": "mall",
+  "area": "Bangsar",
+  "address": "Lot T6A, L3, Bangsar Shopping Centre, 285 Jalan Maarof",
+  "lat": 3.1431,
+  "lng": 101.6673,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   100,
+   150
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月-木17-24時/金土17-25時・無休。カクテル約RM49×2-3杯。",
+  "editorNote": "ヴィンテージ理髪店を模した隠れ家スピークイージー。Asia's 50 Best Bars 2026で32位=マレーシア最高位。",
+  "extraFlags": [
+   "Asia's 50 Best Bars"
+  ],
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08",
+  "catGroup": "バー",
+  "tier": 0,
+  "driveKm": 6.7,
+  "driveMinFree": 10,
+  "driveMinJam": 19
+ },
+ {
+  "id": "R0116",
+  "placeId": "ChIJ1Xns2Zw3zDERT_IUhj_v3y4",
+  "name": "Bar Trigona",
+  "nameJa": "バー・トリゴナ",
+  "cat": "バー",
+  "michelin": "none",
+  "rating": 4.4,
+  "reviewCount": 641,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "Four Seasons KL",
+  "venueType": "hotel",
+  "area": "KLCC",
+  "address": "L6, Four Seasons Hotel, 145 Jalan Ampang",
+  "lat": 3.1581,
+  "lng": 101.7139,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   135,
+   200
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "18時-翌1時(木-土は翌2時)。カクテル約RM67×2-3杯。",
+  "editorNote": "マレーシア産ハリナシバチ蜂蜜(トリゴナ)を軸にした土着素材カクテル。Asia's 50 Best Bars 2026 38位。",
+  "extraFlags": [
+   "Asia's 50 Best Bars"
+  ],
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08",
+  "catGroup": "バー",
+  "tier": 0,
+  "driveKm": 13.6,
+  "driveMinFree": 17,
+  "driveMinJam": 30
+ },
+ {
+  "id": "R0117",
+  "placeId": "ChIJvwZpq4xJzDERgSnj0Je6Ico",
+  "name": "Reka:Bar",
+  "nameJa": "レカ・バー",
+  "cat": "バー",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 269,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Damansara Heights",
+  "address": "67M, Jalan Setia Bakti, Bukit Damansara",
+  "lat": 3.1537,
+  "lng": 101.6563,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   100,
+   180
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "火休。18時-翌1時前後(曜日で変動)。RM実例未取得(相場推定RM35-70/杯)。",
+  "editorNote": "実験器具を模した内装の「ポストモダン・フレーバーラボ」。Asia's 50 Best Bars 2026 63位。",
+  "extraFlags": [
+   "Asia's 50 Best Bars"
+  ],
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08",
+  "catGroup": "バー",
+  "tier": 0,
+  "driveKm": 5.3,
+  "driveMinFree": 8,
+  "driveMinJam": 14
+ },
+ {
+  "id": "R0118",
+  "placeId": "ChIJS0y677RJzDERvxxFFqGh7eg",
+  "name": "Penrose",
+  "nameJa": "ペンローズ",
+  "cat": "バー",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 422,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Chinatown",
+  "address": "149, Jalan Petaling",
+  "lat": 3.1414,
+  "lng": 101.6979,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   100,
+   180
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "水-日19時-・月火休(閉店時刻は要現地確認)。RM実例未取得(相場推定)。",
+  "editorNote": "25席カウンターのみのミニマル空間。Tatler Bar of the Year 2026。Asia's 50 Best Bars 2026 64位。看板はPenrose Gibson。",
+  "extraFlags": [
+   "Asia's 50 Best Bars"
+  ],
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08",
+  "catGroup": "バー",
+  "tier": 0,
+  "driveKm": 12,
+  "driveMinFree": 14,
+  "driveMinJam": 26
+ },
+ {
+  "id": "R0119",
+  "placeId": "ChIJe18mRwBJzDER0uVV1o5dybs",
+  "name": "Cabinet 8",
+  "nameJa": "キャビネット・エイト",
+  "cat": "バー",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 110,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Chinatown",
+  "address": "70, Jalan Sultan",
+  "lat": 3.1439,
+  "lng": 101.6986,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   55,
+   80
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "月-木19-24時/金-日19-25時。カクテル約RM27×2-3杯=KLベストバー勢で最も手頃。",
+  "editorNote": "カフェ「Neighbour Club」奥の本棚を抜けて入る隠し扉型スピークイージー。Asia's 50 Best Bars 2026 65位(51-100唯一の新規)。",
+  "extraFlags": [
+   "Asia's 50 Best Bars"
+  ],
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08",
+  "catGroup": "バー",
+  "tier": 0,
+  "driveKm": 11.5,
+  "driveMinFree": 15,
+  "driveMinJam": 27
+ },
+ {
+  "id": "R0120",
+  "placeId": "ChIJuc6RtZVJzDERItK2WuGQlqk",
+  "name": "Coley",
+  "nameJa": "コーリー",
+  "cat": "バー",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 507,
+  "natCode": 3,
+  "kidOk": 0,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Bangsar",
+  "address": "6-G, Jalan Abdullah, Bangsar",
+  "lat": 3.1301,
+  "lng": 101.6805,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   100,
+   150
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "火-土17-24時/日12-19時・月休。カクテル約RM49×2-3杯。",
+  "editorNote": "クラシック技法×地元素材。2019年マレーシア・ベストバー。Asia's 50 Best Bars 2026 83位。",
+  "extraFlags": [
+   "Asia's 50 Best Bars"
+  ],
+  "vox": {
+   "pros": "",
+   "cons": ""
+  },
+  "verified": "2026-08-08",
+  "catGroup": "バー",
+  "tier": 0,
+  "driveKm": 10.5,
+  "driveMinFree": 15,
+  "driveMinJam": 27
  }
 ]

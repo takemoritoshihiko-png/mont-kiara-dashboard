@@ -575,6 +575,36 @@
    "km": 8.8,
    "minFree": 12,
    "minJam": 22
+  },
+  "Three X Co": {
+   "km": 6.7,
+   "minFree": 10,
+   "minJam": 19
+  },
+  "Bar Trigona": {
+   "km": 13.6,
+   "minFree": 17,
+   "minJam": 30
+  },
+  "Reka:Bar": {
+   "km": 5.3,
+   "minFree": 8,
+   "minJam": 14
+  },
+  "Penrose": {
+   "km": 12,
+   "minFree": 14,
+   "minJam": 26
+  },
+  "Cabinet 8": {
+   "km": 11.5,
+   "minFree": 15,
+   "minJam": 27
+  },
+  "Coley": {
+   "km": 10.5,
+   "minFree": 15,
+   "minJam": 27
   }
  }
 }

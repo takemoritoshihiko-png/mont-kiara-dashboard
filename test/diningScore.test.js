@@ -83,9 +83,10 @@ describe('C, the ledger-wide baseline star', () => {
 // au — the ENUM (v9 pattern-matched free text; this must not)
 // ============================================================
 describe('権威点 au', () => {
-  it('scores every one of the five tags the data actually carries', () => {
+  it('scores every one of the six tags the data actually carries', () => {
     expect(EX_TAG_POINTS).toEqual({
       '国際評価': 3,
+      "Asia's 50 Best Bars": 4,
       'Tatler Best 20': 4,
       'Tatler Best-in-Class': 2,
       '2026 Service Award': 2,

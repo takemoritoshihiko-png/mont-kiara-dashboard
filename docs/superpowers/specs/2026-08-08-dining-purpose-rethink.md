@@ -96,3 +96,7 @@ Eat Drink KL / Malay Mail / Time Out / TastyJournal / Bangsar Babe の2025-26年
 - 候補箱: 検証Cの44店(相互重複ゼロ層)を docs/dining-candidates-box.md に記録。昇格=家族実食のみ
 - 生存スイープ: 四半期定例(生存+言及+候補箱+ソース死活)。初回でCafé Café/Sri Nirwana再調査とHeun Kee移転疑い(Cheras Taman Connaught)を検証
 
+
+## 7. 実装完了(2026-08-08)
+
+§6の仕様どおり本番実装済み: 推奨レンズ既定ON(108/120店)・🌙今夜どこ行く(33店・1タップ)・バー10分類目(50 Best 6店=全て二重確証)・閉店店はピン非表示+🚫表記・裁定注記は詳細パネルに常時表示。テスト677件。Heun Kee続報=Pudu本店は店主引退で2026年1月閉店(公式FB)・Taman Connaught支店が同一経営で継続(候補箱へ)。

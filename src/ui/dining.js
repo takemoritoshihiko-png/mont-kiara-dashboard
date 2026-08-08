@@ -25,6 +25,7 @@ import { visitSummary, groupByRepeat, logMetaText } from '../domain/diningLog.js
 import * as P from '../data/personal.js';
 import * as FS from '../data/fileStore.js';
 import { stableStringify } from '../domain/fileSync.js';
+import { recTier, recBadge } from '../domain/recommend.js';
 import { esc, jsStr, num } from './list.js';
 
 // The re-render to run after a record changes. Injected by main.js so this
@@ -140,6 +141,17 @@ export function visitBoxHtml(c, ctx = 'led'){
 export function eatoutCardExtraHtml(c){
   if(!eatoutActive() || recordLayer(c) !== 'dining') return '';
   return ratingLineHtml(c) + visitBoxHtml(c, 'led');
+}
+
+/**
+ * 推奨バッジ(⭐軸・2026-08-08)。外食モード限定 — 鉄板/拒否権が家族の記録を
+ * 読むため、住まいモードでは絶対に呼ばれない(モード分離契約)。
+ */
+export function eatoutRecBadgeHtml(c){
+  if(!eatoutActive() || recordLayer(c) !== 'dining') return '';
+  const b = recBadge(recTier(c, c.id ? P.getEntry(c.id) : undefined));
+  if(!b) return '';
+  return ` <span class="rec-badge" title="${esc(b.hint)}">${b.icon} ${esc(b.label)}</span>`;
 }
 
 /** Whether a card should sink in the list because you have already been. */
