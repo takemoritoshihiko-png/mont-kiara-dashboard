@@ -197,6 +197,35 @@ describe('matchesDining', () => {
     }
     expect(matchesFilters(eat(), fd({ q: 'not in there' }))).toBe(false);
   });
+
+  // ============================================================
+  // B-4: 検索対象を広げる(2026-08-16 竹森さん依頼)
+  // ============================================================
+  it('also searches the editor note and both halves of the vox (支持される点／割れる点)', () => {
+    for(const q of ['土着食材', '物語性', '塩気が強い']){
+      expect(matchesFilters(eat(), fd({ q })), `"${q}" found nothing`).toBe(true);
+    }
+  });
+
+  it('does not choke on a record with no vox at all', () => {
+    const noVox = eat({ vox: undefined });
+    expect(() => matchesFilters(noVox, fd({ q: 'akar' }))).not.toThrow();
+    expect(matchesFilters(noVox, fd({ q: 'akar' }))).toBe(true);
+  });
+
+  it('searches my own written impression — but ONLY when f.personal is actually passed in', () => {
+    const withMemo = fd({ q: '担々麺', personal: { [eat().id]: { m: '担々麺が美味しかった' } } });
+    expect(matchesFilters(eat(), withMemo)).toBe(true);
+    // 別の店の感想には反応しない
+    const otherStore = fd({ q: '担々麺', personal: { R9999: { m: '担々麺が美味しかった' } } });
+    expect(matchesFilters(eat(), otherStore)).toBe(false);
+  });
+
+  it('never matches on a memo when f.personal is not passed (住まいモードの絶対契約)', () => {
+    // 同じ感想文字列が personal に「あっても」、f.personal 自体を渡さなければ
+    // 絶対にヒットしない。住まいモードは f.personal を一切渡さない前提そのものを検査する。
+    expect(matchesFilters(eat(), fd({ q: '担々麺' }))).toBe(false);
+  });
 });
 
 // ============================================================
@@ -482,21 +511,10 @@ describe('the Google rating links out to the restaurant on Google Maps', () => {
   });
 });
 
-// ── 所要時間フィルタ + ビブ識別（ミシュラン網羅 P4・2026-08-08） ──────
-import { matchesDriveTime } from '../src/domain/filter.js';
-describe('matchesDriveTime — MKからの渋滞込み目安で絞る', () => {
-  it('no limit passes everything, including unknown', () => {
-    expect(matchesDriveTime({ driveMinJam: 41 }, '')).toBe(true);
-    expect(matchesDriveTime({ driveMinJam: null }, '')).toBe(true);
-  });
-  it('bounded limit keeps within, drops beyond, and is honest about unknown', () => {
-    expect(matchesDriveTime({ driveMinJam: 15 }, '15')).toBe(true);
-    expect(matchesDriveTime({ driveMinJam: 16 }, '15')).toBe(false);
-    expect(matchesDriveTime({ driveMinJam: null }, '15')).toBe(false);
-  });
-});
-
 // 列を足したらパーサにも足す(2026-08-08のdrive列で実際に落ちた) — 再発防止の契約
+// 注意(2026-08-16 B-2裁定): 所要時間での「絞り込み」自体は廃止されたが、
+// driveMinJam というデータ自体・カード/詳細パネルの「🚗約n分」表示は残る。
+// そのため、この列がパーサを生き延びることを確認するテストはそのまま残す。
 describe('parseRestaurants carries the drive-time columns', () => {
   it('keeps driveKm/minFree/minJam and passes null through (never 0)', () => {
     const rows = JSON.stringify([{ id:'R0001', name:'x', address:'a', lat:3.1, lng:101.6,
@@ -525,40 +543,11 @@ describe('a hawker-street entry declares itself an AREA, not a restaurant', () =
 });
 
 // ============================================================
-// 評価下限フィルタ(2026-08-09 竹森さん依頼: ★4.3以上/★4.5以上)
+// 小分類セレクト(2026-08-15 竹森さん依頼)
 // ============================================================
-describe('minRating — Google評価の下限', () => {
-  const recs = parseRestaurants(raw);
-  const r43 = recs.find(r => !r.delisted && r.rating != null && r.rating >= 4.3 && r.rating < 4.5);
-  const r42 = recs.find(r => !r.delisted && r.rating != null && r.rating < 4.3);
-  // パース後の契約では「評価未集計」= rating 0 (load.jsが null→0 に潰す)
-  const rNull = recs.find(r => !r.delisted && r.rating === 0);
-
-  it('4.3以上で 4.3台は通り 4.3未満は落ちる', () => {
-    expect(matchesFilters(r43, fd({ minRating: 4.3 })), r43.name).toBe(true);
-    expect(matchesFilters(r42, fd({ minRating: 4.3 })), r42.name).toBe(false);
-  });
-
-  it('4.5以上では 4.3台も落ちる', () => {
-    expect(matchesFilters(r43, fd({ minRating: 4.5 })), r43.name).toBe(false);
-  });
-
-  it('評価未集計(null)は絞り込み中は出ない(証明できない高評価は高評価ではない)', () => {
-    expect(rNull, 'null評価の店が台帳にいる前提').toBeTruthy();
-    expect(matchesFilters(rNull, fd({ minRating: 4.3 })), rNull.name).toBe(false);
-    expect(matchesFilters(rNull, fd({})), rNull.name).toBe(true);   // 絞り込みなしなら出る
-  });
-
-  it('index.html に評価セレクトがあり、選択肢は 4.3 / 4.5(モバイル40pxも登録済み)', () => {
-    const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-    expect(html).toContain('id="fMinRating"');
-    expect(html).toContain('★4.3以上');
-    expect(html).toContain('★4.5以上');
-    expect(html).toMatch(/#fMinRating[^{]*{min-height:40px}/);
-  });
-
-  // 2026-08-15: 小分類セレクトは大分類の隣に立ち、大分類が「すべて」の間は
-  // 押せない(disabled)。選択肢は台帳から作るので、初期HTMLは空でよい。
+describe('小分類セレクト', () => {
+  // 大分類の隣に立ち、大分類が「すべて」の間は押せない(disabled)。
+  // 選択肢は台帳から作るので、初期HTMLは空でよい。
   it('index.html に小分類セレクトがあり、初期状態は disabled・大分類は専用ハンドラ', () => {
     const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
     expect(html).toContain('id="fCat"');

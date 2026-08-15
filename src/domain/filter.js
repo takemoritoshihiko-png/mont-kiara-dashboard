@@ -271,7 +271,6 @@ export function matchesDiningNear(c, near){
 /** The bands offered by the 価格帯 dropdown, as [min exclusive, max inclusive]. */
 export const PRICE_BANDS = {
   '0-50':    [0, 50],
-  '0-150': [0, 150],   // 累積帯(今夜プリセット): 〜RM150
   '50-150':  [50, 150],
   '150-400': [150, 400],
   '400-':    [400, Infinity],
@@ -310,12 +309,25 @@ export function matchesMichelin(c, m){
 // ============================================================
 // SEARCH
 // ============================================================
-function matchesQuery(c, q, layer){
+/**
+ * @param {object} c  the record
+ * @param {string} q  the (already-lowercased) query
+ * @param {string} layer
+ * @param {object} [personal]  外食モードのみ渡される個人記録マップ(src/data/personal.js)。
+ *   住まいモードは呼び出し元(matchesFilters)がこれを一切渡さない — 個人の感想を
+ *   住まいモードの検索対象に混ぜないための唯一の関門(test/eatoutMode.test.js が両側検査)。
+ */
+function matchesQuery(c, q, layer, personal){
   const hay=[c.name, c.addr, c.nameJa||''];
   if(layer==='condo') hay.push(c.luxTier||'');
   if(layer==='school') hay.push(c.curriculum||'');
   if(layer==='commercial') hay.push(c.anchorTenants||'');
-  if(layer==='dining') hay.push(c.cat||'', c.catGroup||'', c.area||'', c.venue||'');
+  if(layer==='dining'){
+    hay.push(c.cat||'', c.catGroup||'', c.area||'', c.venue||'', c.editorNote||'');
+    if(c.vox) hay.push(c.vox.pros||'', c.vox.cons||'');
+    // 自分が書いた感想(B-4-3): f.personal が渡されたとき(=外食モード)だけ検索対象にする。
+    if(personal && personal[c.id]) hay.push(personal[c.id].m||'');
+  }
   return hay.some(v=>String(v).toLowerCase().includes(q));
 }
 
@@ -366,17 +378,6 @@ function matchesCommercial(c, f){
  * the michelin tier and the price band all come from the ledger's own columns,
  * so none of them needs a keyword heuristic.
  */
-/**
- * 所要時間フィルタ — Mont Kiaraから車で「渋滞込み目安(driveMinJam)」が
- * limit分以内か。値が無い(null)店は絞り込みに応えられないので、上限を
- * 指定されたときは正直に外す(不明を「近い」と偽らない)。
- */
-export function matchesDriveTime(c, limit){
-  if(!limit) return true;
-  const m = c && c.driveMinJam;
-  return m != null && m <= Number(limit);
-}
-
 export function matchesDining(c, f){
   // 台帳除名(2026-08-09 ★4.9裁定): 行はID安定のため残るが、両モードとも一切描かない
   if(c.delisted) return false;
@@ -388,11 +389,6 @@ export function matchesDining(c, f){
   // 矛盾しようがなく、順番に AND で効かせるだけでよい。
   if(f.cat && c.cat !== f.cat) return false;
   if(!matchesMichelin(c, f.michelin)) return false;
-  // Google評価の下限(2026-08-09 竹森さん依頼: ★4.3以上/★4.5以上)。評価未集計
-  // (rating=null)の店は「下限を満たすと証明できない」ので、絞り込み中は出さない
-  // — 価格帯の「不明は全帯に出す」とは逆だが、この絞り込みは“証明済みの高評価
-  // だけ見たい”という問いなので未知を混ぜたら答えにならない。
-  if(f.minRating && !(c.rating != null && c.rating >= f.minRating)) return false;
   if(!matchesPriceBand(c, f.priceBand, f.priceBasis)) return false;
   // The ledger's own `area` field (KLCC / Bangsar / Chinatown …). Exact match:
   // it is a controlled value, not free text.
@@ -408,7 +404,6 @@ export function matchesDining(c, f){
   // ledger's labels do not tile the map finely enough to answer the second.
   if(!matchesDiningNear(c, f.near)) return false;
   if(f.venueType && c.venueType !== f.venueType) return false;
-  if(!matchesDriveTime(c, f.driveTime)) return false;
   // kidOk is 0/1 in restaurants.json. The filter is one-way — 「子連れ◎のみ」
   // narrows, it never asks for the places that are NOT child-friendly.
   if(f.kidOnly && c.kidOk !== 1) return false;
@@ -438,11 +433,13 @@ export function matchesDining(c, f){
  *   dining      — catGroup, cat, michelin, priceBand, priceBasis, diningArea, near,
  *                 venueType, kidOnly
  *                 and (外食モードのみ) wantOnly, undoneOnly + the `personal` map
+ *                 (`personal` also widens `q` to search each store's own memo —
+ *                 see matchesQuery — but only when it is actually passed in)
  */
 export function matchesFilters(c, f){
   const layer=f.layer||'condo';
   if(recordLayer(c)!==layer) return false;
-  if(f.q&&!matchesQuery(c,f.q,layer)) return false;
+  if(f.q&&!matchesQuery(c,f.q,layer,f.personal)) return false;
   // The dining layer deliberately does NOT go through matchesArea(). That
   // function's KL half ends in a catch-all — anything on the KL side that is
   // not one of the seven named neighbourhoods is called "Mont Kiara" — which is
