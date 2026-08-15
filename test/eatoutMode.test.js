@@ -106,7 +106,9 @@ describe('記録欄', () => {
   it('opens the visit fields once 訪問済み is on', () => {
     setVisited(DEWAKAN.id, true, new Date(2026, 7, 7));
     const h = visitBoxHtml(DEWAKAN);
-    expect(h).toContain('2026-08-07 に訪問');
+    // 2026-08-16: 訪問日は読み取り専用の行から日付入力になった（後から直せる）。
+    expect(h).toContain('type="date"');
+    expect(h).toContain('value="2026-08-07"');
     expect(h).toContain('また行きたい？');
     for(const label of ['また行く', '機会があれば', 'もういい']) expect(h).toContain(label);
     expect(h).toContain('inputmode="decimal"');

@@ -111,6 +111,10 @@ button,input,select{font-family:inherit}
 .main{display:flex;height:calc(100vh - 52px)}
 #map{flex:1;min-width:0}
 .panel{width:336px;background:var(--bg);border-left:1px solid var(--hairline);display:flex;flex-direction:column;overflow:hidden;transition:width var(--dur) var(--ease)}
+/* 一覧は「決める面」なのに336px固定で、画面を広くしても地図だけが広がっていた
+   （1500px幅で地図72%）。広い画面でだけ一覧にも分け前を渡す（2026-08-16）。 */
+@media(min-width:1600px){.panel{width:400px}}
+@media(min-width:1920px){.panel{width:460px}}
 .panel.collapsed{width:0;border:none}
 .toggle-panel{position:absolute;right:336px;top:57px;z-index:1000;background:var(--surface);border:1px solid var(--hairline);color:var(--accent);padding:6px var(--s2);cursor:pointer;border-radius:var(--r-control) 0 0 var(--r-control);font-size:var(--fs-sm);transition:right var(--dur) var(--ease);box-shadow:-2px 0 4px rgba(0,0,0,.06)}
 .toggle-panel.collapsed{right:0}
@@ -119,7 +123,9 @@ button,input,select{font-family:inherit}
 .summary-bar{padding:var(--s1) var(--s2);background:var(--bg);border-bottom:1px solid var(--hairline);display:flex;gap:var(--s1);flex-shrink:0}
 .summary-item{flex:1;min-width:0;display:flex;align-items:baseline;justify-content:center;gap:4px;padding:3px 2px;background:var(--surface);border-radius:var(--r-control);border:1px solid var(--hairline)}
 /* One line, always: a wrapped 「RM 30,000」 reads as two numbers. */
-.summary-val{font-size:var(--fs-md);font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 値は絶対に縮めない（「RM 811」が「RM 8…」になるのが最悪の事故）。
+   1枚あたり値とラベルで67pxを取り合うので、足りない分はラベル側が省略される。 */
+.summary-val{font-size:var(--fs-md);font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
 .summary-label{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* 視覚的にだけ隠す(ラベルを支援技術と関連付けには残す) */
@@ -475,7 +481,10 @@ button,input,select{font-family:inherit}
 .vb-toggle:hover{border-color:var(--accent);color:var(--accent)}
 .vb-visit.on{background:var(--rv-again);border-color:var(--rv-again);color:var(--surface)}
 .vb-want.on{background:var(--accent);border-color:var(--rv-maybe);color:var(--surface)}
-.vb-date{font-size:var(--fs-label);color:var(--text-2);font-variant-numeric:tabular-nums;margin-top:var(--s2)}
+.vb-date{font-size:var(--fs-label);color:var(--text-2);font-variant-numeric:tabular-nums;margin-top:var(--s2);display:flex;align-items:center;gap:var(--s2)}
+/* 訪問日は直せる(2026-08-16)。日付入力は他の入力欄と同じ見た目に揃える。 */
+.vb-vd{font-family:inherit;font-size:var(--fs-xs);color:var(--text);background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-control);padding:2px var(--s2);font-variant-numeric:tabular-nums}
+.vb-vd:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(10,108,255,.16)}
 .vb-q{font-size:var(--fs-xs);color:var(--text);font-weight:600;margin-top:var(--s2)}
 .vb-hint{font-size:var(--fs-label);color:var(--text-2);font-weight:400}
 .vb-rv{display:flex;gap:var(--s1);margin-top:var(--s1)}
@@ -510,7 +519,11 @@ button,input,select{font-family:inherit}
 
 /* ---- 保存バー / toast ---- */
 .savebar{display:flex;align-items:center;gap:var(--s2);}
-.savebar-text{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* 「ブラウザのデータを消すと失われます」はデータ消失の警告なので、
+   1行に押し込んで7割を省略していた（実測: 必要823px / 表示236px）。
+   2行まで折り返して全文を出す（2026-08-16）。 */
+.savebar-text{flex:1;min-width:0;white-space:normal;line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .savebar-link{flex-shrink:0;background:transparent;border:1px solid var(--hairline);color:var(--accent);border-radius:var(--r-pill);padding:1px var(--s2);font-size:var(--fs-label);font-weight:600;cursor:pointer}
 .savebar-old{font-size:var(--fs-label);color:var(--text-2);background:var(--surface);border-top:1px solid var(--hairline);padding:2px var(--s2);line-height:1.35;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .savebar.bad{color:var(--surface);background:var(--rv-never)}
@@ -600,7 +613,18 @@ button,input,select{font-family:inherit}
   /* 飲食 (D3/UX2): its four dropdowns, the 子連れ toggle and the 昼の予算 basis
      toggle. The generic rules above already reach them; they are named so this
      block visibly covers the layer. */
-  #fCatGroup,#fCat,#fMichelin,#fMinRating,#fPriceBand,#fDiningArea,#fDriveTime,#toggleKidOk,#toggleDayBudget{min-height:40px}
+  #fCatGroup,#fCat,#fMichelin,#fPriceBand,#fDiningArea,#toggleKidOk,#toggleDayBudget{min-height:40px}
+
+  /* ---- スマホでは絞り込みと並び替えを1本の開閉にまとめる（2026-08-16） ----
+     実測: 390×780でパネルは331px、そのうち約296pxがコントロールで埋まり、
+     最初のカードは上から731px＝初期画面に店が1軒も映っていなかった。
+     タップ標的40pxは下げられない（a11y要件）ので、枠の数を減らすしかない。
+     地図の取り分(45%)は2026-08-07に是正済みの値なので触らない。
+     `!important` は data-layer-only / data-mode-only をJSがインラインstyleで
+     出し入れするため（インラインstyleに勝つ必要がある）。 */
+  body:not(.more-open) .filter-row[data-layer-only]{display:none!important}
+  body:not(.more-open) .filter-row[data-mode-only]{display:none!important}
+  body:not(.more-open) #sortRow{display:none!important}
   /* Two chips (michelin + category) now share the row under a dining name. */
   .card-chips .card-chip{max-width:calc(50% - var(--s1))}
 
@@ -613,7 +637,7 @@ button,input,select{font-family:inherit}
   #fVenueType,#toggleWant,#toggleUndone{min-height:40px}
   /* Every control inside a record box, including the three 再訪意向 buttons
      which are the smallest thing on the screen. */
-  .vb-toggle,.vb-rv-btn,.vb-amt,.data-btn{min-height:40px}
+  .vb-toggle,.vb-rv-btn,.vb-amt,.vb-vd,.data-btn{min-height:40px}
   .vb-memo{min-height:72px}
   .vb-rv{gap:2px}
   .card-main{padding:var(--s2) var(--s3)}
@@ -770,12 +794,34 @@ button,input,select{font-family:inherit}
       </div>
       <!-- 飲食: カテゴリ options come from CAT_GROUPS and ミシュラン from
            MICHELIN_FILTERS (src/domain/filter.js), so a dropdown can never
-           offer a value the filter does not understand. -->
+           offer a value the filter does not understand.
+
+           2026-08-16 竹森氏裁定: 常時見せる4枠は「実際に絞れる順」に選び直した。
+           実測(357店)では 予算(〜RM50=128件)・エリア(最大バケツ76件)・ミシュラン(75件)
+           はよく絞れる一方、評価は★4.3で321/357件(90%)が残り、車での所要時間は
+           全店が44分以内で〜45分が1件も絞らなかった。効かない2つは廃止し、
+           空いた枠に予算とエリアを上げている。ミシュランは残す(竹森氏指示)。
+           枠の数は4のままなので、スマホの高さは変わらない。
+           細分類は大分類を選んだときだけ現れる(選ぶまで中身が決まらないため、
+           起動時からずっと押せない枠が場所を取っていた)。 -->
       <div class="filter-row filter-row-2col" data-layer-only="dining" style="display:none">
         <div class="filter-group"><label for="fCatGroup">カテゴリ</label><select id="fCatGroup" onchange="onCatGroupChange()"><option value="">すべて</option></select></div>
-        <div class="filter-group"><label for="fCat">細分類</label><select id="fCat" onchange="applyFilters()" disabled><option value="">—</option></select></div>
+        <div class="filter-group"><label id="fPriceBandLabel" for="fPriceBand">予算 (1人・夜)</label><select id="fPriceBand" onchange="applyFilters()"><option value="">すべて</option><option value="0-50">〜RM50</option><option value="50-150">RM50-150</option><option value="150-400">RM150-400</option><option value="400-">RM400〜</option></select></div>
+        <div class="filter-group"><label for="fDiningArea">エリア</label><select id="fDiningArea" onchange="applyFilters()"><option value="">すべて</option></select></div>
         <div class="filter-group"><label for="fMichelin">ミシュラン</label><select id="fMichelin" onchange="applyFilters()"><option value="">すべて</option></select></div>
-        <div class="filter-group"><label for="fMinRating">評価</label><select id="fMinRating" onchange="applyFilters()"><option value="">すべて</option><option value="4.3">★4.3以上</option><option value="4.5">★4.5以上</option></select></div>
+        <div class="filter-group" id="fCatWrap" style="display:none"><label for="fCat">細分類</label><select id="fCat" onchange="applyFilters()" disabled><option value="">—</option></select></div>
+      </div>
+      <!-- 自分の記録は「良い店ばかりの357軒」を自分ごとの数十軒に変える唯一の軸なので、
+           折りたたみの外に置く(2026-08-16)。3つは独立トグルで、「行きたい」×「未訪問」を
+           併用すると「行きたいのにまだ行っていない店」になる。 -->
+      <div class="filter-row" data-mode-only="eatout" style="display:none">
+        <div class="filter-group"><span class="fg-label">自分の記録</span>
+          <div class="fg-btns">
+            <button type="button" class="chip-toggle" id="toggleVisited" aria-pressed="false" onclick="toggleVisitedFilter()" title="訪問記録を付けた店だけに絞る">✓ 行った店</button>
+            <button type="button" class="chip-toggle" id="toggleWant" aria-pressed="false" onclick="toggleWantFilter()" title="「行きたい」に入れた店だけに絞る">♡ 行きたい</button>
+            <button type="button" class="chip-toggle" id="toggleUndone" aria-pressed="false" onclick="toggleUndoneFilter()" title="まだ訪問記録がない店だけに絞る">未訪問</button>
+          </div>
+        </div>
       </div>
 
 
@@ -807,34 +853,16 @@ button,input,select{font-family:inherit}
              昼夜を「2つの絞り込み」に割るのは却下（並び替えは1つの順番しか持てず、
              フィルタと食い違う）。基準を1つ切り替える形なので、価格帯・並び替え・
              予算中央値は必ず同じ数字を読む。ラベルの「夜基準/昼基準」はJSが書き換える。 -->
+        <!-- 施設タイプ options are built from VENUE_TYPES。エリアと価格帯は
+             2026-08-16に上段へ移した（実際によく絞れるため）。 -->
         <div class="filter-row" data-layer-only="dining" style="display:none">
-          <div class="filter-group"><label id="fPriceBandLabel" for="fPriceBand">価格帯 (1人・夜基準)</label><select id="fPriceBand" onchange="applyFilters()"><option value="">すべて</option><option value="0-50">〜RM50</option><option value="0-150">〜RM150</option><option value="50-150">RM50-150</option><option value="150-400">RM150-400</option><option value="400-">RM400〜</option></select></div>
-          <div class="filter-group"><span class="fg-label">予算の基準</span><button type="button" class="chip-toggle" id="toggleDayBudget" aria-pressed="false" onclick="toggleDayBudget()" title="価格帯・並び替え・予算中央値を、夜ではなく昼の上限で見る">☀ 昼の予算</button></div>
-        </div>
-        <!-- エリア options are built from restaurants.json, NOT from the fArea
-             list below: the condo areas end in a Mont Kiara catch-all that would
-             misfile every city-centre restaurant. This is the ledger's own
-             district LABEL; 「近く: ○○」 (the jump bar's radius filter) is a
-             separate axis and the two combine. -->
-        <div class="filter-row" data-layer-only="dining" style="display:none">
-          <div class="filter-group"><label for="fDiningArea">エリア</label><select id="fDiningArea" onchange="applyFilters()"><option value="">すべて</option></select></div><div class="filter-group"><label for="fDriveTime" title="Mont Kiaraから車・渋滞込み目安">車で(MKから)</label><select id="fDriveTime" onchange="applyFilters()"><option value="">すべて</option><option value="15">〜15分</option><option value="30">〜30分</option><option value="45">〜45分</option></select></div>
           <div class="filter-group"><label for="fVenueType">施設タイプ</label><select id="fVenueType" onchange="applyFilters()"><option value="">すべて</option></select></div>
+          <div class="filter-group"><span class="fg-label">予算の基準</span><button type="button" class="chip-toggle" id="toggleDayBudget" aria-pressed="false" onclick="toggleDayBudget()" title="予算・並び替え・予算中央値を、夜ではなく昼の上限で見る">☀ 昼の予算</button></div>
         </div>
-                <div class="filter-row" data-layer-only="dining" style="display:none">
+        <div class="filter-row" data-layer-only="dining" style="display:none">
           <div class="filter-group"><span class="fg-label">子連れ</span>
             <div class="fg-btns">
               <button type="button" class="chip-toggle" id="toggleKidOk" aria-pressed="false" onclick="toggleKidOk()" title="子ども連れで行きやすい店だけに絞る">👶 子連れ◎のみ</button>
-            </div>
-          </div>
-        </div>
-        <!-- 外食モードだけ。2つは独立したトグルで、併用すると「行きたいのに
-             まだ行っていない店」になる（台帳v9はどちらか一方しか選べなかった）。 -->
-        <div class="filter-row" data-mode-only="eatout" style="display:none">
-          <div class="filter-group"><span class="fg-label">自分の記録</span>
-            <div class="fg-btns">
-              <button type="button" class="chip-toggle" id="toggleVisited" aria-pressed="false" onclick="toggleVisitedFilter()" title="訪問記録を付けた店だけに絞る">✓ 行った店</button>
-              <button type="button" class="chip-toggle" id="toggleWant" aria-pressed="false" onclick="toggleWantFilter()" title="「行きたい」に入れた店だけに絞る">♡ 行きたい</button>
-              <button type="button" class="chip-toggle" id="toggleUndone" aria-pressed="false" onclick="toggleUndoneFilter()" title="まだ訪問記録がない店だけに絞る">未訪問</button>
             </div>
           </div>
         </div>
@@ -850,6 +878,9 @@ button,input,select{font-family:inherit}
         <label class="sort-label" for="fSort">並び替え</label>
         <select id="fSort" class="sort-select" onchange="setSort(this)"></select>
         <button class="sort-btn" id="sfToggle" data-layer-only="school" style="display:none;margin-left:auto" aria-pressed="false" onclick="toggleSchoolFinder()" title="年齢を選んでKL・ペナン全校の年間学費を比べる">🎓 学費くらべ</button>
+        <!-- 絞り込みはURLに載っているのに押すところが無く、アドレスバーを手で
+             コピーするしかなかった(スマホでは実質不可)。用途「知人への案内資料」の入口。 -->
+        <button class="sort-btn" id="shareBtn" style="margin-left:auto" onclick="shareView()" title="いまの絞り込みと並び順をそのまま開けるリンクをコピーします">🔗 共有</button>
       </div>
     </div>
     <div class="school-finder" id="schoolFinder" style="display:none;flex-direction:column;flex:1;overflow:hidden">

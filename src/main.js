@@ -13,10 +13,10 @@ import { initMap, jumpToArea, toggleLegend, togglePenangAreas, map } from './ui/
 import {
   applyFilters, applyFiltersDebounced, onCatGroupChange, setSort, setLayer, setMode, setView, syncLayerUI, toggleMore, updateSummary, toggleLayerVisible,
   toggleAward, toggleKidOk, toggleDayBudget, toggleWantFilter, toggleUndoneFilter, toggleVisitedFilter,
-  togglePanel, clearSearch, removeFilter, clearAllFilters, showLoading,
+  togglePanel, clearSearch, removeFilter, clearAllFilters, showLoading, shareView,
 } from './ui/list.js';
 import {
-  setOnPersonalChange, dineVisit, dineWant, dineRepeat, dineAmount, dineMemo, dineHide, dineUnhide,
+  setOnPersonalChange, dineVisit, dineWant, dineRepeat, dineVisitDate, dineAmount, dineMemo, dineHide, dineUnhide,
   initFileDb, dineFileConnect, dineFileReauth, dineFileDisconnect, dineFileAdoptFile, dineFileAdoptCache,
   dineImport, dineClearAll, dineDownload, dineSelectExport, renderSaveBar, toast,
 } from './ui/dining.js';
@@ -68,6 +68,7 @@ window.dineWant = dineWant;
 window.dineHide = dineHide;
 window.dineUnhide = dineUnhide;
 window.dineRepeat = dineRepeat;
+window.dineVisitDate = dineVisitDate;
 window.dineAmount = dineAmount;
 window.dineMemo = dineMemo;
 window.dineImport = dineImport;
@@ -75,6 +76,7 @@ window.dineClearAll = dineClearAll;
 window.dineDownload = dineDownload;
 window.dineSelectExport = dineSelectExport;
 window.clearSearch = clearSearch;
+window.shareView = shareView;
 window.removeFilter = removeFilter;
 window.clearAllFilters = clearAllFilters;
 window.selectCondo = selectCondo;

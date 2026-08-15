@@ -374,6 +374,18 @@ export function setVisited(id, on, now = new Date()){
   return apply(id, { v: 0 });
 }
 
+/**
+ * 訪問日を手で直す（2026-08-16）。
+ *
+ * 自動で入るのは「訪問済みを押した日」なので、先週行った店をまとめて登録すると
+ * 全部が同じ今日の日付になる。記録はファイルに書き出して家族の台帳になるため、
+ * 日付の正しさは表示の都合ではなくアーカイブの正確さの問題。
+ *
+ * 形式が違う値は normalizeEntry が空に落とすので、ここでは弾かずに渡す
+ * （空 = 「訪問日なし」で、訪問済みフラグ自体は残る）。
+ */
+export function setVisitDate(id, vd){ return apply(id, { vd }); }
+
 /** また行きたいか. Pressing the same choice again returns to 未回答. */
 export function setRepeat(id, rv){
   const cur = getEntry(id);

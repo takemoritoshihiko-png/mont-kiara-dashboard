@@ -389,9 +389,13 @@ describe('「昼の予算」トグルの markup', () => {
     expect(mobile).toMatch(/#toggleDayBudget[^\n]*min-height:40px|\.chip-toggle[^\n]*min-height:40px/);
   });
 
-  it('gives the 価格帯 caption an id, so the basis can be written into it', () => {
+  // 2026-08-16 用語統一: 画面では「価格帯」と「予算」が混在していた
+  // (絞り込みの見出し=価格帯 / 並び替え=予算 安い順 / タイル=予算中央値)。
+  // 上段へ上げたのを機に「予算」へ揃えた。
+  it('gives the 予算 caption an id, so the basis can be written into it', () => {
     expect(html).toContain('id="fPriceBandLabel"');
-    expect(html).toContain('価格帯 (1人・夜基準)');
+    expect(html).toContain('予算 (1人・夜)');
+    expect(html).not.toContain('価格帯 (1人・夜基準)');
   });
 
   it('keeps the ledger エリア select as its own separate control', () => {

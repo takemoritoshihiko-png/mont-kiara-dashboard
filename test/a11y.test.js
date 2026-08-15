@@ -430,7 +430,8 @@ describe('mobile (≤768px)', () => {
     expect(mobile).toContain('.search-clear{min-width:40px;min-height:40px');
     // D4: the record controls. 再訪意向 is the smallest thing on the screen —
     // three buttons sharing one row — so it is named explicitly.
-    expect(mobile).toContain('.vb-toggle,.vb-rv-btn,.vb-amt,.data-btn{min-height:40px}');
+    // .vb-vd = 訪問日の日付入力(2026-08-16に編集可能化)。
+    expect(mobile).toContain('.vb-toggle,.vb-rv-btn,.vb-amt,.vb-vd,.data-btn{min-height:40px}');
     expect(mobile).toContain('.mode-btn{min-height:40px');
     expect(mobile).toContain('#toggleVisited{min-height:40px');
     expect(mobile).toContain('#fVenueType,#toggleWant,#toggleUndone{min-height:40px}');

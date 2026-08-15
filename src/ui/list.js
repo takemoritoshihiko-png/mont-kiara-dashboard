@@ -16,7 +16,7 @@ import {
   CAT_GROUPS, MICHELIN_FILTERS, VENUE_TYPES, diningPriceCeiling, budgetBasisOf,
   AREA_BUCKETS, areaBucketOf,
 } from '../domain/filter.js';
-import { sortOptionsFor, comparatorFor, sortOnArrival } from '../domain/sort.js';
+import { sortOptionsFor, comparatorFor, sortOnArrival, sortAvailable } from '../domain/sort.js';
 import { map, rebuild } from './map.js';
 import { syncUrl } from './urlState.js';
 import {
@@ -50,10 +50,11 @@ const LAYER_CONTROLS = {
   // The dining layer has its own エリア control (fDiningArea): its areas are the
   // ledger's curated values, not the condo areas fArea offers. See the comment
   // in matchesFilters() for why the two must not be shared.
+  // 2026-08-16: 評価(★4.3で90%が残る)と車で(全店44分以内)は実測で絞れないと
+  // 分かったため廃止。予算とエリアを常時表示の上段へ上げた。
   dining: [
-    ['fCatGroup', 'カテゴリ'], ['fCat', '細分類'], ['fMichelin', 'ミシュラン'], ['fMinRating', '評価'],
-    ['fPriceBand', '価格帯'],
-    ['fDiningArea', 'エリア'], ['fVenueType', '施設'], ['fDriveTime', '車で'],
+    ['fCatGroup', 'カテゴリ'], ['fCat', '細分類'], ['fPriceBand', '予算'],
+    ['fDiningArea', 'エリア'], ['fMichelin', 'ミシュラン'], ['fVenueType', '施設'],
   ],
 };
 
@@ -93,11 +94,9 @@ export function readCriteria(){
     // 小分類。大分類が未選択のあいだセレクトは disabled+空なので '' が入る。
     c.cat = val('fCat');
     c.michelin = val('fMichelin');
-    c.minRating = parseFloat(val('fMinRating')) || 0;
     c.priceBand = val('fPriceBand');
     c.priceBasis = currentBudgetBasis();
     c.diningArea = val('fDiningArea');
-    c.driveTime = val('fDriveTime');
     // 「近く: Mont Kiara」 lives in state, not in a control: it is set by the
     // map's area jump, and the chip is what removes it again.
     c.near = diningNear;
@@ -111,7 +110,10 @@ export function readCriteria(){
       c.visitedOnly = showVisitedOnly;
       // 非表示(オーナー除外)は外食モードでは常時適用
       c.hiddenIds = hiddenIdsSet();
-      if(showWantOnly || showUndoneOnly || showVisitedOnly) c.personal = personalMap();
+      // 記録の絞り込みに使うほか、検索語があるときは「自分の感想」も探せるように
+      // 渡す(2026-08-16)。住まいモードでは決して渡さない = 感想が公開の顔に
+      // 一切出ない契約（filter.js は渡されなければ感想を見ない）。
+      if(showWantOnly || showUndoneOnly || showVisitedOnly || c.q) c.personal = personalMap();
     }
   } else {
     c.nla = parseR(val('fNla'));
@@ -150,6 +152,14 @@ export function toggleLayerVisible(layer){
 }
 
 export function doSort(){
+  // 並び替えは共有リンクにも載る(2026-08-16)。リンクの復元は select の値を
+  // 書くだけなので、状態がまだ古い並び順のままのことがある。実際に並べる直前に
+  // 「画面の select が正」として取り込む。普段は両者が一致しているので何もしない。
+  const sel = $('fSort');
+  if(sel && sel.value && sel.value !== currentSort && sortAvailable(activeLayer, sel.value, appMode)){
+    setCurrentSort(sel.value);
+    setLastSortForLayer(activeLayer, sel.value);
+  }
   filtered.sort(comparatorFor(currentSort, currentBudgetBasis()));
 }
 
@@ -324,14 +334,20 @@ function populateDiningFilters(){
 export function syncCatSubOptions(){
   const sub = $('fCat');
   if(!sub) return;
+  // 枠ごと出し入れする(2026-08-16): 大分類を選ぶまで中身が決まらない枠が、
+  // 起動時からずっと押せない状態で場所を取っていた。disabled は残す
+  // (枠が出ている瞬間に中身が空、という状態を作らないため)。
+  const wrap = $('fCatWrap');
   const group = val('fCatGroup');
   const keep = sub.value;
   if(!group){
     sub.innerHTML = '<option value="">—</option>';
     sub.value = '';
     sub.disabled = true;
+    if(wrap) wrap.style.display = 'none';
     return;
   }
+  if(wrap) wrap.style.display = '';
   const counts = new Map();
   CONDOS.filter(c => recordLayer(c) === 'dining' && !c.delisted && c.cat && c.catGroup === group)
     .forEach(c => counts.set(c.cat, (counts.get(c.cat) || 0) + 1));
@@ -413,10 +429,17 @@ export function syncLayerUI(){
 
   const more = $('moreFilters');
   if(more) more.style.display = (moreOpen && ledgerView) ? '' : 'none';
+  // スマホ(≤768px)では、常時表示の絞り込みと並び替えもこの開閉に入る
+  // (2026-08-16: パネル331pxのうち約296pxがコントロールで、初期表示に店が
+  // 1軒も映っていなかった。CSS側は body.more-open で切り替える)。
+  document.body.classList.toggle('more-open', moreOpen);
+  const narrow = typeof matchMedia === 'function' && matchMedia('(max-width:768px)').matches;
   const mt = $('moreToggle');
   if(mt){
     mt.style.display = ledgerView ? '' : 'none';
-    mt.innerHTML = moreOpen ? '－ 絞り込みを閉じる' : '＋ もっと絞り込む';
+    mt.innerHTML = moreOpen
+      ? (narrow ? '－ 閉じる' : '－ 絞り込みを閉じる')
+      : (narrow ? '＋ 絞り込み・並び替え' : '＋ もっと絞り込む');
     // The chevron says "open" to a sighted user; aria-expanded says it to
     // everyone else. They are set together so they cannot disagree.
     mt.setAttribute('aria-expanded', moreOpen ? 'true' : 'false');
@@ -462,6 +485,37 @@ export function clearSearch(){
   applyFilters();
 }
 
+/**
+ * 「🔗 共有」— いまの画面をそのまま開けるリンクをクリップボードへ(2026-08-16)。
+ *
+ * 絞り込みと並び順は既に `?f=` としてアドレスバーに入っている(syncUrl)ので、
+ * ここがやるのは「気づけるようにする」ことだけ。用途②「知人への案内資料」の入口。
+ *
+ * トグル(子連れ・昼の予算・自分の記録)はリンクに載らない。特に自分の記録は
+ * 受け手にとって意味が違う(相手の記録で絞られる)ので、載せない方が正しい。
+ * ただし黙って落とすと「送った画面と違うものが届く」ので、載らないものが
+ * 効いているときは必ず言う。
+ */
+export function shareView(){
+  const url = location.href;
+  const dropped = [];
+  if(showKidOkOnly) dropped.push('子連れ◎のみ');
+  if(dayBudgetBasis) dropped.push('昼の予算');
+  if(eatoutActive()){
+    if(showVisitedOnly) dropped.push('行った店');
+    if(showWantOnly) dropped.push('行きたい');
+    if(showUndoneOnly) dropped.push('未訪問');
+  }
+  const tail = dropped.length ? `（${dropped.join('・')}はリンクに含まれません）` : '';
+  const ok = () => toast('リンクをコピーしました' + tail);
+  const fail = () => toast('⚠ コピーできませんでした。アドレスバーからコピーしてください');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(ok, fail);
+  } else {
+    fail();
+  }
+}
+
 function syncAwardBtn(){
   const b = $('toggleAward');
   if(!b) return;
@@ -505,7 +559,7 @@ function syncDayBudgetBtn(){
   // The 価格帯 caption carries the basis too: the dropdown's own values
   // (「RM50-150」) are read long after the toggle was pressed.
   const lab = $('fPriceBandLabel');
-  if(lab) lab.textContent = dayBudgetBasis ? '価格帯 (1人・昼基準)' : '価格帯 (1人・夜基準)';
+  if(lab) lab.textContent = dayBudgetBasis ? '予算 (1人・昼)' : '予算 (1人・夜)';
 }
 
 export function toggleDayBudget(){
@@ -870,12 +924,26 @@ export function cardHtml(c){
   return `<div class="condo-card record-card${sel}${isVisited(c) ? ' visited' : ''}">${opener}${extra}</div>`;
 }
 
+/**
+ * 0件のときの案内。
+ *
+ * 適用中の条件は既にパネル上部のチップ列(#filterChips)に出ているので、ここで
+ * もう一度並べない(2026-08-16: 同じチップと「すべてクリア」が上下2箇所に出て
+ * いた)。代わりに「なぜ0件なのか」を言う。
+ *
+ * 「✓行った店」と「未訪問」は同じ記録の裏表なので、両方ONだと必ず0件になる。
+ * これは絞り込みが厳しすぎるのではなく成立しない組み合わせなので、名指しで言う。
+ */
 function emptyStateHtml(){
-  const chips = activeChips();
+  const impossible = eatoutActive() && showVisitedOnly && showUndoneOnly;
+  const why = impossible
+    ? '「✓ 行った店」と「未訪問」は同時には成り立ちません。どちらかを外してください。'
+    : (activeChips().length
+      ? '絞り込みを1つ外すと見つかるかもしれません。'
+      : 'この層にデータがありません。');
   return `<div class="empty-state">
     <div class="empty-title">条件に合う${LAYER_LABELS[activeLayer]}がありません</div>
-    <div class="empty-sub">適用中の絞り込み:</div>
-    <div class="empty-chips">${chips.length ? chipsHtml(chips) : '<span class="empty-none">なし（この層にデータがありません）</span>'}</div>
+    <div class="empty-sub">${esc(why)}</div>
     <button type="button" class="btn-clear-all" onclick="clearAllFilters()">すべてクリア</button>
   </div>`;
 }

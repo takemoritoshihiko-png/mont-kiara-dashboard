@@ -130,8 +130,15 @@ export function visitBoxHtml(c, ctx = 'led'){
       ` aria-pressed="${e.rv === o.v ? 'true' : 'false'}"` +
       ` onclick="dineRepeat('${jsStr(id)}','${o.v}')">${esc(o.label)}</button>`).join('') +
     `</div>`;
+  // 訪問日は直せる(2026-08-16 竹森氏承認)。「訪問済み」を押した日が自動で入る
+  // ままだと、先週行った店をまとめて登録した瞬間に台帳が恒久的に嘘になる。
+  // 記録はファイルにも書き出して家族の台帳になるので、日付の正しさは表示上の
+  // 都合ではなくアーカイブの正確さの問題。
   return `<div class="visitbox">${head}` +
-    `<div class="vb-date">${esc(e.vd ? e.vd + ' に訪問' : '訪問日なし')}</div>` +
+    `<div class="vb-date"><label class="vb-flabel" for="vd-${key}">訪問日</label>` +
+      `<input type="date" id="vd-${key}" class="vb-vd" value="${esc(e.vd)}"` +
+      ` max="${esc(P.localDate())}"` +
+      ` onchange="dineVisitDate('${jsStr(id)}',this.value)"></div>` +
     `<div class="vb-q">また行きたい？<span class="vb-hint">（もう一度押すと未回答に戻ります）</span></div>` + rv +
     `<div class="vb-field">` +
       `<label class="vb-flabel" for="amt-${key}">1人あたり実際に払った額 (RM)</label>` +
@@ -238,6 +245,13 @@ export function dineRepeat(id, rv){
   toast(e.rv ? `「${P.REPEAT_LABELS[e.rv]}」にしました` : '未回答に戻しました');
 }
 
+/** 訪問日を直す（2026-08-16）。空にすると「訪問日なし」に戻る。 */
+export function dineVisitDate(id, vd){
+  const e = P.setVisitDate(id, vd);
+  refresh();
+  toast(e.vd ? `訪問日を ${e.vd} にしました` : '訪問日を空にしました');
+}
+
 /**
  * Typing must not re-render: the list is rebuilt from scratch on every change
  * and that would take the caret out of the field on the first keystroke. The
@@ -255,6 +269,14 @@ export function dineMemo(id, v){ P.setMemo(id, v); }
 // ============================================================
 export const PRIVACY_TEXT =
   '記録はこのブラウザにだけ保存され、公開サイトでも他人には見えません。ブラウザのデータを消すと失われます。';
+
+/**
+ * 保存バー用の短い版（2026-08-16）。
+ * 保存バーの文字領域は実測236pxしかなく、全文(823px必要)は7割が省略されて
+ * 「ブラウザのデータを消すと失われます」という肝心の警告が読めなかった。
+ * 読める長さに切り詰め、全文はホバーの説明と詳細パネル側に残す。
+ */
+export const PRIVACY_SHORT = 'この端末にだけ保存。消すと失われます';
 
 function savedAtText(st){
   if(!st.savedAt) return 'まだ保存していません';
@@ -491,9 +513,10 @@ export function renderSaveBar(){
   bar.style.display = '';
   bar.classList.toggle('bad', !!st.error || fb.startsWith('⚠'));
   const text = st.error ? '⚠ ' + st.error
-    : savedAtText(st) + (fb ? ' ・ ' + fb : '') + ' ・ ' + PRIVACY_TEXT;
+    : savedAtText(st) + (fb ? ' ・ ' + fb : '') + ' ・ ' + PRIVACY_SHORT;
   // データ画面への入口はここ(旧3タブは2026-08-08廃止)。保存の話をする場所に併設。
-  bar.innerHTML = `<span class="savebar-text">${esc(text)}</span>` +
+  // title に全文を入れる: 短い版で切り詰めた説明の受け皿(2026-08-16)。
+  bar.innerHTML = `<span class="savebar-text" title="${esc(PRIVACY_TEXT)}">${esc(text)}</span>` +
     `<button type="button" class="savebar-link" onclick="setView('data')">💾 データ管理</button>`;
 }
 
