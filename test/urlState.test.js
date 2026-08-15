@@ -3,7 +3,7 @@
 // in plain node and the history calls can be checked against a stub.
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import {
-  buildQuery, readUrlState, writeUrlState, withUrlWritesSuspended,
+  buildQuery, readUrlState, writeUrlState, withUrlWritesSuspended, parseFilterParam,
 } from '../src/ui/urlState.js';
 
 const roundTrip = (state) => readUrlState('?' + buildQuery(state));
@@ -11,6 +11,16 @@ const roundTrip = (state) => readUrlState('?' + buildQuery(state));
 // OUT of the query string, so it comes back as null — a link written before D4
 // still reproduces exactly the screen it did.
 const HOME = { mode: null, f: null };
+
+describe('filters in the URL', () => {
+  // 2026-08-15: 小分類も共有リンクに載る(「洋食・グリル＞ステーキ」で絞った画面を
+  // そのまま家族に送れる)。許可リストに無いidは落とされる契約なので、ここで守る。
+  it('carries the 大分類 and the 小分類, and still drops unknown ids', () => {
+    expect(parseFilterParam('fCatGroup:%E4%B8%AD%E8%8F%AF|fCat:%E7%81%AB%E9%8D%8B'))
+      .toEqual([['fCatGroup', '中華'], ['fCat', '火鍋']]);
+    expect(parseFilterParam('fNope:x')).toEqual([]);
+  });
+});
 
 describe('round trip', () => {
   it('preserves a plain condo selection', () => {

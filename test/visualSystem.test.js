@@ -185,8 +185,11 @@ describe('JS-side colours are inventoried (map.js / inline.js)', () => {
   it('src/ui/map.js introduces no unlisted colour', () => {
     expect(hexesOf('../src/ui/map.js')).toEqual([
       '#112a58', '#1a3d7c', '#1d5f55', '#333', '#37474f', '#3d2b00', '#546e7a', '#666',
-      '#6f3305', '#78909c', '#7a5a10', '#8c1145', '#b45309', '#b85806', '#c2185b',
-      '#d4a51f', '#e8710a', '#fff',
+      '#6f3305', '#78909c', '#7a5a10', '#8c1145',
+      // 2026-08-15: ミシュラン掲載店(sel)の淡金ピン。金(#d4a51f)・琥珀(#b45309)と
+      // 同系で並べ、縁は本体より暗く取る。
+      '#a17f24', '#b45309', '#b85806', '#c2185b',
+      '#d4a51f', '#e8710a', '#ecd48a', '#fff',
     ]);
   });
 

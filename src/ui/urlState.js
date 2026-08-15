@@ -54,7 +54,10 @@ export function buildQuery({ mode, layer, sel, tab, f } = {}) {
 const FILTER_IDS = [
   'fSearch', 'fArea', 'fRent', 'fTier', 'fSalePsf', 'fYear', 'fAge', 'fSize',
   'fStatus', 'fSchoolAge', 'fCurriculum', 'fFee', 'fNla', 'fOpenYear',
-  'fAnchor', 'fCatGroup', 'fMichelin', 'fPriceBand', 'fDiningArea', 'fVenueType', 'fDriveTime',
+  // fCat(小分類)は fCatGroup の直後。復元は「大分類を書く→小分類の選択肢が
+  // 生まれる→小分類を書く」の順でなければ効かないので、順番に意味がある
+  // (受け手側の二度書きは src/ui/info.js の applyUrlState)。
+  'fAnchor', 'fCatGroup', 'fCat', 'fMichelin', 'fPriceBand', 'fDiningArea', 'fVenueType', 'fDriveTime',
 ];
 
 /** The non-empty filter controls, serialized. '' when nothing is set. */

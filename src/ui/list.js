@@ -51,7 +51,7 @@ const LAYER_CONTROLS = {
   // ledger's curated values, not the condo areas fArea offers. See the comment
   // in matchesFilters() for why the two must not be shared.
   dining: [
-    ['fCatGroup', 'カテゴリ'], ['fMichelin', 'ミシュラン'], ['fMinRating', '評価'],
+    ['fCatGroup', 'カテゴリ'], ['fCat', '細分類'], ['fMichelin', 'ミシュラン'], ['fMinRating', '評価'],
     ['fPriceBand', '価格帯'],
     ['fDiningArea', 'エリア'], ['fVenueType', '施設'], ['fDriveTime', '車で'],
   ],
@@ -90,6 +90,8 @@ export function readCriteria(){
     c.fee = parseR(val('fFee'));
   } else if(layer === 'dining'){
     c.catGroup = val('fCatGroup');
+    // 小分類。大分類が未選択のあいだセレクトは disabled+空なので '' が入る。
+    c.cat = val('fCat');
     c.michelin = val('fMichelin');
     c.minRating = parseFloat(val('fMinRating')) || 0;
     c.priceBand = val('fPriceBand');
@@ -308,6 +310,46 @@ function populateDiningFilters(){
     area.value = keep;
     area.dataset.filled = '1';
   }
+  // 小分類だけは「作って終わり」にできない — 中身が大分類に従って変わるので、
+  // dataset.filled を持たせず毎回作り直す。
+  syncCatSubOptions();
+}
+
+/**
+ * 小分類(fCat)の選択肢を、いま選ばれている大分類の中身だけで作り直す。
+ * 大分類が「すべて」のあいだは中身が決まらないので disabled（2026-08-15 竹森さん
+ * 裁定: 69種を一列に並べるより、親を選んでから10種前後を選ぶ）。
+ * 件数はエリアの選択肢と同じ流儀で括弧に出す。並びは多い順。
+ */
+export function syncCatSubOptions(){
+  const sub = $('fCat');
+  if(!sub) return;
+  const group = val('fCatGroup');
+  const keep = sub.value;
+  if(!group){
+    sub.innerHTML = '<option value="">—</option>';
+    sub.value = '';
+    sub.disabled = true;
+    return;
+  }
+  const counts = new Map();
+  CONDOS.filter(c => recordLayer(c) === 'dining' && !c.delisted && c.cat && c.catGroup === group)
+    .forEach(c => counts.set(c.cat, (counts.get(c.cat) || 0) + 1));
+  sub.innerHTML = '<option value="">すべて</option>' +
+    [...counts.entries()]
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'ja'))
+      .map(([name, n]) => `<option value="${esc(name)}">${esc(name)} (${n})</option>`).join('');
+  sub.disabled = false;
+  // 大分類を変えると、前の小分類はもう選択肢に無い=「すべて」に戻る。
+  // 台帳では小分類が2つの大分類にまたがらない(test/dining.test.js)ので、
+  // 「親を変えたのに子が残る」は起こりえない。
+  sub.value = counts.has(keep) ? keep : '';
+}
+
+/** 大分類のセレクト。小分類を作り直してから絞り込む。 */
+export function onCatGroupChange(){
+  syncCatSubOptions();
+  applyFilters();
 }
 
 /**
@@ -582,7 +624,11 @@ export function removeFilter(id){
   // The map keeps the view it flew to — clearing the chip widens the LIST back
   // out, it does not undo the navigation (fArea behaves the same way).
   else if(id === 'toggleDayBudget'){ setDayBudgetBasis(false); syncLayerUI(); }
-  else { const el = $(id); if(el) el.value = ''; }
+  else {
+    const el = $(id); if(el) el.value = '';
+    // 大分類のチップを外したら、その中身だった小分類も一緒に畳む
+    if(id === 'fCatGroup') syncCatSubOptions();
+  }
   applyFilters();
 }
 
@@ -606,6 +652,8 @@ export function clearAllFilters(){
   const ids = new Set();
   Object.values(LAYER_CONTROLS).forEach(list => list.forEach(([id]) => ids.add(id)));
   ids.forEach(id => { const el = $(id); if(el) el.value = ''; });
+  // 大分類が空に戻ったので小分類も畳む（syncLayerUI より後でなければ意味がない）
+  syncCatSubOptions();
   applyFilters();
 }
 

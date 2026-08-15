@@ -404,7 +404,7 @@ describe('mobile (≤768px)', () => {
     for(const sel of ['.seg-btn', '.chips', '.disclosure', '.sort-select',
       '.sf-header', '.nb-row', '.info-tab', '.skel-card', '.fchip-x', '.info-overlay',
       // D3: the 飲食 layer's own controls.
-      '#fCatGroup', '#fMichelin', '#fPriceBand', '#fDiningArea', '#toggleKidOk',
+      '#fCatGroup', '#fCat', '#fMichelin', '#fPriceBand', '#fDiningArea', '#toggleKidOk',
       // D4: 外食モード — the mode switch, the three views, the extra filters and
       // every control inside a record box.
       '.mode-btn', '#toggleVisited', '#fVenueType', '#toggleWant', '#toggleUndone',

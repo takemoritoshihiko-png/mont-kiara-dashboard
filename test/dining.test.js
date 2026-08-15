@@ -41,6 +41,27 @@ describe('restaurants.json', () => {
     expect(bad.map((r) => `${r.name}:${r.catGroup}`)).toEqual([]);
   });
 
+  it('every record carries BOTH levels of the category (大分類+小分類)', () => {
+    const bad = restaurants.filter((r) => !r.cat || !r.catGroup);
+    expect(bad.map((r) => `${r.name}:${r.catGroup}/${r.cat}`)).toEqual([]);
+  });
+
+  // 小分類フィルタ(2026-08-15)は「大分類を選ぶ→その中の小分類が並ぶ」構造。
+  // 同じ小分類が2つの大分類にまたがると、どちらの親から入ったかで結果が変わり、
+  // 選択肢の件数も二重計上になる。台帳の側でその状態を禁じる。
+  it('each 小分類 belongs to exactly one 大分類 (cascade stays unambiguous)', () => {
+    const groupsOf = new Map();
+    for (const r of restaurants) {
+      if (!r.cat || !r.catGroup) continue;
+      if (!groupsOf.has(r.cat)) groupsOf.set(r.cat, new Set());
+      groupsOf.get(r.cat).add(r.catGroup);
+    }
+    const straddling = [...groupsOf.entries()]
+      .filter(([, gs]) => gs.size > 1)
+      .map(([cat, gs]) => `${cat} → ${[...gs].join(' / ')}`);
+    expect(straddling).toEqual([]);
+  });
+
   it('michelin and venueType are valid enums', () => {
     expect(restaurants.filter((r) => !MICHELIN.includes(r.michelin))).toEqual([]);
     expect(restaurants.filter((r) => !VENUE_TYPES.includes(r.venueType))).toEqual([]);

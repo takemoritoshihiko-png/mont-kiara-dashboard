@@ -383,6 +383,10 @@ export function matchesDining(c, f){
   // オーナー除外(2026-08-08): 「ここは違う」と消した店は外食モードの一覧/地図に出さない
   if(f.hiddenIds && f.hiddenIds.has(c.id)) return false;
   if(f.catGroup && c.catGroup !== f.catGroup) return false;
+  // 小分類(2026-08-15 竹森さん依頼): 大分類の中をもう一段絞る。台帳では小分類は
+  // 必ず1つの大分類にだけ属する(test/dining.test.js が守る)ので、この2つは
+  // 矛盾しようがなく、順番に AND で効かせるだけでよい。
+  if(f.cat && c.cat !== f.cat) return false;
   if(!matchesMichelin(c, f.michelin)) return false;
   // Google評価の下限(2026-08-09 竹森さん依頼: ★4.3以上/★4.5以上)。評価未集計
   // (rating=null)の店は「下限を満たすと証明できない」ので、絞り込み中は出さない
@@ -431,7 +435,7 @@ export function matchesDining(c, f){
  *   condo       — tierVal, sp, rn, yr, sz, age, statusFilter, showAwardOnly, currentYear
  *   school      — schoolAge, curriculum, fee
  *   commercial  — nla, openYear, anchorQ
- *   dining      — catGroup, michelin, priceBand, priceBasis, diningArea, near,
+ *   dining      — catGroup, cat, michelin, priceBand, priceBasis, diningArea, near,
  *                 venueType, kidOnly
  *                 and (外食モードのみ) wantOnly, undoneOnly + the `personal` map
  */

@@ -30,7 +30,7 @@ const eat = (over = {}) => ({
 });
 
 const fd = (over = {}) => ({
-  layer: 'dining', q: '', catGroup: '', michelin: '', priceBand: '',
+  layer: 'dining', q: '', catGroup: '', cat: '', michelin: '', priceBand: '',
   diningArea: '', kidOnly: false, ...over,
 });
 
@@ -152,6 +152,19 @@ describe('matchesDining', () => {
     expect(matchesDining(eat(), { catGroup: 'マレーシア料理' })).toBe(true);
     expect(matchesDining(eat(), { catGroup: '中華' })).toBe(false);
     expect(matchesDining(eat(), { catGroup: '' })).toBe(true);
+  });
+
+  // 2026-08-15 竹森さん依頼: 大分類を選んだあと、その中の小分類でも絞れる。
+  // 台帳は cat(小分類69種) と catGroup(大分類11種) の2階建てで、店ごとに
+  // 必ず1つずつ持つ(dining.test.js が両方の存在と一意性を守る)。
+  it('matches the 小分類 exactly, and combines with the 大分類', () => {
+    expect(matchesDining(eat(), { cat: 'モダン・マレーシアン' })).toBe(true);
+    expect(matchesDining(eat(), { cat: 'ニョニャ' })).toBe(false);
+    // 未選択(すべて)は何も狭めない
+    expect(matchesDining(eat(), { cat: '' })).toBe(true);
+    const steak = eat({ catGroup: '洋食・グリル', cat: 'ステーキ' });
+    expect(matchesFilters(steak, fd({ catGroup: '洋食・グリル', cat: 'ステーキ' }))).toBe(true);
+    expect(matchesFilters(steak, fd({ catGroup: '洋食・グリル', cat: 'フレンチ' }))).toBe(false);
   });
 
   it('offers the eleven ruled groups and nothing else (2026-08-09: 中東を独立)', () => {
@@ -542,6 +555,22 @@ describe('minRating — Google評価の下限', () => {
     expect(html).toContain('★4.3以上');
     expect(html).toContain('★4.5以上');
     expect(html).toMatch(/#fMinRating[^{]*{min-height:40px}/);
+  });
+
+  // 2026-08-15: 小分類セレクトは大分類の隣に立ち、大分類が「すべて」の間は
+  // 押せない(disabled)。選択肢は台帳から作るので、初期HTMLは空でよい。
+  it('index.html に小分類セレクトがあり、初期状態は disabled・大分類は専用ハンドラ', () => {
+    const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+    expect(html).toContain('id="fCat"');
+    expect(html).toContain('細分類');
+    // 大分類が変わったら小分類を作り直す必要があるので applyFilters() 直呼びではない
+    expect(html).toMatch(/id="fCatGroup"[^>]*onchange="onCatGroupChange\(\)"/);
+    // 初期は選べない(大分類を選ぶまで中身が決まらない)
+    expect(html).toMatch(/<select id="fCat"[^>]*disabled/);
+    expect(html).toMatch(/#fCat[,{][^{]*{min-height:40px}/);
+    // 4つ横並びのままだと選んだ値が読めない幅になるので、飲食の行だけ2列折り返し
+    expect(html).toMatch(/<div class="filter-row filter-row-2col" data-layer-only="dining"/);
+    expect(html).toContain('.filter-row-2col{flex-wrap:wrap}');
   });
 });
 

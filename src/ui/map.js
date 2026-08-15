@@ -88,12 +88,18 @@ export const MARKER_COLORS = {
 // 指摘)ので、ボディ色+グリフ+サイズの3信号で分離する:
 //   星付き(1★/2★) = 金色ボディ + 黒★ + ひと回り大きい
 //   ビブグルマン   = 琥珀色ボディ + 🍽 + ひと回り大きい
+//   掲載店(sel)    = 淡い金ボディ + Ⓜ + ひと回り大きい (2026-08-15 竹森さん裁定A案)
 //   通常           = 従来の暗赤ボディ + 🍽
 // 琥珀は商業の明橙(#e8710a)より暗くし、四角い商業マーカーと混ざらない。
+// 掲載店の淡金は琥珀・金より明るい側に置き、色が近いぶんグリフ(Ⓜ)で二重に
+// 名乗る — 星なしの掲載が68店と最も多く、ここが読めないと「ミシュラン=星」の
+// 誤解が残る(2026-08-15 竹森さん指摘)。
 export const MICHELIN_STAR_BG = '#d4a51f';
 export const MICHELIN_STAR_BORDER = '#7a5a10';
 export const MICHELIN_BIB_BG = '#b45309';
 export const MICHELIN_BIB_BORDER = '#6f3305';
+export const MICHELIN_SEL_BG = '#ecd48a';
+export const MICHELIN_SEL_BORDER = '#a17f24';
 
 // Cluster bubbles reuse the marker colours so the type stays readable when
 // several markers collapse into one.
@@ -430,18 +436,23 @@ function mkMarker(c) {
     const mb = MICHELIN_BADGES[c.michelin];
     const isStar = c.michelin === '1star' || c.michelin === '2star';
     const isBib = c.michelin === 'bib';
+    const isSel = c.michelin === 'sel';
     // ミシュランはボディ色ごと変える+ひと回り大きく(縁だけでは見分け不能だった)
-    const csz = (isStar || isBib) ? 25 : 22;
-    const bg = isStar ? MICHELIN_STAR_BG : isBib ? MICHELIN_BIB_BG : MARKER_COLORS.dining.bg;
+    const csz = (isStar || isBib || isSel) ? 25 : 22;
+    const bg = isStar ? MICHELIN_STAR_BG
+      : isBib ? MICHELIN_BIB_BG : isSel ? MICHELIN_SEL_BG : MARKER_COLORS.dining.bg;
     const border = isStar ? MICHELIN_STAR_BORDER
-      : isBib ? MICHELIN_BIB_BORDER : MARKER_COLORS.dining.border;
+      : isBib ? MICHELIN_BIB_BORDER : isSel ? MICHELIN_SEL_BORDER : MARKER_COLORS.dining.border;
     // 星の数をそのまま描く(2026-08-09 竹森さん指示: 2つ星・3つ星は★を増やす)。
     // KLは現在2★が最高だが、'3star'が来ても自動で3つ並ぶ。
     const starCount = c.michelin === '1star' ? 1 : c.michelin === '2star' ? 2 : c.michelin === '3star' ? 3 : 0;
-    const glyph = c.catGroup === '屋台街' ? '📍' : isStar ? '★'.repeat(starCount) : '🍽';
+    const glyph = c.catGroup === '屋台街' ? '📍'
+      : isStar ? '★'.repeat(starCount) : isSel ? 'Ⓜ' : '🍽';
     const starFs = starCount >= 3 ? 7.5 : starCount === 2 ? 9.5 : 13;
     const glyphStyle = isStar
       ? `color:#3d2b00;font-size:${starFs}px;font-weight:700;letter-spacing:-1px;white-space:nowrap;text-shadow:0 1px 1px rgba(255,255,255,0.4)`
+      // 淡金の上の白抜きは読めないので、掲載店のグリフだけ濃い文字色にする
+      : isSel ? 'color:#3d2b00;font-size:12px;font-weight:700'
       : 'color:#fff;font-size:10px';
     // 訪問済みの店はピン自体に緑の✓バッジ（2026-08-07 依頼: 地図を見るだけで
     // 「もう行った」が分かるように）。記録が変わると applyFilters→rebuild が
@@ -580,7 +591,8 @@ export function updateLegend(){
   if(eatout){
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>飲食店</div>`;
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_STAR_BG};border-color:${MICHELIN_STAR_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ミシュラン星付き（金色ピン・★の数=星の数）</div>`;
-    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_BIB_BG};border-color:${MICHELIN_BIB_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ビブグルマン（琥珀色ピン）</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_BIB_BG};border-color:${MICHELIN_BIB_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ビブグルマン（琥珀色ピン・お値打ち店）</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_SEL_BG};border-color:${MICHELIN_SEL_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>掲載店（淡い金ピン・Ⓜ／星もビブも無い掲載）</div>`;
     h+=`<div class="map-legend-item">数字の丸 = 重なった店。押すと開きます</div>`;
   } else {
     // The condo pin carries year (fill) + tier (letter/ring): explain both

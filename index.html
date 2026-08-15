@@ -131,6 +131,10 @@ button,input,select{font-family:inherit}
 /* ---- Controls ---- */
 .filters{padding:var(--s2) var(--s2) var(--s1);background:var(--surface);border-bottom:1px solid var(--hairline);flex-shrink:1;overflow-y:auto}
 .filter-row{display:flex;gap:var(--s2);margin-bottom:var(--s1)}
+/* 4つ横並びだと1つ約90pxになり、選んだ値（「洋食・グリル」）が読めなくなる。
+   飲食の行だけ2列で折り返す（2026-08-15 小分類セレクト追加にあわせて実測）。 */
+.filter-row-2col{flex-wrap:wrap}
+.filter-row-2col>.filter-group{flex:1 1 calc(50% - var(--s2));min-width:0}
 .filter-group{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
 /* .fg-label is the same caption for a group whose control is a button, not a
    form field: a <label> with nothing to point at is a dangling label. */
@@ -139,6 +143,9 @@ button,input,select{font-family:inherit}
    would be a <span> with nothing to say — the buttons name themselves. */
 .fg-btns{display:flex;gap:var(--s2);flex-wrap:wrap}
 .filter-group select,.filter-group input{background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:3px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm);min-width:0}
+/* 小分類セレクトは大分類を選ぶまで押せない。.filter-group select が color を
+   明示しているので、ブラウザ既定のグレーアウトは効かない — ここで名乗る。 */
+.filter-group select:disabled{color:var(--text-2);background:var(--bg);cursor:not-allowed;opacity:1}
 .filter-group select:focus,.filter-group input:focus,.sort-select:focus,.search-wrap input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(10,108,255,.16)}
 .sort-row{display:flex;gap:var(--s2);align-items:center;margin-top:var(--s1)}
 .sort-label{font-size:var(--fs-xs);color:var(--text-2);font-weight:600;white-space:nowrap}
@@ -593,7 +600,7 @@ button,input,select{font-family:inherit}
   /* 飲食 (D3/UX2): its four dropdowns, the 子連れ toggle and the 昼の予算 basis
      toggle. The generic rules above already reach them; they are named so this
      block visibly covers the layer. */
-  #fCatGroup,#fMichelin,#fMinRating,#fPriceBand,#fDiningArea,#fDriveTime,#toggleKidOk,#toggleDayBudget{min-height:40px}
+  #fCatGroup,#fCat,#fMichelin,#fMinRating,#fPriceBand,#fDiningArea,#fDriveTime,#toggleKidOk,#toggleDayBudget{min-height:40px}
   /* Two chips (michelin + category) now share the row under a dining name. */
   .card-chips .card-chip{max-width:calc(50% - var(--s1))}
 
@@ -764,8 +771,9 @@ button,input,select{font-family:inherit}
       <!-- 飲食: カテゴリ options come from CAT_GROUPS and ミシュラン from
            MICHELIN_FILTERS (src/domain/filter.js), so a dropdown can never
            offer a value the filter does not understand. -->
-      <div class="filter-row" data-layer-only="dining" style="display:none">
-        <div class="filter-group"><label for="fCatGroup">カテゴリ</label><select id="fCatGroup" onchange="applyFilters()"><option value="">すべて</option></select></div>
+      <div class="filter-row filter-row-2col" data-layer-only="dining" style="display:none">
+        <div class="filter-group"><label for="fCatGroup">カテゴリ</label><select id="fCatGroup" onchange="onCatGroupChange()"><option value="">すべて</option></select></div>
+        <div class="filter-group"><label for="fCat">細分類</label><select id="fCat" onchange="applyFilters()" disabled><option value="">—</option></select></div>
         <div class="filter-group"><label for="fMichelin">ミシュラン</label><select id="fMichelin" onchange="applyFilters()"><option value="">すべて</option></select></div>
         <div class="filter-group"><label for="fMinRating">評価</label><select id="fMinRating" onchange="applyFilters()"><option value="">すべて</option><option value="4.3">★4.3以上</option><option value="4.5">★4.5以上</option></select></div>
       </div>

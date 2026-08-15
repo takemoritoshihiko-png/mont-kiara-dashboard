@@ -19,7 +19,7 @@ import { TIER_COLORS, MICHELIN_LABELS } from '../data/inline.js';
 import { recordLayer } from '../domain/filter.js';
 import { nearby, formatDistance, BUCKET_LABELS, NEARBY_BUCKETS } from '../domain/nearby.js';
 import { focusOnRecord, rebuild } from './map.js';
-import { renderList, setLayer, setMode, applyFilters, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
+import { renderList, setLayer, setMode, applyFilters, syncCatSubOptions, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
 import { eatoutDetailHtml, eatoutRecBadgeHtml } from './dining.js';
 import { syncUrl, withUrlWritesSuspended, applyFilterParam } from './urlState.js';
 
@@ -209,7 +209,11 @@ function diningDetail(c){
     // Mont Kiaraから車の渋滞込み目安(OSRM free-flow×1.8)。無い店は正直に—。
     kv('車で(MKから)', c.driveMinJam != null ? esc('約'+c.driveMinJam+'分 ('+c.driveKm+'km)') : '—', c.driveMinJam == null, { hint: 'Mont Kiara中心からの目安。渋滞を含めた概算(空いていれば'+(c.driveMinFree!=null?c.driveMinFree+'分':'—')+')' }),
     kv('夜 / 1人', esc(dinner || '—'), !dinner),
-    kv('カテゴリ', esc(c.cat || c.catGroup || '—'), !(c.cat || c.catGroup)),
+    // 大分類＞小分類の順で両方出す(2026-08-15 竹森さん裁定)。一覧カード・地図の
+    // 吹き出し・絞り込みは大分類、ここだけ小分類…という食い違いが「ステーキが
+    // 別の画面では洋食になっている」に見えていた。片方しか無い店は在る方だけ。
+    // 中東・バー・屋台街のように大小が同じ名前の分類は1つだけ出す(「中東 ＞ 中東」を出さない)。
+    kv('カテゴリ', esc([...new Set([c.catGroup, c.cat].filter(Boolean))].join(' ＞ ') || '—'), !(c.cat || c.catGroup)),
     // kidOk: 1 = family-friendly, 0 = a judged "suits adults" (v9's wording),
     // null = the expansion research found no evidence either way — say nothing
     // rather than guess.
@@ -485,7 +489,14 @@ export function applyUrlState(s){
   // Filters travel in the URL too (?f=fRent:0-20000|...): write them into
   // the controls, then re-run the filters so the shared link shows what the
   // sender saw.
-  if(s.f && applyFilterParam(s.f) > 0) applyFilters();
+  // 小分類(fCat)の選択肢は大分類が決まって初めて生まれるので、一度書いてから
+  // 選択肢を作り直し、もう一度書く。二度目は同じ値を入れ直すだけ(冪等)で、
+  // 一度目に落ちた小分類だけが今度は刺さる。
+  if(s.f && applyFilterParam(s.f) > 0){
+    syncCatSubOptions();
+    applyFilterParam(s.f);
+    applyFilters();
+  }
   // An unknown name (renamed or removed record) is ignored rather than shown as
   // an error — a stale bookmark should still open a usable map.
   if(s.sel && CONDOS.some(x => x.name === s.sel)) selectCondo(s.sel, { tab: s.tab || 'detail' });
