@@ -25,7 +25,7 @@ import * as P from '../data/personal.js';
 import * as FS from '../data/fileStore.js';
 import { stableStringify } from '../domain/fileSync.js';
 import { recTier, recBadge } from '../domain/recommend.js';
-import { esc, jsStr, num } from './list.js';
+import { esc, jsStr, num, ratingText } from './list.js';
 
 // The re-render to run after a record changes. Injected by main.js so this
 // module never has to reach back into the list renderer at import time.
@@ -73,10 +73,33 @@ export function scoreBlockHtml(c){
     `<div class="sc-bars">${bars}</div></div>`;
 }
 
-/** 「Google ★4.8 / 1,178件（母数 標準）→ 縮約後 4.44」 */
+/** 「Google ★4.8 / 1,178件（母数 標準）→ 縮約後 4.44」— 詳細パネル用。 */
 export function ratingLineHtml(c){
   const t = ratingMetaText(c, (c && c.ledgerBaseline) || BASELINE_STAR);
   return t ? `<div class="sc-rating">${esc(t)}</div>` : '';
+}
+
+/**
+ * カード用の評価行（2026-08-16）。「（母数 標準）→ 縮約後 4.44」は統計の用語で、
+ * 家族が店を選ぶときには使わない。カードでは住まいモードと同じ素の表記に戻し、
+ * 縮約の説明は詳細パネル(ratingLineHtml)にだけ残す。
+ */
+export function ratingLineCardHtml(c){
+  const t = ratingText(c);
+  return t ? `<div class="sc-rating">Google ${esc(t)}</div>` : '';
+}
+
+/**
+ * カードが先頭に出す点数（2026-08-16）。
+ * 棒3本は台帳スコアの内訳だが、ラベルはCSSで隠されていて意味が読めず、しかも
+ * 「継続性」は312/357店(87%)で常にゼロ＝空の棒が並ぶだけだった。棒と内訳は
+ * 詳細パネル(scoreBlockHtml)にだけ残し、カードは数字1つにする。
+ * 数字自体は残す — 既定の並び順が台帳スコア順なので、消すと順番の理由が読めなくなる。
+ */
+export function scoreNumberHtml(c){
+  const s = scoreOf(c);
+  return `<div class="scorebox"><div class="sc-total">` +
+    `<span class="sc-num">${s.total}</span><span class="sc-unit">/100</span></div></div>`;
 }
 
 // ============================================================
@@ -159,10 +182,10 @@ export function eatoutCardExtraHtml(c){
   // 未訪問カードは「評価 + 2ボタン」を1行に畳む(2026-08-08 密度改善:
   // カード307px→大幅圧縮の主部品)。訪問済みは記録欄が要るので従来の展開。
   if(!e || e.v !== 1){
-    return `<div class="vb-line">${ratingLineHtml(c)}` +
+    return `<div class="vb-line">${ratingLineCardHtml(c)}` +
       `<div class="vb-mini">${c.id ? vbHeadButtons(c.id, e || P.getEntry(c.id)) : ''}</div></div>`;
   }
-  return ratingLineHtml(c) + visitBoxHtml(c, 'led');
+  return ratingLineCardHtml(c) + visitBoxHtml(c, 'led');
 }
 
 /**
@@ -181,7 +204,7 @@ export const isVisited = P.isVisited;
 
 /** The score block a 台帳 card leads with in 外食モード. '' elsewhere. */
 export function eatoutCardScoreHtml(c){
-  return eatoutActive() && recordLayer(c) === 'dining' ? scoreBlockHtml(c) : '';
+  return eatoutActive() && recordLayer(c) === 'dining' ? scoreNumberHtml(c) : '';
 }
 
 /** The record block the detail panel shows in 外食モード. '' elsewhere. */
@@ -543,8 +566,11 @@ export function initFileDb(){
   });
   FS.onFileChange(() => {
     renderSaveBar();
-    // データビューを開いているときは状態表示を追随させる
-    if(eatoutActive() && listView === 'data') onChanged();
+    // ファイルから記録を取り込んだ時も、画面が古いままにならないようにする
+    // （2026-08-16 影響範囲sweep: 以前はデータビューを開いているときだけ
+    //  追随していたので、台帳や詳細パネルを見ている最中に取り込むと
+    //  「保存はされたのに画面が変わらない」X1と同じ症状が残っていた）。
+    if(eatoutActive()) onChanged();
   });
   FS.resumeFileStore();
 }

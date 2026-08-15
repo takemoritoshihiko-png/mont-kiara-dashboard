@@ -71,7 +71,12 @@ export function currentFilterParam(doc) {
   const parts = [];
   for (const id of FILTER_IDS) {
     const el = d.getElementById(id);
-    if (el && el.value) parts.push(id + ':' + encodeURIComponent(el.value));
+    if (!el || !el.value) continue;
+    // 並び替えは既定値が常に入っているので、そのままだと全リンクに
+    // `?f=fSort:…` が付いて公開サイトのURLの形が変わってしまう。
+    // 既定（そのレイヤーの先頭の選択肢）のときは載せない（2026-08-16）。
+    if (id === 'fSort' && el.options && el.options[0] && el.value === el.options[0].value) continue;
+    parts.push(id + ':' + encodeURIComponent(el.value));
   }
   return parts.join('|');
 }

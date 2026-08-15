@@ -599,8 +599,10 @@ export function updateLegend(){
   if(eatout){
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MARKER_COLORS.dining.bg};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>飲食店</div>`;
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_STAR_BG};border-color:${MICHELIN_STAR_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ミシュラン星付き（金色ピン・★の数=星の数）</div>`;
-    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_BIB_BG};border-color:${MICHELIN_BIB_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ビブグルマン（琥珀色ピン・お値打ち店）</div>`;
+    // 並びは 星付き → 掲載店 → ビブグルマン（2026-08-16 竹森氏指示）。
+    // 絞り込みの選択肢(MICHELIN_FILTERS)と同じ順に揃える。
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_SEL_BG};border-color:${MICHELIN_SEL_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>掲載店（淡い金ピン・Ⓜ／星もビブも無い掲載）</div>`;
+    h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_BIB_BG};border-color:${MICHELIN_BIB_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ビブグルマン（琥珀色ピン・お値打ち店）</div>`;
     // ✓訪問済み・♡行きたい バッジ(2026-08-16): 凡例にこれまで無かったので
     // 2行に増やさず1行にまとめる(凡例が長いと地図を潰すため)。
     h+=`<div class="map-legend-item">✓ 訪問済み ／ ♡ 行きたい（ピン右上・左上のバッジ）</div>`;

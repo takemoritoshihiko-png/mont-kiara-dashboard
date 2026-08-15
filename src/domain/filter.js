@@ -188,10 +188,12 @@ export function areaBucketOf(area){ return AREA_BUCKET_OF[area] || 'その他'; 
 export function isBucketedArea(area){ return area in AREA_BUCKET_OF; }
 
 /** Michelin filter values. 'star' covers both star levels; '' is everything. */
+// 並びは 星付き → 掲載店 → ビブグルマン → 掲載なし（2026-08-16 竹森氏指示）。
+// 地図の凡例(src/ui/map.js の updateLegend)も同じ順に揃える。
 export const MICHELIN_FILTERS = [
   { value: 'star', label: '星付き（★1・★2）' },
-  { value: 'bib',  label: 'ビブグルマン' },
   { value: 'sel',  label: '掲載店（セレクテッド）' },
+  { value: 'bib',  label: 'ビブグルマン' },
   { value: 'none', label: '掲載なし' },
 ];
 

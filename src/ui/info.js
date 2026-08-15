@@ -518,7 +518,14 @@ export function applyUrlState(s){
   // Mode first: 外食モード pins the layer, so restoring the layer before the
   // mode would set it twice and leave the sort on the wrong default.
   if(s.mode) setMode(s.mode, { silent: true });
-  if(s.layer && s.layer !== activeLayer) setLayer(s.layer);
+  // selectNearby と同じ穴がここにもあった（2026-08-16 影響範囲sweepで検出）:
+  // `?mode=eatout&layer=school` のようなURLを開くと、外食モードのまま一覧だけ
+  // 学校に化け、層セグが隠れているので画面から戻せなくなる。URLは手で編集も
+  // 共有もされるので、リンク経由でもモードと層は必ず噛み合わせる。
+  if(s.layer && s.layer !== activeLayer){
+    if(appMode === 'eatout' && s.layer !== 'dining') setMode('home', { silent: true });
+    setLayer(s.layer);
+  }
   // Filters travel in the URL too (?f=fRent:0-20000|...): write them into
   // the controls, then re-run the filters so the shared link shows what the
   // sender saw.

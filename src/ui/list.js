@@ -432,7 +432,7 @@ export function syncLayerUI(){
   // スマホ(≤768px)では、常時表示の絞り込みと並び替えもこの開閉に入る
   // (2026-08-16: パネル331pxのうち約296pxがコントロールで、初期表示に店が
   // 1軒も映っていなかった。CSS側は body.more-open で切り替える)。
-  document.body.classList.toggle('more-open', moreOpen);
+  if(document.body) document.body.classList.toggle('more-open', moreOpen);
   const narrow = typeof matchMedia === 'function' && matchMedia('(max-width:768px)').matches;
   const mt = $('moreToggle');
   if(mt){
@@ -509,11 +509,31 @@ export function shareView(){
   const tail = dropped.length ? `（${dropped.join('・')}はリンクに含まれません）` : '';
   const ok = () => toast('リンクをコピーしました' + tail);
   const fail = () => toast('⚠ コピーできませんでした。アドレスバーからコピーしてください');
+  // 先に「選択してコピー」を試す。これは同期で、権限も画面のフォーカスも要らない
+  // ので、押した瞬間に結果が確定する。新しいクリップボードAPIは権限が保留の間
+  // 待ち続ける（＝押しても何の反応も返らない時間ができる）ので、後ろに置く。
+  if(copyBySelection(url)){ ok(); return; }
   if(navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(url).then(ok, fail);
   } else {
     fail();
   }
+}
+
+/** 画面外のテキスト欄に入れて選択→コピー。古い経路だがフォーカス条件が緩い。 */
+function copyBySelection(text){
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.setAttribute('aria-hidden', 'true');
+    ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    const done = document.execCommand && document.execCommand('copy');
+    ta.remove();
+    return !!done;
+  } catch { return false; }
 }
 
 function syncAwardBtn(){

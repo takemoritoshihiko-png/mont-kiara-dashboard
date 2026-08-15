@@ -376,10 +376,16 @@ describe('keyboard focus is visible', () => {
 });
 
 describe('mobile (≤768px)', () => {
-  it('gives the panel 45% of the split, not the 27vh that halved a card', () => {
-    expect(mobile).toContain('flex:0 0 45%');
+  // 2026-08-16: 45% → 55%。45%は2026-08-07に27vhから直した値だが、実測すると
+  // 一覧に残るのは126pxで、カード1枚(220px)が丸ごと入らなかった＝「カードを
+  // 半分に切らない」という当時の意図をまだ満たしていなかった。55%で一覧197px、
+  // カード188px（スマホでは点数をカード右上に寄せて28px回収）で1枚が丸ごと出る。
+  it('gives the panel 55% of the split, so one whole card fits', () => {
+    expect(mobile).toContain('flex:0 0 55%');
     expect(mobile).not.toContain('27vh');
     expect(mobile).not.toContain('73vh');
+    // パネルの開閉ボタンは分割線の上に座るので、比率と必ず一致させる。
+    expect(mobile).toContain('bottom:55%');
   });
 
   it('splits the height of .main, so the panel is not clipped by the header', () => {

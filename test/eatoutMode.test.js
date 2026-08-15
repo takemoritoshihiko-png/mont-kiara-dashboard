@@ -219,20 +219,30 @@ describe('the 台帳 card in 外食モード', () => {
     expect(cardHtml(DEWAKAN)).toContain('class="condo-card record-card visited"');
   });
 
-  it('leads with the score and its breakdown', () => {
+  // 2026-08-16: カードは点数1つだけにした。棒3本はラベルがCSSで隠れていて
+  // 意味が読めず、「継続性」は312/357店(87%)で常にゼロ＝空の棒だった。
+  // 内訳と棒は詳細パネル(scoreBlockHtml)にだけ残す。
+  it('leads with the score alone — no breakdown, no meters', () => {
     const h = cardBodyHtml(DEWAKAN);
     expect(h).toContain('class="scorebox"');
     expect(h).toContain('>80<');            // Dewakan's total (see diningScore.test.js)
-    expect(h).toContain('35 + 25 + 20');
+    expect(h).not.toContain('35 + 25 + 20');
+    expect(h).not.toContain('sc-bar');
     expect(h.indexOf('scorebox')).toBeLessThan(h.indexOf('card-name'));
   });
 
-  it('prints the star with its sample size and its shrunk value, once', () => {
+  // 2026-08-16: 「（母数 やや薄い）→ 縮約後 4.29」は統計の用語なので、カードでは
+  // 住まいモードと同じ素の表記に戻した。縮約の説明は詳細パネルにだけ残す。
+  it('prints the plain star on the card, and keeps the shrunk value for the detail panel', () => {
     const h = cardHtml(DEWAKAN);
-    expect(h).toContain('母数 やや薄い');
-    expect(h).toContain('縮約後 4.29');
-    // The plain 「★4.2 (548件)」 of 住まいモード would be the same fact twice.
-    expect(h).not.toContain('★4.2 (548件)');
+    expect(h).toContain('★4.2 (548件)');
+    expect(h).not.toContain('母数 やや薄い');
+    expect(h).not.toContain('縮約後 4.29');
+    // 詳細パネル側は従来どおり縮約の説明つき。
+    const d = eatoutDetailHtml(DEWAKAN);
+    expect(d).toContain('母数 やや薄い');
+    expect(d).toContain('縮約後 4.29');
+    expect(d).toContain('35 + 25 + 20');
   });
 
   it('still prints the plain rating in 住まいモード', () => {

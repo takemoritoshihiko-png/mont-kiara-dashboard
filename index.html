@@ -471,7 +471,10 @@ button,input,select{font-family:inherit}
 /* ---- 記録欄 (visitbox) ---- */
 .visitbox{padding:var(--s2) var(--s3) var(--s3);border-top:1px solid var(--hairline);background:var(--bg);border-radius:0 0 var(--r-card) var(--r-card)}
 .vb-head{display:flex;gap:var(--s2);flex-wrap:wrap}
-.vb-line{display:flex;align-items:center;gap:var(--s2);padding:0 var(--s3) var(--s2)}
+/* 評価と記録ボタンが1行を分け合う。ボタン側が固定幅なので、評価は残りに
+   押し込まれて数件が1〜2文字だけ欠けていた（2026-08-16 実測: 必要120px/実119px）。
+   左右の余白を詰めて評価に返す。 */
+.vb-line{display:flex;align-items:center;gap:var(--s1);padding:0 var(--s2) var(--s2)}
 .vb-line .sc-rating{padding:0;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .vb-mini{display:flex;gap:var(--s1);flex-shrink:0}
 .vb-mini .vb-toggle{flex:none;padding:3px var(--s2);font-size:var(--fs-label)}
@@ -558,8 +561,9 @@ button,input,select{font-family:inherit}
 /* ============================================================
    MOBILE (≤768px)  — B4
    Not a second design, the same one re-proportioned. Three rules govern it:
-   1. The bottom panel is 45% of the split (it was 27vh, which cut the richer
-      B3 cards in half — you could not read one card without scrolling).
+   1. The bottom panel is 55% of the split (it was 27vh, which cut the richer
+      B3 cards in half — you could not read one card without scrolling; 45%
+      still did not fit one whole card and was raised again on 2026-08-16).
    2. The split is a share of .main, not of the viewport. 73vh+27vh added up to
       a full screen inside a container that is a screen MINUS the header, so
       the bottom of the panel was clipped by exactly the header's height.
@@ -591,9 +595,14 @@ button,input,select{font-family:inherit}
   .header h1 .en{display:none}
   .main{flex-direction:column;height:calc(100vh - 44px);height:calc(100dvh - 44px)}
   #map{flex:1 1 auto;height:auto;min-height:0}
-  .panel{width:100%!important;flex:0 0 45%;height:auto;border-left:none;border-top:1px solid var(--hairline)}
+  /* 45% は 2026-08-07 に一度直した値だが、実測すると一覧に残るのは 126px で、
+     カード1枚(220px)が丸ごと入らなかった（サマリー35 + 絞り込み101 + 保存バー35
+     + 出典24 が上下を食う）＝「カードを半分に切らない」という当時の意図をまだ
+     満たせていなかった。55% にすると一覧197px＝1枚が丸ごと出る。地図は321pxで、
+     周辺が読める大きさは保っている（2026-08-16 実測）。 */
+  .panel{width:100%!important;flex:0 0 55%;height:auto;border-left:none;border-top:1px solid var(--hairline)}
   .panel.collapsed{flex:0 0 0;height:0;min-height:0}
-  .toggle-panel{right:var(--s3)!important;top:auto;bottom:45%;border-radius:var(--r-control) var(--r-control) 0 0;padding:var(--s2) var(--s4);z-index:1001;font-size:var(--fs-xs);min-height:40px}
+  .toggle-panel{right:var(--s3)!important;top:auto;bottom:55%;border-radius:var(--r-control) var(--r-control) 0 0;padding:var(--s2) var(--s4);z-index:1001;font-size:var(--fs-xs);min-height:40px}
   .toggle-panel.collapsed{bottom:0}
   .summary-bar{gap:3px;padding:var(--s1)}
   .summary-val{font-size:var(--fs-sm)}
@@ -625,6 +634,13 @@ button,input,select{font-family:inherit}
   body:not(.more-open) .filter-row[data-layer-only]{display:none!important}
   body:not(.more-open) .filter-row[data-mode-only]{display:none!important}
   body:not(.more-open) #sortRow{display:none!important}
+
+  /* 点数は自分の行を持たず、カード右上に寄せる（縦に28px返す）。
+     数字自体は残す — 既定の並び順が台帳スコア順なので、消すと順番の理由が
+     読めなくなる。狭い画面でだけの措置で、パソコンでは従来どおり1行使う。 */
+  .record-card{position:relative}
+  .record-card .scorebox{position:absolute;top:6px;right:10px;margin:0;padding:0;border:none;gap:0}
+  .record-card .card-head{padding-right:52px}
   /* Two chips (michelin + category) now share the row under a dining name. */
   .card-chips .card-chip{max-width:calc(50% - var(--s1))}
 
