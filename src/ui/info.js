@@ -20,7 +20,7 @@ import { recordLayer } from '../domain/filter.js';
 import { nearby, formatDistance, BUCKET_LABELS, NEARBY_BUCKETS } from '../domain/nearby.js';
 import { focusOnRecord, rebuild } from './map.js';
 import { renderList, setLayer, setMode, applyFilters, syncCatSubOptions, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
-import { eatoutDetailHtml, eatoutRecBadgeHtml } from './dining.js';
+import { eatoutDetailHtml, eatoutRecBadgeHtml, toast } from './dining.js';
 import { syncUrl, withUrlWritesSuspended, applyFilterParam } from './urlState.js';
 
 // The record the overlay is currently showing. Kept so a tab switch can
@@ -370,9 +370,19 @@ export function selectNearby(name){
   const r = CONDOS.find(x => x.name === name);
   if(!r) return;
   const layer = recordLayer(r);
-  // The layer switch is part of one navigation, not a step of its own: writing
-  // its URL here would leave a half-updated entry in the history.
-  if(layer !== activeLayer) withUrlWritesSuspended(() => setLayer(layer));
+  // X2 fix: 外食モードは層を飲食に固定する契約（CLAUDE.md / test/eatoutMode.
+  // test.js）。setLayer() 自身はそれを知らないので、飲食以外を無条件で渡すと
+  // 見出しは「外食台帳」のまま一覧だけ差し替わり、層セグが隠れているので
+  // 画面から戻す手段も無くなる。押した意味を消さないよう、住まいモードへ
+  // 移ってからその層を開く（(a)案・2026-08-16 裁定）。
+  const crossingFromEatout = appMode === 'eatout' && layer !== 'dining';
+  withUrlWritesSuspended(() => {
+    if(crossingFromEatout) setMode('home');
+    // The layer switch is part of one navigation, not a step of its own:
+    // writing its URL here would leave a half-updated entry in the history.
+    if(layer !== activeLayer) setLayer(layer);
+  });
+  if(crossingFromEatout) toast('住まいモードに切り替えました（右上の「外食」で戻れます）');
   selectCondo(name);
 }
 
@@ -422,6 +432,29 @@ function renderInfo(){
     headerHtml(c) +
     `<div class="info-tabs" role="tablist" aria-label="表示する内容">${tabBtn('detail', '詳細')}${tabBtn('nearby', '周辺')}</div>` +
     `<div class="info-tab-body">${body}</div>`;
+}
+
+/**
+ * X1 fix: re-render the open overlay after a personal record changes
+ * elsewhere (dineVisit / dineWant / dineRepeat / dineHide). Those only ran
+ * applyFilters() before, so ✓訪問済み・訪問日・再訪意向・感想欄 never appeared
+ * until the overlay was closed and reopened — the record WAS saved, the panel
+ * just never redrew.
+ *
+ * Does nothing when no overlay is open (nothing to redraw) and does nothing
+ * while the user is mid-keystroke in the overlay's own 実額/感想 fields —
+ * visitBoxHtml(c,'info') is the only place those two ids carry the 'info'
+ * namespace, so checking the focused id is enough to know a redraw would cut
+ * off typing.
+ */
+export function refreshInfoIfOpen(){
+  if(!currentRecord) return;
+  const active = typeof document !== 'undefined' ? document.activeElement : null;
+  const tag = active && active.tagName;
+  const id = active && active.id;
+  if((tag === 'TEXTAREA' || tag === 'INPUT') && id &&
+     (id.startsWith('amt-info-') || id.startsWith('memo-info-'))) return;
+  renderInfo();
 }
 
 export function setInfoTab(tab){

@@ -21,7 +21,7 @@ import {
   dineImport, dineClearAll, dineDownload, dineSelectExport, renderSaveBar, toast,
 } from './ui/dining.js';
 import { initPersonal, flush, onPersonalChange } from './data/personal.js';
-import { selectCondo, closeInfo, setInfoTab, selectNearby, applyUrlState } from './ui/info.js';
+import { selectCondo, closeInfo, setInfoTab, selectNearby, applyUrlState, refreshInfoIfOpen } from './ui/info.js';
 import { initA11y } from './ui/a11y.js';
 import { readUrlState, withUrlWritesSuspended } from './ui/urlState.js';
 import {
@@ -105,7 +105,9 @@ map.on('moveend', () => { clearTimeout(moveTimer); moveTimer = setTimeout(update
 // save bar instead of losing the first evening's notes in silence.
 // ============================================================
 const personal = initPersonal();
-setOnPersonalChange(() => { applyFilters(); });
+// X1 fix (2026-08-16): 訪問済み等のボタンは保存後 applyFilters() しか起こさず、
+// 開いている詳細オーバーレイは閉じて開き直すまで表示が変わらなかった。
+setOnPersonalChange(() => { applyFilters(); refreshInfoIfOpen(); });
 onPersonalChange(() => renderSaveBar());
 // ファイルDB（A案）: 保存済みフォルダがあれば無音で再開。未接続なら何もしない。
 initFileDb();
