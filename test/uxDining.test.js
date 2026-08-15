@@ -255,17 +255,10 @@ describe('the budget SORT moves with the same basis', () => {
 // This is the whole reason 昼夜 is one basis and not two filters.
 // ============================================================
 describe('invariant: the price band and the budget order read one figure', () => {
-  // '0-150' は今夜プリセット用の累積帯(2026-08-08): 意図的に 0-50 と 50-150 の
-  // 和集合なので、分割(partition)の不変条件からは外し、和集合性そのものを固定する。
-  const CUMULATIVE = ['0-150'];
-  const BANDS = Object.keys(PRICE_BANDS).filter(b => !CUMULATIVE.includes(b));
-
-  it('the cumulative band is exactly the union of its base bands', () => {
-    for(const r of LEDGER){
-      const inUnion = matchesPriceBand(r, '0-50') || matchesPriceBand(r, '50-150');
-      expect(matchesPriceBand(r, '0-150'), r.name).toBe(inUnion);
-    }
-  });
+  // B-3(2026-08-16裁定): '0-150' の累積帯(旧・今夜プリセット専用)を撤去したので、
+  // PRICE_BANDS の全帯がきれいに排他(partition)になった。以前はここで '0-150' を
+  // 例外として除いていたが、その例外自体が不要になった。
+  const BANDS = Object.keys(PRICE_BANDS);
 
   for(const basis of [BUDGET_BASIS_NIGHT, BUDGET_BASIS_DAY]){
     it(`every priced restaurant sits in exactly one base band on the ${basis} basis`, () => {
