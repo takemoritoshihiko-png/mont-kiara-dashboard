@@ -8,7 +8,7 @@ import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS, MICHELIN_BADGES } from '.
 import { selectCondo, closeInfo } from './info.js';
 // Deferred-usage only (called inside functions): safe across the list.js<->map.js cycle.
 import { cardHeroText, ratingText, num } from './list.js';
-import { isVisited } from '../data/personal.js';
+import { isVisited, getEntry } from '../data/personal.js';
 
 // ============================================================
 // ZOOM THRESHOLDS (tune here)
@@ -455,20 +455,28 @@ function mkMarker(c) {
       : isSel ? 'color:#3d2b00;font-size:12px;font-weight:700'
       : 'color:#fff;font-size:10px';
     // 訪問済みの店はピン自体に緑の✓バッジ（2026-08-07 依頼: 地図を見るだけで
-    // 「もう行った」が分かるように）。記録が変わると applyFilters→rebuild が
-    // 走るので、押した瞬間にバッジも追随する。色は再訪意向「また行く」と同じ
-    // 緑 (--rv-again) のリテラル。
+    // 「もう行った」が分かるように）。行きたい店には反対側(左上)に同じ緑の
+    // ♡バッジ（2026-08-16 依頼: 「行きたいが、まだ」も地図だけで分かる
+    // ように。同じ店が両方立っても重ならない位置分け）。記録が変わると
+    // applyFilters→rebuild が走るので、押した瞬間にバッジも追随する。色は
+    // 再訪意向「また行く」と同じ緑 (--rv-again) のリテラルを✓・♡で共有する
+    // （新色を増やさない契約 — test/visualSystem.test.js の色一覧固定）。
     // 外食モード限定: 住まいモードは個人記録を一切出さない契約（CLAUDE.md）
     // なので、住まい側で飲食レイヤーを重ねてもバッジは描かない。
+    // 「行きたい」もisVisitedと同じ読み取り経路(personal.jsのgetEntry)・
+    // 同じモードガードで揃える。personal.jsにisWant相当が無いためgetEntryを
+    // 直接読む(mapは personal.js を編集できない — 用意されている読み取り
+    // 関数を使う契約)。
     const visited = appMode === 'eatout' && isVisited(c);
-    const badge = visited
-      ? `<span aria-hidden="true" style="position:absolute;top:-5px;right:-5px;width:13px;height:13px;border-radius:50%;background:#1d5f55;border:1.5px solid #fff;color:#fff;font-size:9px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.35)">✓</span>`
-      : '';
+    const want = appMode === 'eatout' && getEntry(c.id).w === 1;
+    const badgeStyle = (side) => `position:absolute;top:-5px;${side}:-5px;width:13px;height:13px;border-radius:50%;background:#1d5f55;border:1.5px solid #fff;color:#fff;font-size:9px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.35)`;
+    const badge = (visited ? `<span aria-hidden="true" style="${badgeStyle('right')}">✓</span>` : '')
+      + (want ? `<span aria-hidden="true" style="${badgeStyle('left')}">♡</span>` : '');
     const icon = L.divIcon({
       className: pinClass(c),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
-      html: `<div role="button" aria-label="飲食店 ${attrEsc(c.name)}${mb ? '、' + mb : ''}${visited ? '、訪問済み' : ''}" style="position:relative;width:${csz}px;height:${csz}px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+      html: `<div role="button" aria-label="飲食店 ${attrEsc(c.name)}${mb ? '、' + mb : ''}${visited ? '、訪問済み' : ''}${want ? '、行きたい' : ''}" style="position:relative;width:${csz}px;height:${csz}px;display:flex;align-items:center;justify-content:center;cursor:pointer">
         <span aria-hidden="true" style="position:absolute;inset:0;border-radius:${MARKER_COLORS.dining.radius};background:${bg};border:2px solid ${border};box-shadow:0 2px 6px rgba(0,0,0,0.3);transform:rotate(-45deg)"></span>
         <span aria-hidden="true" style="position:relative;line-height:1;${glyphStyle}">${glyph}</span>${badge}
       </div>`
@@ -593,6 +601,9 @@ export function updateLegend(){
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_STAR_BG};border-color:${MICHELIN_STAR_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ミシュラン星付き（金色ピン・★の数=星の数）</div>`;
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_BIB_BG};border-color:${MICHELIN_BIB_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>ビブグルマン（琥珀色ピン・お値打ち店）</div>`;
     h+=`<div class="map-legend-item"><div class="map-legend-dot" style="background:${MICHELIN_SEL_BG};border-color:${MICHELIN_SEL_BORDER};border-radius:${MARKER_COLORS.dining.radius};transform:rotate(-45deg)"></div>掲載店（淡い金ピン・Ⓜ／星もビブも無い掲載）</div>`;
+    // ✓訪問済み・♡行きたい バッジ(2026-08-16): 凡例にこれまで無かったので
+    // 2行に増やさず1行にまとめる(凡例が長いと地図を潰すため)。
+    h+=`<div class="map-legend-item">✓ 訪問済み ／ ♡ 行きたい（ピン右上・左上のバッジ）</div>`;
     h+=`<div class="map-legend-item">数字の丸 = 重なった店。押すと開きます</div>`;
   } else {
     // The condo pin carries year (fill) + tier (letter/ring): explain both
