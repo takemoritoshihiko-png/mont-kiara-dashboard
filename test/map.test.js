@@ -128,3 +128,34 @@ describe('同一住所ピンの選び直しポップアップ', () => {
     expect(html.indexOf('.colo-item{min-height:40px}', mobileAt)).toBeGreaterThan(mobileAt);
   });
 });
+
+// ============================================================
+// ♡「行きたい」バッジ(2026-08-16): ✓訪問済みバッジと対になる地図バッジ。
+// mkMarker は Leaflet(L.divIcon) 依存で DOM 環境が無いテストからは呼べない
+// ため、test/eatoutMode.test.js の「visited badge stays out of home mode」
+// と同じ手法(ソース契約のテキストスキャン)で、want も同じモードガードを
+// 通ることを固定する。
+// ============================================================
+describe('want (♡行きたい) badge stays out of home mode', () => {
+  const map = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8');
+
+  it("map.js computes `want` only when appMode === 'eatout'", () => {
+    const line = map.split('\n').find(l => l.includes('const want ='));
+    expect(line, 'want badge line not found').toBeTruthy();
+    expect(line).toContain("appMode === 'eatout'");
+  });
+
+  it('visited(✓)とwant(♡)は同じ色(#1d5f55)を共有し、新色を増やさない', () => {
+    const style = map.slice(map.indexOf('const badgeStyle'));
+    expect(style.slice(0, style.indexOf('\n'))).toContain('#1d5f55');
+  });
+
+  it('♡バッジは✓バッジの反対側(左上)に出る', () => {
+    expect(map).toContain("badgeStyle('right')");
+    expect(map).toContain("badgeStyle('left')");
+  });
+
+  it('読み上げラベルにも「行きたい」を、訪問済みと同じ形（読点区切り）で足す', () => {
+    expect(map).toContain("${want ? '、行きたい' : ''}");
+  });
+});
