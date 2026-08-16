@@ -595,15 +595,27 @@ export function renderSaveBar(){
   // 帯を常時赤くしない（常に赤い警告は、そのうち見えなくなる）。文言の⚠と
   // データ画面の赤枠が役目を負う。
   bar.classList.toggle('bad', !!st.error || cs.phase === 'conflict' || cs.phase === 'error');
-  const text = st.error ? '⚠ ' + st.error
-    : cs.phase === 'conflict' ? '⚠ クラウドと食い違い（データ管理で選んでください）'
-    : cs.phase === 'error' ? '⚠ クラウドに保存できていません（データ管理で確認）'
+  // 文は2つに分ける。**前半は絶対に落とさない**もの（誰として保存しているか／
+  // 何が壊れているか）、後半はあれば嬉しいもの（いつ保存したか）。
+  // スマホのヘッダーは実測128pxしか空かず全文206pxは入らないので、後半だけを
+  // CSSで隠す。1つの文字列を切り詰めると、いちばん大事な名前から消えていく。
+  const head = st.error ? '⚠ 保存できません'
+    : cs.phase === 'conflict' ? '⚠ 食い違いあり'
+    : cs.phase === 'error' ? '⚠ 未保存'
     : cs.phase === 'signing' ? '☁ 接続中…'
-    : signedIn ? `☁ ${cs.username} ・ ${cs.phase === 'saving' ? '保存中…' : savedAtText(st)}`
-    : '⚠ ' + PRIVACY_SHORT;
+    : signedIn ? `☁ ${cs.username}`
+    : '⚠ この端末だけ';
+  const tail = st.error ? '（' + st.error + '）'
+    : cs.phase === 'conflict' ? '（データ管理で選んでください）'
+    : cs.phase === 'error' ? '（クラウド・データ管理で確認）'
+    : signedIn ? ` ・ ${cs.phase === 'saving' ? '保存中…' : savedAtText(st)}`
+    : 'に保存。消すと失われます';
   // データ画面への入口はここ(旧3タブは2026-08-08廃止)。保存の話をする場所に併設。
-  bar.innerHTML = `<span class="savebar-text" title="${esc(PRIVACY_TEXT)}">${esc(text)}</span>` +
-    `<button type="button" class="savebar-link" onclick="setView('data')">💾 データ管理</button>`;
+  bar.innerHTML = `<span class="savebar-text" title="${esc(head + tail + ' / ' + PRIVACY_TEXT)}">` +
+      `<span class="sb-head">${esc(head)}</span><span class="sb-tail">${esc(tail)}</span></span>` +
+    // スマホでは文字ラベルをCSSで隠して絵文字だけにするので、名前は aria-label が持つ
+    `<button type="button" class="savebar-link" aria-label="データ管理" onclick="setView('data')">` +
+      `<span aria-hidden="true">💾</span><span class="sb-btn-label" aria-hidden="true"> データ管理</span></button>`;
 }
 
 // ============================================================

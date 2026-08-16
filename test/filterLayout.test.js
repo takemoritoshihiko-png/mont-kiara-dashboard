@@ -91,6 +91,45 @@ describe('ミシュランの並び（2026-08-16 竹森氏指示）', () => {
   });
 });
 
+// 2026-08-16 竹森氏指示「データ保管の『まだ保存されていません』の位置が悪い。
+// 住まい／外食の上段に移して」。一覧の下の帯だと、記録を付けている最中に目に
+// 入らず、視線が最下部まで往復していた。ヘッダーは畳まれないので、スマホでも
+// 常に「誰として、どこまで保存されたか」が見える。
+describe('保存の状況はヘッダーの 住まい/外食 の右にある', () => {
+  const header = html.slice(html.indexOf('<header class="header"'), html.indexOf('</header>'));
+
+  it('保存バーはヘッダーの中にある', () => {
+    expect(header).toContain('id="saveBar"');
+  });
+
+  it('一覧の下には残っていない（2箇所に出ない）', () => {
+    expect((html.match(/id="saveBar"/g) || []).length).toBe(1);
+  });
+
+  it('モード切替のあとに来る（切替 → 保存 の順）', () => {
+    expect(header.indexOf('id="modeSeg"')).toBeLessThan(header.indexOf('id="saveBar"'));
+  });
+
+  // スマホのヘッダーで空くのは実測106px。全文211pxは入らないので、後半（いつ
+  // 保存したか）と💾のラベルだけを畳み、**名前は必ず残す**。1つの文字列を
+  // 切り詰めると、いちばん大事な名前から先に消えていく。
+  it('スマホでは後半と💾のラベルだけを隠す（名前は隠さない）', () => {
+    const mobile = html.slice(html.indexOf('@media(max-width:768px)'));
+    expect(mobile).toContain('.sb-tail,.sb-btn-label{display:none}');
+    expect(mobile).not.toContain('.sb-head{display:none}');
+  });
+
+  it('アプリ名が幅0まで潰れないよう下限を持つ', () => {
+    const rule = html.slice(html.indexOf('.header h1{flex:'));
+    expect(rule.slice(0, rule.indexOf('}'))).toContain('min-width');
+  });
+
+  it('💾ボタンは文字ラベルを隠しても名前を持つ', async () => {
+    const src = readFileSync(new URL('../src/ui/dining.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+    expect(src).toMatch(/class="savebar-link" aria-label="データ管理"/);
+  });
+});
+
 describe('共有ボタン', () => {
   it('並び替えの行に置かれ、shareView() を呼ぶ', () => {
     expect(html).toContain('id="shareBtn"');
