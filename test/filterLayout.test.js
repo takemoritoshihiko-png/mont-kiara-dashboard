@@ -118,8 +118,21 @@ describe('スマホ（≤768px）で絞り込みと並び替えを畳む', () =>
 });
 
 describe('サマリータイル', () => {
-  it('値は縮まない（「RM 811」が「RM 8…」になるのを止める）', () => {
-    const rule = html.slice(html.indexOf('.summary-val{'));
-    expect(rule.slice(0, rule.indexOf('}'))).toContain('flex-shrink:0');
+  // 2026-08-16 竹森氏指摘「家賃中央値」が「家」になっていた。
+  // タイルは77pxしかなく、値とラベルを**横に並べる**と取り合いになる
+  // （「RM 5,750」が61px使い、ラベルに6pxしか残らなかった）。
+  // 縦に積めば、値もラベルもタイルの幅をまるごと使える。
+  it('値とラベルを縦に積む（横に並べると77pxを取り合って潰れる）', () => {
+    const rule = html.slice(html.indexOf('.summary-item{'));
+    const decl = rule.slice(0, rule.indexOf('}'));
+    expect(decl).toContain('flex-direction:column');
+    expect(decl).toContain('min-width:0');
+  });
+
+  it('値もラベルも、はみ出したら省略記号で示す（黙って消さない）', () => {
+    for(const sel of ['.summary-val{', '.summary-label{']){
+      const rule = html.slice(html.indexOf(sel));
+      expect(rule.slice(0, rule.indexOf('}')), sel).toContain('text-overflow:ellipsis');
+    }
   });
 });

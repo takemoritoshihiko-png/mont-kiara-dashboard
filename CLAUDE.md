@@ -15,7 +15,7 @@ KLとペナンの**コンドミニアム271・学校33・商業施設32(KL有名
 ```bash
 npm install
 npm run dev            # http://localhost:5173
-npm test               # 736件
+npm test               # 770件
 npm run hooks:install  # pre-push フックを .git/hooks へ
 ```
 

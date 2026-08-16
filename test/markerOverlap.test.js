@@ -12,6 +12,7 @@ import { readFileSync } from 'node:fs';
 import {
   nearAnyMall, mallShiftOff, overlapRadiusM, MALL_OVERLAP_M, MALL_SHIFT_PX, COMMERCIAL_Z,
   MALL_SHIFT_CLASS, MALL_APART_CLASS, MALL_SHIFT_MAX_ZOOM, LABEL_ZOOM,
+  spotOffsets, SAME_SPOT_M, SAME_SPOT_RADIUS_PX, SPOT_PRIORITY,
 } from '../src/ui/map.js';
 import { haversineKm } from '../src/domain/geo.js';
 
@@ -138,5 +139,126 @@ describe('地図側の契約（ソースに刻んだもの）', () => {
   it('商業を出していないときは、ずらしの基準が空になる', () => {
     // 外食モード（飲食だけ）と、商業のチェックを外したときは重なりが起きない
     expect(src).toContain("mallPoints = (appMode !== 'eatout' && visibleLayers.commercial)");
+  });
+});
+
+// ============================================================
+// 同じ地点に複数ある場合（2026-08-16 竹森氏指示）
+// 「めっちゃ拡大しても完全に重なる」組を、表示だけ扇状に散らす。
+// ============================================================
+describe('spotOffsets — 完全に同じ地点の散らし', () => {
+  it('1件だけの地点は動かさない（ずらす必要が無い）', () => {
+    const out = spotOffsets([{ key: 'A', lat: 3.16, lng: 101.65, layer: 'condo' }]);
+    expect(out.size).toBe(0);
+  });
+
+  it('離れた2件も動かさない（3mより遠ければ寄れば分かれる）', () => {
+    const out = spotOffsets([
+      { key: 'A', lat: 3.16, lng: 101.65, layer: 'condo' },
+      { key: 'B', lat: 3.161, lng: 101.65, layer: 'dining' },   // 約111m
+    ]);
+    expect(out.size).toBe(0);
+  });
+
+  it('完全に同じ座標の2件は、片方だけ動かす（もう片方は本当の位置に残る）', () => {
+    const out = spotOffsets([
+      { key: '商業', lat: 3.16, lng: 101.65, layer: 'commercial' },
+      { key: '飲食', lat: 3.16, lng: 101.65, layer: 'dining' },
+    ]);
+    expect(out.size).toBe(1);
+    expect(out.has('商業')).toBe(false);   // 優先度が高い方が真ん中
+    expect(out.has('飲食')).toBe(true);
+  });
+
+  it('真ん中に残るのは 商業 > 学校 > 物件 > 飲食 の順', () => {
+    const at = (key, layer) => ({ key, layer, lat: 3.16, lng: 101.65 });
+    expect(spotOffsets([at('学校', 'school'), at('飲食', 'dining')]).has('学校')).toBe(false);
+    expect(spotOffsets([at('物件', 'condo'), at('飲食', 'dining')]).has('物件')).toBe(false);
+    expect(spotOffsets([at('学校', 'school'), at('物件', 'condo')]).has('学校')).toBe(false);
+    expect(spotOffsets([at('商業', 'commercial'), at('学校', 'school')]).has('商業')).toBe(false);
+  });
+
+  it('ずらし量は 0 ではない（「少しずらす」＝必ず動く）', () => {
+    const out = spotOffsets([
+      { key: 'A', lat: 3.16, lng: 101.65, layer: 'commercial' },
+      { key: 'B', lat: 3.16, lng: 101.65, layer: 'dining' },
+    ]);
+    const { dx, dy } = out.get('B');
+    expect(Math.hypot(dx, dy)).toBeGreaterThan(0);
+  });
+
+  it('3件以上でも全員が別の位置になる（重ねたまま散らさない）', () => {
+    const at = (key, layer) => ({ key, layer, lat: 3.16, lng: 101.65 });
+    const out = spotOffsets([at('a', 'commercial'), at('b', 'dining'), at('c', 'dining'), at('d', 'condo')]);
+    expect(out.size).toBe(3);
+    const seen = new Set([...out.values()].map(v => `${v.dx},${v.dy}`));
+    expect(seen.size).toBe(3);            // ずらした先が誰ともかぶらない
+    expect(seen.has('0,0')).toBe(false);  // 真ん中にも戻らない
+  });
+
+  it('同じ入力なら毎回同じ結果（描き直しでピンが飛び回らない）', () => {
+    const recs = [
+      { key: 'z', lat: 3.16, lng: 101.65, layer: 'dining' },
+      { key: 'a', lat: 3.16, lng: 101.65, layer: 'dining' },
+      { key: 'm', lat: 3.16, lng: 101.65, layer: 'dining' },
+    ];
+    const j = m => JSON.stringify([...m].sort());
+    expect(j(spotOffsets(recs))).toBe(j(spotOffsets([...recs].reverse())));
+  });
+
+  it('緯度経度が無いレコードは黙って飛ばす（落ちない）', () => {
+    expect(() => spotOffsets([{ key: 'A', lat: null, lng: null, layer: 'condo' }, null])).not.toThrow();
+  });
+});
+
+describe('同じ地点の散らし — ソースに刻んだ契約', () => {
+  it('動かすのは表示だけ（L.marker には元の lat/lng を渡す）', () => {
+    expect(src).toContain('L.marker([c.lat,c.lng]');
+    expect(src).not.toMatch(/L\.marker\(\[c\.lat\s*\+/);
+  });
+
+  it('4層すべてのピンにずらしが効く', () => {
+    // 学校・商業・物件は style の先頭、飲食は spot 変数経由
+    expect(src.match(/\$\{spotStyle\(c\)\}/g).length).toBe(3);
+    expect(src).toContain('const spot = spotStyle(c);');
+    expect(src).toContain('style="${spot}position:relative;');
+  });
+
+  it('モールのずらしとは二重に掛からない（どちらか一方）', () => {
+    expect(src).toContain("const shift = spot ? '' : (nearAnyMall(");
+  });
+
+  it('どの縮尺でも効く（MALL_SHIFT と違い、打ち消すclassを持たない）', () => {
+    // 散らしは inline style。MALL_APART_CLASS のような無効化の口を作らない
+    const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+    expect(html).not.toContain('mk-spot-shift');
+  });
+
+  it('いま描くものだけで判定する（見えないピンを避けて動かさない）', () => {
+    expect(src).toContain('spotShift = spotOffsets(drawn.map(');
+  });
+});
+
+describe('実データ — 層をまたいで完全に重なる組', () => {
+  it('見つかった組はすべて散らされる（1件も取りこぼさない）', () => {
+    const condos = readFileSync(new URL('../condos_data.csv', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+    const rows = condos.trim().split('\n').slice(1);
+    const head = condos.trim().split('\n')[0].split(',');
+    const iLat = head.indexOf('lat'), iLng = head.indexOf('lng'), iName = head.indexOf('name');
+    const recs = rows.map(r => r.split(',')).filter(f => f[iLat] && f[iLng])
+      .map(f => ({ key: f[iName], lat: +f[iLat], lng: +f[iLng], layer: 'condo' }));
+    for(const r of restaurants){
+      if(r.lat == null || r.lng == null) continue;
+      recs.push({ key: r.name, lat: +r.lat, lng: +r.lng, layer: 'dining' });
+    }
+    // 3m以内の層をまたぐ組を素朴に数える
+    let pairs = 0;
+    for(let i = 0; i < recs.length; i++)
+      for(let j = i + 1; j < recs.length; j++)
+        if(recs[i].layer !== recs[j].layer &&
+           haversineKm(recs[i].lat, recs[i].lng, recs[j].lat, recs[j].lng) <= 0.003) pairs++;
+    const out = spotOffsets(recs);
+    expect(pairs).toBeGreaterThan(0);           // 実データに本当にある問題
+    expect(out.size).toBeGreaterThanOrEqual(pairs);
   });
 });

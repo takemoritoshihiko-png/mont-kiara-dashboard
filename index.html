@@ -121,12 +121,14 @@ button,input,select{font-family:inherit}
 
 /* ---- Summary tiles ---- */
 .summary-bar{padding:var(--s1) var(--s2);background:var(--bg);border-bottom:1px solid var(--hairline);display:flex;gap:var(--s1);flex-shrink:0}
-.summary-item{flex:1;min-width:0;display:flex;align-items:baseline;justify-content:center;gap:4px;padding:3px 2px;background:var(--surface);border-radius:var(--r-control);border:1px solid var(--hairline)}
+/* 値とラベルは縦に積む（2026-08-16 竹森氏指摘）。
+   タイルは4分割で1枚77px。横に並べると値とラベルが同じ幅を取り合い、
+   「RM 5,750」が61px使った結果ラベルには6pxしか残らず「家賃中央値」が
+   「家」になっていた。縦なら両方が71pxをまるごと使える。 */
+.summary-item{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:2px;background:var(--surface);border-radius:var(--r-control);border:1px solid var(--hairline)}
 /* One line, always: a wrapped 「RM 30,000」 reads as two numbers. */
-/* 値は絶対に縮めない（「RM 811」が「RM 8…」になるのが最悪の事故）。
-   1枚あたり値とラベルで67pxを取り合うので、足りない分はラベル側が省略される。 */
-.summary-val{font-size:var(--fs-md);font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
-.summary-label{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.summary-val{font-size:var(--fs-md);font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;line-height:1.25}
+.summary-label{font-size:var(--fs-label);color:var(--text-2);text-transform:uppercase;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;line-height:1.2}
 
 /* 視覚的にだけ隠す(ラベルを支援技術と関連付けには残す) */
 .vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -617,8 +619,11 @@ button,input,select{font-family:inherit}
   .toggle-panel{right:var(--s3)!important;top:auto;bottom:55%;border-radius:var(--r-control) var(--r-control) 0 0;padding:var(--s2) var(--s4);z-index:1001;font-size:var(--fs-xs);min-height:40px}
   .toggle-panel.collapsed{bottom:0}
   .summary-bar{gap:3px;padding:var(--s1)}
-  .summary-val{font-size:var(--fs-sm)}
-  .summary-label{font-size:var(--fs-label);letter-spacing:0}
+  /* 縦積みにした分（2026-08-16）、狭い画面では行間と余白を詰めて取り返す。
+     一覧はカード1枚がちょうど収まる高さしかないので、数pxが効く。 */
+  .summary-item{padding:1px}
+  .summary-val{font-size:var(--fs-sm);line-height:1.15}
+  .summary-label{font-size:var(--fs-label);letter-spacing:0;line-height:1.1}
   .filters{padding:var(--s2)}
   .filter-row{gap:var(--s1);margin-bottom:var(--s1)}
   .sort-row{gap:var(--s1);margin-top:var(--s1)}
