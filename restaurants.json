@@ -15722,5 +15722,46 @@
   "driveKm": 10.2,
   "driveMinFree": 15,
   "driveMinJam": 27
+ },
+ {
+  "id": "R0382",
+  "placeId": "pending:fish-with-you-kepong-gi",
+  "name": "Fish With You 鱼你在一起 (Kepong Gi)",
+  "nameJa": "フィッシュ・ウィズ・ユー（魚你在一起・Kepong店）",
+  "cat": "中華（モダン）",
+  "michelin": "none",
+  "rating": 4.8,
+  "reviewCount": 1173,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Kepong",
+  "address": "G-7-G, Desa Kepong'gi, Teratai 4, Jalan Rimbunan Raya, Kepong, 52100 Kuala Lumpur",
+  "lat": 3.2190239,
+  "lng": 101.6459163,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   40
+  ],
+  "priceDinner": [
+   20,
+   40
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Googleの価格帯表示 RM20〜40 をそのまま採用。通し営業で昼夜の価格差は確認できず同額とした。マレーシア国内は2店(Kepong / Starling Mall PJ)で恒久ルールの2〜4店内だが、**中国発祥で世界2,500店超**の大型チェーンである点を竹森氏が承知の上で採用を裁定(2026-08-16)。",
+  "editorNote": "四川式の酸菜魚(漬物白菜と魚の煮込み)を主役にした中国発のファストカジュアル。骨なしの魚とご飯・水がおかわり自由で、3人でシェアできる量。辛さは選べる。",
+  "vox": {
+   "pros": "骨のない柔らかい魚と、酸味と辛味の効いたスープが高く評価され、量が多く新鮮という声が多い。",
+   "cons": "副菜(焼きナス等)が油っぽいという指摘があり、中国発チェーンの標準化された味を物足りないと感じる人もいる。"
+  },
+  "verified": "2026-08-16",
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 10.1,
+  "driveMinFree": 16,
+  "driveMinJam": 28
  }
 ]

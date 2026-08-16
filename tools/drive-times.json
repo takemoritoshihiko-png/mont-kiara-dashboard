@@ -1910,6 +1910,11 @@
    "km": 10.2,
    "minFree": 15,
    "minJam": 27
+  },
+  "Fish With You 鱼你在一起 (Kepong Gi)": {
+   "km": 10.1,
+   "minFree": 16,
+   "minJam": 28
   }
  }
 }
