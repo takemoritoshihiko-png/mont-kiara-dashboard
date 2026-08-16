@@ -4,7 +4,7 @@
   "lng": 101.652
  },
  "jamFactor": 1.8,
- "computed": "2026-08-08",
+ "computed": "2026-08-16",
  "times": {
   "Dewakan": {
    "km": 13.6,
@@ -1875,6 +1875,41 @@
    "km": 13.9,
    "minFree": 22,
    "minJam": 39
+  },
+  "Nice Soup Gang Restaurant 靓汤一族": {
+   "km": 10.6,
+   "minFree": 14,
+   "minJam": 25
+  },
+  "Jia Kopitiam 家": {
+   "km": 13.4,
+   "minFree": 17,
+   "minJam": 31
+  },
+  "IIAN Cuisine 伊兰阁": {
+   "km": 9.3,
+   "minFree": 13,
+   "minJam": 24
+  },
+  "Fujisawa Izakaya (Kepong)": {
+   "km": 9,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "The Soybean Factory (Menjalara)": {
+   "km": 6.8,
+   "minFree": 10,
+   "minJam": 18
+  },
+  "Restoran QQ BBQ Steamboat Buffet @ Kepong": {
+   "km": 9,
+   "minFree": 13,
+   "minJam": 23
+  },
+  "Nasi Kandar Rasmeena (Bangsar)": {
+   "km": 10.2,
+   "minFree": 15,
+   "minJam": 27
   }
  }
 }

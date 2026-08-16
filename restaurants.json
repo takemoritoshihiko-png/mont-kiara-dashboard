@@ -15435,5 +15435,292 @@
   "driveKm": 13.9,
   "driveMinFree": 22,
   "driveMinJam": 39
+ },
+ {
+  "id": "R0375",
+  "placeId": "pending:nice-soup-gang-kepong",
+  "name": "Nice Soup Gang Restaurant 靓汤一族",
+  "nameJa": "ナイス・スープ・ギャング（靚湯一族）",
+  "cat": "広東（老舗）",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1895,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Kepong",
+  "address": "8 & 10, Jalan Daya 11, Taman Daya, 52100 Kepong, Kuala Lumpur",
+  "lat": 3.2236294,
+  "lng": 101.6382203,
+  "geoPrecision": "building",
+  "priceLunch": [
+   40,
+   80
+  ],
+  "priceDinner": [
+   40,
+   80
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "個人向けスープ(RM10-35)から仏跳牆(RM90)・10人用スープ(RM480)まで幅が広く、シェア前提の家族利用で一人RM40-80が目安。1994年創業の単一店舗。",
+  "editorNote": "1994年創業、広東式の老火湯(じっくり煮込む薬膳スープ)専門店。個室あり、親族の集まりにも使われるKepongの地元密着店。",
+  "vox": {
+   "pros": "看板の薬膳スープと海鮮の火加減が評価され、簡単な野菜炒めまで手を抜かないという声。",
+   "cons": "評価は割れ、鶏の皮がパサついていたという指摘や、混雑時は人気メニューの事前注文が要るとの声もある。"
+  },
+  "verified": "2026-08-16",
+  "catGroup": "中華",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 10.6,
+  "driveMinFree": 14,
+  "driveMinJam": 25
+ },
+ {
+  "id": "R0376",
+  "placeId": "pending:jia-kopitiam-danau-kota",
+  "name": "Jia Kopitiam 家",
+  "nameJa": "ジア・コピティアム（家）",
+  "cat": "麺",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 2055,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Setapak",
+  "address": "G02, Danau Kota Suite Apartment, Jalan 1a/6, Taman Danau Kota, 53300 Kuala Lumpur",
+  "lat": 3.2089461,
+  "lng": 101.7187714,
+  "geoPrecision": "building",
+  "priceLunch": [
+   8,
+   15
+  ],
+  "priceDinner": [
+   0,
+   0
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "朝8時〜午後4時のみ営業(火曜定休)で夕食の提供なし。ナシレマRM12.80・プロウンミーRM9.80など単品RM3-15帯。単一店舗。",
+  "editorNote": "アパート1階にある豚肉・ラード不使用の朝食コピティアム。ナシレマ・海南鶏飯・カレーラクサが揃い、地元の朝〜昼の定番。",
+  "vox": {
+   "pros": "厚みのあるナシレマや濃厚なカレーミーが繰り返し推され、接客の丁寧さも褒められている。",
+   "cons": "行列と駐車場探しに加え、会計時にメニュー非記載の6%サービス料が付く点を指摘する声がある。"
+  },
+  "verified": "2026-08-16",
+  "catGroup": "麺・肉骨茶",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 13.4,
+  "driveMinFree": 17,
+  "driveMinJam": 31
+ },
+ {
+  "id": "R0377",
+  "placeId": "pending:iian-cuisine-kepong",
+  "name": "IIAN Cuisine 伊兰阁",
+  "nameJa": "イーアン・キュイジーヌ（伊蘭閣）",
+  "cat": "麺",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 1707,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Kepong",
+  "address": "97, Jalan Metro Perdana Barat 1, Taman Usahawan Kepong, 52100 Kuala Lumpur",
+  "lat": 3.2145802,
+  "lng": 101.638176,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   45
+  ],
+  "priceDinner": [
+   20,
+   45
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "11-15時・17-23時の通し営業で昼夜同一。蘭州牛肉麺RM14.80、串焼きRM8-18から麺+串数本で一人RM20-45と推定。Kepongのみで他店舗は見つからず。",
+  "editorNote": "Kepongで初とされる蘭州式の手延べ麺を出す清真(ハラル)中華。羊肉料理と串焼きも豊富で、夜は行列ができる。",
+  "vox": {
+   "pros": "手延べ麺のコシと羊肉・串焼きの本格的な風味が支持され、多民族の客で賑わう活気も好評。",
+   "cons": "中華としては値段が高めという指摘があり、香辛料の効いた味付けは好みが分かれる。"
+  },
+  "verified": "2026-08-16",
+  "catGroup": "麺・肉骨茶",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 9.3,
+  "driveMinFree": 13,
+  "driveMinJam": 24
+ },
+ {
+  "id": "R0378",
+  "placeId": "pending:fujisawa-izakaya-kepong",
+  "name": "Fujisawa Izakaya (Kepong)",
+  "nameJa": "フジサワ居酒屋（Kepong店）",
+  "cat": "居酒屋",
+  "michelin": "none",
+  "rating": 4.6,
+  "reviewCount": 1088,
+  "natCode": 3,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Kepong",
+  "address": "21, Jalan Metro Perdana Barat 1, Taman Usahawan Kepong, 52100 Kuala Lumpur",
+  "lat": 3.2148702,
+  "lng": 101.6409895,
+  "geoPrecision": "building",
+  "priceLunch": [
+   20,
+   35
+  ],
+  "priceDinner": [
+   35,
+   65
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "Googleの価格帯目安RM20〜60とランチセット例(RM19.90)から昼夜へ按分した推定。国内4店(Kepong/Sri Petaling/PJ Uptown/Puchong)。",
+  "editorNote": "ラーメン・うどん・刺身・鍋まで揃う家族向けの居酒屋。昼と夜の両方が営業しており、日本人にも入りやすい。",
+  "vox": {
+   "pros": "スタッフの対応が丁寧で、料理の質と価格のバランスが評価されている。",
+   "cons": "週末は40分〜2時間待ちや品切れの報告があり、ピーク時間は避けたい。"
+  },
+  "verified": "2026-08-16",
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 9,
+  "driveMinFree": 13,
+  "driveMinJam": 23
+ },
+ {
+  "id": "R0379",
+  "placeId": "pending:the-soybean-factory-kepong-menjalara",
+  "name": "The Soybean Factory (Menjalara)",
+  "nameJa": "ザ・ソイビーン・ファクトリー（Menjalara店）",
+  "cat": "デザート",
+  "michelin": "none",
+  "rating": 4.5,
+  "reviewCount": 1741,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Kepong",
+  "address": "51, Jalan 3/62A, Bandar Sri Menjalara, 52100 Kuala Lumpur",
+  "lat": 3.1950893,
+  "lng": 101.6306459,
+  "geoPrecision": "building",
+  "priceLunch": [
+   10,
+   22
+  ],
+  "priceDinner": [
+   10,
+   22
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "公式メニューの豆花・豆乳はRM9〜22。12:00〜23:00の通し営業で昼夜の価格差は確認できず同額とした。単一店舗。",
+  "editorNote": "豆花・豆乳・かき氷など大豆スイーツの専門店。食事ではなく軽食・デザート利用向けで、トッピングを選べる。",
+  "vox": {
+   "pros": "量が多く地元での人気が高い。",
+   "cons": "価格の割に豆花が水っぽい・風味が薄いという批判もあり、評価は割れる。"
+  },
+  "verified": "2026-08-16",
+  "catGroup": "カフェ・デザート",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 6.8,
+  "driveMinFree": 10,
+  "driveMinJam": 18
+ },
+ {
+  "id": "R0380",
+  "placeId": "pending:qq-bbq-steamboat-buffet-kepong",
+  "name": "Restoran QQ BBQ Steamboat Buffet @ Kepong",
+  "nameJa": "QQ BBQ スチームボート・ビュッフェ（Kepong店）",
+  "cat": "焼肉ビュッフェ",
+  "michelin": "none",
+  "rating": 4.7,
+  "reviewCount": 4827,
+  "natCode": 2,
+  "kidOk": 1,
+  "venue": "Fortune Avenue",
+  "venueType": "street",
+  "area": "Kepong",
+  "address": "D-G-2, Fortune Avenue, Jalan Metro Perdana 3, Taman Usahawan Kepong, 52100 Kuala Lumpur",
+  "lat": 3.2164723,
+  "lng": 101.6429236,
+  "geoPrecision": "building",
+  "priceLunch": [
+   0,
+   0
+  ],
+  "priceDinner": [
+   64,
+   76
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "公式サイトの大人料金(平日RM63.80++/週末RM65.80++)に税・サを見込んで加算した概算。16:00〜24:00の夜のみ営業。店舗数は公式が「KL & Selangor」とのみ記載し正確な数は未確認だが、Google広域検索ではKepong店1件に解決する。",
+  "editorNote": "焼肉＋スチームボートの食べ放題(夜のみ・2時間制)。★4.7×4,827件はKepong圏で最上位クラス。子供・シニア料金あり。",
+  "vox": {
+   "pros": "刺身・牡蠣・蟹まで含む品数の多さと気さくな接客が支持されている。",
+   "cons": "ピーク時間帯の混雑が指摘され、2時間の時間制限もある。"
+  },
+  "verified": "2026-08-16",
+  "catGroup": "日本・その他アジア",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 9,
+  "driveMinFree": 13,
+  "driveMinJam": 23
+ },
+ {
+  "id": "R0381",
+  "placeId": "pending:nasi-kandar-rasmeena-bangsar",
+  "name": "Nasi Kandar Rasmeena (Bangsar)",
+  "nameJa": "ナシカンダール・ラスミーナ（Bangsar店）",
+  "cat": "マレー",
+  "michelin": "none",
+  "rating": 4.3,
+  "reviewCount": 1021,
+  "natCode": 1,
+  "kidOk": 1,
+  "venue": "路面店",
+  "venueType": "street",
+  "area": "Bangsar",
+  "address": "44, Jalan Bangsar, 59200 Kuala Lumpur",
+  "lat": 3.1281193,
+  "lng": 101.6792333,
+  "geoPrecision": "building",
+  "priceLunch": [
+   11,
+   18
+  ],
+  "priceDinner": [
+   11,
+   18
+  ],
+  "priceConfidence": "概算",
+  "priceNote": "デリバリー各社のナシセット単品(RM11.50〜18.30)から一人あたりを推定。営業時間の情報源が一致せず昼夜の価格差の根拠がないため同額とした。公式Instagramで確認できた国内3店(Bangsar/USJ9/Sentul)。",
+  "editorNote": "インド系ムスリムのナシカンダール専門店。豚肉・酒類を扱わない業態で、Bangsar駅至近。JAKIMハラル認証の有無は確認できていない。",
+  "vox": {
+   "pros": "カレーの塩梅が良く、ご飯と具の量が多いと地元客の支持が厚い。",
+   "cons": "ピーク時は満席で待つことがあり、デリバリーでは量が少ないとの指摘もある。"
+  },
+  "verified": "2026-08-16",
+  "catGroup": "マレーシア料理",
+  "tier": 0,
+  "extraFlags": [],
+  "driveKm": 10.2,
+  "driveMinFree": 15,
+  "driveMinJam": 27
  }
 ]

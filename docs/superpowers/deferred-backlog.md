@@ -275,3 +275,26 @@
 - ⚠️ **Fish With You — 要裁定**。マレーシア国内は2店（Starling Mall PJ / Kepong）で数の上では許容内だが、**中国発祥で世界2,500店超**の大型チェーン。「全国チェーン除外」の趣旨に照らすとグレー
 - 🔴 **北KL圏の残り7件は判定不能のまま**（Nice Soup Gang / Jia Kopitiam / iian Cuisine / SRK Borneo(Kepong店) / Fujisawa居酒屋 / Soybean Factory / QQ BBQ）。**Google Maps への WebFetch が全店で403またはJSシェルのみ**を返し、★評価と口コミ件数を一次確認できなかった（前回スイープのCAPTCHA障害の再現）。集計サイトの数値は候補生成専用のため判定に使えない。**次はブラウザ自動操作でGoogle Mapsを開いて直読する**（メインエージェントのみ可能）
   - 参考: SRK Borneo の Desa Setapak 店は報道で4.6★/859件＝1,000件未満で不可。対象のKepong店は未確定
+
+**✅ 北KL圏の保留を解消（2026-08-16）— メインがブラウザでGoogle Mapsを直読**
+サブエージェントのWebFetchは全店403だったが、**ブラウザ自動操作なら読める**。これが今回いちばんの発見（次回のスイープでも同じ手を使う）。
+
+| 店 | ★ | 口コミ | MKから | 店舗数 | 判定 |
+|---|---|---|---|---|---|
+| QQ BBQ Steamboat Buffet @ Kepong | 4.7 | 4,827 | 5.0km | 1(推定) | ✅ 追加 R0380 |
+| Jia Kopitiam (家) | 4.7 | 2,055 | 8.6km | 1 | ✅ 追加 R0376 |
+| Nice Soup Gang | 4.5 | 1,895 | 5.9km | 1 | ✅ 追加 R0375 |
+| The Soybean Factory | 4.5 | 1,741 | 3.4km | 1 | ✅ 追加 R0379 |
+| IIAN Cuisine | 4.7 | 1,707 | 4.9km | 1 | ✅ 追加 R0377 |
+| 藤澤居酒屋 (Kepong) | 4.6 | 1,088 | 4.8km | 4 | ✅ 追加 R0378 |
+| **SRK Borneo Noodle House** | 4.7 | 1,097 | 5.0km | **5店以上** | ❌ **不可** |
+| Nasi Kandar Rasmeena (Bangsar) | 4.3 | 1,021 | — | 3 | ✅ 追加 R0381 |
+
+- **SRK Borneo は不可**。当初の調査は「2店」としていたが、メインがGoogle Mapsの広域検索で **Kepong / Jalan 1/27b(Setapak) / Plaza Low Yat ほか計5店以上**を目視確認。恒久ルール「2〜4店舗まで可」を超える
+- **QQ BBQ の「評価不一致」は解決**。集計サイトの4,207が古く、Google直読では **4.7 × 4,827件**。前回スイープの保留理由が消えた
+- 藤澤居酒屋は国内4店でルールの上限ぴったり。**5店目ができたら再判定が要る**
+- QQ BBQ の店舗数は公式が「KL & Selangor」とだけ書き**正確な数は未確認**。Google広域検索ではKepong店1件に解決するため採用したが、複数店が判明したら再判定
+- **未解決の残り**: Nasi Kandar Rasmeena は公式Instagramで3店(Bangsar/USJ9/Sentul)だが、Skudai(Johor)店が同一資本なら5店以上で不可に転じる。店名の語順と電話番号から別経営の可能性が高いと判断して採用した
+
+**⚠️ Fish With You — 要裁定（未処理）**
+マレーシア国内は2店(Starling Mall PJ / Kepong)で数の上は許容内だが、**中国発祥で世界2,500店超**。「全国チェーン除外」の趣旨に照らすとグレー。竹森氏の裁定待ち。
