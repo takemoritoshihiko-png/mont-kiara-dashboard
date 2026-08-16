@@ -13,7 +13,7 @@
 //   データ   save status, export, import, erase
 //
 // What this file owns: the markup and the click handlers. The arithmetic lives
-// in src/domain/diningScore.js and src/domain/diningLog.js, the storage in
+// in src/domain/diningScore.js, the storage in
 // src/data/personal.js, and all three are pure or injectable so they are tested
 // without a DOM.
 import { CONDOS, filtered, appMode, listView } from '../state.js';
@@ -319,7 +319,9 @@ export function dineAmount(id, v){ P.setAmount(id, v); }
 export function dineMemo(id, v){ P.setMemo(id, v); }
 
 // 行った店ビューは 2026-08-08 竹森さん指示で廃止(台帳+「✓行った店」トグルが代替)。
-// 集計・グループ化の純関数(src/domain/diningLog.js)はテスト付きで保持している。
+// 集計・グループ化の純関数(diningLog.js)は「いつか使うかも」で残していたが、
+// 8日間どこからも呼ばれなかったので 2026-08-16 に削除した(竹森さん承認)。
+// 必要になったら git 履歴から戻せる。
 
 // ============================================================
 // データ

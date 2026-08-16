@@ -43,7 +43,6 @@
 | `src/domain/nearby.js` | 「周辺」= 距離バケット（800m/2km/6km）へ種別ごとに仕分け＋距離の表記。層は `LAYERS` から自動で増える |
 | `src/domain/fees.js` | 年齢 → 学年 → 年間学費。学年ラベルの解析。**補間せず**近い公表学年の実額を返す |
 | `src/domain/diningScore.js` | 台帳スコア（100点）。権威au / 継続性ct / 評価ev・ベイズ縮約★(M=800)・レビュー母数の厚み・exタグはENUM。`calcLedgerScores()` が全件に焼き付ける |
-| `src/domain/diningLog.js` | 行った店の集計とグループ分け。**母集団は訪問済みのみ**（台帳v9の食い違いの解消）。4タイル・再訪意向グループ・行のメタ文 |
 
 ### ui/ — 画面の描画と操作
 
@@ -77,7 +76,6 @@
 | `test/diningLayer.test.js` | 飲食層: 絞り込み5軸・価格帯の判定基準・カード/ヒーロー文字列・並び替え・詳細パネル・読み込み |
 | `test/diningScore.test.js` | **台帳スコア**: 定数・exタグENUMと実データの照合・C=4.3600・手計算フィクスチャ・内訳が総合点と一致すること |
 | `test/personal.test.js` | **個人記録**: ローカル日付・読み取りが書き込まないこと・保存可否の起動テスト・デバウンス保存・v9形式の読み込み変換・書き出し往復 |
-| `test/diningLog.test.js` | 行った店: 母集団＝訪問済みのみ・平均実額の分母・グループの固定順と並び |
 | `test/uxDining.test.js` | UX2: 飲食のエリア連動（距離フィルタ・3kmの妥当性・ジャンプ配線）と昼夜基準（`diningPriceCeiling`/価格帯/並び替えが**同じ数字を読む**invariant）・層タブの飲食入口・トグルのmarkup契約 |
 | `test/snapshots.test.js` | 控えの契約: undoは常に1件・dailyは日ごと1件7世代・現地時刻で出す・**消える経路(全消去/まるごと置き換え)は必ず控えを通る**を実物のpersonal.jsで検査 |
 | `test/recommend.test.js` | 推奨軸の契約: ティア梯子・家族拒否権・実勢裁定の回帰(Dewakan=通好み等)・裁定なきcaution=0店 |

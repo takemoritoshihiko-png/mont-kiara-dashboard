@@ -407,7 +407,9 @@ describe('mobile (≤768px)', () => {
   });
 
   it('carries every control added since B3a', () => {
-    for(const sel of ['.seg-btn', '.chips', '.disclosure', '.sort-select',
+    // .seg-btn / .log-* は 2026-08-16 に削除（旧「行った店」ビューの名残で、
+    // 要素がどこにも無かった）。消えた部品にモバイル規則を求めない。
+    for(const sel of ['.chips', '.disclosure', '.sort-select',
       '.sf-header', '.nb-row', '.info-tab', '.skel-card', '.fchip-x', '.info-overlay',
       // D3: the 飲食 layer's own controls.
       // #fDiningArea は 2026-08-16 にセレクトごと削除（地図のジャンプバーで代替）。
@@ -416,7 +418,7 @@ describe('mobile (≤768px)', () => {
       // every control inside a record box.
       '.mode-btn', '#toggleVisited', '#fVenueType', '#toggleWant', '#toggleUndone',
       '.vb-toggle', '.vb-rv-btn', '.vb-amt', '.vb-memo', '.data-btn', '.data-area',
-      '.card-main', '.visitbox', '.log-name', '.log-tiles', '.savebar', '.toast']){
+      '.card-main', '.visitbox', '.savebar', '.toast']){
       expect(mobile, `${sel} was never given a mobile rule`).toContain(sel);
     }
   });
@@ -430,7 +432,12 @@ describe('mobile (≤768px)', () => {
   });
 
   it('makes segments, rows, tabs and the close/clear buttons 40px tappable', () => {
-    for(const sel of ['.seg-btn{min-height:40px}', '.info-tab{min-height:40px}',
+    // エリアジャンプは2026-08-16に32→40px。バーは既に横スクロールするので、
+    // 折りたたみもドロップダウンも要らず、costは地図の高さ8pxだけだった。
+    // 32pxに戻ったら気づけるよう、値まで固定する。
+    const aj = mobile.slice(mobile.indexOf('.area-jump button{'));
+    expect(aj.slice(0, aj.indexOf('}'))).toContain('min-height:40px');
+    for(const sel of ['.info-tab{min-height:40px}',
       '.nb-row,.sf-row,.sf-condo-row{min-height:40px}']){
       expect(mobile).toContain(sel);
     }

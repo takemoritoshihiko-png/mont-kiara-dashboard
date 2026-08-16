@@ -445,8 +445,7 @@ export function toggleWant(id){
  * today's date if there is none yet. Turning it OFF clears ONLY the flag: the
  * memo, the amount, the verdict and the date stay, so an accidental tap costs
  * nothing and turning it back on restores everything. That is v9's behaviour
- * and the reason the aggregates count 訪問済み records only — see
- * src/domain/diningLog.js.
+ * and the reason the aggregates count 訪問済み records only.
  */
 export function setVisited(id, on, now = new Date()){
   if(on){
@@ -512,7 +511,8 @@ export function currentExportText(now){ return exportText(store, now); }
 
 /**
  * 記録の中身の内訳 — what is in storage, not what your dining looks like.
- * (The dining figures live in src/domain/diningLog.js and count 訪問済み only.)
+ * (訪問済みの件数は storedCounts が数える。旧「行った店」ビューの集計モジュールは
+ *  2026-08-16 に削除した — 8日間どこからも呼ばれていなかった。)
  */
 export function storedCounts(){
   const e = Object.values(store);

@@ -175,9 +175,6 @@ button,input,select{font-family:inherit}
 .chip-name:hover{color:var(--text)}
 .layer-chip.active{background:var(--surface);box-shadow:var(--shadow-1)}
 .layer-chip.active .chip-name{color:var(--accent)}
-.seg-btn{flex:1;background:transparent;border:none;color:var(--text-2);font-size:var(--fs-sm);font-weight:600;padding:3px var(--s1);border-radius:6px;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
-.seg-btn:hover{color:var(--text)}
-.seg-btn.active{background:var(--surface);color:var(--accent);box-shadow:var(--shadow-1)}
 
 /* ---- Search with clear ---- */
 .search-wrap{position:relative;display:flex}
@@ -541,7 +538,6 @@ button,input,select{font-family:inherit}
 .savebar-text{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb-head{white-space:nowrap}
 .savebar-link{flex-shrink:0;background:transparent;border:1px solid var(--hairline);color:var(--accent);border-radius:var(--r-pill);padding:1px var(--s2);font-size:var(--fs-label);font-weight:600;cursor:pointer}
-.savebar-old{font-size:var(--fs-label);color:var(--text-2);background:var(--surface);border-top:1px solid var(--hairline);padding:2px var(--s2);line-height:1.35;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .savebar.bad{color:var(--surface);background:var(--rv-never);border-radius:var(--r-control);padding:0 var(--s2)}
 .toast{position:fixed;left:50%;bottom:var(--s5);transform:translateX(-50%) translateY(8px);background:var(--text);color:var(--surface);font-size:var(--fs-xs);padding:var(--s2) var(--s4);border-radius:var(--r-pill);box-shadow:var(--shadow-2);opacity:0;pointer-events:none;z-index:2000;transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease);max-width:80vw;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -560,7 +556,7 @@ button,input,select{font-family:inherit}
 .sf-age-row select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 /* Rows and cards are flush with their container, so the ring goes inside. */
 .condo-card:focus-visible,.nb-row:focus-visible,.sf-row:focus-visible,
-.sf-condo-row:focus-visible,.card-main:focus-visible,.log-row-head:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.sf-condo-row:focus-visible,.card-main:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 /* The markers are Leaflet's elements; the ring goes on the pin inside, the same
    place the selected-marker ring lives (see .mk-pin-sel above). */
 .mk-pin:focus-visible{outline:none}
@@ -596,7 +592,7 @@ button,input,select{font-family:inherit}
 .mhc-sub{font-size:var(--fs-label);color:var(--text-2);margin-top:1px}
 
 /* 押下感: タッチにはhoverが無いので、押した瞬間の反応をここで一括付与 */
-.condo-card:active,.seg-btn:active,.mode-btn:active,.chip-toggle:active,.vb-toggle:active,.vb-rv-btn:active,.data-btn:active,.area-jump button:active,.nb-row:active,.sf-row:active,.sort-btn:active,.aj-penang-toggle:active{transform:scale(.98);opacity:.85}
+.condo-card:active,.mode-btn:active,.chip-toggle:active,.vb-toggle:active,.vb-rv-btn:active,.data-btn:active,.area-jump button:active,.nb-row:active,.sf-row:active,.sort-btn:active,.aj-penang-toggle:active{transform:scale(.98);opacity:.85}
 /* 商業施設と飲食店の重なり（2026-08-16 竹森氏指摘）。
    モールの中や真上にある店は座標がほぼ同じで、飲食の雫が商業の四角を覆っていた。
    商業は zIndexOffset で常に上に描き、そこに乗る飲食はアイコンだけ右へずらす。
@@ -639,10 +635,8 @@ button,input,select{font-family:inherit}
   .layer-seg{margin-bottom:var(--s2)}
   /* Four segments share the row since the 飲食 layer landed, so they give up
      their side padding before they give up their label. */
-  .seg-btn{padding:6px 2px;font-size:var(--fs-xs)}
 
   /* ---- Touch targets ---- */
-  .seg-btn{min-height:40px}
   .colo-item{min-height:40px}
   .filter-group select,.filter-group input,.sort-select,.sf-age-row select{min-height:40px}
   /* 飲食 (D3/UX2): its four dropdowns, the 子連れ toggle and the 昼の予算 basis
@@ -684,9 +678,6 @@ button,input,select{font-family:inherit}
   .vb-rv{gap:2px}
   .card-main{padding:var(--s2) var(--s3)}
   .visitbox{padding:var(--s2)}
-  .log-name{min-height:40px;display:flex;align-items:center}
-  .log-tiles{gap:2px}
-  .log-tile-val{font-size:var(--fs-sm)}
   .data-area{font-size:var(--fs-label)}
   /* The bar is the last thing above the footer; it must not eat the list. */
   /* ヘッダー44pxの中で、切り替えボタンと取り合う。名前が長くても省略記号で
@@ -735,7 +726,11 @@ button,input,select{font-family:inherit}
   .sf-header{padding:var(--s2)}
 
   .area-jump{top:6px;left:46px;right:6px;max-width:calc(100% - 52px);padding:var(--s1) 6px;gap:2px}
-  .area-jump button{font-size:var(--fs-label);padding:var(--s1) var(--s2);min-height:32px}
+  /* 40px（タップ標的の方針値）。2026-08-07 の保留は「16個が詰まるので折りたたみと
+     セットでないと成立しない」としていたが、実測するとバーは既に横スクロールする
+     構造で（中身641px / 枠334px）、40px化のコストは**地図の高さ8pxだけ**だった。
+     折りたたみもドロップダウンも要らない。 */
+  .area-jump button{font-size:var(--fs-label);padding:var(--s1) var(--s2);min-height:40px}
   .aj-label{font-size:var(--fs-label)}
 }
 </style>

@@ -374,7 +374,6 @@ export function syncLayerUI(){
   const ledgerView = isLedgerView();
 
   syncSeg('.mode-btn', 'mode', appMode);
-  syncSeg('.seg-btn', 'layer', activeLayer);
   // Layer chips: ☑ = drawn on the map, highlighted name = the list's layer.
   document.querySelectorAll('#layerSeg .layer-chip').forEach(ch => {
     const ly = ch.dataset.layer;
