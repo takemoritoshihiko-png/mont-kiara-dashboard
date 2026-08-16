@@ -398,7 +398,10 @@ describe('「昼の予算」トグルの markup', () => {
     expect(html).not.toContain('価格帯 (1人・夜基準)');
   });
 
-  it('keeps the ledger エリア select as its own separate control', () => {
-    expect(html).toContain('id="fDiningArea"');
+  // 2026-08-16 竹森氏指示: エリアのセレクトは削除（地図上のエリアジャンプで
+  // 用が足りる）。場所の絞り込みは「近く: ○○（3km）」が唯一の入口になった。
+  // バケツの判定と対応表は domain 側に残してある（調査で作った知識なので）。
+  it('no longer offers a separate エリア select (the map jump bar covers it)', () => {
+    expect(html).not.toContain('id="fDiningArea"');
   });
 });

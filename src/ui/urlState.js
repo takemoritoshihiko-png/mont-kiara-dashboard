@@ -57,7 +57,8 @@ const FILTER_IDS = [
   // fCat(小分類)は fCatGroup の直後。復元は「大分類を書く→小分類の選択肢が
   // 生まれる→小分類を書く」の順でなければ効かないので、順番に意味がある
   // (受け手側の二度書きは src/ui/info.js の applyUrlState)。
-  'fAnchor', 'fCatGroup', 'fCat', 'fMichelin', 'fPriceBand', 'fDiningArea', 'fVenueType',
+  // fDiningArea は 2026-08-16 にセレクトごと畳んだので、書く先が無くなった。
+  'fAnchor', 'fCatGroup', 'fCat', 'fMichelin', 'fPriceBand', 'fVenueType',
   // 並び替えも画面状態(2026-08-16)。「予算 安い順」で送ったのに受け手には
   // 別の順で並ぶ、が起きていた。トグル(子連れ・昼の予算・自分の記録)は
   // 引き続き載せない — 自分の記録は受け手にとって意味が違うため。

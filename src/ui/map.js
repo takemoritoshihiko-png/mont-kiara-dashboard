@@ -4,6 +4,7 @@ import {
   selectedCondo, activeLayer, appMode, setDiningNear, visibleLayers,
 } from '../state.js';
 import { NEAR_KM, recordLayer } from '../domain/filter.js';
+import { haversineKm } from '../domain/geo.js';
 import { YEAR_MIN, YEAR_MAX, YEAR_COLORS, TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
 import { selectCondo, closeInfo } from './info.js';
 // Deferred-usage only (called inside functions): safe across the list.js<->map.js cycle.
@@ -101,6 +102,85 @@ export const MICHELIN_BIB_BORDER = '#6f3305';
 export const MICHELIN_SEL_BG = '#ecd48a';
 export const MICHELIN_SEL_BORDER = '#a17f24';
 
+// ============================================================
+// 商業施設と飲食店の重なり(2026-08-16 竹森氏指摘)
+//
+// モールの中や真上にある店は座標がほぼ同じなので、飲食のピンが商業の四角を
+// 覆って「モールが消える」ことが起きていた(実測: 80m以内に飲食がある商業施設が
+// 8件・Pavilion KLは6店)。裁定は「商業を優先に見せ、飲食はその横にずらす」。
+//
+// 手当ては3つ。
+//   1. 商業マーカーに zIndexOffset を与え、常に飲食の上に描く
+//   2. モールの近くにある飲食ピンは、アイコンだけ右へずらす(座標は動かさない
+//      ので、選択したときは正しい位置に寄る)
+//   3. まとまった数字玉も、中心がモールの近くなら同じだけ右へずらす
+// ずらすのは表示だけで、データ側の緯度経度には一切触れない。
+// ============================================================
+/**
+ * 重なりは「画面上の現象」なので、判定の半径は縮尺から出す。
+ * 引いた地図では1pxが何十mにもなるため、固定の半径だと取りこぼす
+ * (ズーム13では1px≒19m＝30px離れた玉は実距離570m先でも重なって見える)。
+ *
+ * @param {number} zoom @param {number} lat @param {number} iconPx 相手側の大きさ
+ * @returns {number} この距離より近ければ画面上で重なる(m)
+ */
+export function overlapRadiusM(zoom, lat, iconPx){
+  const mPerPx = 156543.03392 * Math.cos((lat || 0) * Math.PI / 180) / Math.pow(2, zoom);
+  // モールの四角(最大30px)の半分 + 相手のアイコンの半分
+  return (15 + iconPx / 2) * mPerPx;
+}
+
+/** 個別ピン用の既定半径(m)。ピンが1つずつ出るのはズーム16以上＝1px≒2.4m。 */
+export const MALL_OVERLAP_M = 60;
+/**
+ * ずらす量(px)。四角(最大30px)の右端の外へ、数字玉(32px)の左端が出る幅。
+ * 15(四角の半分) + 16(玉の半分) + 1(隙間) = 32。
+ */
+export const MALL_SHIFT_PX = 32;
+/** 商業を常に上に描くための持ち上げ量。 */
+export const COMMERCIAL_Z = 1000;
+/**
+ * これより寄ったら、ずらしをやめて本当の位置に戻す縮尺。
+ * ズーム17では1pxがおよそ1.2mなので、60m離れた店は50px離れて描かれる＝もう
+ * 重ならない。重なっていないのにずらすと、今度はそれが嘘になる。
+ * LABEL_ZOOM と同じ値にしてあるのは偶然ではない: 名前ラベルは本当の座標に付く
+ * ので、ラベルが常時出る縮尺でずらしていると、名前とピンが離れて見える。
+ */
+export const MALL_SHIFT_MAX_ZOOM = LABEL_ZOOM;
+/** ずらす対象につけるclass。実際に動かすかはCSS(地図側のclass)が決める。 */
+export const MALL_SHIFT_CLASS = 'mk-mall-shift';
+/** この縮尺以上のときに地図コンテナへ付くclass。ずらしを打ち消す。 */
+export const MALL_APART_CLASS = 'mk-mall-apart';
+
+/** その縮尺では、もうずらす必要がないか。 */
+export function mallShiftOff(zoom){ return zoom >= MALL_SHIFT_MAX_ZOOM; }
+
+/**
+ * ずらしの入り切りを地図コンテナのclassで切り替える。
+ * マーカーを作り直さずに済むので、ズームのたびに数百個を作り直さない。
+ */
+function syncMallShift(){
+  if(!map) return;
+  const el = map.getContainer && map.getContainer();
+  if(el) el.classList.toggle(MALL_APART_CLASS, mallShiftOff(map.getZoom()));
+}
+
+/**
+ * その地点が、いま地図に出ている商業施設の近くにあるか。
+ * @param {number} lat @param {number} lng
+ * @param {{lat:number,lng:number}[]} malls 判定対象の商業施設
+ * @param {number} [withinM]
+ */
+export function nearAnyMall(lat, lng, malls, withinM = MALL_OVERLAP_M){
+  if(lat == null || lng == null || !malls || !malls.length) return false;
+  const km = withinM / 1000;
+  return malls.some(m => haversineKm(lat, lng, m.lat, m.lng) <= km);
+}
+
+// rebuild() が毎回作り直す「いま描く商業施設」の一覧。飲食ピンとクラスタ玉の
+// 両方が読むので、モジュールの持ち物にしている(描画のたびに引き回さない)。
+let mallPoints = [];
+
 // Cluster bubbles reuse the marker colours so the type stays readable when
 // several markers collapse into one.
 const CLUSTER_STYLE = {
@@ -123,11 +203,19 @@ function clusterIconFactory(type) {
     const sz = n >= 25 ? 46 : n >= 10 ? 38 : 32;
     const fs = n >= 25 ? 15 : n >= 10 ? 13 : 12;
     const mute = '';
+    // 飲食の数字玉がモールの真上に来ると四角を隠すので、その分だけ右へずらす
+    // (2026-08-16)。玉の位置(緯度経度)は動かさないので、押したときの挙動は同じ。
+    // 数字玉はズームのたびに作り直されるので、そのときの縮尺で判定できる。
+    const ll = cluster.getLatLng && cluster.getLatLng();
+    const zoom = map ? map.getZoom() : CLUSTER_OFF_ZOOM;
+    const shift = (type === 'dining' && ll
+      && nearAnyMall(ll.lat, ll.lng, mallPoints, overlapRadiusM(zoom, ll.lat, sz)))
+      ? ` ${MALL_SHIFT_CLASS}` : '';
     return L.divIcon({
       className: '',
       iconSize: [sz, sz],
       iconAnchor: [sz/2, sz/2],
-      html: `<div role="button" aria-label="${CLUSTER_LABELS[type]} ${n}件。押すと開きます" style="${mute}width:${sz}px;height:${sz}px;border-radius:${st.radius};background:${st.bg};border:2px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer">
+      html: `<div role="button" class="mk-cluster${shift}" aria-label="${CLUSTER_LABELS[type]} ${n}件。押すと開きます" style="${mute}width:${sz}px;height:${sz}px;border-radius:${st.radius};background:${st.bg};border:2px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer">
         <span aria-hidden="true" style="color:#fff;font-size:${fs}px;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,0.35)">${n}</span>
       </div>`
     });
@@ -185,11 +273,13 @@ export function initMap() {
 
   // Re-bind the labels only when the zoom crosses the threshold.
   map.on('zoomend', () => {
+    syncMallShift();
     const mode = labelModeForZoom(map.getZoom());
     if (mode === labelMode) return;
     labelMode = mode;
     applyLabelMode(mode);
   });
+  syncMallShift();
 
   // Add tooltip style dynamically
   const tipStyle = document.createElement('style');
@@ -392,7 +482,10 @@ function openCoLocatedChooser(c){
 /** The tail every marker branch shares: build the Leaflet marker, wire the
  *  click, bind the name label. shortName is what the label prints. */
 function attachMarker(c, icon, shortName, size){
-  const m = L.marker([c.lat,c.lng],{icon,keyboard:false});
+  // 商業施設は常に飲食の上に描く(2026-08-16 竹森氏指示「商業施設を優先に見せる」)。
+  // モール内の店と座標がほぼ同じになるため、放っておくと四角が雫に隠れていた。
+  const zIndexOffset = recordLayer(c) === 'commercial' ? COMMERCIAL_Z : 0;
+  const m = L.marker([c.lat,c.lng],{icon,keyboard:false,zIndexOffset});
   m._rec = c;
   m.on('click',()=>{
     // 選択中のピンをもう一度押したら、同地点の店を分岐表示して選び直せる
@@ -472,11 +565,17 @@ function mkMarker(c) {
     const badgeStyle = (side) => `position:absolute;top:-5px;${side}:-5px;width:13px;height:13px;border-radius:50%;background:#1d5f55;border:1.5px solid #fff;color:#fff;font-size:9px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.35)`;
     const badge = (visited ? `<span aria-hidden="true" style="${badgeStyle('right')}">✓</span>` : '')
       + (want ? `<span aria-hidden="true" style="${badgeStyle('left')}">♡</span>` : '');
+    // モールの上に乗る店は、四角を覆わないようアイコンだけ右へずらす(2026-08-16)。
+    // 座標は動かさないので、選ぶと従来どおり本当の位置が中心に来る。
+    // 個別のピンが1つずつ出るのはズーム16以上。そこでの重なり幅で判定する。
+    const shift = nearAnyMall(c.lat, c.lng, mallPoints,
+      overlapRadiusM(map ? Math.max(map.getZoom(), CLUSTER_OFF_ZOOM) : CLUSTER_OFF_ZOOM, c.lat, csz))
+      ? ` ${MALL_SHIFT_CLASS}` : '';
     const icon = L.divIcon({
       className: pinClass(c),
       iconSize: [csz, csz],
       iconAnchor: [csz/2, csz/2],
-      html: `<div role="button" aria-label="飲食店 ${attrEsc(c.name)}${mb ? '、' + mb : ''}${visited ? '、訪問済み' : ''}${want ? '、行きたい' : ''}" style="position:relative;width:${csz}px;height:${csz}px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+      html: `<div role="button" class="mk-dining-pin${shift}" aria-label="飲食店 ${attrEsc(c.name)}${mb ? '、' + mb : ''}${visited ? '、訪問済み' : ''}${want ? '、行きたい' : ''}" style="position:relative;width:${csz}px;height:${csz}px;display:flex;align-items:center;justify-content:center;cursor:pointer">
         <span aria-hidden="true" style="position:absolute;inset:0;border-radius:${MARKER_COLORS.dining.radius};background:${bg};border:2px solid ${border};box-shadow:0 2px 6px rgba(0,0,0,0.3);transform:rotate(-45deg)"></span>
         <span aria-hidden="true" style="position:relative;line-height:1;${glyphStyle}">${glyph}</span>${badge}
       </div>`
@@ -546,6 +645,12 @@ export function rebuild(){
   Object.values(clusterGroups).forEach(g=>g.clearLayers());
   setMarkers({});
   labelMode = labelModeForZoom(map.getZoom());
+  // ずらしの基準になる「いま描く商業施設」。外食モードは飲食しか描かないので
+  // 空 = ずらしは起きない。商業のチェックを外したときも同じ(2026-08-16)。
+  mallPoints = (appMode !== 'eatout' && visibleLayers.commercial)
+    ? CONDOS.filter(c => recordLayer(c) === 'commercial' && c.lat != null && c.lng != null)
+        .map(c => ({ lat: c.lat, lng: c.lng }))
+    : [];
   const ns=new Set(filtered.map(c=>c.name));
   CONDOS.forEach(c=>{
     const type=recordLayer(c);

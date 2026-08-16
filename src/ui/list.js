@@ -14,7 +14,6 @@ import { TIER_COLORS, MICHELIN_BADGES } from '../data/inline.js';
 import {
   parseR, matchesFilters, recordLayer, LAYER_LABELS, CURRICULA,
   CAT_GROUPS, MICHELIN_FILTERS, VENUE_TYPES, diningPriceCeiling, budgetBasisOf,
-  AREA_BUCKETS, areaBucketOf,
 } from '../domain/filter.js';
 import { sortOptionsFor, comparatorFor, sortOnArrival, sortAvailable } from '../domain/sort.js';
 import { map, rebuild } from './map.js';
@@ -47,14 +46,12 @@ const LAYER_CONTROLS = {
   commercial: [
     ['fNla', '規模'], ['fOpenYear', '開業年'], ['fAnchor', 'アンカー'], ['fArea', 'エリア'],
   ],
-  // The dining layer has its own エリア control (fDiningArea): its areas are the
-  // ledger's curated values, not the condo areas fArea offers. See the comment
-  // in matchesFilters() for why the two must not be shared.
   // 2026-08-16: 評価(★4.3で90%が残る)と車で(全店44分以内)は実測で絞れないと
-  // 分かったため廃止。予算とエリアを常時表示の上段へ上げた。
+  // 分かったため廃止。エリアは地図上のジャンプバーで用が足りるため同日に削除。
+  // 空いた枠へ予算を上げ、細分類はカテゴリのすぐ右に置いた。
   dining: [
     ['fCatGroup', 'カテゴリ'], ['fCat', '細分類'], ['fPriceBand', '予算'],
-    ['fDiningArea', 'エリア'], ['fMichelin', 'ミシュラン'], ['fVenueType', '施設'],
+    ['fMichelin', 'ミシュラン'], ['fVenueType', '施設'],
   ],
 };
 
@@ -96,9 +93,9 @@ export function readCriteria(){
     c.michelin = val('fMichelin');
     c.priceBand = val('fPriceBand');
     c.priceBasis = currentBudgetBasis();
-    c.diningArea = val('fDiningArea');
     // 「近く: Mont Kiara」 lives in state, not in a control: it is set by the
-    // map's area jump, and the chip is what removes it again.
+    // map's area jump, and the chip is what removes it again. 2026-08-16 に
+    // エリアのセレクトを畳んだので、いまはこれが唯一の場所の絞り込み。
     c.near = diningNear;
     c.venueType = val('fVenueType');
     c.kidOnly = showKidOkOnly;
@@ -304,22 +301,7 @@ function populateDiningFilters(){
     vt.value = keep;
     vt.dataset.filled = '1';
   }
-  const area = $('fDiningArea');
-  if(area && !area.dataset.filled){
-    // 選択肢は「〜付近」バケツ(2026-08-09 A案: 細エリア43個は選ぶには多すぎる)。
-    // 細かいエリア名はカード・詳細に残る。並びは AREA_BUCKETS の定義順(地理順)で、
-    // 店が1軒もないバケツは出さない。
-    const counts = new Map();
-    CONDOS.filter(c => recordLayer(c) === 'dining' && c.area && !c.delisted)
-      .forEach(c => { const b = areaBucketOf(c.area); counts.set(b, (counts.get(b) || 0) + 1); });
-    if(!counts.size) return;   // data has not arrived yet
-    const keep = area.value;
-    area.innerHTML = '<option value="">すべて</option>' +
-      AREA_BUCKETS.filter(b => counts.has(b))
-        .map(b => `<option value="${esc(b)}">${esc(b)} (${counts.get(b)})</option>`).join('');
-    area.value = keep;
-    area.dataset.filled = '1';
-  }
+  // エリアのセレクトは 2026-08-16 に削除した（地図上のジャンプバーで用が足りる）。
   // 小分類だけは「作って終わり」にできない — 中身が大分類に従って変わるので、
   // dataset.filled を持たせず毎回作り直す。
   syncCatSubOptions();
@@ -329,25 +311,23 @@ function populateDiningFilters(){
  * 小分類(fCat)の選択肢を、いま選ばれている大分類の中身だけで作り直す。
  * 大分類が「すべて」のあいだは中身が決まらないので disabled（2026-08-15 竹森さん
  * 裁定: 69種を一列に並べるより、親を選んでから10種前後を選ぶ）。
- * 件数はエリアの選択肢と同じ流儀で括弧に出す。並びは多い順。
+ * 件数は括弧に出す。並びは多い順。
+ *
+ * 枠はカテゴリのすぐ右に常に置く（2026-08-16 竹森氏指示: エリアを畳んで空いた
+ * 枠へ移した）。大分類を選ぶまでは中身が決まらないので押せない状態で待つ —
+ * 枠ごと出し入れすると、選ぶたびに他の枠の位置が動いてしまう。
  */
 export function syncCatSubOptions(){
   const sub = $('fCat');
   if(!sub) return;
-  // 枠ごと出し入れする(2026-08-16): 大分類を選ぶまで中身が決まらない枠が、
-  // 起動時からずっと押せない状態で場所を取っていた。disabled は残す
-  // (枠が出ている瞬間に中身が空、という状態を作らないため)。
-  const wrap = $('fCatWrap');
   const group = val('fCatGroup');
   const keep = sub.value;
   if(!group){
     sub.innerHTML = '<option value="">—</option>';
     sub.value = '';
     sub.disabled = true;
-    if(wrap) wrap.style.display = 'none';
     return;
   }
-  if(wrap) wrap.style.display = '';
   const counts = new Map();
   CONDOS.filter(c => recordLayer(c) === 'dining' && !c.delisted && c.cat && c.catGroup === group)
     .forEach(c => counts.set(c.cat, (counts.get(c.cat) || 0) + 1));

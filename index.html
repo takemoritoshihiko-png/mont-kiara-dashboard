@@ -584,6 +584,14 @@ button,input,select{font-family:inherit}
 
 /* 押下感: タッチにはhoverが無いので、押した瞬間の反応をここで一括付与 */
 .condo-card:active,.seg-btn:active,.mode-btn:active,.chip-toggle:active,.vb-toggle:active,.vb-rv-btn:active,.data-btn:active,.area-jump button:active,.nb-row:active,.sf-row:active,.sort-btn:active,.aj-penang-toggle:active{transform:scale(.98);opacity:.85}
+/* 商業施設と飲食店の重なり（2026-08-16 竹森氏指摘）。
+   モールの中や真上にある店は座標がほぼ同じで、飲食の雫が商業の四角を覆っていた。
+   商業は zIndexOffset で常に上に描き、そこに乗る飲食はアイコンだけ右へずらす。
+   ずらすのは見た目だけで、マーカーの緯度経度は本物のまま（選ぶと正しい位置へ寄る）。
+   十分に寄ったズーム（18以上）では地図上で自然に離れるので、ずらしを打ち消す。 */
+.mk-mall-shift{transform:translateX(32px)}
+.leaflet-container.mk-mall-apart .mk-mall-shift{transform:none}
+
 /* 記録カード: 押せるのは .card-main だけ。それ以外にポインタと持ち上げを出さない */
 .record-card{cursor:default}
 .record-card:hover{transform:none;box-shadow:var(--shadow-1)}
@@ -622,7 +630,7 @@ button,input,select{font-family:inherit}
   /* 飲食 (D3/UX2): its four dropdowns, the 子連れ toggle and the 昼の予算 basis
      toggle. The generic rules above already reach them; they are named so this
      block visibly covers the layer. */
-  #fCatGroup,#fCat,#fMichelin,#fPriceBand,#fDiningArea,#toggleKidOk,#toggleDayBudget{min-height:40px}
+  #fCatGroup,#fCat,#fMichelin,#fPriceBand,#toggleKidOk,#toggleDayBudget{min-height:40px}
 
   /* ---- スマホでは絞り込みと並び替えを1本の開閉にまとめる（2026-08-16） ----
      実測: 390×780でパネルは331px、そのうち約296pxがコントロールで埋まり、
@@ -813,19 +821,20 @@ button,input,select{font-family:inherit}
            offer a value the filter does not understand.
 
            2026-08-16 竹森氏裁定: 常時見せる4枠は「実際に絞れる順」に選び直した。
-           実測(357店)では 予算(〜RM50=128件)・エリア(最大バケツ76件)・ミシュラン(75件)
-           はよく絞れる一方、評価は★4.3で321/357件(90%)が残り、車での所要時間は
-           全店が44分以内で〜45分が1件も絞らなかった。効かない2つは廃止し、
-           空いた枠に予算とエリアを上げている。ミシュランは残す(竹森氏指示)。
-           枠の数は4のままなので、スマホの高さは変わらない。
-           細分類は大分類を選んだときだけ現れる(選ぶまで中身が決まらないため、
-           起動時からずっと押せない枠が場所を取っていた)。 -->
+           実測(357店)では 予算(〜RM50=128件)・ミシュラン(75件)はよく絞れる一方、
+           評価は★4.3で321/357件(90%)が残り、車での所要時間は全店が44分以内で
+           〜45分が1件も絞らなかった。効かない2つは廃止。ミシュランは残す。
+
+           同日の追加裁定: エリアの絞り込みも削除した。地図の上にエリアへ飛ぶバーが
+           既にあり、そちらで用が足りるため。空いた枠に細分類を入れ、カテゴリの
+           すぐ右に置いた(選んだ大分類の中をもう一段絞る、という関係が並びで分かる)。
+           枠の数は4のままなので、スマホの高さは変わらない。細分類は大分類を
+           選ぶまで中身が決まらないので、それまでは押せない状態で待つ。 -->
       <div class="filter-row filter-row-2col" data-layer-only="dining" style="display:none">
         <div class="filter-group"><label for="fCatGroup">カテゴリ</label><select id="fCatGroup" onchange="onCatGroupChange()"><option value="">すべて</option></select></div>
+        <div class="filter-group" id="fCatWrap"><label for="fCat">細分類</label><select id="fCat" onchange="applyFilters()" disabled><option value="">—</option></select></div>
         <div class="filter-group"><label id="fPriceBandLabel" for="fPriceBand">予算 (1人・夜)</label><select id="fPriceBand" onchange="applyFilters()"><option value="">すべて</option><option value="0-50">〜RM50</option><option value="50-150">RM50-150</option><option value="150-400">RM150-400</option><option value="400-">RM400〜</option></select></div>
-        <div class="filter-group"><label for="fDiningArea">エリア</label><select id="fDiningArea" onchange="applyFilters()"><option value="">すべて</option></select></div>
         <div class="filter-group"><label for="fMichelin">ミシュラン</label><select id="fMichelin" onchange="applyFilters()"><option value="">すべて</option></select></div>
-        <div class="filter-group" id="fCatWrap" style="display:none"><label for="fCat">細分類</label><select id="fCat" onchange="applyFilters()" disabled><option value="">—</option></select></div>
       </div>
       <!-- 自分の記録は「良い店ばかりの357軒」を自分ごとの数十軒に変える唯一の軸なので、
            折りたたみの外に置く(2026-08-16)。3つは独立トグルで、「行きたい」×「未訪問」を

@@ -17,10 +17,22 @@ const topRowBody = topRow.slice(0, topRow.indexOf('<!-- 自分の記録'));
 const moreBlock = html.slice(html.indexOf('<div id="moreFilters"'), html.indexOf('<div class="chips" id="filterChips"'));
 
 describe('常時見えている絞り込み（飲食）', () => {
-  it('4つの枠は カテゴリ・予算・エリア・ミシュラン', () => {
-    for(const id of ['fCatGroup', 'fPriceBand', 'fDiningArea', 'fMichelin']){
+  it('4つの枠は カテゴリ・細分類・予算・ミシュラン', () => {
+    for(const id of ['fCatGroup', 'fCat', 'fPriceBand', 'fMichelin']){
       expect(topRowBody, `${id} が上段にない`).toContain(`id="${id}"`);
     }
+  });
+
+  // 2026-08-16 竹森氏指示: エリアは地図上のジャンプバーで用が足りるので削除し、
+  // 空いた枠に細分類を入れた。細分類はカテゴリのすぐ右（大分類の中をもう一段
+  // 絞る、という関係が並びで分かる位置）。
+  it('エリアの絞り込みは画面から消えている', () => {
+    expect(html).not.toContain('id="fDiningArea"');
+  });
+
+  it('細分類はカテゴリのすぐ右に来る', () => {
+    expect(topRowBody.indexOf('id="fCatGroup"')).toBeLessThan(topRowBody.indexOf('id="fCat"'));
+    expect(topRowBody.indexOf('id="fCat"')).toBeLessThan(topRowBody.indexOf('id="fPriceBand"'));
   });
 
   it('効き目の薄い絞り込みは画面から消えている（評価・車で）', () => {
@@ -32,8 +44,10 @@ describe('常時見えている絞り込み（飲食）', () => {
     expect(html).not.toContain('<option value="45">');
   });
 
-  it('細分類は大分類を選ぶまで枠ごと隠れている', () => {
-    expect(topRowBody).toMatch(/id="fCatWrap"[^>]*style="display:none"/);
+  // 枠は常に置く（選ぶたびに他の枠が動かないように）。中身が決まるまで押せない。
+  it('細分類の枠は常にあり、大分類を選ぶまでは押せない', () => {
+    expect(topRowBody).toContain('id="fCatWrap"');
+    expect(topRowBody).not.toMatch(/id="fCatWrap"[^>]*style="display:none"/);
     expect(topRowBody).toMatch(/<select id="fCat"[^>]*disabled/);
   });
 
@@ -99,7 +113,7 @@ describe('スマホ（≤768px）で絞り込みと並び替えを畳む', () =>
   });
 
   it('廃止した2つは40pxリストからも消えている', () => {
-    expect(mobile).toContain('#fCatGroup,#fCat,#fMichelin,#fPriceBand,#fDiningArea,#toggleKidOk,#toggleDayBudget{min-height:40px}');
+    expect(mobile).toContain('#fCatGroup,#fCat,#fMichelin,#fPriceBand,#toggleKidOk,#toggleDayBudget{min-height:40px}');
   });
 });
 
