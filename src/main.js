@@ -19,6 +19,7 @@ import {
   setOnPersonalChange, dineVisit, dineWant, dineRepeat, dineVisitDate, dineAmount, dineMemo, dineHide, dineUnhide,
   initFileDb, dineFileConnect, dineFileReauth, dineFileDisconnect, dineFileAdoptFile, dineFileAdoptCache,
   dineImport, dineClearAll, dineDownload, dineSelectExport, renderSaveBar, toast,
+  dineCloudSignIn, dineCloudSignOut, dineCloudSyncNow, dineCloudKeepLocal, dineCloudKeepCloud,
 } from './ui/dining.js';
 import { initPersonal, flush, onPersonalChange } from './data/personal.js';
 import { selectCondo, closeInfo, setInfoTab, selectNearby, applyUrlState, refreshInfoIfOpen } from './ui/info.js';
@@ -69,6 +70,12 @@ window.dineHide = dineHide;
 window.dineUnhide = dineUnhide;
 window.dineRepeat = dineRepeat;
 window.dineVisitDate = dineVisitDate;
+// クラウド保存（2026-08-16）
+window.dineCloudSignIn = dineCloudSignIn;
+window.dineCloudSignOut = dineCloudSignOut;
+window.dineCloudSyncNow = dineCloudSyncNow;
+window.dineCloudKeepLocal = dineCloudKeepLocal;
+window.dineCloudKeepCloud = dineCloudKeepCloud;
 window.dineAmount = dineAmount;
 window.dineMemo = dineMemo;
 window.dineImport = dineImport;

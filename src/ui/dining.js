@@ -23,6 +23,7 @@ import {
 } from '../domain/diningScore.js';
 import * as P from '../data/personal.js';
 import * as FS from '../data/fileStore.js';
+import * as CS from '../data/cloudStore.js';
 import { stableStringify } from '../domain/fileSync.js';
 import { recTier, recBadge } from '../domain/recommend.js';
 import { esc, jsStr, num, ratingText } from './list.js';
@@ -268,6 +269,47 @@ export function dineRepeat(id, rv){
   toast(e.rv ? `「${P.REPEAT_LABELS[e.rv]}」にしました` : '未回答に戻しました');
 }
 
+// ============================================================
+// クラウド保存の操作（2026-08-16）
+// ============================================================
+export async function dineCloudSignIn(){
+  const u = el('cloudUser'), p = el('cloudPass');
+  const res = await CS.cloudSignIn(u ? u.value : '', p ? p.value : '');
+  if(p) p.value = '';
+  if(!res.ok){ toast('⚠ ' + res.why); refresh(); return; }
+  // 打ち間違いが「別人の空アカウント」になって「記録が消えた」に見えるのを
+  // 防ぐため、新しく作ったときは必ず名乗る。
+  toast(res.created
+    ? `新しいユーザー「${CS.cloudStatus().username}」を作りました`
+    : `${CS.cloudStatus().username} としてログインしました`);
+  refresh();
+}
+
+export async function dineCloudSignOut(){
+  await CS.cloudSignOut();
+  toast('ログアウトしました（この端末の記録は残っています）');
+  refresh();
+}
+
+export async function dineCloudSyncNow(){
+  await CS.cloudSyncNow();
+  const cs = CS.cloudStatus();
+  toast(cs.phase === 'error' ? '⚠ ' + cs.lastError : 'クラウドに保存しました');
+  refresh();
+}
+
+export async function dineCloudKeepLocal(){
+  await CS.cloudKeepLocal();
+  toast('この端末の記録をクラウドに反映しました');
+  refresh();
+}
+
+export async function dineCloudKeepCloud(){
+  await CS.cloudKeepCloud();
+  toast('クラウドの記録をこの端末に取り込みました');
+  refresh();
+}
+
 /** 訪問日を直す（2026-08-16）。空にすると「訪問日なし」に戻る。 */
 export function dineVisitDate(id, vd){
   const e = P.setVisitDate(id, vd);
@@ -372,6 +414,57 @@ function fileSectionHtml(){
   `</section>`;
 }
 
+/**
+ * クラウド保存の節（2026-08-16）。データ画面のいちばん上。
+ *
+ * 端末の中だけに置く設計では、iOSの7日ルールやアプリ内ブラウザで消える。
+ * ここでログインすると、記録の本体がクラウドにも入り、どの端末からでも同じ
+ * 記録が出る。ログインは「ユーザー名＋合言葉」だけ（メール不要）。
+ */
+function cloudSectionHtml(){
+  const cs = CS.cloudStatus();
+  const head = `<section class="data-sec"><h3 class="data-h">クラウド保存（端末をまたいで残す）</h3>`;
+
+  if(cs.phase === 'conflict'){
+    return head +
+      `<div class="data-warn">⚠ ${esc(cs.conflictText)}</div>` +
+      `<div class="data-btns">` +
+        `<button type="button" class="data-btn primary" onclick="dineCloudKeepLocal()">この端末の記録を残す</button>` +
+        `<button type="button" class="data-btn" onclick="dineCloudKeepCloud()">クラウドの記録を残す</button>` +
+      `</div>` +
+      `<div class="data-note">選ばなかった方は上書きされます。迷ったら、先に上の「書き出し」で控えを取ってから選んでください。</div>` +
+    `</section>`;
+  }
+
+  if(cs.phase === 'off' || cs.phase === 'error'){
+    const warn = cs.phase === 'error' ? `<div class="data-warn">⚠ ${esc(cs.lastError)}</div>` : '';
+    return head + warn +
+      `<div class="data-note">ログインすると、記録がこの端末とクラウドの両方に残ります。スマホで書いてパソコンで見る、ができるようになります。</div>` +
+      `<div class="cloud-form">` +
+        `<label class="vb-flabel" for="cloudUser">ユーザー名</label>` +
+        `<input type="text" id="cloudUser" class="vb-amt" autocomplete="username" placeholder="例: takemori" value="${esc(cs.username)}">` +
+        `<label class="vb-flabel" for="cloudPass">合言葉（6文字以上）</label>` +
+        `<input type="password" id="cloudPass" class="vb-amt" autocomplete="current-password" placeholder="他人に推測されないもの">` +
+      `</div>` +
+      `<div class="data-btns">` +
+        `<button type="button" class="data-btn primary" onclick="dineCloudSignIn()">ログイン / はじめる</button>` +
+      `</div>` +
+      `<div class="data-note">はじめての名前を入れると、その名前で新しく作ります。打ち間違えると別の（空の）記録になるので、作ったときは画面でお知らせします。</div>` +
+    `</section>`;
+  }
+
+  const busy = cs.phase === 'signing' ? 'つないでいます…' : cs.phase === 'saving' ? '保存中…' : '';
+  return head +
+    `<div class="data-line">${esc(cs.username)} としてログイン中${busy ? ' ・ ' + esc(busy) : ''}</div>` +
+    `<div class="data-line">${cs.lastSyncAt ? 'クラウドへの最終保存: ' + esc(fileTimeText(cs.lastSyncAt)) : 'まだ保存していません'}</div>` +
+    `<div class="data-btns">` +
+      `<button type="button" class="data-btn" onclick="dineCloudSyncNow()">今すぐ保存</button>` +
+      `<button type="button" class="data-btn" onclick="dineCloudSignOut()">ログアウト</button>` +
+    `</div>` +
+    `<div class="data-note">ログアウトしても、この端末の記録は消えません。クラウドから離れるだけです。</div>` +
+  `</section>`;
+}
+
 function dataViewHtml(){
   const st = P.saveStatus();
   const cnt = P.storedCounts();
@@ -392,6 +485,7 @@ function dataViewHtml(){
     : '保存先: このブラウザ（localStorage）';
   return `<div class="dataview">` +
     `<button type="button" class="data-btn" style="margin-bottom:var(--s2)" onclick="setView(&quot;ledger&quot;)">← 台帳にもどる</button>` +
+    cloudSectionHtml() +
     fileSectionHtml() +
     `<section class="data-sec"><h3 class="data-h">保存の状態</h3>` +
       warn +
@@ -534,9 +628,18 @@ export function renderSaveBar(){
   const st = P.saveStatus();
   const fb = fileBarText(FS.fileStatus());
   bar.style.display = '';
-  bar.classList.toggle('bad', !!st.error || fb.startsWith('⚠'));
+  // クラウドの状態は保存バーの一等地に出す（2026-08-16）。記録が端末の中
+  // だけにある状態を、画面が黙って見過ごさないため。
+  const cs = CS.cloudStatus();
+  bar.classList.toggle('bad', !!st.error || fb.startsWith('⚠') || cs.phase === 'conflict' || cs.phase === 'error');
+  const cloudBit = cs.phase === 'conflict' ? '⚠ クラウドと食い違い（データ管理で選んでください）'
+    : cs.phase === 'error' ? '⚠ クラウド未保存'
+    : cs.phase === 'idle' || cs.phase === 'saving' ? `☁ ${cs.username}`
+    : cs.phase === 'signing' ? '☁ 接続中'
+    : '';
   const text = st.error ? '⚠ ' + st.error
-    : savedAtText(st) + (fb ? ' ・ ' + fb : '') + ' ・ ' + PRIVACY_SHORT;
+    : savedAtText(st) + (cloudBit ? ' ・ ' + cloudBit : '') + (fb ? ' ・ ' + fb : '')
+      + ' ・ ' + (cloudBit && cs.phase !== 'error' && cs.phase !== 'conflict' ? '' : PRIVACY_SHORT);
   // データ画面への入口はここ(旧3タブは2026-08-08廃止)。保存の話をする場所に併設。
   // title に全文を入れる: 短い版で切り詰めた説明の受け皿(2026-08-16)。
   bar.innerHTML = `<span class="savebar-text" title="${esc(PRIVACY_TEXT)}">${esc(text)}</span>` +
@@ -564,6 +667,17 @@ export function initFileDb(){
     localDate: P.localDate,
     onRestored: (n) => toast(`保存ファイルから記録 ${num(n)}店ぶんを復元しました`),
   });
+  // クラウド保存（2026-08-16）。前回ログインしていれば黙って復帰する。
+  // していなければSDKすら読まないので、公開の顔（住まいモード）は今までどおり。
+  CS.initCloud({
+    getExportText: () => P.currentExportText(),
+    storedCounts: () => P.storedCounts(),
+    parseImport: (text) => P.parseImport(text, P.buildPlaceIdMap(diningRecords())),
+    replaceAll: (data) => P.replaceAll(data),
+    onStatus: () => { renderSaveBar(); if(eatoutActive() && listView === 'data') onChanged(); },
+  });
+  // 記録が変わったらクラウドへも書きスルー（デバウンスはcloudStore側）
+  P.onPersonalChange(() => CS.cloudNotifyChanged());
   FS.onFileChange(() => {
     renderSaveBar();
     // ファイルから記録を取り込んだ時も、画面が古いままにならないようにする

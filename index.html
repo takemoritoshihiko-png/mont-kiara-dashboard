@@ -487,6 +487,10 @@ button,input,select{font-family:inherit}
 .vb-date{font-size:var(--fs-label);color:var(--text-2);font-variant-numeric:tabular-nums;margin-top:var(--s2);display:flex;align-items:center;gap:var(--s2)}
 /* 訪問日は直せる(2026-08-16)。日付入力は他の入力欄と同じ見た目に揃える。 */
 .vb-vd{font-family:inherit;font-size:var(--fs-xs);color:var(--text);background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-control);padding:2px var(--s2);font-variant-numeric:tabular-nums}
+/* クラウド保存のログイン欄（2026-08-16）。データ管理画面の中だけで使う。 */
+.cloud-form{display:flex;flex-direction:column;gap:2px;margin:var(--s2) 0}
+.cloud-form .vb-flabel{margin-top:var(--s1)}
+.cloud-form input{max-width:280px}
 .vb-vd:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(10,108,255,.16)}
 .vb-q{font-size:var(--fs-xs);color:var(--text);font-weight:600;margin-top:var(--s2)}
 .vb-hint{font-size:var(--fs-label);color:var(--text-2);font-weight:400}

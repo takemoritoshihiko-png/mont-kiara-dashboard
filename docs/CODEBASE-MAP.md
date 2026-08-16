@@ -28,6 +28,9 @@
 | `src/data/parseCsv.js` | CSVパーサ（引用符・改行対応）。**唯一の実装** |
 | `src/data/load.js` | ファイルURL定義・fetch・CSV/JSON列 → アプリのレコード形へのマッピング（飲食は `parseRestaurants`） |
 | `src/data/inline.js` | コードに埋めた固定データ: FIABCI受賞・開発会社・Tier色・年色スケール・ペナン9校の学費カーブ・ミシュランの表記 |
+| `src/domain/cloudSync.js` | **クラウド同期の「判断」だけ**（純・テスト対象）。ログイン入力の検分／ログイン直後にどちらを正とするか／書いてよいか。**片方が空のときは絶対に自動同期しない**が最重要の一行 |
+| `src/data/cloudConfig.js` | Firebase の接続先と SDK のバージョン。**この値は秘密ではない**（守っているのは Firestore のセキュリティ規則） |
+| `src/data/cloudStore.js` | **Firebase に触る唯一の場所**。ログイン（ユーザー名＋合言葉→`<name>@mkd.local`）・`users/{uid}` への読み書き・状態の保持。SDKは**ログインするまで読まない**（CDNから動的import）。personal.js は書き換えず `onPersonalChange` を購読して書きスルー |
 | `src/data/personal.js` | **個人記録の唯一の書き込み口**（外食モード）。localStorage `mkd_dining_personal_v1`・6項目(w/v/vd/rv/m/amt)+非表示フラグh(🗑で台帳から消す・データ管理から戻す)・ローカル日付・起動時の書込テスト・書き出し / 読み込み(v9のplaceIdキーを変換) / 全消去 |
 
 ### domain/ — 純粋なロジック（DOMを触らない）
