@@ -193,7 +193,7 @@ describe('matchesArea', () => {
 // (found live: four Kia Peng / Stonor towers sat in both klcc and ampang).
 describe('the KL areas claim each KL condo exactly once', () => {
   const KL_AREAS = ['mont-kiara', 'parkcity', 'bangsar', 'klgcc', 'klcc', 'ampang', 'damansara', 'other-kl'];
-  const condos = parseCsv(readFileSync(new URL('../condos_data.csv', import.meta.url), 'utf8'));
+  const condos = parseCsv(readFileSync(new URL('../condos_data.csv', import.meta.url), 'utf8').replace(/\r\n/g, '\n'));
   const kl = condos.filter(c => Number(c.lat) > 1 && Number(c.lat) < 4);
   const areasOf = (c) => KL_AREAS.filter(a => matchesArea({ ...c, lat: Number(c.lat) }, a));
 
@@ -208,7 +208,7 @@ describe('the KL areas claim each KL condo exactly once', () => {
 
 describe('the Penang areas cover the Penang condos', () => {
   const PENANG_AREAS = ['gurney', 'tanjung', 'ferringhi', 'bayan', 'george-town', 'gelugor'];
-  const condos = parseCsv(readFileSync(new URL('../condos_data.csv', import.meta.url), 'utf8'));
+  const condos = parseCsv(readFileSync(new URL('../condos_data.csv', import.meta.url), 'utf8').replace(/\r\n/g, '\n'));
   // lat > 4 is the island: KL sits near 3.1, Penang near 5.4.
   const penang = condos.filter(c => Number(c.lat) > 4);
   const areasOf = (c) => PENANG_AREAS.filter(a => matchesArea({ ...c, lat: Number(c.lat) }, a));
@@ -355,7 +355,7 @@ describe('school filters', () => {
   // filter and nobody notices (found live: Pelita's bare "Cambridge (IGCSE)").
   // Walk the CSV: every school must be findable through at least one option.
   it('every school in the CSV matches at least one curriculum option', () => {
-    const rows = parseCsv(readFileSync(new URL('../schools_data.csv', import.meta.url), 'utf8'));
+    const rows = parseCsv(readFileSync(new URL('../schools_data.csv', import.meta.url), 'utf8').replace(/\r\n/g, '\n'));
     const orphans = rows.filter(
       (r) => !CURRICULA.some((c) => (r.curriculum || '').toLowerCase().includes(c.toLowerCase()))
     );

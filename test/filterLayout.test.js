@@ -10,7 +10,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 
-const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 /** 常時表示の飲食の行（開始タグから最初の閉じまで、を素朴に切り出す） */
 const topRow = html.slice(html.indexOf('<div class="filter-row filter-row-2col" data-layer-only="dining"'));
 const topRowBody = topRow.slice(0, topRow.indexOf('<!-- 自分の記録'));
@@ -80,7 +80,7 @@ describe('ミシュランの並び（2026-08-16 竹森氏指示）', () => {
   });
 
   it('地図の凡例も同じ順に並ぶ', () => {
-    const map = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8');
+    const map = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
     const legend = map.slice(map.indexOf('export function updateLegend'));
     const star = legend.indexOf('ミシュラン星付き');
     const sel = legend.indexOf('掲載店（淡い金ピン');

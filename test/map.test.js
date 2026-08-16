@@ -64,7 +64,7 @@ describe('zoom threshold constants', () => {
 // notices when one of them gains an area and the others do not.
 // ============================================================
 describe('area keys stay in sync across the jump bar, the dropdown and the map', () => {
-  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
   const buttons = [...html.matchAll(/data-area="([^"]+)"/g)].map(m => m[1]);
   const select = html.slice(html.indexOf('id="fArea"'));
   const options = [...select.slice(0, select.indexOf('</select>')).matchAll(/<option value="([^"]*)"/g)]
@@ -118,7 +118,7 @@ describe('focusActionForZoom — 選択は常に「中心へ・FOCUS_ZOOMで」'
 // ロジックはLeaflet依存のため実画面で検証済み。ここでは部品のCSS契約だけ固定する
 // (新UI要素はモバイル40pxブロックにも入れる — CLAUDE.md の作法)。
 describe('同一住所ピンの選び直しポップアップ', () => {
-  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
   it('colo-list/colo-item のスタイルがあり、モバイルのタップ標的も登録済み', () => {
     expect(html).toContain('.colo-list{');
     expect(html).toContain('.colo-item{');
@@ -137,7 +137,7 @@ describe('同一住所ピンの選び直しポップアップ', () => {
 // 通ることを固定する。
 // ============================================================
 describe('want (♡行きたい) badge stays out of home mode', () => {
-  const map = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8');
+  const map = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 
   it("map.js computes `want` only when appMode === 'eatout'", () => {
     const line = map.split('\n').find(l => l.includes('const want ='));

@@ -9,7 +9,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { skeletonHtml, num, TILE_EMPTY } from '../src/ui/list.js';
 
-const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 // Everything between <style> and </style> — the whole design system lives there.
 const css = html.slice(html.indexOf('<style>'), html.indexOf('</style>'));
 
@@ -179,7 +179,7 @@ describe('loading state (audit E3 / spec 2.10)', () => {
 // ============================================================
 describe('JS-side colours are inventoried (map.js / inline.js)', () => {
   const hexesOf = (rel) => [...new Set(
-    (readFileSync(new URL(rel, import.meta.url), 'utf8').match(/#[0-9a-fA-F]{3,6}\b/g) || [])
+    (readFileSync(new URL(rel, import.meta.url), 'utf8').replace(/\r\n/g, '\n').match(/#[0-9a-fA-F]{3,6}\b/g) || [])
   )].sort();
 
   it('src/ui/map.js introduces no unlisted colour', () => {

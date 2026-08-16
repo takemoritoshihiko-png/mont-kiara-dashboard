@@ -21,9 +21,9 @@ import { haversineKm } from '../src/domain/geo.js';
 import { sortOptionsFor, comparatorFor, sortRecords } from '../src/domain/sort.js';
 import { AREA_CENTERS } from '../src/ui/map.js';
 
-const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const mapSrc = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8');
-const LEDGER = JSON.parse(readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8'));
+const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+const mapSrc = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+const LEDGER = JSON.parse(readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8').replace(/\r\n/g, '\n'));
 
 // A dining record. Coordinates default to Mont Kiara's jump centre.
 const eat = (over = {}) => ({
@@ -362,17 +362,25 @@ describe('住まいモードの層タブに飲食への入口がある', () => {
   });
 
   it('keeps setLayer(dining) as the hand-over to 外食モード, not a home layer', () => {
-    const list = readFileSync(new URL('../src/ui/list.js', import.meta.url), 'utf8');
+    const list = readFileSync(new URL('../src/ui/list.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
     const fn = list.slice(list.indexOf('export function setLayer'));
     expect(fn.slice(0, fn.indexOf('\n}'))).toContain(`setMode('eatout')`);
   });
 });
 
 describe('「昼の予算」トグルの markup', () => {
-  it('sits in the dining filters, next to the price band', () => {
-    const row = html.slice(html.indexOf('id="fPriceBand"'));
-    const upToRowEnd = row.slice(0, row.indexOf('</div>\n        <!--'));
-    expect(upToRowEnd).toContain('id="toggleDayBudget"');
+  // 2026-08-16に配置が変わった: 予算のセレクトは常時表示の上段へ、昼/夜の基準を
+  // 切り替えるトグルは折りたたみの中へ。隣り合わなくなったので、代わりに
+  // 「基準がどこかで必ず名乗られている」ことを検査する——
+  // 基準が見えないまま予算で絞れてしまう、が本当に困る状態だから。
+  it('は折りたたみの中にあり、基準は予算のラベルが名乗る', () => {
+    const more = html.slice(html.indexOf('<div id="moreFilters"'), html.indexOf('<div class="chips"'));
+    expect(more).toContain('id="toggleDayBudget"');
+    // 予算のラベルは基準(昼/夜)を書いた状態で出荷され、JSが切り替える
+    expect(html).toContain('id="fPriceBandLabel"');
+    expect(html).toContain('予算 (1人・夜)');
+    const list = readFileSync(new URL('../src/ui/list.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+    expect(list).toContain("'予算 (1人・昼)'");
   });
 
   it('is a pressable toggle, announced as one', () => {

@@ -8,7 +8,7 @@ import {
   RECOMMENDED_TIERS, REC_BADGES, recBadge,
 } from '../src/domain/recommend.js';
 
-const LEDGER = JSON.parse(readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8'));
+const LEDGER = JSON.parse(readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8').replace(/\r\n/g, '\n'));
 const find = (n) => LEDGER.find((x) => x.name === n);
 
 const rec = (over = {}) => ({

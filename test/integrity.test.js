@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { parseCsv } from './helpers/csv.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const read = (f) => readFileSync(join(root, f), 'utf8');
+const read = (f) => readFileSync(join(root, f), 'utf8').replace(/\r\n/g, '\n');
 
 const condos = parseCsv(read('condos_data.csv'));
 const commercials = parseCsv(read('commercial_data.csv'));

@@ -15,8 +15,8 @@ import {
 } from '../src/ui/map.js';
 import { haversineKm } from '../src/domain/geo.js';
 
-const src = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8');
-const restaurants = JSON.parse(readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8'));
+const src = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+const restaurants = JSON.parse(readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8').replace(/\r\n/g, '\n'));
 
 // Pavilion KL（実データで最も飲食が重なっている商業施設）
 const PAVILION = { lat: 3.1490, lng: 101.7130 };
@@ -110,7 +110,7 @@ describe('地図側の契約（ソースに刻んだもの）', () => {
     expect(src).not.toMatch(/L\.marker\(\[c\.lat \+/);
     expect(src).not.toMatch(/L\.marker\(\[c\.lat-/);
     // CSS 側に、ずらしと打ち消しの両方がある
-    const css = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+    const css = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
     expect(css).toContain(`.${MALL_SHIFT_CLASS}{transform:translateX(${MALL_SHIFT_PX}px)}`);
     expect(css).toContain(`.leaflet-container.${MALL_APART_CLASS} .${MALL_SHIFT_CLASS}{transform:none}`);
   });

@@ -16,7 +16,7 @@ import {
 } from '../src/domain/diningScore.js';
 import { parseRestaurants } from '../src/data/load.js';
 
-const RAW = readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8');
+const RAW = readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 const LEDGER = parseRestaurants(RAW);
 // The baseline's provenance: v9's original 50 records (R0001-R0050). The D6
 // expansion grows the file past them, but the pinned BASELINE_STAR keeps

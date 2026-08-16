@@ -13,7 +13,7 @@ import { cardBodyHtml, cardHeroText, cardAriaLabel, priceRangeText, ratingText }
 import { googleMapsUrl, detailHtml } from '../src/ui/info.js';
 import { parseRestaurants, RESTAURANTS_URL } from '../src/data/load.js';
 
-const raw = readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8');
+const raw = readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 
 /** A dining record in the shape parseRestaurants() produces. */
 const eat = (over = {}) => ({
@@ -549,7 +549,7 @@ describe('小分類セレクト', () => {
   // 大分類の隣に立ち、大分類が「すべて」の間は押せない(disabled)。
   // 選択肢は台帳から作るので、初期HTMLは空でよい。
   it('index.html に小分類セレクトがあり、初期状態は disabled・大分類は専用ハンドラ', () => {
-    const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+    const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
     expect(html).toContain('id="fCat"');
     expect(html).toContain('細分類');
     // 大分類が変わったら小分類を作り直す必要があるので applyFilters() 直呼びではない

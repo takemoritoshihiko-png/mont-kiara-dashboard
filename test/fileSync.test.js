@@ -95,9 +95,9 @@ describe('readEnvelope / stableStringify', () => {
 });
 
 describe('配線の契約（ソース）', () => {
-  const dining = readFileSync(new URL('../src/ui/dining.js', import.meta.url), 'utf8');
-  const personal = readFileSync(new URL('../src/data/personal.js', import.meta.url), 'utf8');
-  const fileStore = readFileSync(new URL('../src/data/fileStore.js', import.meta.url), 'utf8');
+  const dining = readFileSync(new URL('../src/ui/dining.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+  const personal = readFileSync(new URL('../src/data/personal.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+  const fileStore = readFileSync(new URL('../src/data/fileStore.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
   it('personal.js は fileStore を知らない（単一ドアのまま・購読方式）', () => {
     expect(personal).not.toContain('fileStore');
   });

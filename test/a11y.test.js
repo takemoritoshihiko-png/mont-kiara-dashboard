@@ -12,7 +12,7 @@ import { cardHtml, cardAriaLabel, cardHeroText } from '../src/ui/list.js';
 import { attrEsc } from '../src/ui/map.js';
 import { initA11y } from '../src/ui/a11y.js';
 
-const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 const css = html.slice(html.indexOf('<style>'), html.indexOf('</style>'));
 const body = html.slice(html.indexOf('<body>'));
 // The mobile block is the last thing in the stylesheet.
@@ -210,7 +210,7 @@ describe('the detail overlay is a dialog you can always leave', () => {
   });
 
   it('is renamed after whatever it is showing, and reset when it closes', () => {
-    const info = readFileSync(new URL('../src/ui/info.js', import.meta.url), 'utf8');
+    const info = readFileSync(new URL('../src/ui/info.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
     expect(info).toContain("setAttribute('aria-label', c.name + ' の詳細')");
     expect(info).toContain("setAttribute('aria-label', DIALOG_LABEL_EMPTY)");
   });
@@ -318,20 +318,20 @@ describe('card-shaped controls behave like buttons', () => {
   it('wires exactly one listener for the whole page', () => {
     // The list is re-rendered on every keystroke in the search box; per-card
     // wiring would be attached and thrown away hundreds of times a session.
-    const a11y = readFileSync(new URL('../src/ui/a11y.js', import.meta.url), 'utf8');
+    const a11y = readFileSync(new URL('../src/ui/a11y.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
     expect(a11y.match(/addEventListener/g)).toHaveLength(1);
   });
 
   it('gives the same treatment to the 周辺 and 学費くらべ rows', () => {
-    const info = readFileSync(new URL('../src/ui/info.js', import.meta.url), 'utf8');
-    const sf = readFileSync(new URL('../src/ui/schoolFinder.js', import.meta.url), 'utf8');
+    const info = readFileSync(new URL('../src/ui/info.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+    const sf = readFileSync(new URL('../src/ui/schoolFinder.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
     expect(info).toContain('class="nb-row" role="button" tabindex="0"');
     expect(sf).toContain('role="button" tabindex="0"');
   });
 });
 
 describe('map markers', () => {
-  const map = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8');
+  const map = readFileSync(new URL('../src/ui/map.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 
   it('names every marker and every cluster bubble', () => {
     expect(map).toContain('aria-label="学校 ${attrEsc(c.name)}"');
@@ -354,7 +354,7 @@ describe('map markers', () => {
 
   it('points keyboard users at the list rather than pretending markers are navigable', () => {
     expect(html).toContain('id="map" role="application"');
-    const a11y = readFileSync(new URL('../src/ui/a11y.js', import.meta.url), 'utf8');
+    const a11y = readFileSync(new URL('../src/ui/a11y.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
     expect(a11y).toContain('Deliberately NOT here');
   });
 });

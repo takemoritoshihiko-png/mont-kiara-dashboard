@@ -29,7 +29,7 @@ vi.mock('../src/ui/map.js', () => ({
   focusOnRecord: () => {},
 }));
 
-const LEDGER = parseRestaurants(readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8'));
+const LEDGER = parseRestaurants(readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8').replace(/\r\n/g, '\n'));
 calcLedgerScores(LEDGER);
 const DEWAKAN = LEDGER.find(r => r.name === 'Dewakan');
 

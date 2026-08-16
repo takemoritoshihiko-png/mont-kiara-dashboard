@@ -215,8 +215,8 @@ describe('feeComparison', () => {
 // REAL DATA — the mess this module exists for
 // ============================================================
 const root = new URL('../', import.meta.url);
-const detail = JSON.parse(readFileSync(new URL('schools_detail.json', root), 'utf8'));
-const schools = parseCsv(readFileSync(new URL('schools_data.csv', root), 'utf8')).map(r => ({
+const detail = JSON.parse(readFileSync(new URL('schools_detail.json', root), 'utf8').replace(/\r\n/g, '\n'));
+const schools = parseCsv(readFileSync(new URL('schools_data.csv', root), 'utf8').replace(/\r\n/g, '\n')).map(r => ({
   name: r.name, lat: Number(r.lat), ageRange: r.age_range, curriculum: r.curriculum, nameJa: r.name_ja,
 }));
 
