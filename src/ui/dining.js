@@ -22,9 +22,8 @@ import {
   ledgerScore, scoreBreakdownText, scoreBars, ratingMetaText, BASELINE_STAR,
 } from '../domain/diningScore.js';
 import * as P from '../data/personal.js';
-import * as FS from '../data/fileStore.js';
 import * as CS from '../data/cloudStore.js';
-import { stableStringify } from '../domain/fileSync.js';
+import { snapLabel } from '../domain/snapshots.js';
 import { recTier, recBadge } from '../domain/recommend.js';
 import { esc, jsStr, num, ratingText } from './list.js';
 
@@ -291,13 +290,6 @@ export async function dineCloudSignOut(){
   refresh();
 }
 
-export async function dineCloudSyncNow(){
-  await CS.cloudSyncNow();
-  const cs = CS.cloudStatus();
-  toast(cs.phase === 'error' ? '⚠ ' + cs.lastError : 'クラウドに保存しました');
-  refresh();
-}
-
 export async function dineCloudKeepLocal(){
   await CS.cloudKeepLocal();
   toast('この端末の記録をクラウドに反映しました');
@@ -356,7 +348,7 @@ const EXPORT_LEAD_TEXT =
   '記録をファイルに保存するか、下のJSONをコピーして控えられます';
 const EXPORT_SUMMARY_TEXT = '書き出した内容（JSON）';
 
-// ---- ファイルDB（A案 2026-08-08）: データビュー先頭の節と保存バーの一言 ----
+// ---- 時刻の表示（クラウドの節と保存バーが共有） ----
 
 function fileTimeText(d){
   if(!d) return '';
@@ -364,82 +356,44 @@ function fileTimeText(d){
   return `${p(d.getHours())}:${p(d.getMinutes())}`;
 }
 
-/** 保存バー用の短い一言。'' なら何も足さない。 */
-export function fileBarText(fs){
-  if(!fs.supported || fs.phase === 'off' || fs.phase === 'unsupported') return '';
-  if(fs.phase === 'conflict') return '⚠ ファイル保存が競合（データビューで解決）';
-  if(fs.phase === 'error') return '⚠ ファイル保存に失敗';
-  if(fs.phase === 'reauth') return 'ファイル保存: 再接続待ち';
-  if(fs.phase === 'saving') return 'ファイルへ保存中…';
-  return 'ファイル保存: ' + (fs.lastWriteAt ? fileTimeText(fs.lastWriteAt) + ' ✓' : '接続済み');
-}
-
-/** データビュー先頭「自動保存（ファイル）」の節。状態ごとに言うことが違う。 */
-function fileSectionHtml(){
-  const fs = FS.fileStatus();
-  const head = `<section class="data-sec"><h3 class="data-h">自動保存（ファイル）</h3>`;
-  if(!fs.supported){
-    return head + `<div class="data-note">このブラウザはフォルダへの自動保存に対応していません（Chrome/Edgeで利用できます）。下の「書き出し」でのバックアップをおすすめします。</div></section>`;
-  }
-  if(fs.phase === 'off'){
-    return head +
-      `<div class="data-note">フォルダを一度選ぶと、以後は記録のたび自動でファイルにも保存されます。OneDrive内のフォルダを選べば、ブラウザのデータ消去やPCの故障からも記録が守られます。</div>` +
-      `<div class="data-btns"><button type="button" class="data-btn primary" onclick="dineFileConnect()">フォルダを選んで自動保存を始める</button></div></section>`;
-  }
-  if(fs.phase === 'reauth'){
-    return head +
-      `<div class="data-line">前回の保存先: フォルダ「${esc(fs.dirName)}」</div>` +
-      `<div class="data-note">ブラウザ再起動後のため、再接続の許可が必要です。ダイアログで「毎回許可」を選ぶと次回から表示されません。</div>` +
-      `<div class="data-btns"><button type="button" class="data-btn primary" onclick="dineFileReauth()">再接続する（許可）</button>` +
-      `<button type="button" class="data-btn" onclick="dineFileDisconnect()">自動保存をやめる</button></div></section>`;
-  }
-  if(fs.phase === 'conflict'){
-    return head +
-      `<div class="data-warn">⚠ ${esc(fs.error)}</div>` +
-      `<div class="data-note">別のPCやファイルの手編集で、保存ファイルがこのブラウザの記録と食い違っています。残す方を選んでください（選ぶまで自動保存は止まっています）。</div>` +
-      `<div class="data-btns">` +
-        `<button type="button" class="data-btn primary" onclick="dineFileAdoptFile()">ファイルの内容をこのブラウザに読み込む</button>` +
-        `<button type="button" class="data-btn danger" onclick="dineFileAdoptCache()">このブラウザの記録でファイルを上書き</button>` +
-      `</div></section>`;
-  }
-  const warn = fs.phase === 'error' ? `<div class="data-warn">⚠ ${esc(fs.error)}</div>` : '';
-  return head + warn +
-    `<div class="data-line">保存先: フォルダ「${esc(fs.dirName)}」の ${esc('dining-records.json')}</div>` +
-    `<div class="data-line">${fs.lastWriteAt ? 'ファイルへの最終保存: ' + fileTimeText(fs.lastWriteAt) : '接続済み（まだ書き込みなし）'} ・ 日次バックアップ7世代（backups/）</div>` +
-    `<div class="data-btns">` +
-      (fs.phase === 'error' ? `<button type="button" class="data-btn primary" onclick="dineFileReauth()">再試行</button>` : '') +
-      `<button type="button" class="data-btn" onclick="dineFileDisconnect()">自動保存をやめる</button>` +
-    `</div>` +
-    `<div class="data-note">ファイルは手元に残るので、新しいPCではこの画面から同じフォルダを選び直すだけで復元されます。</div>` +
-  `</section>`;
-}
-
 /**
- * クラウド保存の節（2026-08-16）。データ画面のいちばん上。
+ * 第1節「記録の保存先」（2026-08-16 整頓）。
  *
- * 端末の中だけに置く設計では、iOSの7日ルールやアプリ内ブラウザで消える。
- * ここでログインすると、記録の本体がクラウドにも入り、どの端末からでも同じ
- * 記録が出る。ログインは「ユーザー名＋合言葉」だけ（メール不要）。
+ * 以前はここに3つの節（クラウド／フォルダ自動保存／保存の状態）が並び、
+ * 「保存先は◯◯です」を3通りの言い方で同時に名乗っていた。実測で6節1284px、
+ * スマホでは4.4画面ぶん。竹森氏の裁定でフォルダ自動保存を廃止し、残りを
+ * **この1節に統合**した。画面が答えるのは1つの問いだけ:
+ * 「いま、私の記録はどこにあるのか」。
+ *
+ * 押す保存は無い。書いた瞬間に端末へ、1.2秒後にクラウドへ自動で入る。
  */
-function cloudSectionHtml(){
+function storageSectionHtml(){
   const cs = CS.cloudStatus();
-  const head = `<section class="data-sec"><h3 class="data-h">クラウド保存（端末をまたいで残す）</h3>`;
+  const st = P.saveStatus();
+  const cnt = P.storedCounts();
+  const head = `<section class="data-sec"><h3 class="data-h">記録の保存先</h3>`;
+  const inventory = cnt.stores
+    ? `<div class="data-line">記録 ${num(cnt.stores)}店（訪問 ${num(cnt.visited)} ・ 行きたい ${num(cnt.want)} ・ 感想 ${num(cnt.memo)} ・ 実額 ${num(cnt.amount)}）</div>`
+    : `<div class="data-note">${esc(DATA_EMPTY_TEXT)}</div>`;
+  const err = st.error ? `<div class="data-warn">⚠ ${esc(st.error)}</div>` : '';
 
   if(cs.phase === 'conflict'){
-    return head +
+    return head + err +
       `<div class="data-warn">⚠ ${esc(cs.conflictText)}</div>` +
       `<div class="data-btns">` +
         `<button type="button" class="data-btn primary" onclick="dineCloudKeepLocal()">この端末の記録を残す</button>` +
         `<button type="button" class="data-btn" onclick="dineCloudKeepCloud()">クラウドの記録を残す</button>` +
       `</div>` +
-      `<div class="data-note">選ばなかった方は上書きされます。迷ったら、先に上の「書き出し」で控えを取ってから選んでください。</div>` +
+      `<div class="data-note">選ばなかった方は上書きされます。選んだあとでも、下の「控え」から戻せます。</div>` +
     `</section>`;
   }
 
   if(cs.phase === 'off' || cs.phase === 'error'){
     const warn = cs.phase === 'error' ? `<div class="data-warn">⚠ ${esc(cs.lastError)}</div>` : '';
-    return head + warn +
-      `<div class="data-note">ログインすると、記録がこの端末とクラウドの両方に残ります。スマホで書いてパソコンで見る、ができるようになります。</div>` +
+    return head + err + warn +
+      `<div class="data-warn">⚠ いまは<b>この端末の中だけ</b>に保存されています</div>` +
+      inventory +
+      `<div class="data-note">ブラウザのデータを消すと失われます。ログインすると、スマホで書いてパソコンで見る、ができるようになります。</div>` +
       `<div class="cloud-form">` +
         `<label class="vb-flabel" for="cloudUser">ユーザー名</label>` +
         `<input type="text" id="cloudUser" class="vb-amt" autocomplete="username" placeholder="例: takemori" value="${esc(cs.username)}">` +
@@ -454,86 +408,74 @@ function cloudSectionHtml(){
   }
 
   const busy = cs.phase === 'signing' ? 'つないでいます…' : cs.phase === 'saving' ? '保存中…' : '';
-  return head +
-    `<div class="data-line">${esc(cs.username)} としてログイン中${busy ? ' ・ ' + esc(busy) : ''}</div>` +
-    `<div class="data-line">${cs.lastSyncAt ? 'クラウドへの最終保存: ' + esc(fileTimeText(cs.lastSyncAt)) : 'まだ保存していません'}</div>` +
+  const synced = cs.lastSyncAt ? '自動保存 ' + esc(fileTimeText(cs.lastSyncAt)) : 'まだ保存していません';
+  return head + err +
+    `<div class="data-line"><b>☁ ${esc(cs.username)}</b> でログイン中</div>` +
+    `<div class="data-line">${synced}${busy ? ' ・ ' + esc(busy) : ''}</div>` +
+    inventory +
     `<div class="data-btns">` +
-      `<button type="button" class="data-btn" onclick="dineCloudSyncNow()">今すぐ保存</button>` +
       `<button type="button" class="data-btn" onclick="dineCloudSignOut()">ログアウト</button>` +
     `</div>` +
-    `<div class="data-note">ログアウトしても、この端末の記録は消えません。クラウドから離れるだけです。</div>` +
+    `<div class="data-note">保存ボタンはありません。書いた瞬間に自動で保存されます。どの端末でも、このユーザー名でログインすれば同じ記録が出ます。</div>` +
+  `</section>`;
+}
+
+/**
+ * 第2節「控え（自動）」。
+ * 人は何も押さない。危険な操作の直前と、その日の最初の変更の前に、
+ * 機械が控えを取る（判断は src/domain/snapshots.js）。ここは戻す口だけ。
+ */
+function snapshotSectionHtml(){
+  const list = P.listSnapshots();
+  const today = P.localDate();
+  const rows = list.map(s =>
+    `<div class="data-line">${esc(snapLabel(s, today))}` +
+    `<button type="button" class="data-btn" style="padding:1px 8px;margin-left:6px" onclick="dineRestoreSnapshot('${jsStr(s.id)}')">この時点に戻す</button></div>`
+  ).join('');
+  return `<section class="data-sec"><h3 class="data-h">控え（自動）</h3>` +
+    (list.length
+      ? `<div class="data-note">押し間違えても戻せるように、消す直前と、日ごとの姿を自動で控えています。</div>` + rows
+      : `<div class="data-note">記録を書き始めると、消す直前と日ごとの姿を自動で控えます。まだ控えはありません。</div>`) +
+    `<div class="data-btns">` +
+      `<button type="button" class="data-btn primary" onclick="dineDownload()">ファイルに保存</button>` +
+    `</div>` +
+    `<div class="data-note">${esc(EXPORT_LEAD_TEXT)}</div>` +
+    `<details class="data-details" id="dataExportBox">` +
+      `<summary>JSONで直接あつかう（書き出し・読み込み）</summary>` +
+      `<textarea id="dataExport" class="data-area" rows="5" readonly` +
+      ` aria-label="${esc(EXPORT_SUMMARY_TEXT)}">${esc(P.currentExportText())}</textarea>` +
+      `<div class="data-btns"><button type="button" class="data-btn" onclick="dineSelectExport()">JSONを全選択</button></div>` +
+      `<label class="vb-flabel" for="dataImport">貼り付け欄（台帳v9のバックアップも読めます）</label>` +
+      `<textarea id="dataImport" class="data-area" rows="4" placeholder='{"app":"kl-dining-ledger", ...}'></textarea>` +
+      `<div class="data-btns">` +
+        `<button type="button" class="data-btn" onclick="dineImport('merge')">いまの記録に統合</button>` +
+        `<button type="button" class="data-btn danger" onclick="dineImport('replace')">まるごと置き換え</button>` +
+      `</div>` +
+      `<div class="data-result" id="dataResult" role="status" aria-live="polite"></div>` +
+    `</details>` +
   `</section>`;
 }
 
 function dataViewHtml(){
-  const st = P.saveStatus();
-  const cnt = P.storedCounts();
-  const warn = st.error
-    ? `<div class="data-warn">⚠ ${esc(st.error)}</div>` : '';
-  // 0 records is not "記録中: 0店（訪問 0 ・ …）" — a row of zeros reads as a
-  // failure. It is a state with an instruction, so it gets one.
-  const inventory = cnt.stores
-    ? `<div class="data-line">記録中: ${num(cnt.stores)}店（訪問 ${num(cnt.visited)} ・ 行きたい ${num(cnt.want)} ・ 感想 ${num(cnt.memo)} ・ 実額 ${num(cnt.amount)}）</div>`
-    : `<div class="data-note">${esc(DATA_EMPTY_TEXT)}</div>`;
-  // PRIVACY_TEXT is NOT repeated here: the save bar under the list carries it
-  // on every screen of 外食モード, and the detail panel carries it beside the
-  // record itself. A third copy on the one view the user came to on purpose
-  // was the same sentence twice in one glance.
-  const fs = FS.fileStatus();
-  const cacheRole = fs.phase === 'idle' || fs.phase === 'saving'
-    ? '保存先: このブラウザ（高速キャッシュ）＋ 自動保存ファイル'
-    : '保存先: このブラウザ（localStorage）';
-  return `<div class="dataview">` +
-    `<button type="button" class="data-btn" style="margin-bottom:var(--s2)" onclick="setView(&quot;ledger&quot;)">← 台帳にもどる</button>` +
-    cloudSectionHtml() +
-    fileSectionHtml() +
-    `<section class="data-sec"><h3 class="data-h">保存の状態</h3>` +
-      warn +
-      `<div class="data-line">${esc(cacheRole)}</div>` +
-      `<div class="data-line">${esc(savedAtText(st))}</div>` +
-      inventory +
-    `</section>` +
-
-    `<section class="data-sec"><h3 class="data-h">書き出し（バックアップ）</h3>` +
-      `<div class="data-note">機種変更やブラウザのデータ消去に備えて、ときどき保存してください。</div>` +
-      `<div class="data-btns">` +
-        `<button type="button" class="data-btn primary" onclick="dineDownload()">ファイルに保存</button>` +
-        `<button type="button" class="data-btn" onclick="dineSelectExport()">JSONを全選択</button>` +
-      `</div>` +
-      `<div class="data-note">${esc(EXPORT_LEAD_TEXT)}</div>` +
-      // The raw JSON is folded away. It is the fallback, not the offer: the
-      // first thing on this view should be the button that does the job.
-      `<details class="data-details" id="dataExportBox">` +
-        `<summary>${esc(EXPORT_SUMMARY_TEXT)}</summary>` +
-        `<textarea id="dataExport" class="data-area" rows="6" readonly` +
-        ` aria-label="${esc(EXPORT_SUMMARY_TEXT)}">${esc(P.currentExportText())}</textarea>` +
-      `</details>` +
-    `</section>` +
-
-    `<section class="data-sec"><h3 class="data-h">読み込み</h3>` +
-      `<div class="data-note">書き出したJSONを貼り付けてください。台帳v9のバックアップもそのまま読めます。</div>` +
-      `<label class="vb-flabel" for="dataImport">貼り付け欄</label>` +
-      `<textarea id="dataImport" class="data-area" rows="5" placeholder='{"app":"kl-dining-ledger", ...}'></textarea>` +
-      `<div class="data-btns">` +
-        `<button type="button" class="data-btn" onclick="dineImport('merge')">いまの記録に統合</button>` +
-        // 置き換え destroys; it is dressed like 全消去 and says so on its face.
-        `<button type="button" class="data-btn danger" onclick="dineImport('replace')">まるごと置き換え（今の記録は消えます）</button>` +
-      `</div>` +
-      `<div class="data-result" id="dataResult" role="status" aria-live="polite"></div>` +
-    `</section>` +
-
-    (() => {
-      const hid = [...P.hiddenIds()];
-      if(!hid.length) return '';
-      const rows = hid.map(id => {
+  // 節は3つだけ（2026-08-16 竹森氏裁定）。それぞれが答える問いは1つ:
+  //   ①いま記録はどこにあるか ②間違えたらどう戻すか ③片づけたいときは
+  // 以前は6節・実測1284px（スマホ4.4画面）で、同じ事実を3通りの言い方で
+  // 同時に名乗っていた。
+  const hid = [...P.hiddenIds()];
+  const hidden = hid.length
+    ? `<div class="data-line">非表示にした店 ${num(hid.length)}件</div>` +
+      hid.map(id => {
         const c = diningRecords().find(x => x.id === id);
         return `<div class="data-line">🗑 ${esc(c ? c.name : id)} <button type="button" class="data-btn" style="padding:1px 8px;margin-left:6px" onclick="dineUnhide('${jsStr(id)}')">台帳に戻す</button></div>`;
-      }).join('');
-      return `<section class="data-sec"><h3 class="data-h">非表示にした店（${num(hid.length)}件）</h3>` +
-        `<div class="data-note">「ここは違う」と消した店。台帳・地図から見えなくなっていますが、いつでも戻せます。</div>` + rows + `</section>`;
-    })() +
-    `<section class="data-sec"><h3 class="data-h">全消去</h3>` +
-      `<div class="data-note">この端末の記録をすべて消します。戻せません。先に書き出しておいてください。</div>` +
+      }).join('')
+    : '';
+  return `<div class="dataview">` +
+    `<button type="button" class="data-btn" style="margin-bottom:var(--s2)" onclick="setView(&quot;ledger&quot;)">← 台帳にもどる</button>` +
+    storageSectionHtml() +
+    snapshotSectionHtml() +
+    `<section class="data-sec"><h3 class="data-h">片づけ</h3>` +
+      hidden +
+      `<div class="data-note">記録をすべて消します。消す直前の姿は上の「控え」に残るので、押し間違えても戻せます。</div>` +
       `<div class="data-btns"><button type="button" class="data-btn danger" onclick="dineClearAll()">記録をすべて消す</button></div>` +
     `</section></div>`;
 }
@@ -595,16 +537,27 @@ export function dineImport(mode){
   say(P.importSummaryText(res.stats, mode), false);
 }
 
-/** Two confirmations, and the first one names the way out. v9 asked twice too. */
+/**
+ * 全消去。確認は**1回だけ**にした（2026-08-16）。
+ * 以前は2回聞いて「取り消せません」と脅していたが、いまは消す直前の姿が
+ * 自動で控えに残る。戻せるものを2回聞くのは、ただの摩擦。
+ */
 export function dineClearAll(){
   const n = P.storedCounts().stores;
   if(!n){ toast('消す記録がありません'); return; }
   if(typeof confirm !== 'function') return;
-  if(!confirm(`${n}店ぶんの記録を全部消します。先に「ファイルに保存」で書き出しておいてください。続けますか？`)) return;
-  if(!confirm('本当に消しますか？ この操作は取り消せません。')) return;
+  if(!confirm(`${n}店ぶんの記録を消します。消す直前の姿は「控え」に残るので、あとから戻せます。続けますか？`)) return;
   P.clearAll();
   refresh();
-  toast('記録をすべて消しました');
+  toast('記録をすべて消しました（控えから戻せます）');
+}
+
+/** 控えの1件に戻す。戻す前の姿も控えに入るので、往復できる。 */
+export function dineRestoreSnapshot(id){
+  const n = P.restoreSnapshot(id);
+  if(n === null){ toast('その控えは見つかりませんでした'); return; }
+  refresh();
+  toast(`控えから ${num(n)}店ぶんを戻しました`);
 }
 
 // ============================================================
@@ -620,83 +573,59 @@ export function toast(msg){
   toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-/** The slim save indicator under the list. Red and permanent when writes fail. */
+/**
+ * 一覧の下の細い帯。言うことは**2つだけ**（2026-08-16 整頓）。
+ *
+ * 以前は「最終保存/クラウド/ファイル保存/この端末にだけ保存」の4つを連結して
+ * いた。文字領域は実測236pxしかなく、必要な高さ53pxに対して35pxしか出せず、
+ * **3行目が黙って切れていた**。言うことを絞れば1〜2行に収まる（実測18px/35px）。
+ *
+ * ログイン中は「誰として保存しているか」を先頭に固定する（竹森氏の明示要望）。
+ * 未ログインのときだけ、この端末にしか無いという警告を出す。
+ */
 export function renderSaveBar(){
   const bar = el('saveBar');
   if(!bar) return;
   if(!eatoutActive()){ bar.style.display = 'none'; return; }
   const st = P.saveStatus();
-  const fb = fileBarText(FS.fileStatus());
-  bar.style.display = '';
-  // クラウドの状態は保存バーの一等地に出す（2026-08-16）。記録が端末の中
-  // だけにある状態を、画面が黙って見過ごさないため。
   const cs = CS.cloudStatus();
-  bar.classList.toggle('bad', !!st.error || fb.startsWith('⚠') || cs.phase === 'conflict' || cs.phase === 'error');
-  const cloudBit = cs.phase === 'conflict' ? '⚠ クラウドと食い違い（データ管理で選んでください）'
-    : cs.phase === 'error' ? '⚠ クラウド未保存'
-    : cs.phase === 'idle' || cs.phase === 'saving' ? `☁ ${cs.username}`
-    : cs.phase === 'signing' ? '☁ 接続中'
-    : '';
+  bar.style.display = '';
+  const signedIn = cs.phase === 'idle' || cs.phase === 'saving';
+  // 赤は「いま壊れている」だけに使う。未ログインは正常な状態のひとつなので、
+  // 帯を常時赤くしない（常に赤い警告は、そのうち見えなくなる）。文言の⚠と
+  // データ画面の赤枠が役目を負う。
+  bar.classList.toggle('bad', !!st.error || cs.phase === 'conflict' || cs.phase === 'error');
   const text = st.error ? '⚠ ' + st.error
-    : savedAtText(st) + (cloudBit ? ' ・ ' + cloudBit : '') + (fb ? ' ・ ' + fb : '')
-      + ' ・ ' + (cloudBit && cs.phase !== 'error' && cs.phase !== 'conflict' ? '' : PRIVACY_SHORT);
+    : cs.phase === 'conflict' ? '⚠ クラウドと食い違い（データ管理で選んでください）'
+    : cs.phase === 'error' ? '⚠ クラウドに保存できていません（データ管理で確認）'
+    : cs.phase === 'signing' ? '☁ 接続中…'
+    : signedIn ? `☁ ${cs.username} ・ ${cs.phase === 'saving' ? '保存中…' : savedAtText(st)}`
+    : '⚠ ' + PRIVACY_SHORT;
   // データ画面への入口はここ(旧3タブは2026-08-08廃止)。保存の話をする場所に併設。
-  // title に全文を入れる: 短い版で切り詰めた説明の受け皿(2026-08-16)。
   bar.innerHTML = `<span class="savebar-text" title="${esc(PRIVACY_TEXT)}">${esc(text)}</span>` +
     `<button type="button" class="savebar-link" onclick="setView('data')">💾 データ管理</button>`;
 }
 
 // ============================================================
-// ファイルDBの配線（main.jsから起動時に1回）とボタンハンドラ
+// クラウド保存の配線（main.jsから起動時に1回）
 // ============================================================
-export function initFileDb(){
-  FS.initFileStore({
-    subscribe: P.onPersonalChange,
-    getExportText: () => P.currentExportText(),
-    cacheCount: () => P.storedCounts().stores,
-    sameData: (text) => {
-      try { return stableStringify(JSON.parse(text).data) === stableStringify(P.allEntries()); }
-      catch { return false; }
-    },
-    restore: (text) => {
-      const res = P.parseImport(text, P.buildPlaceIdMap(diningRecords()));
-      if(!res.ok) return res;
-      P.replaceAll(res.data);
-      return { ok: true };
-    },
-    localDate: P.localDate,
-    onRestored: (n) => toast(`保存ファイルから記録 ${num(n)}店ぶんを復元しました`),
-  });
-  // クラウド保存（2026-08-16）。前回ログインしていれば黙って復帰する。
-  // していなければSDKすら読まないので、公開の顔（住まいモード）は今までどおり。
+export function initCloudSync(){
+  // 前回ログインしていれば黙って復帰する。していなければSDKすら読まないので、
+  // 公開の顔（住まいモード）は今までどおり。
   CS.initCloud({
     getExportText: () => P.currentExportText(),
     storedCounts: () => P.storedCounts(),
     parseImport: (text) => P.parseImport(text, P.buildPlaceIdMap(diningRecords())),
     replaceAll: (data) => P.replaceAll(data),
-    onStatus: () => { renderSaveBar(); if(eatoutActive() && listView === 'data') onChanged(); },
+    // クラウドから記録が入れ替わったら、**どの画面を見ていても**追随させる。
+    // 以前は listView === 'data' のときだけ再描画していたため、台帳や詳細
+    // パネルを見ている最中に復元が走ると「保存はされたのに画面が変わらない」
+    // X1と同じ症状が残っていた（2026-08-16 影響範囲sweep）。
+    onStatus: () => { renderSaveBar(); if(eatoutActive()) onChanged(); },
   });
   // 記録が変わったらクラウドへも書きスルー（デバウンスはcloudStore側）
   P.onPersonalChange(() => CS.cloudNotifyChanged());
-  FS.onFileChange(() => {
-    renderSaveBar();
-    // ファイルから記録を取り込んだ時も、画面が古いままにならないようにする
-    // （2026-08-16 影響範囲sweep: 以前はデータビューを開いているときだけ
-    //  追随していたので、台帳や詳細パネルを見ている最中に取り込むと
-    //  「保存はされたのに画面が変わらない」X1と同じ症状が残っていた）。
-    if(eatoutActive()) onChanged();
-  });
-  FS.resumeFileStore();
 }
-
-export function dineFileConnect(){ FS.connectFileStore(); }
-export function dineFileReauth(){ FS.reauthFileStore(); }
-export function dineFileDisconnect(){
-  FS.disconnectFileStore();
-  toast('自動保存をやめました。ファイルは手元に残っています');
-}
-export function dineFileAdoptFile(){ FS.adoptFile(); }
-export function dineFileAdoptCache(){ FS.adoptCache(); }
 
 // ============================================================
 // THE VIEW SWITCH

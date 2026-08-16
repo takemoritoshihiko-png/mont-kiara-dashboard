@@ -16,9 +16,8 @@
 |---|---|
 | `src/main.js` | 起動: 地図生成 → UI初期化 → CSV/JSON読込 → 初回描画 → URL状態の復元。インライン`onclick`用に関数を`window`へ公開 |
 | `src/state.js` | 共有する可変状態（データ・絞り込み結果・選択中・アクティブ層/タブ・**モード(住まい/外食)**・**外食の3ビュー**・各トグル・**飲食の「近く」中心(diningNear)**・**予算の昼夜基準(dayBudgetBasis)**）。書き込みは全てセッター経由 |
-| `src/domain/fileSync.js` | ファイルDB(A案)の判断だけ: 突合(reconcile)・書き込み前スタンプ照合・バックアップ剪定・安定直列化。FSAには触れない純ロジック |
+| `src/domain/snapshots.js` | **控え（自動バックアップ）の判断だけ**: いつ取るか(危険操作の直前=undo 1件／その日の最初の変更前=daily 7世代)・剪定・見出しの言葉。保存領域には触れない純ロジック |
 | `src/domain/recommend.js` | 推奨軸(2026-08-08): 家族>二重確証>通好み…のカテゴリ導出=**バッジ表示専用**(レンズ絞り込みは同日夜の裁定で撤去)。数値合成なし・保存は素材(recDivergence/closed/verified)のみ。経緯=specs/2026-08-08-dining-purpose-rethink.md |
-| `src/data/fileStore.js` | File System Access APIに触る唯一の場所。フォルダ握手・ハンドルのIndexedDB保存・書きスルー・日次7世代バックアップ。personal.jsはonPersonalChange購読で駆動され無改変 |
 | `src/format.js` | num/esc/jsStrの唯一の実装(ui/とdomain/の両方から使うためui外に置く)。jsStrはJSエスケープ+HTML属性エスケープの2層 |
 
 ### data/ — 読み込みと固定データ
@@ -31,7 +30,7 @@
 | `src/domain/cloudSync.js` | **クラウド同期の「判断」だけ**（純・テスト対象）。ログイン入力の検分／ログイン直後にどちらを正とするか／書いてよいか。**片方が空のときは絶対に自動同期しない**が最重要の一行 |
 | `src/data/cloudConfig.js` | Firebase の接続先と SDK のバージョン。**この値は秘密ではない**（守っているのは Firestore のセキュリティ規則） |
 | `src/data/cloudStore.js` | **Firebase に触る唯一の場所**。ログイン（ユーザー名＋合言葉→`<name>@mkd.local`）・`users/{uid}` への読み書き・状態の保持。SDKは**ログインするまで読まない**（CDNから動的import）。personal.js は書き換えず `onPersonalChange` を購読して書きスルー |
-| `src/data/personal.js` | **個人記録の唯一の書き込み口**（外食モード）。localStorage `mkd_dining_personal_v1`・6項目(w/v/vd/rv/m/amt)+非表示フラグh(🗑で台帳から消す・データ管理から戻す)・ローカル日付・起動時の書込テスト・書き出し / 読み込み(v9のplaceIdキーを変換) / 全消去 |
+| `src/data/personal.js` | **個人記録の唯一の書き込み口**（外食モード）。localStorage `mkd_dining_personal_v1`・6項目(w/v/vd/rv/m/amt)+非表示フラグh(🗑で台帳から消す・データ管理から戻す)・ローカル日付・起動時の書込テスト・書き出し / 読み込み(v9のplaceIdキーを変換) / 全消去。**控え（自動バックアップ）もここが持つ**（別キー `mkd_dining_snapshots_v1`）: 全消去とまるごと置き換えは関数の中で必ず控えを取り、その日の最初の書き込み前に日次の控えを取る。判断は `domain/snapshots.js` |
 
 ### domain/ — 純粋なロジック（DOMを触らない）
 
@@ -55,7 +54,7 @@
 | `src/ui/info.js` | 詳細オーバーレイ（dialog）: ヘッダー／「詳細」「周辺」タブ／外部リンク／選択の遷移 |
 | `src/ui/urlState.js` | URL ⇄ 画面状態（`?mode=&layer=&sel=&tab=&f=`）。`mode=eatout` のときだけ書かれる（住まいは既定＝省略）。履歴の積み方（push/replace）もここ。**`f=` の小分類(fCat)は選択肢が大分類に依存するので、復元は info.js が「書く→選択肢を作る→もう一度書く」の2回で行う**。**並び替え(fSort)も載るが、既定値のときは載せない**（全リンクに `?f=fSort:` が付くのを防ぐ）。トグル（子連れ・昼の予算・自分の記録）は載せない＝共有ボタンが押されたときにトーストで名指しする |
 | `src/ui/schoolFinder.js` | 学費くらべ: 年齢別の全校比較リスト・学費推移チャート・選んだ学校の周辺コンド |
-| `src/ui/dining.js` | **外食モードの画面**。台帳スコアの表示・記録欄(visitbox)・🗑非表示(dineHide/dineUnhide)・データビュー(非表示にした店の一覧含む)・toast・保存バー。書き込みは全部 `data/personal.js` 経由 |
+| `src/ui/dining.js` | **外食モードの画面**。台帳スコアの表示・記録欄(visitbox)・🗑非表示(dineHide/dineUnhide)・toast・保存バー。書き込みは全部 `data/personal.js` 経由。**データ管理は3節だけ**（記録の保存先／控え（自動）／片づけ・2026-08-16に6節から整頓）。**押す保存は無い**（書いた瞬間に自動）。保存バーが言うのは2つだけ＝ログイン中は「☁ ユーザー名 ・ 最終保存」、未ログインは「⚠ この端末にだけ保存」 |
 | `src/ui/a11y.js` | Enter/Space で `role="button"` を起動、Escapeで詳細を閉じる。**document に委譲リスナー1つだけ** |
 
 ## test/ — 全テスト（件数・ファイル数は `npm test` の実行結果が正）
@@ -80,7 +79,7 @@
 | `test/personal.test.js` | **個人記録**: ローカル日付・読み取りが書き込まないこと・保存可否の起動テスト・デバウンス保存・v9形式の読み込み変換・書き出し往復 |
 | `test/diningLog.test.js` | 行った店: 母集団＝訪問済みのみ・平均実額の分母・グループの固定順と並び |
 | `test/uxDining.test.js` | UX2: 飲食のエリア連動（距離フィルタ・3kmの妥当性・ジャンプ配線）と昼夜基準（`diningPriceCeiling`/価格帯/並び替えが**同じ数字を読む**invariant）・層タブの飲食入口・トグルのmarkup契約 |
-| `test/fileSync.test.js` | ファイルDBの判断契約: どの分岐でも無言でデータを失わない・剪定は自作ファイルのみ・配線(単一ドア温存)のソース契約 |
+| `test/snapshots.test.js` | 控えの契約: undoは常に1件・dailyは日ごと1件7世代・現地時刻で出す・**消える経路(全消去/まるごと置き換え)は必ず控えを通る**を実物のpersonal.jsで検査 |
 | `test/recommend.test.js` | 推奨軸の契約: ティア梯子・家族拒否権・実勢裁定の回帰(Dewakan=通好み等)・裁定なきcaution=0店 |
 | `test/eatoutMode.test.js` | 外食モード: **住まいモードに記録UIが出ないこと**（訪問済み✓バッジ含む）・記録欄・カード構造・3ビュー・独立トグル・台帳スコア順・markup契約 |
 | `test/infoPanel.test.js` | 詳細パネルの表現契約: 物件=出典語併記(PSF)/未定表示・商業=運営者/NLA/エスケープ・学校=長文ブロックの既定折りたたみ(畳んでも情報は落とさない) |

@@ -17,9 +17,9 @@ import {
 } from './ui/list.js';
 import {
   setOnPersonalChange, dineVisit, dineWant, dineRepeat, dineVisitDate, dineAmount, dineMemo, dineHide, dineUnhide,
-  initFileDb, dineFileConnect, dineFileReauth, dineFileDisconnect, dineFileAdoptFile, dineFileAdoptCache,
+  initCloudSync, dineRestoreSnapshot,
   dineImport, dineClearAll, dineDownload, dineSelectExport, renderSaveBar, toast,
-  dineCloudSignIn, dineCloudSignOut, dineCloudSyncNow, dineCloudKeepLocal, dineCloudKeepCloud,
+  dineCloudSignIn, dineCloudSignOut, dineCloudKeepLocal, dineCloudKeepCloud,
 } from './ui/dining.js';
 import { initPersonal, flush, onPersonalChange } from './data/personal.js';
 import { selectCondo, closeInfo, setInfoTab, selectNearby, applyUrlState, refreshInfoIfOpen } from './ui/info.js';
@@ -60,11 +60,6 @@ window.toggleUndoneFilter = toggleUndoneFilter;
 // nothing else. They exist on window for the same reason the rest do — the
 // generated card markup uses inline on* attributes.
 window.dineVisit = dineVisit;
-window.dineFileConnect = dineFileConnect;
-window.dineFileReauth = dineFileReauth;
-window.dineFileDisconnect = dineFileDisconnect;
-window.dineFileAdoptFile = dineFileAdoptFile;
-window.dineFileAdoptCache = dineFileAdoptCache;
 window.dineWant = dineWant;
 window.dineHide = dineHide;
 window.dineUnhide = dineUnhide;
@@ -73,9 +68,10 @@ window.dineVisitDate = dineVisitDate;
 // クラウド保存（2026-08-16）
 window.dineCloudSignIn = dineCloudSignIn;
 window.dineCloudSignOut = dineCloudSignOut;
-window.dineCloudSyncNow = dineCloudSyncNow;
 window.dineCloudKeepLocal = dineCloudKeepLocal;
 window.dineCloudKeepCloud = dineCloudKeepCloud;
+// 控え（自動バックアップ）から戻す — 2026-08-16
+window.dineRestoreSnapshot = dineRestoreSnapshot;
 window.dineAmount = dineAmount;
 window.dineMemo = dineMemo;
 window.dineImport = dineImport;
@@ -116,10 +112,10 @@ const personal = initPersonal();
 // 開いている詳細オーバーレイは閉じて開き直すまで表示が変わらなかった。
 setOnPersonalChange(() => { applyFilters(); refreshInfoIfOpen(); });
 onPersonalChange(() => renderSaveBar());
-// ファイルDB（A案）: 保存済みフォルダがあれば無音で再開。未接続なら何もしない。
-initFileDb();
+// クラウド保存: 前回ログインしていれば無音で再開。未ログインならSDKも読まない。
+initCloudSync();
 // Web標準の永続化リクエスト: 容量逼迫時の自動削除からこのオリジンの保存領域を守る。
-// （ユーザー操作の消去は防げない — それはファイルDB側の役目）
+// （ユーザー操作の消去は防げない — それはクラウド保存側の役目）
 if(typeof navigator !== 'undefined' && navigator.storage && navigator.storage.persist){
   navigator.storage.persist().catch(() => {});
 }

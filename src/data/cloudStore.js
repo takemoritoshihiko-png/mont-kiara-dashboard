@@ -274,7 +274,12 @@ export async function cloudKeepCloud(){
  * どちらかで上書きしてしまうのが、いちばん取り返しがつかない。
  */
 export function cloudNotifyChanged(){
-  if(phase !== 'idle' && phase !== 'saving') return;
+  // error からは**自動で復帰する**（2026-08-16）。以前はここで止まっていたため、
+  // 通信が1度切れると以後の記録が無言でクラウドへ届かなくなり、人が「今すぐ
+  // 保存」を押すまで戻らなかった。押す保存を廃止した以上、機械が再挑戦する。
+  // conflict だけは止める — 人が選ぶ前にどちらかで上書きするのが最悪。
+  if(phase === 'error' && user){ /* 次の変更で書き直す */ }
+  else if(phase !== 'idle' && phase !== 'saving') return;
   if(writing){ rearmed = true; return; }
   clearTimeout(timer);
   timer = setTimeout(() => { pushNow().catch(() => {}); }, CLOUD_WRITE_MS);

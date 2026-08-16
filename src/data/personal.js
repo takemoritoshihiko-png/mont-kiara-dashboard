@@ -24,9 +24,12 @@
 //      before anything is typed.
 //
 // Everything above `initPersonal` is pure and tested directly.
+import * as SN from '../domain/snapshots.js';
 
 /** localStorage key. Versioned: a future shape change gets a new key. */
 export const STORAGE_KEY = 'mkd_dining_personal_v1';
+/** 控え（自動バックアップ）の置き場。記録本体とは**別のキー**。 */
+export const SNAPSHOT_KEY = 'mkd_dining_snapshots_v1';
 /** Written and removed at startup to prove the storage accepts writes. */
 export const PROBE_KEY = 'mkd_probe_v1';
 
@@ -267,6 +270,8 @@ export function initPersonal({ storage, now = new Date() } = {}){
   } catch(e){
     storageError = '保存済みの記録を読めませんでした: ' + e.message;
   }
+  // 控えは別キー。読めなくても記録本体には影響させない（parseSnapshots は投げない）
+  try { snaps = SN.parseSnapshots(backend.getItem(SNAPSHOT_KEY)); } catch { snaps = []; }
   // Then prove it accepts a write, before the user types anything into it.
   try {
     backend.setItem(PROBE_KEY, '1');
@@ -306,10 +311,87 @@ export function allEntries(){
   return out;
 }
 
+// ============================================================
+// 控え（自動バックアップ）— 2026-08-16 竹森氏裁定
+//
+// 押す操作はゼロ。控えは記録が変わるたびに機械が判断して取る。
+// 判断は src/domain/snapshots.js（純関数）、保存領域に触るのはここだけ。
+// ============================================================
+let snaps = [];
+
+/** 控えの一覧（新しい順・undo が先頭）。表示用のコピーを返す。 */
+export function listSnapshots(){ return snaps.map(s => ({ ...s, id: SN.snapId(s) })); }
+
+function writeSnaps(){
+  if(!backend) return;
+  try { backend.setItem(SNAPSHOT_KEY, SN.serializeSnapshots(snaps)); }
+  catch(e){
+    // 控えが入らない（容量オーバー等）ときは、古い daily を捨てて1度だけ再挑戦。
+    // ここで例外を外へ出すと、記録本体の保存まで巻き添えになる。
+    snaps = snaps.filter(s => s.kind === SN.SNAP_UNDO).concat(
+      snaps.filter(s => s.kind === SN.SNAP_DAILY).slice(0, 2));
+    try { backend.setItem(SNAPSHOT_KEY, SN.serializeSnapshots(snaps)); } catch { /* 控えは諦める。記録本体は守る */ }
+  }
+}
+
+/**
+ * いまの記録を控えに1件足す。
+ * @param {'undo'|'daily'} kind
+ * @param {object} [from] 控えに取る中身（省略時はいまの記録）
+ */
+function pushSnapshot(kind, from = store, now = new Date()){
+  const snap = {
+    kind,
+    at: now.toISOString(),
+    date: localDate(now),
+    count: Object.keys(from).length,
+    json: JSON.stringify(from),
+  };
+  snaps = SN.addSnapshot(snaps, snap);
+  writeSnaps();
+}
+
+/**
+ * 危険な操作（全消去・まるごと置き換え）の直前に呼ぶ。
+ * **消える前の姿**を控えるので、必ず操作より先に呼ぶこと。
+ */
+export function snapshotBeforeDestructive(now = new Date()){
+  pushSnapshot(SN.SNAP_UNDO, store, now);
+}
+
+/** 控えの1件に戻す。戻す前の姿も undo として控えるので、往復できる。 */
+export function restoreSnapshot(id, now = new Date()){
+  const s = SN.findSnapshot(snaps, id);
+  if(!s) return null;
+  let data;
+  try { data = JSON.parse(s.json); } catch { return null; }
+  pushSnapshot(SN.SNAP_UNDO, store, now);   // 「戻す」自体も取り消せるように
+  store = normalizeStore(data);
+  writeNow();
+  return Object.keys(store).length;
+}
+
+/** その日の最初の変更の前に、前日までの姿を控える。writeNow から呼ばれる。 */
+function maybeDailySnapshot(){
+  const today = localDate();
+  if(!SN.needsDaily(snaps, today)) return;
+  // 変更が適用される前の姿＝保存領域にまだ残っている中身
+  let prev = null;
+  try {
+    const raw = backend.getItem(STORAGE_KEY);
+    if(raw) prev = normalizeStore(JSON.parse(raw));
+  } catch { prev = null; }
+  // 記録がまだ1つも無い日は控える中身が無い。空の控えを積むと一覧が嘘になる
+  // ので、その日は取らない（明日また判定される）。
+  if(prev && Object.keys(prev).length) pushSnapshot(SN.SNAP_DAILY, prev);
+}
+
 // ---- writing ----
 function writeNow(){
   if(timer){ clearTimeout(timer); timer = null; }
   if(!backend) return false;
+  // 控えは本体を書く**前**に取る（取り損ねても本体の保存は必ず進む）
+  try { maybeDailySnapshot(); } catch { /* 控えの失敗で記録を落とさない */ }
   try {
     backend.setItem(STORAGE_KEY, JSON.stringify(store));
     savedAt = new Date();
@@ -404,15 +486,22 @@ export function mergeAll(incoming){
   return Object.keys(store).length;
 }
 
-/** 読み込み（置き換え）: the file becomes the whole record. */
+/**
+ * 読み込み（置き換え）: the file becomes the whole record.
+ * 消える前の姿を控えてから入れ替える（2026-08-16）。クラウドへは1.2秒で
+ * 伝わって取り返しがつかないので、控えは**この関数の中**で取る — 呼び出し側が
+ * 忘れられる場所には置かない。
+ */
 export function replaceAll(incoming){
+  if(Object.keys(store).length) snapshotBeforeDestructive();
   store = normalizeStore(incoming);
   writeNow();
   return Object.keys(store).length;
 }
 
-/** 全消去. */
+/** 全消去。消える前の姿を控えてから消す（戻せるのはこの控えだけ）。 */
 export function clearAll(){
+  if(Object.keys(store).length) snapshotBeforeDestructive();
   store = {};
   writeNow();
   return 0;

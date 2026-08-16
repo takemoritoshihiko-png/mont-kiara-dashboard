@@ -312,15 +312,47 @@ describe('台帳 / 行った店 / データ', () => {
     expect(matchesDining(LEDGER[1], { layer: 'dining', visitedOnly: false })).toBe(true);
   });
 
-  it('offers save status, export, import and erase on データ', () => {
+  // 2026-08-16 竹森氏裁定「複雑すぎる。究極にシンプルに」。実測で6節1284px
+  // （スマホ4.4画面）あり、「保存先は◯◯です」を3通りの言い方で同時に名乗って
+  // いた。節を3つに畳み、フォルダ自動保存は廃止した。
+  it('データ画面の節は3つだけ（保存先・控え・片づけ）', () => {
     setup({ mode: 'eatout', view: 'data' });
     const h = eatoutListHtml();
-    for(const t of ['保存の状態', '書き出し（バックアップ）', '読み込み', '全消去']) expect(h).toContain(t);
+    for(const t of ['記録の保存先', '控え（自動）', '片づけ']) expect(h).toContain(t);
+    expect((h.match(/<h3 class="data-h">/g) || []).length).toBe(3);
     expect(h).toContain('dineDownload()');
     expect(h).toContain("dineImport('merge')");
     expect(h).toContain("dineImport('replace')");
     expect(h).toContain('dineClearAll()');
-    expect(h).toContain('台帳v9のバックアップもそのまま読めます');
+    expect(h).toContain('台帳v9のバックアップも読めます');
+  });
+
+  it('廃止した節の見出しは1つも残っていない', () => {
+    setup({ mode: 'eatout', view: 'data' });
+    const h = eatoutListHtml();
+    for(const gone of ['自動保存（ファイル）', '保存の状態', '書き出し（バックアップ）', '全消去', 'クラウド保存（端末をまたいで残す）']){
+      expect(h, `${gone} がまだ画面に残っている`).not.toContain(gone);
+    }
+  });
+
+  it('押す保存は無い（書いた瞬間に自動で保存される）', () => {
+    setup({ mode: 'eatout', view: 'data' });
+    const h = eatoutListHtml();
+    expect(h).not.toContain('dineCloudSyncNow');
+    expect(h).not.toContain('今すぐ保存');
+    // ログイン中の節は、押す保存が無いことを言葉でも名乗る。この分岐は未ログイン
+    // では描かれないので、ソースの契約として押さえる。
+    const src = readFileSync(new URL('../src/ui/dining.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+    expect(src).toContain('保存ボタンはありません');
+    expect(src).not.toContain('dineCloudSyncNow');
+  });
+
+  it('フォルダ自動保存の入口はどこにも無い', () => {
+    setup({ mode: 'eatout', view: 'data' });
+    const h = eatoutListHtml();
+    for(const gone of ['dineFileConnect', 'dineFileReauth', 'dineFileDisconnect', 'dineFileAdoptFile', 'dineFileAdoptCache', 'フォルダ']){
+      expect(h, `${gone} が残っている`).not.toContain(gone);
+    }
   });
 
   it('says the privacy sentence ONCE per screen — the save bar owns it here', () => {
@@ -332,28 +364,41 @@ describe('台帳 / 行った店 / データ', () => {
     expect(eatoutDetailHtml(DEWAKAN)).toContain(PRIVACY_TEXT);
   });
 
-  it('folds the raw JSON away behind a summary, with a plain line above it', () => {
+  // JSONの直接あつかい（書き出しの生テキスト・貼り付け欄・統合／置き換え）は
+  // 全部この畳みの中へ入れた。ふだん要らないものが常時見えているのが、6節に
+  // 膨れた原因のひとつ。
+  it('JSONの読み書きは畳みの中にまとまっている', () => {
     setup({ mode: 'eatout', view: 'data' });
     const h = eatoutListHtml();
     expect(h).toContain('<details class="data-details" id="dataExportBox">');
-    expect(h).toContain('<summary>書き出した内容（JSON）</summary>');
-    expect(h).toContain('記録をファイルに保存するか、下のJSONをコピーして控えられます');
+    expect(h).toContain('<summary>JSONで直接あつかう（書き出し・読み込み）</summary>');
     // The textarea keeps a name of its own: <summary> is not a <label>.
     expect(h).toMatch(/<textarea id="dataExport"[^>]*aria-label="書き出した内容（JSON）"/);
-    expect(h.indexOf('下のJSONをコピー')).toBeLessThan(h.indexOf('<details'));
+    const open = h.indexOf('<details');
+    const close = h.indexOf('</details>');
+    for(const inside of ['id="dataImport"', "dineImport('merge')", "dineImport('replace')", 'dineSelectExport()']){
+      const at = h.indexOf(inside);
+      expect(at, `${inside} が畳みの外にある`).toBeGreaterThan(open);
+      expect(at, `${inside} が畳みの外にある`).toBeLessThan(close);
+    }
+    // 「ファイルに保存」は畳みの外＝ふだん使う控えの取り方
+    expect(h.indexOf('dineDownload()')).toBeLessThan(open);
   });
 
-  it('dresses まるごと置き換え as the destructive act it is', () => {
+  // 置き換えも全消去も、消える前の姿が自動で控えに入るようになった（2026-08-16）。
+  // 「今の記録は消えます」と脅す必要が無くなったので、名前から落とした。
+  it('まるごと置き換えは danger のまま、脅し文句は落ちている', () => {
     setup({ mode: 'eatout', view: 'data' });
     const h = eatoutListHtml();
-    expect(h).toContain(`<button type="button" class="data-btn danger" onclick="dineImport('replace')">まるごと置き換え（今の記録は消えます）</button>`);
+    expect(h).toContain(`<button type="button" class="data-btn danger" onclick="dineImport('replace')">まるごと置き換え</button>`);
+    expect(h).not.toContain('今の記録は消えます');
   });
 
   it('shows the storage inventory on データ', () => {
     setup({ mode: 'eatout', view: 'data' });
     setVisited(DEWAKAN.id, true);
     setMemo(DEWAKAN.id, 'x');
-    expect(eatoutListHtml()).toContain('記録中: 1店（訪問 1 ・ 行きたい 0 ・ 感想 1 ・ 実額 0）');
+    expect(eatoutListHtml()).toContain('記録 1店（訪問 1 ・ 行きたい 0 ・ 感想 1 ・ 実額 0）');
   });
 
   it('replaces the row of zeros with what to do about it', () => {
