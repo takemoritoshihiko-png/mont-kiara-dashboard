@@ -1,6 +1,7 @@
 // Contract for the per-type card templates (spec 2.5 / audit finding C1).
 // cardBodyHtml is pure, so it can be checked without a DOM.
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { cardBodyHtml } from '../src/ui/list.js';
 
 const condo = (over = {}) => ({
@@ -151,5 +152,29 @@ describe('all cards', () => {
   it('shows the Japanese name under the English one when there is one', () => {
     expect(cardBodyHtml(condo())).toContain('セニ・モントキアラ');
     expect(cardBodyHtml(condo({ nameJa: '' }))).not.toContain('card-ja');
+  });
+});
+
+// 2026-08-16 竹森氏「なおす」。1行固定だったため、実測336件中36件（物件31・
+// 学校4・商業1）が省略記号で切れていた（使える幅287px / 長いものは379px必要）。
+// 切れるのは番地や郵便番号の側で、「どこにあるか」がいちばん読めなくなっていた。
+describe('カードの住所は切らない', () => {
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+
+  it('2行まで折り返す（1行に押し込まない）', () => {
+    const rule = html.slice(html.indexOf('.card-addr{'));
+    const decl = rule.slice(0, rule.indexOf('}'));
+    expect(decl).not.toContain('white-space:nowrap');
+    expect(decl).toContain('-webkit-line-clamp:2');
+  });
+
+  // 2行に収まることは実ブラウザで確認済み（物件271・学校33・商業32の全336件で
+  // はみ出しゼロ／2行になったのは37件だけ）。ここではその前提を崩す変更——
+  // 1行に戻す・省略記号だけに頼る——を検出する。
+  it('省略記号で消す作りに戻さない', () => {
+    const rule = html.slice(html.indexOf('.card-addr{'));
+    const decl = rule.slice(0, rule.indexOf('}'));
+    expect(decl).not.toContain('text-overflow:ellipsis');
+    expect(decl).toContain('overflow:hidden');   // 3行目以降は出さない
   });
 });

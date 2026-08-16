@@ -874,15 +874,17 @@ function diningCard(c){
   if(c.catGroup === '屋台街') chips.push(`<span class="card-chip chip-area-mark">📍 屋台街エリア（通り全体・個別の店ではありません）</span>`);
   else if(c.catGroup) chips.push(`<span class="card-chip chip-dining">${esc(c.catGroup)}</span>`);
   const hero = diningHeroText(c);
+  // エリア・車時間・評価を**1行にまとめる**(2026-08-16 竹森氏「カードを125pxに」)。
+  // 評価は以前カードの下に自分の行を持っていた。実測で3つを1行にすると120枚中
+  // 1枚しか折り返さない（価格と混ぜる案は65%が折り返して逆に高くなったので却下）。
+  // 「Google」の語はここでは省く — 落とさないと120枚中20枚が折り返す。★は詳細
+  // パネルで「Google ★4.8 / 1,178件（母数 標準）→ 縮約後 4.44」と完全に名乗る。
   const meta = [];
-  // 外食モード prints the star with its sample size and its shrunk value on its
-  // own line (ratingLineHtml), so repeating 「★4.8 (1,178件)」 here would be the
-  // same information twice.
-  const rating = eatoutActive() ? '' : ratingText(c);
-  if(rating) meta.push(rating);
   if(c.area) meta.push(c.area);
   // 2026-08-08 密度改善: 住所は詳細パネルの領分(一覧では1行のメタに エリア・車時間)。
   if(c.driveMinJam != null) meta.push(`🚗約${c.driveMinJam}分`);
+  const rating = ratingText(c);
+  if(rating) meta.push(rating);
   return eatoutCardScoreHtml(c) +
     cardHead(c, badge, '', 'card-name-wrap') +
     (chips.length ? `<div class="card-chips">${chips.join('')}</div>` : '') +

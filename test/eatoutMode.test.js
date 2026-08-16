@@ -653,3 +653,49 @@ describe('非表示にした店', () => {
     expect(eatoutListHtml()).not.toContain('非表示にした店');
   });
 });
+
+// 2026-08-16 竹森氏裁定「カードを125pxに」。実測での内訳と、実測で潰れた案:
+//   採った   日本語名を隠す −21px ／ 評価をメタ行へ統合 −18px ／ 点数を右上へ −32px
+//            ＋ 行間を1段だけ詰める −10px  → 190px から 127px
+//   潰れた   「価格・エリアの1行化」（当初の提案）。実測で60枚中39枚(65%)が
+//            2行に折り返し、**かえって高くなった**（190→194px）
+describe('外食カードの密度（2026-08-16）', () => {
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+
+  it('日本語名は一覧に出さない（詳細パネルが持つ）', () => {
+    expect(html).toContain('.record-card .card-ja{display:none}');
+  });
+
+  it('点数はパソコンでも右上に寄せる（自分の行を持たない）', () => {
+    const rule = html.slice(html.indexOf('.record-card .scorebox{'));
+    const decl = rule.slice(0, rule.indexOf('}'));
+    expect(decl).toContain('position:absolute');
+    // 名前が点数の下に潜らないよう、頭に逃げ場を作る
+    expect(html).toContain('.record-card .card-head{padding-right:52px}');
+  });
+
+  it('評価はメタ行に統合され、独立行を持たない（同じ★が2回出ない）', () => {
+    setup({ mode: 'eatout', view: 'ledger' });
+    const h = cardHtml(DEWAKAN);
+    expect((h.match(/★/g) || []).length).toBe(1);
+    expect(h).not.toContain('sc-rating');
+    // メタ行に エリア・車時間・評価 が同居する
+    expect(h).toMatch(/class="card-meta">[^<]*🚗[^<]*★/);
+  });
+
+  it('カードの評価から「Google」の語を外す（付けると120枚中20枚が折り返す）', () => {
+    setup({ mode: 'eatout', view: 'ledger' });
+    expect(cardHtml(DEWAKAN)).not.toContain('Google ★');
+    // 出典は詳細パネルが完全な形で名乗る
+    const src = readFileSync(new URL('../src/ui/dining.js', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+    expect(src).toContain('ratingMetaText');
+  });
+
+  it('価格とエリアは混ぜない（混ぜると65%が折り返して逆に高くなった）', () => {
+    setup({ mode: 'eatout', view: 'ledger' });
+    const h = cardHtml(DEWAKAN);
+    // 価格は card-hero、エリアは card-meta。同じ要素に入れない
+    expect(h).toMatch(/class="card-hero">[^<]*RM/);
+    expect(h).not.toMatch(/class="card-hero">[^<]*🚗/);
+  });
+});

@@ -179,13 +179,13 @@ export function visitBoxHtml(c, ctx = 'led'){
 export function eatoutCardExtraHtml(c){
   if(!eatoutActive() || recordLayer(c) !== 'dining') return '';
   const e = c.id ? P.getEntry(c.id) : null;
-  // 未訪問カードは「評価 + 2ボタン」を1行に畳む(2026-08-08 密度改善:
-  // カード307px→大幅圧縮の主部品)。訪問済みは記録欄が要るので従来の展開。
+  // 評価(★4.8 (2,237件))は2026-08-16にカード本体のメタ行へ移した — エリア・
+  // 車時間と同じ1行に入る。ここに残すと同じ数字が1枚のカードに2回出る。
   if(!e || e.v !== 1){
-    return `<div class="vb-line">${ratingLineCardHtml(c)}` +
+    return `<div class="vb-line">` +
       `<div class="vb-mini">${c.id ? vbHeadButtons(c.id, e || P.getEntry(c.id)) : ''}</div></div>`;
   }
-  return ratingLineCardHtml(c) + visitBoxHtml(c, 'led');
+  return visitBoxHtml(c, 'led');
 }
 
 /**
