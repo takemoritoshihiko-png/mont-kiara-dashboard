@@ -254,3 +254,24 @@
 - **2端末を同時に開くと後勝ち** → **現状で許容**。1人運用なので、PCとスマホを同時に開いたまま両方に書く場面を作らない運用でカバーする。塞ぐ実装は行わない。
 - **控え（自動バックアップ）が localStorage にしかない** → **現状で許容**。ブラウザのデータを消すと控えは消えるが、記録の本体はクラウドから戻る。Firestoreへの移設は行わない。
 - **死にコード削除** → **実行済み**。`src/domain/diningLog.js`(98行) と `test/diningLog.test.js`(174行) を削除。旧「行った店」ビュー（2026-08-08廃止）の集計モジュールで、8日間どこからも import されていなかった。あわせて要素が存在しないCSS（`.seg-btn` / `.savebar-old` / `.log-*`）11箇所と、無効化していた `syncSeg('.seg-btn', …)` の呼び出しを撤去。テストは 784 → 763件（削除したテスト21件ぶん）。必要になれば git 履歴から戻せる。
+
+## 2026-08-16 保留の一括処理（竹森氏裁定「C 実行」「D 入れる」）
+
+**✅ D: GM Klang Wholesale City を商業レイヤーへ追加（33件目）**
+- 一次資料: 開業2009年（デベロッパー公式 ggm.com.my/about-us "first opened its doors for business in the year 2009"。Block A 2012・Block B 2016はフェーズ増築で開業年ではない）／店舗数2,500（GGM公式＋マレーシア政府観光局 malaysia.travel）／運営 Gamuda GM Klang Sdn Bhd（Gamuda Land と GM Klang の合弁）／公式 https://gmklang.com/ （WebFetchで応答確認・JS描画のため本文は読めず）
+- **NLAは空欄**。公表されているのは全5フェーズ完成時のGFA見込み150万sfのみで、GFA→NLAの換算は「補間・外挿しない」契約に反するため入れない。詳細パネルは「—」と表示され、0は出ない（テストで固定）
+- 車1時間圏の確認: OSRM実測で Mont Kiara から **42.2km / 空いている時42分**（既存の最遠 AEON Bukit Tinggi と同水準）。渋滞込み×1.8で75分になる点は既存5件と同じ扱い
+- **⚠️ 稼働率の懸念（要現地確認）**: 2026年1月6日時点の訪問者報告で「**約6割の店舗が閉店、上層階はゴーストタウン**」（Wanderlog経由・メインでも独立に確認）。ただしこれは集計サイト由来の弱い出典で、2,500はデベロッパー公式＋政府観光局という強い出典。出典の強弱の順に従い2,500を採用したが、**実稼働数は大幅に少ない可能性が高い**。現地確認の機会があれば要更新
+- **卸売モールという性質差**: テナントは小売店でなく卸売業者中心で、「アンカーテナント」という概念が成立しない（Block A/B=ファッション・美容・雑貨の卸、Block C=マレーシア最大級のブライダル卸、Malaysia Brand Zone）。`anchor_tenants` は空欄
+- 副作用の手当て: NLAが無いと最小22pxで描かれ「2500」が枠から溢れるため、**NLA未公表のときは店舗数で大きさの段を選ぶ**フォールバックを `src/ui/map.js` に追加（30px枠に4桁は既存の Berjaya Times Square「1000」で実績あり）
+
+**C: 保留4件の調査結果**
+- ✅ **Chee Meng — 対応不要だった**。台帳のR0029は**既に michelin="bib" で正しく登録済み**（保留リストの「掲載疑いだが未反映」という前提が誤り）。ミシュラン公式の認定は Old Klang Road 店に紐づき、**Bukit Bintang 店の単独エントリは公式に存在しない**（二次サイトがチェーン全体の受賞をBB店に誤帰属させたとみられる）。台帳のミシュラン件数も 星2=1／星1=6／ビブ=24／セレクテッド=44／計75 で期待どおり
+  - 照合の過程で Qureshi（Selected・1年超休業）と Heun Kee Claypot Chicken Rice（Bib・2026年1月閉店）が公式リストにあり台帳に無いことが確認されたが、これは **discovery-logic spec に記録済みの意図的な裁定**（「Heun Kee=閉店」「Qureshi=1年超休業で見送り」）。対応不要
+- ❌ **The Social @ Desa ParkCity — 不可**。国内5店以上（Bangsar/Publika/Desa ParkCity/Empire Subang/Kiara163またはTREC）を独立2ソースで確認。「2〜4店舗まで可」を超過
+- ❌ **Wagyu More（牛摩） — 不可**。国内は2店（Gardens Mall / Sunway Pyramid＝公式サイトで確認）だが、**台湾発ではなく香港発祥**（2014年 沙田1号店→香港6店→2018年マレーシア進出）。多国籍チェーンに該当
+- ⭕ **Nasi Kandar Rasmeena — 採用可**。座標 3.1281193, 101.6792333（Nominatim・施設名＋住所の完全一致。他ソースはブロックまたは未掲載でクロス確認は取れず）。**店舗数は公式Instagramの自己申告で Bangsar/USJ9/Sentul の3店が確定**、Puncak Alam を含めると4店（確度中）。Skudai(Johor)店は店名の語順と電話番号から別経営の可能性が高い。**Skudai等が同一資本なら5店以上で不可に転じる**余地は残る
+- ❌ **Sun Thai — 不可**。国内6店以上（Bandar Menjalara/Sri Petaling/Mahkota Cheras/Sunway Mentari/Kota Damansara/Setapak・公式サイトの店舗一覧で確認）
+- ⚠️ **Fish With You — 要裁定**。マレーシア国内は2店（Starling Mall PJ / Kepong）で数の上では許容内だが、**中国発祥で世界2,500店超**の大型チェーン。「全国チェーン除外」の趣旨に照らすとグレー
+- 🔴 **北KL圏の残り7件は判定不能のまま**（Nice Soup Gang / Jia Kopitiam / iian Cuisine / SRK Borneo(Kepong店) / Fujisawa居酒屋 / Soybean Factory / QQ BBQ）。**Google Maps への WebFetch が全店で403またはJSシェルのみ**を返し、★評価と口コミ件数を一次確認できなかった（前回スイープのCAPTCHA障害の再現）。集計サイトの数値は候補生成専用のため判定に使えない。**次はブラウザ自動操作でGoogle Mapsを開いて直読する**（メインエージェントのみ可能）
+  - 参考: SRK Borneo の Desa Setapak 店は報道で4.6★/859件＝1,000件未満で不可。対象のKepong店は未確定

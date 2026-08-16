@@ -87,7 +87,7 @@
 | ファイル | 中身 |
 |---|---|
 | `condos_data.csv` | 物件271件・28列 |
-| `commercial_data.csv` | 商業施設32件・11列（一次出典必須の再調査で確定・旧88件は docs/archive） |
+| `commercial_data.csv` | 商業施設33件・11列（一次出典必須の再調査で確定・旧88件は docs/archive） |
 | `schools_data.csv` | 学校33件（地図と一覧の基本情報） |
 | `schools_detail.json` | 学校の詳細。**キーは schools_data.csv の name と完全一致** |
 | `restaurants.json` | 飲食店データ（件数はファイル実体が正・墓標=delisted含む。**現存する公式KLミシュラン2026全75店を完全網羅**。Mont Kiaraからの車所要時間(driveKm/MinFree/MinJam)を焼き込み済み。v9原本は削除済みで、tools/convert-v9-dining.js がコミット済みデータ+dining-additions.jsonから再生成）。住所の列名だけ他層と違い `address`（読み込み時に `addr` へ） |

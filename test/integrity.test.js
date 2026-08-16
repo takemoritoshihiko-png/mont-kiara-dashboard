@@ -32,8 +32,9 @@ describe('record counts', () => {
     // 商業は2026-08-09裁定で再構成: KL有名モールTOP10 + 「200店以上×MKから
     // 車1時間圏」の全数調査16件 + MK付近(50店以上に緩和)6件 = 32。
     // 一次出典(公式サイト/Wikipedia infobox/報道)で店数確認済みのみ。旧88件は
-    // docs/archive-commercial_data-88件-20260809.csv に保全。ちょうど32を守る。
-    expect(commercials.length).toBe(32);
+    // docs/archive-commercial_data-88件-20260809.csv に保全。
+    // +1 = GM Klang Wholesale City(2026-08-16 竹森氏裁定で追加・卸売モール)。
+    expect(commercials.length).toBe(33);
     expect(schools.length).toBeGreaterThanOrEqual(33);
   });
 });
@@ -122,9 +123,25 @@ describe('schools_detail.json: contract with schools_data.csv', () => {
 });
 
 describe('commercial / schools: value checks', () => {
-  it('commercial numeric fields are positive', () => {
-    const bad = commercials.filter((r) => !(num(r.tenants) > 0) || !(num(r.nla_sqft) > 0));
+  // NLAが公表されていない施設は**空欄**にする（0を書かない）。いまの例外は
+  // GM Klang Wholesale City の1件だけ — 非REITの卸売モールで、公表されている
+  // のは全5フェーズ完成時のGFA見込み(150万sf)のみ。GFAはNLAの1.3〜1.5倍なので
+  // 換算して入れることは禁止（このrepoの「補間・外挿しない」契約）。
+  // 名前を明示して持つのは、空欄が黙って増えないようにするため。
+  const NLA_UNKNOWN = ['GM Klang Wholesale City'];
+
+  it('commercial numeric fields are positive (NLA未公表の例外を除く)', () => {
+    const bad = commercials.filter((r) =>
+      !(num(r.tenants) > 0) || (!(num(r.nla_sqft) > 0) && !NLA_UNKNOWN.includes(r.name)));
     expect(bad.map((r) => r.name)).toEqual([]);
+  });
+
+  it('NLA未公表の施設は空欄であって 0 ではない（0は面積として表示されてしまう）', () => {
+    for(const name of NLA_UNKNOWN){
+      const r = commercials.find((x) => x.name === name);
+      expect(r, `${name} が台帳にない`).toBeTruthy();
+      expect(String(r.nla_sqft).trim()).toBe('');
+    }
   });
   it('school fee min <= max and students > 0', () => {
     const bad = schools.filter((r) =>
