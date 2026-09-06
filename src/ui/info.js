@@ -127,6 +127,19 @@ export function googleMapsUrl(placeId){
   return 'https://www.google.com/maps/place/?q=place_id:' + encodeURIComponent(placeId);
 }
 
+/**
+ * 同じ店の「クチコミ一覧」への入口（2026-08-18 竹森氏「ワンクリックで飛べる
+ * ように」）。Google マップの店ページは概要から始まるので、評価の数字を押した
+ * 人はもう一手クチコミを開かされていた。
+ *
+ * この入口が受け取れるのは本物の Place ID だけ。CID しか持たない店は、無リンク
+ * にするより地図が開いたほうがましなので地図へ落とす。
+ */
+export function googleReviewsUrl(placeId){
+  if(!placeId || !placeId.startsWith('ChIJ')) return googleMapsUrl(placeId);
+  return 'https://search.google.com/local/reviews?placeid=' + encodeURIComponent(placeId);
+}
+
 // ============================================================
 // 詳細 TAB — the record's own data
 // ============================================================
@@ -190,12 +203,12 @@ function diningDetail(c){
   // that only serves dinner says so instead of showing a zero for lunch.
   const lunch = priceRangeText(c.priceLunch);
   const dinner = priceRangeText(c.priceDinner);
-  // 評価はその店のGoogleマップへの入口を兼ねる（2026-08-08 依頼）。
-  // pending: の店はリンク先が無いので素のテキストのまま。
-  const gm = googleMapsUrl(c.placeId);
-  const ratingCell = gm && c.rating > 0
-    ? `<a class="kv-link" href="${esc(gm)}" target="_blank" rel="noopener"` +
-      ` title="Googleマップでレビューを見る">${esc(ratingText(c))} ↗</a>`
+  // 評価はその店のクチコミ一覧への入口を兼ねる（2026-08-08 依頼／2026-08-18に
+  // 行き先を概要からクチコミへ変更）。pending: の店はリンク先が無いので素のまま。
+  const gr = googleReviewsUrl(c.placeId);
+  const ratingCell = gr && c.rating > 0
+    ? `<a class="kv-link" href="${esc(gr)}" target="_blank" rel="noopener"` +
+      ` title="Googleのクチコミを見る">${esc(ratingText(c))} ↗</a>`
     : esc(ratingText(c) || '—');
   // 推奨バッジ(⭐軸)。外食モード限定ヘルパーが自分でガードするので此処は素通し。
   // 裁定注記(recNote)は「なぜこの区分か」を1行で読者に言う。

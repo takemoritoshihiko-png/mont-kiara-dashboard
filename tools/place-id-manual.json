@@ -1,0 +1,56 @@
+{
+  "note": "自動の関門（距離＋名前）で決めきれず、人が1件ずつ見て決めたぶん。2026-08-18。verified=browser は Google マップの店ページを実際に開いて住所を台帳と突き合わせたもの。",
+  "results": [
+    { "id": "R0094", "name": "Bōl", "verdict": "ok", "verified": "name+14m",
+      "picked": { "placeId": "ChIJU07MS_RJzDERPjkzWQV6wmo", "name": "Bol - Asian Classics Reimagined", "dist": 14 },
+      "why": "Bōl と Bol は同じ語。自動側は当初アクセント記号を畳んでいなかったので落ちていた" },
+
+    { "id": "R0095", "name": "Café Café", "verdict": "ok", "verified": "name+13m",
+      "picked": { "placeId": "ChIJE9dI0N5JzDER7WR53wcGWh4", "name": "Cafe Cafe KL", "dist": 13 },
+      "why": "Café と Cafe。同上" },
+
+    { "id": "R0184", "name": "Restoran Kin Kin Chilli Pan Mee", "verdict": "ok", "verified": "browser",
+      "picked": { "placeId": "ChIJDatlfy9IzDERGzC0gs51DLw", "name": "Kin Kin Restaurant / レストラン キンキン", "dist": 7 },
+      "why": "Google側の住所「40, Jln Dewan Sultan Sulaiman 1, Chow Kit, 50300」が台帳と一致。屋号が「Restoran 〜 Chilli Pan Mee」ではなく「Kin Kin Restaurant」なので名前の関門に掛かっていた" },
+
+    { "id": "R0192", "name": "Pak Punjab Restaurant HQ", "verdict": "ok", "verified": "name+0m",
+      "picked": { "placeId": "ChIJheNlNT1IzDERhydrznRKlwE", "name": "Pak Punjab Restaurant HQ", "dist": 0 },
+      "why": "店名が完全一致で距離0m。長い検索語では0件だったのが、屋号だけにしたら出た" },
+
+    { "id": "R0227", "name": "Muhibbah Seafood Restaurant", "verdict": "ok", "verified": "browser",
+      "picked": { "placeId": "ChIJY67kyNFIzDERr-aokoJbt1I", "name": "Muhibbah Seafood Restaurant | Halal", "dist": 752 },
+      "why": "Google側の住所「Jalan Seri Penchala, Kampung Sungai Penchala」が台帳と一致。752mは台帳の座標のほうがずれている" },
+
+    { "id": "R0278", "name": "Raw (formerly Raw Kitchen Hall)", "verdict": "ok", "verified": "name+0m",
+      "picked": { "placeId": "ChIJ517kH8VJzDEReICmzAG_kgQ", "name": "Raw (formerly Raw Kitchen Hall)", "dist": 0 },
+      "why": "店名が完全一致で距離0m。Else Kuala Lumpur（入居先ホテル）に埋もれていた" },
+
+    { "id": "R0327", "name": "Muito Bom! Brazilian BBQ Buffet", "verdict": "ok", "verified": "browser",
+      "picked": { "placeId": "ChIJJ0sc9D9LzDERDRAHhOnwEcE", "name": "Muito Bom x Asylum Coffeehouse", "dist": 68 },
+      "why": "Google側の住所「28, Jalan Kemuja, Bangsar, 59000」が台帳と一致。ブラジル料理店で同一。屋号にコーヒー店が併記されている" },
+
+    { "id": "R0341", "name": "Lau Heong Seafood Restaurant", "verdict": "ok", "verified": "browser",
+      "picked": { "placeId": "ChIJv4WQBxBIzDERhpSH9lEBfqI", "name": "Lau Heong Seafood Restaurant", "dist": 2568 },
+      "why": "Google側の住所「43A, Sentul Perdana, 0-9」が台帳と一字一句一致。2568mは台帳の座標が誤っている（別課題としてbacklogへ）" },
+
+    { "id": "R0343", "name": "Qasar Balqis Restaurant (Ampang)", "verdict": "ok", "verified": "browser",
+      "picked": { "placeId": "ChIJy2dJEug3zDEReFO_xv9CMBY", "name": "Qasar Balqis", "dist": 1530 },
+      "why": "Google側の住所「Jalan 5, 498, Jln Ampang」が台帳と一致（郵便番号の帰属だけKL/Selangorで違う）。1530mは台帳の座標が誤っている" },
+
+    { "id": "R0345", "name": "Sahara Tent Restaurant • Jalan Ampang", "verdict": "ok", "verified": "name+0m",
+      "picked": { "placeId": "ChIJQbAPGcg3zDERGXWfyfkii8I", "name": "Sahara Tent Restaurant • Jalan Ampang", "dist": 0 },
+      "why": "店名が完全一致で距離0m" },
+
+    { "id": "R0352", "name": "B.A.J Cafe", "verdict": "ok", "verified": "browser",
+      "picked": { "placeId": "ChIJ_45zkAY4zDER7vCcQsVNXf0", "name": "B.A.J Cafe", "dist": 575 },
+      "why": "Google側の住所「PV128 G33, Jalan Genting Kelang」が台帳と一致。575mは台帳の座標が誤っている" }
+  ],
+  "unresolved": [
+    { "id": "R0185", "name": "Coliseum Cafe & Grill Room",
+      "why": "台帳の住所（98-100 Jalan Tuanku Abdul Rahman）に現存するGoogle掲載が見当たらない。今あるのは The Gardens Mall 店ほか。どの店を指すのか竹森氏の裁定が要る" },
+    { "id": "R0269", "name": "RasaNya Seafood and Steamboat",
+      "why": "台帳の区画（Lot 8.105.00, Level 8, Pavilion Elite）は現在 De.wan 1958。閉店か入れ替わりの疑い。De.wan 1958 は台帳に別途在る" },
+    { "id": "R0358", "name": "Restoran Mei Keng Fatt",
+      "why": "台帳は Sri Petaling だが、Googleは Ampang 店（No.1 Lorong Awan 6）しか返さない。住所違いか、Sri Petaling 店に掲載が無い" }
+  ]
+}

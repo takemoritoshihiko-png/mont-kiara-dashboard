@@ -1,0 +1,1301 @@
+{
+  "mode": "check",
+  "generated": "2026-08-18T02:19:11.904Z",
+  "results": [
+    {
+      "id": "R0001",
+      "name": "Dewakan",
+      "query": "Dewakan, Naza Tower Skyviews 48F, Level 48 Skyviews Naza Tower Platinum Park Persiaran KLCC, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJD5ydgbdNzDERVeakzTjfpk8",
+        "name": "Dewakan Restaurant",
+        "dist": 11
+      },
+      "truth": "ChIJD5ydgbdNzDERVeakzTjfpk8",
+      "hit": true
+    },
+    {
+      "id": "R0002",
+      "name": "DC Restaurant",
+      "query": "DC Restaurant, 44 Persiaran Zaaba Taman Tun Dr Ismail, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJ7W0aCDBJzDERLXoIAb7IIbU",
+        "name": "DC Restaurant",
+        "dist": 2
+      },
+      "truth": "ChIJ7W0aCDBJzDERLXoIAb7IIbU",
+      "hit": true
+    },
+    {
+      "id": "R0003",
+      "name": "Beta KL",
+      "query": "Beta KL, Lot 163 10 Jalan Perak, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJlTA1sdU3zDERKbujTkG2pJc",
+        "name": "Beta KL",
+        "dist": 0
+      },
+      "truth": "ChIJlTA1sdU3zDERKbujTkG2pJc",
+      "hit": true
+    },
+    {
+      "id": "R0004",
+      "name": "akar",
+      "query": "akar, 109 Jalan Aminuddin Baki Taman Tun Dr Ismail, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJzQV-vENJzDER1u-w_fLKF6E",
+        "name": "akar",
+        "dist": 4
+      },
+      "truth": "ChIJzQV-vENJzDER1u-w_fLKF6E",
+      "hit": true
+    },
+    {
+      "id": "R0005",
+      "name": "Terra Dining",
+      "query": "Terra Dining, 91 Jalan Aminuddin Baki Taman Tun Dr Ismail, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJBfTsHZlJzDERjl9OeqGJWBI",
+        "name": "Terra Dining KL",
+        "dist": 11
+      },
+      "truth": "ChIJBfTsHZlJzDERjl9OeqGJWBI",
+      "hit": true
+    },
+    {
+      "id": "R0006",
+      "name": "Chim by Chef Noom",
+      "query": "Chim by Chef Noom, TSLAW Tower 2F, L2-03 TSLAW Tower 39 Jalan Kamuning Imbi, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJe82e0fI3zDERywfjSDUmlWs",
+        "name": "Chim By Chef Noom",
+        "dist": 35
+      },
+      "truth": "ChIJe82e0fI3zDERywfjSDUmlWs",
+      "hit": true
+    },
+    {
+      "id": "R0007",
+      "name": "Molina",
+      "query": "Molina, THE FACE Style 51F, Level 51 THE FACE Style 1020 Jalan Sultan Ismail, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJwSUnAEVJzDERpJVtwKxn0Sk",
+        "name": "Molina",
+        "dist": 91
+      },
+      "truth": "ChIJwSUnAEVJzDERpJVtwKxn0Sk",
+      "hit": true
+    },
+    {
+      "id": "R0008",
+      "name": "De.Wan 1958",
+      "query": "De.Wan 1958, The Linc KL, The Linc 360 Jalan Tun Razak Taman U Thant, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJTYFd_6s3zDER6OJUD9GC0TM",
+        "name": "De.Wan 1958 by Chef Wan",
+        "dist": 45
+      },
+      "truth": "ChIJTYFd_6s3zDER6OJUD9GC0TM",
+      "hit": true
+    },
+    {
+      "id": "R0009",
+      "name": "Yun House",
+      "query": "Yun House, Four Seasons Hotel, 145 Jalan Ampang, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJaRpoNIw3zDERgJ3IvbGv62U",
+        "name": "Yun House",
+        "dist": 22
+      },
+      "truth": "ChIJaRpoNIw3zDERgJ3IvbGv62U",
+      "hit": true
+    },
+    {
+      "id": "R0010",
+      "name": "Aliyaa",
+      "query": "Aliyaa, 48 G&M Jalan Medan Setia 2 Bukit Damansara, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJ73SCX1RIzDERTYDlfaVsoYA",
+        "name": "Aliyaa",
+        "dist": 11
+      },
+      "truth": "ChIJ73SCX1RIzDERTYDlfaVsoYA",
+      "hit": true
+    },
+    {
+      "id": "R0011",
+      "name": "Bar.Kar",
+      "query": "Bar.Kar, No. 199 Suites G-06 Jalan Tun Razak, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJHQN-OaE3zDERRFtiJRhT11A",
+        "name": "Bar.Kar Best Restaurant KL",
+        "dist": 13
+      },
+      "truth": "ChIJHQN-OaE3zDERRFtiJRhT11A",
+      "hit": true
+    },
+    {
+      "id": "R0012",
+      "name": "Hide",
+      "query": "Hide, Concourse Ritz-Carlton Residences 105 Jalan Ampang, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJNRKy0u5JzDERU7WuyvGaYV4",
+        "name": "Hide",
+        "dist": 28
+      },
+      "truth": "ChIJNRKy0u5JzDERU7WuyvGaYV4",
+      "hit": true
+    },
+    {
+      "id": "R0013",
+      "name": "Atelier Binchotan",
+      "query": "Atelier Binchotan, Taman Desa Business Park, 5 Jalan 1 109e Taman Desa Business Park, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 700,
+      "picked": {
+        "placeId": "ChIJYQ3YcxpLzDERikmCeIwWzVg",
+        "name": "Atelier Binchotan",
+        "dist": 55
+      },
+      "truth": "ChIJYQ3YcxpLzDERikmCeIwWzVg",
+      "hit": true
+    },
+    {
+      "id": "R0014",
+      "name": "K KL（圭）",
+      "query": "K KL, ILHAM Tower 37F, Level 37 ILHAM Tower 8 Jalan Binjai, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJxcotQ2c3zDER626rmPz7X3s",
+        "name": "K KL (圭)",
+        "dist": 21
+      },
+      "truth": "ChIJxcotQ2c3zDER626rmPz7X3s",
+      "hit": true
+    },
+    {
+      "id": "R0015",
+      "name": "Congkak",
+      "query": "Congkak, 24 Jalan Beremi off Jalan Sultan Ismail, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJg3SVybo3zDERADqEe4aL-VA",
+        "name": "Congkak",
+        "dist": 1
+      },
+      "truth": "ChIJg3SVybo3zDERADqEe4aL-VA",
+      "hit": true
+    },
+    {
+      "id": "R0016",
+      "name": "Wong Mei Kee",
+      "query": "Wong Mei Kee, 30 Jalan Nyonya Pudu, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJx6rAYCY2zDERWI5R13hJPgE",
+        "name": "Restoran Wong Mei Kee",
+        "dist": 89
+      },
+      "truth": "ChIJx6rAYCY2zDERWI5R13hJPgE",
+      "hit": true
+    },
+    {
+      "id": "R0017",
+      "name": "Coast by Kayra",
+      "query": "Coast by Kayra, The Starhill 1F, Lot G03-G05 Ground Floor The Starhill 181 Jalan Bukit Bintang, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJhy577zo3zDERTqZLk3L_x3M",
+        "name": "Coast by Kayra",
+        "dist": 38
+      },
+      "truth": "ChIJhy577zo3zDERTqZLk3L_x3M",
+      "hit": true
+    },
+    {
+      "id": "R0018",
+      "name": "Leen's",
+      "query": "Leen's, 136 Jalan Burhanuddin Helmi Taman Tun Dr Ismail, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJxbi0bW5JzDER4H0wI_rarnE",
+        "name": "Leen’s Middle East Kitchen TTDI",
+        "dist": 12
+      },
+      "truth": "ChIJxbi0bW5JzDER4H0wI_rarnE",
+      "hit": true
+    },
+    {
+      "id": "R0019",
+      "name": "MTR 1924",
+      "query": "MTR 1924, 69 Jalan Thambipillay Brickfields, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJ0_v9e-pJzDERGIeEjyz94tI",
+        "name": "MTR",
+        "dist": 20
+      },
+      "truth": "ChIJ0_v9e-pJzDERGIeEjyz94tI",
+      "hit": true
+    },
+    {
+      "id": "R0020",
+      "name": "ROTI by d'Tandoor",
+      "query": "ROTI by d'Tandoor, 82 Jalan Damai Kampung Datuk Keramat, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJPVvpAs83zDERFcIf7TzEo3Q",
+        "name": "ROTI By d'Tandoor",
+        "dist": 15
+      },
+      "truth": "ChIJPVvpAs83zDERFcIf7TzEo3Q",
+      "hit": true
+    },
+    {
+      "id": "R0021",
+      "name": "Sri Nirwana Maju",
+      "query": "Sri Nirwana Maju, 43 Jalan Telawi 3 Bangsar, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJ63X5a5hJzDERQwWp6DSrZcY",
+        "name": "Sri Nirwana Maju Restaurant",
+        "dist": 8
+      },
+      "truth": "ChIJ63X5a5hJzDERQwWp6DSrZcY",
+      "hit": true
+    },
+    {
+      "id": "R0022",
+      "name": "Sao Nam",
+      "query": "Sao Nam, 25 Tengkat Tong Shin Bukit Bintang, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJW8ZV5Sk2zDEREyD1cIkbLVI",
+        "name": "Sao Nam",
+        "dist": 2
+      },
+      "truth": "ChIJW8ZV5Sk2zDEREyD1cIkbLVI",
+      "hit": true
+    },
+    {
+      "id": "R0023",
+      "name": "Hai Kah Lang",
+      "query": "Hai Kah Lang, 44 Jalan Kaskas 2 Taman Cheras, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJZ4S8obQ1zDERY836jot3-hk",
+        "name": "Hai Kah Lang Seafood Noodle and Fish Head Noodle",
+        "dist": 5
+      },
+      "truth": "ChIJZ4S8obQ1zDERY836jot3-hk",
+      "hit": true
+    },
+    {
+      "id": "R0024",
+      "name": "Nam Heong Chicken Rice",
+      "query": "Nam Heong Chicken Rice, 56 Jalan Sultan City Centre, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJQ9Le-dBJzDERoy5Tt9Oqiz0",
+        "name": "Nam Heong Chicken Rice, Jalan Sultan",
+        "dist": 0
+      },
+      "truth": "ChIJQ9Le-dBJzDERoy5Tt9Oqiz0",
+      "hit": true
+    },
+    {
+      "id": "R0025",
+      "name": "Ah Hei Bak Kut Teh",
+      "query": "Ah Hei Bak Kut Teh, 33A Medan Imbi Imbi, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 700,
+      "picked": {
+        "placeId": "ChIJaX0Z-i42zDERvbr2pTSqE0E",
+        "name": "Ah Hei Bak Kut Teh",
+        "dist": 116
+      },
+      "truth": "ChIJaX0Z-i42zDERvbr2pTSqE0E",
+      "hit": true
+    },
+    {
+      "id": "R0026",
+      "name": "Hing Kee Bakuteh",
+      "query": "Hing Kee Bakuteh, 121 Jalan Kepong Metro Prima, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJeUy6YWpGzDERJuS-ujQp-rQ",
+        "name": "Hing Kee Bakuteh Main Branch 甲洞大街 兴记肉骨茶 总行",
+        "dist": 0
+      },
+      "truth": "ChIJeUy6YWpGzDERJuS-ujQp-rQ",
+      "hit": true
+    },
+    {
+      "id": "R0028",
+      "name": "Hor Poh Cuisine",
+      "query": "Hor Poh Cuisine, 36 Jalan 6 38d Taman Sri Sinar, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 700,
+      "picked": {
+        "placeId": "ChIJrcysV4JIzDERMO9wiM0ZIwg",
+        "name": "Hor Poh Cuisine Restaurant",
+        "dist": 36
+      },
+      "truth": "ChIJrcysV4JIzDERMO9wiM0ZIwg",
+      "hit": true
+    },
+    {
+      "id": "R0029",
+      "name": "Chee Meng",
+      "query": "Chee Meng, Sub Lot A-1 Batu 4 Jalan Klang Lama, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJb3lbUzhKzDER3wZ8LN0hWaY",
+        "name": "Nasi Ayam Hainan Chee Meng • Jalan Klang Lama",
+        "dist": 0
+      },
+      "truth": "ChIJb3lbUzhKzDER3wZ8LN0hWaY",
+      "hit": true
+    },
+    {
+      "id": "R0030",
+      "name": "Sek Yuen",
+      "query": "Sek Yuen, 313 Jalan Pudu Pudu, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJzZ5UWiE2zDERMrzWoZxeRoU",
+        "name": "Sek Yuen Restaurant",
+        "dist": 0
+      },
+      "truth": "ChIJzZ5UWiE2zDERMrzWoZxeRoU",
+      "hit": true
+    },
+    {
+      "id": "R0031",
+      "name": "Anak Baba",
+      "query": "Anak Baba, 159 Jalan Sultan Abdul Samad Brickfields, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJT9pYGcJJzDERkO9nXwauEPw",
+        "name": "Anak Baba @ Brickfields",
+        "dist": 7
+      },
+      "truth": "ChIJT9pYGcJJzDERkO9nXwauEPw",
+      "hit": true
+    },
+    {
+      "id": "R0032",
+      "name": "Lai Foong Lala Noodles",
+      "query": "Lai Foong Lala Noodles, 99 Jalan Sultan City Centre, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJPVGtDrxJzDERatQnLHBYARk",
+        "name": "Lai Foong Lala Noodles, Kuala Lumpur",
+        "dist": 0
+      },
+      "truth": "ChIJPVGtDrxJzDERatQnLHBYARk",
+      "hit": true
+    },
+    {
+      "id": "R0033",
+      "name": "Foong Lian",
+      "query": "Foong Lian, 55 Jalan Yew Pudu, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJVcgB7CI2zDERABq-azub4QM",
+        "name": "Foong Lian - 丰年瓦煲美食馆",
+        "dist": 11
+      },
+      "truth": "ChIJVcgB7CI2zDERABq-azub4QM",
+      "hit": true
+    },
+    {
+      "id": "R0034",
+      "name": "Jalan Ipoh Claypot",
+      "query": "Jalan Ipoh Claypot, Lot 1224 7 Jalan Batu Ambar Taman Kok Lian, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 700,
+      "picked": {
+        "placeId": "ChIJj9Grb8VHzDEROofS7kSvjZs",
+        "name": "Jalan Ipoh Claypot Chicken Rice",
+        "dist": 131
+      },
+      "truth": "ChIJj9Grb8VHzDEROofS7kSvjZs",
+      "hit": true
+    },
+    {
+      "id": "R0035",
+      "name": "Sin Kiew Yee Beef Noodles",
+      "query": "Sin Kiew Yee Beef Noodles, 7a Jalan Tun Tan Cheng Lock City Centre, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJ73vXAQBJzDERjh5Zzf53bNA",
+        "name": "Sin Kiew Yee Shin Kee Beef Noodles",
+        "dist": 22
+      },
+      "truth": "ChIJ73vXAQBJzDERjh5Zzf53bNA",
+      "hit": true
+    },
+    {
+      "id": "R0036",
+      "name": "GulaiNya",
+      "query": "GulaiNya, 44-G Jalan Medan Setia 2 Bukit Damansara, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJ8xXzvs9JzDER0MmuPrvVleE",
+        "name": "GulaiNya Bukit Damansara",
+        "dist": 49
+      },
+      "truth": "ChIJ8xXzvs9JzDER0MmuPrvVleE",
+      "hit": true
+    },
+    {
+      "id": "R0037",
+      "name": "Lama Nyonya",
+      "query": "Lama Nyonya, Steppes @ Mont Kiara, Kuala Lumpur Malaysia",
+      "tried": 3,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJfxAsVwA5zDERQFLnE8AAoyw",
+        "name": "Lama Nyonya Restaurant, Steppes @ Mont Kiara",
+        "dist": 75
+      },
+      "truth": "ChIJfxAsVwA5zDERQFLnE8AAoyw",
+      "hit": true
+    },
+    {
+      "id": "R0038",
+      "name": "Limapulo",
+      "query": "Limapulo, 50 Jalan Doraisamy Chow Kit, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJ43mF4C5IzDERm8u991ryZuY",
+        "name": "Limapulo",
+        "dist": 4
+      },
+      "truth": "ChIJ43mF4C5IzDERm8u991ryZuY",
+      "hit": true
+    },
+    {
+      "id": "R0039",
+      "name": "Nadodi",
+      "query": "Nadodi, Level 7A Four Seasons Hotel Jalan Ampang, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJacl_rtA3zDERNJiRM-i5PeM",
+        "name": "NADODI",
+        "dist": 32
+      },
+      "truth": "ChIJacl_rtA3zDERNJiRM-i5PeM",
+      "hit": true
+    },
+    {
+      "id": "R0040",
+      "name": "Entier",
+      "query": "Entier, Kuala Lumpur Malaysia",
+      "tried": 5,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJC6IDC5RJzDER8J9Hr0LKF7k",
+        "name": "Entier French Dining",
+        "dist": 35
+      },
+      "truth": "ChIJC6IDC5RJzDER8J9Hr0LKF7k",
+      "hit": true
+    },
+    {
+      "id": "R0041",
+      "name": "Skillet KL",
+      "query": "Skillet KL, Menara Hap Seng 1F, Lot 1-01 Level 1 Menara Hap Seng 3 Jalan P. Ramlee, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJH3dBsNU3zDERgTKw6354sgk",
+        "name": "Skillet KL",
+        "dist": 44
+      },
+      "truth": "ChIJH3dBsNU3zDERgTKw6354sgk",
+      "hit": true
+    },
+    {
+      "id": "R0042",
+      "name": "Cilantro",
+      "query": "Cilantro, MiCasa All Suite Hotel, 368B MiCasa All Suite Hotel Jalan Tun Razak Taman U Thant, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJAQBwkc43zDER0_QEBU8lUy4",
+        "name": "Cilantro Restaurant & Wine Bar",
+        "dist": 3
+      },
+      "truth": "ChIJAQBwkc43zDER0_QEBU8lUy4",
+      "hit": true
+    },
+    {
+      "id": "R0043",
+      "name": "Elegant Inn",
+      "query": "Elegant Inn, 2nd Floor Podium Block Menara Hap Seng Jalan Tengah, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJqbsLZNU3zDERWISdWxh0l8o",
+        "name": "Elegant Inn Hong Kong Cuisine",
+        "dist": 24
+      },
+      "truth": "ChIJqbsLZNU3zDERWISdWxh0l8o",
+      "hit": true
+    },
+    {
+      "id": "R0044",
+      "name": "Ling Long",
+      "query": "Ling Long, The Five Kompleks Pejabat Damansara, L2-04 Block E The Five Kompleks Pejabat Damansara Jalan Dungun, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJeyJQmA5JzDERMtbgq1ikNhs",
+        "name": "Ling Long",
+        "dist": 166
+      },
+      "truth": "ChIJeyJQmA5JzDERMtbgq1ikNhs",
+      "hit": true
+    },
+    {
+      "id": "R0045",
+      "name": "Marini's on 57",
+      "query": "Marini's on 57, Menara 3 Petronas 57F, Level 57 Menara 3 Petronas Persiaran KLCC, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJY0pAodY3zDERpLoOdZbQ0UM",
+        "name": "Marini’s on 57",
+        "dist": 28
+      },
+      "truth": "ChIJY0pAodY3zDERpLoOdZbQ0UM",
+      "hit": true
+    },
+    {
+      "id": "R0046",
+      "name": "Wagyu Kappo Yoshida",
+      "query": "Wagyu Kappo Yoshida, Naza Tower Skyviews 48F, Unit 3-48 48F Naza Tower Platinum Park 10 Persiaran KLCC, Kuala Lumpur Malaysia",
+      "tried": 5,
+      "verdict": "review",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJW3HkBOI3zDER4p7E3lRVFTI",
+        "name": "Kappo Hiyori KL",
+        "dist": 11
+      },
+      "near": [
+        {
+          "lat": 3.1547291,
+          "lng": 101.71864629999999,
+          "cid": "0x31cc37e204e4715b:0x32155554dec49ee2",
+          "name": "Kappo Hiyori KL",
+          "placeId": "ChIJW3HkBOI3zDER4p7E3lRVFTI",
+          "dist": 11
+        }
+      ],
+      "truth": "ChIJW3HkBOI3zDER4p7E3lRVFTI",
+      "hit": false
+    },
+    {
+      "id": "R0047",
+      "name": "Studio Restaurant",
+      "query": "Studio Restaurant, 38-1 Jalan Kemuja Bangsar, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 700,
+      "picked": {
+        "placeId": "ChIJgft_mwVJzDERp9xgE9qt2z4",
+        "name": "Studio Restaurant",
+        "dist": 32
+      },
+      "truth": "ChIJgft_mwVJzDERp9xgE9qt2z4",
+      "hit": true
+    },
+    {
+      "id": "R0048",
+      "name": "Merdeka Grill",
+      "query": "Merdeka Grill, Park Hyatt Merdeka 118 75F, Level 75 Park Hyatt Kuala Lumpur KL118 Presint Merdeka 118, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJ68HHqsdJzDERqpqKFXOeDv0",
+        "name": "Merdeka Grill",
+        "dist": 18
+      },
+      "truth": "ChIJ68HHqsdJzDERqpqKFXOeDv0",
+      "hit": true
+    },
+    {
+      "id": "R0049",
+      "name": "Jalan Alor",
+      "query": "Jalan Alor, 64 Jalan Alor Bukit Bintang, Kuala Lumpur Malaysia",
+      "tried": 3,
+      "verdict": "review",
+      "radius": 700,
+      "picked": {
+        "placeId": "ChIJh1VBjik2zDERy9HKiYbXovE",
+        "name": "64, Jln Alor",
+        "dist": 45
+      },
+      "near": [
+        {
+          "lat": 3.1458811,
+          "lng": 101.708719,
+          "cid": "0x31cc36298e415587:0xf1a2d78689cad1cb",
+          "name": "64, Jln Alor",
+          "placeId": "ChIJh1VBjik2zDERy9HKiYbXovE",
+          "dist": 45
+        }
+      ],
+      "truth": "ChIJWV51lvU3zDERCyHo6Gi0cQo",
+      "hit": false
+    },
+    {
+      "id": "R0050",
+      "name": "Village Park",
+      "query": "Village Park, 5 Jalan SS21 37 Damansara Utama Petaling Jaya, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJIfYLMzFJzDERPG9vHZ7DqiE",
+        "name": "Village Park Restaurant",
+        "dist": 16
+      },
+      "truth": "ChIJIfYLMzFJzDERPG9vHZ7DqiE",
+      "hit": true
+    },
+    {
+      "id": "R0051",
+      "name": "Kyomo",
+      "query": "Kyomo, 26 Jalan 24 70A Desa Sri Hartamas, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 700,
+      "picked": {
+        "placeId": "ChIJFVEiF_BIzDEROJINDbdudtE",
+        "name": "Kyomo",
+        "dist": 34
+      },
+      "truth": "ChIJFVEiF_BIzDEROJINDbdudtE",
+      "hit": true
+    },
+    {
+      "id": "R0054",
+      "name": "Vin's Restaurant",
+      "query": "Vin's Restaurant, 6 Lorong Datuk Sulaiman 1 Taman Tun Dr Ismail, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJZ05BeSZJzDERlVmxJahQ1iM",
+        "name": "Vin's Restaurant",
+        "dist": 0
+      },
+      "truth": "ChIJZ05BeSZJzDERlVmxJahQ1iM",
+      "hit": true
+    },
+    {
+      "id": "R0057",
+      "name": "Aftermeal Desserts",
+      "query": "Aftermeal Desserts, Damansara Utama, Kuala Lumpur Malaysia",
+      "tried": 3,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJNSn5-YVJzDERxxHyTGitpGA",
+        "name": "Aftermeal Desserts • Damansara Utama",
+        "dist": 19
+      },
+      "truth": "ChIJNSn5-YVJzDERxxHyTGitpGA",
+      "hit": true
+    },
+    {
+      "id": "R0061",
+      "name": "Annalakshmi",
+      "query": "Annalakshmi, 116 Jalan Berhala Brickfields, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJAAAAAOxJzDERyp0riNSkJIg",
+        "name": "Annalakshmi Vegetarian Restaurant Kuala Lumpur",
+        "dist": 0
+      },
+      "truth": "ChIJAAAAAOxJzDERyp0riNSkJIg",
+      "hit": true
+    },
+    {
+      "id": "R0062",
+      "name": "Kanbe Ramen",
+      "query": "Kanbe Ramen, 163 Retail Park GF-08, GF-08 163 Retail Park 8 Jalan Kiara Mont Kiara, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJgXZ2Aj1JzDERUl0t7vOeh-Y",
+        "name": "Kanbe Ramen - 163 Retail Park",
+        "dist": 30
+      },
+      "truth": "ChIJgXZ2Aj1JzDERUl0t7vOeh-Y",
+      "hit": true
+    },
+    {
+      "id": "R0063",
+      "name": "Ombak Kitchen",
+      "query": "Ombak Kitchen, 12 Lorong Ara Kiri 2 Lucky Garden Bangsar, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJ9RJ3yRRJzDERVgPr_VWX3As",
+        "name": "Ombak Kitchen Bangsar",
+        "dist": 5
+      },
+      "truth": "ChIJ9RJ3yRRJzDERVgPr_VWX3As",
+      "hit": true
+    },
+    {
+      "id": "R0065",
+      "name": "Marta's Kitchen",
+      "query": "Marta's Kitchen, Jln Sri Hartamas 22 Desa Sri Hartamas, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 700,
+      "picked": {
+        "placeId": "ChIJmdqKT_BIzDERco1xm5HDZE0",
+        "name": "Marta's Kitchen • Hartamas",
+        "dist": 100
+      },
+      "truth": "ChIJwXZnJvBIzDERP9Jn5_UryCA",
+      "hit": false
+    },
+    {
+      "id": "R0068",
+      "name": "Antipodean Cafe",
+      "query": "Antipodean Cafe, 20 Jalan Telawi 2 Bangsar, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJ64XGCZhJzDERQdq7nRddfuU",
+        "name": "Antipodean Cafe • Bangsar",
+        "dist": 0
+      },
+      "truth": "ChIJ64XGCZhJzDERQdq7nRddfuU",
+      "hit": true
+    },
+    {
+      "id": "R0069",
+      "name": "WTF Restaurant",
+      "query": "WTF Restaurant, Lorong Maarof Bangsar, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 700,
+      "picked": {
+        "placeId": "ChIJ1dfEh6hJzDERrXgCs7couWg",
+        "name": "WTF Restaurant",
+        "dist": 0
+      },
+      "truth": "ChIJ1dfEh6hJzDERrXgCs7couWg",
+      "hit": true
+    },
+    {
+      "id": "R0070",
+      "name": "Fuego at Troika Sky Dining",
+      "query": "Fuego at Troika Sky Dining, The Troika, Level 23a The Troika Persiaran KLCC, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJw9z919E3zDERJQtm_navO_s",
+        "name": "Fuego at Troika Sky Dining",
+        "dist": 0
+      },
+      "truth": "ChIJw9z919E3zDERJQtm_navO_s",
+      "hit": true
+    },
+    {
+      "id": "R0071",
+      "name": "Nipah (EQ Kuala Lumpur)",
+      "query": "Nipah, EQ Kuala Lumpur, Equatorial Plaza Jalan Sultan Ismail, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJv2f0HdU3zDERWLpbFhk6oJQ",
+        "name": "Nipah at EQ",
+        "dist": 13
+      },
+      "truth": "ChIJ29zYrKxJzDERP_CAMG4HNOQ",
+      "hit": false
+    },
+    {
+      "id": "R0072",
+      "name": "Bijan Bar & Restaurant",
+      "query": "Bijan Bar & Restaurant, 3 Jalan Ceylon Bukit Ceylon, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJhUW7pNVJzDERrVLuwiGu_N4",
+        "name": "Bijan Bar & Restaurant",
+        "dist": 0
+      },
+      "truth": "ChIJhUW7pNVJzDERrVLuwiGu_N4",
+      "hit": true
+    },
+    {
+      "id": "R0073",
+      "name": "Manja KL",
+      "query": "Manja KL, Old Malaya, Old Malaya Lorong Raja Chulan, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJKTxLJNVJzDERs_iwRo6PCgc",
+        "name": "Manja KL",
+        "dist": 0
+      },
+      "truth": "ChIJKTxLJNVJzDERs_iwRo6PCgc",
+      "hit": true
+    },
+    {
+      "id": "R0074",
+      "name": "Heritage Pizza KL",
+      "query": "Heritage Pizza KL, Jalan Doraisamy Chow Kit, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJcwlvHmBJzDER3ZqTUKb44QU",
+        "name": "Heritage Pizza KL",
+        "dist": 0
+      },
+      "truth": "ChIJcwlvHmBJzDER3ZqTUKb44QU",
+      "hit": true
+    },
+    {
+      "id": "R0075",
+      "name": "Positano Risto",
+      "query": "Positano Risto, Publika, Publika Shopping Gallery Solaris Dutamas, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJZy_2kg1JzDERAvoqASU0JSI",
+        "name": "Positano Risto",
+        "dist": 0
+      },
+      "truth": "ChIJZy_2kg1JzDERAvoqASU0JSI",
+      "hit": true
+    },
+    {
+      "id": "R0076",
+      "name": "Common Man Coffee Roasters",
+      "query": "Common Man Coffee Roasters, Jalan Tun Mohd Fuad TTDI, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJsfUxqztJzDERNSiW6AxnvL8",
+        "name": "Common Man Coffee Roasters - Kuala Lumpur",
+        "dist": 0
+      },
+      "truth": "ChIJsfUxqztJzDERNSiW6AxnvL8",
+      "hit": true
+    },
+    {
+      "id": "R0077",
+      "name": "Brasserie Léon",
+      "query": "Brasserie Léon, Menara Manulife, Menara Manulife Jalan Beringin Bukit Damansara, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJiQxLd7VJzDERkAMAvprE_DY",
+        "name": "Brasserie Léon",
+        "dist": 0
+      },
+      "truth": "ChIJiQxLd7VJzDERkAMAvprE_DY",
+      "hit": true
+    },
+    {
+      "id": "R0085",
+      "name": "Bidou",
+      "query": "Bidou, Jalan Setiakasih 5 Bukit Damansara, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 700,
+      "picked": {
+        "placeId": "ChIJt33vEgBJzDER3o_IKFxILNk",
+        "name": "Bidou",
+        "dist": 30
+      },
+      "truth": "ChIJt33vEgBJzDER3o_IKFxILNk",
+      "hit": true
+    },
+    {
+      "id": "R0087",
+      "name": "Kazu",
+      "query": "Kazu, Pavilion At The Five Bukit Damansara, Kuala Lumpur Malaysia",
+      "tried": 2,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJbSUGr5FJzDERLU7zjcMbaos",
+        "name": "Kazu",
+        "dist": 105
+      },
+      "truth": "ChIJbSUGr5FJzDERLU7zjcMbaos",
+      "hit": true
+    },
+    {
+      "id": "R0089",
+      "name": "KUKI Vegan",
+      "query": "KUKI Vegan, Menara KEN TTDI, Menara KEN TTDI, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJNTh0WnZJzDERr1-yhKOUqRY",
+        "name": "KUKI Vegan",
+        "dist": 16
+      },
+      "truth": "ChIJNTh0WnZJzDERr1-yhKOUqRY",
+      "hit": true
+    },
+    {
+      "id": "R0090",
+      "name": "Potager",
+      "query": "Potager, Bamboo Hills, Bamboo Hills Jalan Ipoh, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 450,
+      "picked": {
+        "placeId": "ChIJgX-_3O5HzDEResd9A2B6FGY",
+        "name": "Potager KL",
+        "dist": 46
+      },
+      "truth": "ChIJgX-_3O5HzDEResd9A2B6FGY",
+      "hit": true
+    },
+    {
+      "id": "R0091",
+      "name": "Chipta 11a",
+      "query": "Chipta 11a, 11a Jalan 20 16 Taman Paramount PJ, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJtUFt9m9LzDERgnXGrZfhCoc",
+        "name": "Chipta 11A Curated Dining",
+        "dist": 0
+      },
+      "truth": "ChIJtUFt9m9LzDERgnXGrZfhCoc",
+      "hit": true
+    },
+    {
+      "id": "R0092",
+      "name": "Table & Apron",
+      "query": "Table & Apron, 23 Jalan SS20 11 Damansara Kim PJ, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJYectmzdJzDERBg2jCkYYcfk",
+        "name": "Table & Apron",
+        "dist": 78
+      },
+      "truth": "ChIJYectmzdJzDERBg2jCkYYcfk",
+      "hit": true
+    },
+    {
+      "id": "R0093",
+      "name": "Sushi Taka",
+      "query": "Sushi Taka, St. Regis KL, The St. Regis 6 Jalan Stesen Sentral 2, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJv8xrTcFJzDERpQTzoH-VBEs",
+        "name": "SUSHI TAKA",
+        "dist": 25
+      },
+      "truth": "ChIJv8xrTcFJzDERpQTzoH-VBEs",
+      "hit": true
+    },
+    {
+      "id": "R0106",
+      "name": "Seed",
+      "query": "Seed, The Five@KPD, L1-04 Block E The Five@KPD 49 Jalan Dungun Bukit Damansara, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJH8dvpIlJzDERuzO5S41eV6M",
+        "name": "Seed by Whitegrass",
+        "dist": 10
+      },
+      "truth": "ChIJH8dvpIlJzDERuzO5S41eV6M",
+      "hit": true
+    },
+    {
+      "id": "R0107",
+      "name": "Shanghai Restaurant",
+      "query": "Shanghai Restaurant, JW Marriott, 1F JW Marriott 183 Jalan Bukit Bintang Bukit Bintang, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJWwyNaiw2zDER7uyyxH-iXCY",
+        "name": "Shanghai Restaurant",
+        "dist": 13
+      },
+      "truth": "ChIJWwyNaiw2zDER7uyyxH-iXCY",
+      "hit": true
+    },
+    {
+      "id": "R0108",
+      "name": "Sushi Masa",
+      "query": "Sushi Masa, Menara Hap Seng 3, Lot 1-03 1F Menara Hap Seng 3 Jalan P. Ramlee, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJ0dBxTSo3zDERh6en1WjEMtg",
+        "name": "Sushi Masa",
+        "dist": 0
+      },
+      "truth": "ChIJ0dBxTSo3zDERh6en1WjEMtg",
+      "hit": true
+    },
+    {
+      "id": "R0109",
+      "name": "Sushi Ori",
+      "query": "Sushi Ori, Menara Keck Seng, Unit PG-01 GF Podium Block Menara Keck Seng 203 Jalan Bukit Bintang Bukit Bintang, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJi2EvDOI3zDER7yppWKt1i-4",
+        "name": "鮨 おり Sushi ORI ( Chef ORI )",
+        "dist": 2
+      },
+      "truth": "ChIJi2EvDOI3zDER7yppWKt1i-4",
+      "hit": true
+    },
+    {
+      "id": "R0111",
+      "name": "Tenmasa",
+      "query": "Tenmasa, Platinum Park Tower1, Unit 3.3 2F Tower 1 Platinum Park 11 Persiaran KLCC, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJfcnkAIw3zDEREDealx6_YXk",
+        "name": "Tenmasa Tempura Bar",
+        "dist": 10
+      },
+      "truth": "ChIJfcnkAIw3zDEREDealx6_YXk",
+      "hit": true
+    },
+    {
+      "id": "R0114",
+      "name": "Ushi",
+      "query": "Ushi, Kuala Lumpur Malaysia",
+      "tried": 5,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJEQpmWH5JzDERU5OCiD_6cSQ",
+        "name": "USHI",
+        "dist": 42
+      },
+      "truth": "ChIJK3HVgFpJzDERtnM_vbJnJc0",
+      "hit": false
+    },
+    {
+      "id": "R0115",
+      "name": "Three X Co",
+      "query": "Three X Co, Bangsar Shopping Centre, Lot T6A L3 Bangsar Shopping Centre 285 Jalan Maarof, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJd4DkNK9JzDERPutnazW1VtU",
+        "name": "THREE X CO",
+        "dist": 11
+      },
+      "truth": "ChIJd4DkNK9JzDERPutnazW1VtU",
+      "hit": true
+    },
+    {
+      "id": "R0116",
+      "name": "Bar Trigona",
+      "query": "Bar Trigona, Four Seasons KL, L6 Four Seasons Hotel 145 Jalan Ampang, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJ1Xns2Zw3zDERT_IUhj_v3y4",
+        "name": "Bar Trigona",
+        "dist": 27
+      },
+      "truth": "ChIJ1Xns2Zw3zDERT_IUhj_v3y4",
+      "hit": true
+    },
+    {
+      "id": "R0117",
+      "name": "Reka:Bar",
+      "query": "Reka:Bar, 67M Jalan Setia Bakti Bukit Damansara, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 700,
+      "picked": {
+        "placeId": "ChIJvwZpq4xJzDERgSnj0Je6Ico",
+        "name": "Reka:Bar",
+        "dist": 175
+      },
+      "truth": "ChIJvwZpq4xJzDERgSnj0Je6Ico",
+      "hit": true
+    },
+    {
+      "id": "R0118",
+      "name": "Penrose",
+      "query": "Penrose, 149 Jalan Petaling, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJS0y677RJzDERvxxFFqGh7eg",
+        "name": "Penrose KL",
+        "dist": 7
+      },
+      "truth": "ChIJS0y677RJzDERvxxFFqGh7eg",
+      "hit": true
+    },
+    {
+      "id": "R0119",
+      "name": "Cabinet 8",
+      "query": "Cabinet 8, 70 Jalan Sultan, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJe18mRwBJzDER0uVV1o5dybs",
+        "name": "Cabinet 8 KL",
+        "dist": 17
+      },
+      "truth": "ChIJe18mRwBJzDER0uVV1o5dybs",
+      "hit": true
+    },
+    {
+      "id": "R0120",
+      "name": "Coley",
+      "query": "Coley, 6-G Jalan Abdullah Bangsar, Kuala Lumpur Malaysia",
+      "tried": 1,
+      "verdict": "ok",
+      "radius": 250,
+      "picked": {
+        "placeId": "ChIJuc6RtZVJzDERItK2WuGQlqk",
+        "name": "Coley",
+        "dist": 42
+      },
+      "truth": "ChIJuc6RtZVJzDERItK2WuGQlqk",
+      "hit": true
+    }
+  ]
+}

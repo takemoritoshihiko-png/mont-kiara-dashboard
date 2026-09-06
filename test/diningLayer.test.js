@@ -10,7 +10,7 @@ import {
 } from '../src/domain/filter.js';
 import { SORT_OPTIONS, defaultSortFor, sortAvailable, sortRecords } from '../src/domain/sort.js';
 import { cardBodyHtml, cardHeroText, cardAriaLabel, priceRangeText, ratingText } from '../src/ui/list.js';
-import { googleMapsUrl, detailHtml } from '../src/ui/info.js';
+import { googleMapsUrl, googleReviewsUrl, detailHtml } from '../src/ui/info.js';
 import { parseRestaurants, RESTAURANTS_URL } from '../src/data/load.js';
 
 const raw = readFileSync(new URL('../restaurants.json', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
@@ -493,16 +493,80 @@ describe('the Google Maps link', () => {
   });
 });
 
+// ── クチコミ直行リンク（2026-08-18 竹森氏「ワンクリックで飛べるように」） ──
+describe('the Google reviews link', () => {
+  it('opens the review list itself, not the place overview', () => {
+    expect(googleReviewsUrl('ChIJD5ydgbdNzDERVeakzTjfpk8'))
+      .toBe('https://search.google.com/local/reviews?placeid=ChIJD5ydgbdNzDERVeakzTjfpk8');
+  });
+
+  // クチコミの入口は Place ID しか受け付けない。CID しか無い店は、無リンクに
+  // するより地図を開いたほうがましなので、そちらへ落とす。
+  it('falls back to the map for a CID-only store', () => {
+    expect(googleReviewsUrl('cid:0x31cc49b4fb1160f5:0x5e61207dc7cc1e84'))
+      .toBe(googleMapsUrl('cid:0x31cc49b4fb1160f5:0x5e61207dc7cc1e84'));
+  });
+
+  it('is nothing at all when the Place ID is missing or still pending', () => {
+    expect(googleReviewsUrl('')).toBe('');
+    expect(googleReviewsUrl('pending:somewhere')).toBe('');
+  });
+});
+
+// ── 台帳の側の契約（2026-08-18） ────────────────────────────────
+// 2026-08-09 の拡充で店だけ増えて Place ID は `pending:` のまま残り、生存365店の
+// うち280店から Google への導線が丸ごと消えていた。画面もテストも「リンクが無い
+// のが正しい」と言っていたので、誰も気づけなかった。ここで台帳を見張る。
+describe('the ledger keeps a Google handle for every live restaurant', () => {
+  const live = parseRestaurants(raw).filter(r => !r.delisted);
+
+  // Place ID を採れなかった店。増やすときは、なぜ採れないかを必ず書く。
+  // 3件とも「店が見つからない」ではなく「台帳の住所とGoogleの実体が食い違う」ので、
+  // 竹森氏の裁定が要る（詳細は tools/place-id-manual.json の unresolved）。
+  const NO_PLACE_ID = new Set([
+    'Coliseum Cafe & Grill Room',   // 台帳の Jalan TAR 店に現存する掲載が無い
+    'RasaNya Seafood and Steamboat', // 同じ区画が今は De.wan 1958
+    'Restoran Mei Keng Fatt',        // 台帳は Sri Petaling・Googleは Ampang 店しか返さない
+  ]);
+
+  it('has a real Place ID for every live store except the named few', () => {
+    const missing = live
+      .filter(r => !r.placeId || r.placeId.startsWith('pending:'))
+      .map(r => r.name)
+      .filter(n => !NO_PLACE_ID.has(n));
+    expect(missing).toEqual([]);
+  });
+
+  it('gives every rated live store a link a reader can actually press', () => {
+    const dead = live.filter(r => r.rating > 0 && !googleReviewsUrl(r.placeId)).map(r => r.name);
+    expect(dead.filter(n => !NO_PLACE_ID.has(n))).toEqual([]);
+  });
+
+  // 同じ Place ID が2店に付いていたら、どちらかは他人の店を指している。
+  // 実際に「Ushi」が SUSHI TAKA の ID を持っていた（2026-08-18に判明）。
+  it('never points two different restaurants at the same place', () => {
+    const seen = new Map(), clash = [];
+    for(const r of live){
+      if(!r.placeId || r.placeId.startsWith('pending:')) continue;
+      if(seen.has(r.placeId)) clash.push(`${seen.get(r.placeId)} / ${r.name}`);
+      else seen.set(r.placeId, r.name);
+    }
+    expect(clash).toEqual([]);
+  });
+});
+
 // ── Google評価のリンク化（2026-08-08 依頼） ─────────────────────────
 describe('the Google rating links out to the restaurant on Google Maps', () => {
   const eatWith = (over) => ({ status: 'dining', id: 'R0001', name: 'x', venueType: 'street',
     rating: 4.5, reviewCount: 100, placeId: 'ChIJtest123', michelin: 'none',
     cat: 'フレンチ', catGroup: '洋食・グリル', priceLunch: [0,0], priceDinner: [0,0],
     vox: { pros: '', cons: '' }, ...over });
-  it('wraps the rating in a Maps link when the store has a real placeId', () => {
+  // 押した先はクチコミ一覧。評価の数字を押す人が見たいのは地図ではなく口コミ
+  // だから（2026-08-18 竹森氏）。地図へは下の「Google マップ」ボタンが行く。
+  it('wraps the rating in a link straight to the reviews when the store has a real placeId', () => {
     const h = detailHtml(eatWith({}));
     expect(h).toContain('class="kv-link"');
-    expect(h).toContain('place_id:ChIJtest123');
+    expect(h).toContain('search.google.com/local/reviews?placeid=ChIJtest123');
     expect(h).toContain('rel="noopener"');
   });
   it('stays plain text for a pending placeId and for an unrated store', () => {

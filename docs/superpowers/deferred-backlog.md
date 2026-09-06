@@ -180,7 +180,7 @@
 ## 2026-08-08 ミシュランKL完全網羅で判明した保留
 - **Qureshi (KLGCC)** — 2026年版Selected発表リストに載ったが、1年超の臨時休業で公式サイトからページ削除済み(「Restaurant not found」実確認)。訪問不能のため台帳追加を見送り。再開したら追加(Wagyu Saikouと同じ休業ウォッチ)
 - **Heun Kee Claypot / Kappo Hiyori** — 2026年版で選外を確認しmichelinバッジを外した(店は台帳に残置・経緯は各editorNoteに記載)
-- 新規追加分のGoogle Place IDは全て pending:(Places API無しでは取得不能)。既存のpending 9件と合わせ、いつかまとめてブラウザ実機で採取する
+- ~~新規追加分のGoogle Place IDは全て pending:(Places API無しでは取得不能)。既存のpending 9件と合わせ、いつかまとめてブラウザ実機で採取する~~ → **✅ 2026-08-18に解消**。「Places API無しでは取得不能」という前提が誤りで、`/search?tbm=map` の応答に Place ID がそのまま入っていた。280件中277件を採取(`tools/fetch-place-ids.js`)。残3件と、この作業で判明した座標誤りは下の 2026-08-18 節が正
 
 ## 2026-08-09 新Google条件再調査(★4.2-4.9未満×1,000件+)で保留にしたもの
 
@@ -299,3 +299,30 @@
 **✅ Fish With You — 竹森氏裁定で採用（2026-08-16・R0382）**
 マレーシア国内は2店(Kepong / Starling Mall PJ)で恒久ルールの2〜4店内。**中国発祥で世界2,500店超**という点はグレーだったが、竹森氏が承知の上で「入れる」と裁定。Google直読で ★4.8 × 1,173件・営業中・MKから5.2km・RM20〜40 を確認。四川式の酸菜魚を主役にしたファストカジュアル。
 **この裁定の含意**: 「全国チェーン除外」は**マレーシア国内の店舗数**で判定し、海外本国の規模は除外理由にしない、という運用になった。今後の同型ケース(海外大手チェーンのマレーシア少店舗展開)は同じ扱いにする。
+
+## 2026-08-18 Place ID 一括採取で残したもの
+
+**Place ID が採れなかった3件（竹森氏の裁定が要る。どれも「店が見つからない」ではなく「台帳の住所とGoogleの実体が食い違う」）**
+- **Coliseum Cafe & Grill Room (R0185)** — 台帳の住所は 98-100 Jalan Tuanku Abdul Rahman（1921年創業の本店）。Google に現存する掲載は **The Gardens Mall 店ほか**で、本店の掲載が見当たらない。本店を指すのか、移転先を指すのかで台帳の住所ごと変わる
+- **RasaNya Seafood and Steamboat (R0269)** — 台帳の区画（Lot 8.105.00, Level 8, Pavilion Elite）は Google 上で現在 **De.wan 1958 by Chef Wan**。閉店か入れ替わりの疑い。De.wan 1958 は台帳に別途在る（R番号別）。閉店なら `delisted` 墓標へ
+- **Restoran Mei Keng Fatt (R0358)** — 台帳は **Sri Petaling**（Jalan 5/149J, Zon L）。Google は「Mei Keng Fatt Sri Petaling」で検索しても **Ampang 店**（No.1, Lorong Awan 6, Kuala Ampang）しか返さない。住所が誤りか、Sri Petaling 店に掲載が無い
+
+**台帳の座標が実際と大きくずれている4件（別課題・地図のピンが違う場所に立っている）**
+Place ID の採取で Google 側の座標と突き合わせた結果、住所は一致するのに距離だけ大きく開いた店。座標の出どころを洗い直すまで台帳は触っていない。
+| 店 | ずれ | 根拠 |
+|---|---|---|
+| Restoran Mei Keng Fatt (R0358) | — | 住所自体が要確認（上記） |
+| Lau Heong Seafood Restaurant (R0341) | **2,568m** | Google の住所「43A, Sentul Perdana, 0-9」が台帳と一字一句一致 |
+| Qasar Balqis Restaurant (R0343) | **1,530m** | Google の住所「Jalan 5, 498, Jln Ampang」が台帳と一致 |
+| B.A.J Cafe (R0352) | **575m** | Google の住所「PV128 G33, Jalan Genting Kelang」が台帳と一致 |
+| Muhibbah Seafood Restaurant (R0227) | **752m** | Google の住所「Jalan Seri Penchala, Kampung Sungai Penchala」が台帳と一致 |
+
+**もとから入っていた Place ID の誤り3件（2026-08-18に修正済み・記録のため残す）**
+`--check` で既存85件を答え合わせしたら、3件が別のものを指していた。実際に開いて確認した。
+| 店 | 旧IDが開いていたもの | 直した先 |
+|---|---|---|
+| Ushi (R0299) | **SUSHI TAKA（たか）** という別の寿司店 | USHI |
+| Nipah (EQ Kuala Lumpur) | **EQ Kuala Lumpur（ホテルそのもの）** | Nipah at EQ |
+| Marta's Kitchen | **Jln Sri Hartamas 22（ただの通り）** | Marta's Kitchen • Hartamas |
+
+**要観察**: Ushi の Google 掲載は ★5.0・クチコミ3件と新しい。台帳の ★4.6 は旧ID（SUSHI TAKA）由来の可能性がある。評価の数字を洗い直すかは裁定待ち。
