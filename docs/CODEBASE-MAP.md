@@ -27,7 +27,7 @@
 | `src/data/parseCsv.js` | CSVパーサ（引用符・改行対応）。**唯一の実装** |
 | `src/data/load.js` | ファイルURL定義・fetch・CSV/JSON列 → アプリのレコード形へのマッピング（飲食は `parseRestaurants`） |
 | `src/data/inline.js` | コードに埋めた固定データ: FIABCI受賞・開発会社・Tier色・年色スケール・ペナン9校の学費カーブ・ミシュランの表記 |
-| `src/domain/cloudSync.js` | **クラウド同期の「判断」だけ**（純・テスト対象）。ログイン入力の検分／ログイン直後にどちらを正とするか／書いてよいか。**片方が空のときは絶対に自動同期しない**が最重要の一行 |
+| `src/domain/cloudSync.js` | **クラウド同期の「判断」だけ**（純・テスト対象）。ログイン入力の検分／ログイン直後にどちらを正とするか／書いてよいか。**ログイン直後は記録のある側から空の側へだけ自動同期し、両方に異なる記録があれば人が選ぶ**（設計正本 §20） |
 | `src/data/cloudConfig.js` | Firebase の接続先と SDK のバージョン。**この値は秘密ではない**（守っているのは Firestore のセキュリティ規則） |
 | `src/data/cloudStore.js` | **Firebase に触る唯一の場所**。ログイン（ユーザー名＋合言葉→`<name>@mkd.local`）・`users/{uid}` への読み書き・状態の保持。SDKは**ログインするまで読まない**（CDNから動的import）。personal.js は書き換えず `onPersonalChange` を購読して書きスルー |
 | `src/data/personal.js` | **個人記録の唯一の書き込み口**（外食モード）。localStorage `mkd_dining_personal_v1`・6項目(w/v/vd/rv/m/amt)+非表示フラグh(🗑で台帳から消す・データ管理から戻す)・ローカル日付・起動時の書込テスト・書き出し / 読み込み(v9のplaceIdキーを変換) / 全消去。**控え（自動バックアップ）もここが持つ**（別キー `mkd_dining_snapshots_v1`）: 全消去とまるごと置き換えは関数の中で必ず控えを取り、その日の最初の書き込み前に日次の控えを取る。判断は `domain/snapshots.js` |
@@ -92,6 +92,8 @@
 | `schools_detail.json` | 学校の詳細。**キーは schools_data.csv の name と完全一致** |
 | `restaurants.json` | 飲食店データ（件数はファイル実体が正・墓標=delisted含む。**現存する公式KLミシュラン2026全75店を完全網羅**。Mont Kiaraからの車所要時間(driveKm/MinFree/MinJam)を焼き込み済み。v9原本は削除済みで、tools/convert-v9-dining.js がコミット済みデータ+dining-additions.jsonから再生成）。住所の列名だけ他層と違い `address`（読み込み時に `addr` へ） |
 | `tools/gen-drive-times.js` | Mont Kiara基点の車所要時間をOSRMで一括計算→drive-times.json。converterが焼き込む。更新手順: convert→gen-drive-times→convert |
+| `tools/fetch-place-ids.js` | Google Place ID を鍵なしで採取（`/search?tbm=map` の応答から店名・座標・Place IDを取り出す）。**別の店を掴まないための関門は2つ＝距離（台帳の検証済み座標から building 250m / venue 450m / street 700m 以内）と店名の一致**。どちらか欠けたら採らず `review` に落とす。`--check`＝既にIDがある店で答え合わせ（精度の実測用）／`--fill`＝`pending:` の店を採取 |
+| `tools/apply-place-ids.js` | 採取結果を restaurants.json へ入れる。`ok` のものだけ・墓標には触れない・既存IDの書き換えは前→後を必ず印字。既定は下読み、`--write` で書く |
 
 ## その他
 
