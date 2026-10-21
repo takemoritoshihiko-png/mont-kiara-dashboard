@@ -95,6 +95,15 @@ afterEach(() => {
   delete globalThis.document;
 });
 
+it('除名した店を古いリンクから選んでも詳細を開かない', () => {
+  setAppMode('home');
+  setActiveLayer('condo');
+  setCondos([{ ...DEWAKAN, delisted: true }]);
+  selectCondo(DEWAKAN.name);
+  expect(document.getElementById('infoOverlay').classList.contains('active')).toBe(false);
+  expect(document.getElementById('infoContent').innerHTML).not.toContain(DEWAKAN.name);
+});
+
 // ============================================================
 // X1 — 個人記録の変更が、開いているオーバーレイに反映される
 // ============================================================

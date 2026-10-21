@@ -381,7 +381,7 @@ function nearbyTabHtml(c){
 /** Jump to a record listed in the 周辺 tab, crossing layers when needed. */
 export function selectNearby(name){
   const r = CONDOS.find(x => x.name === name);
-  if(!r) return;
+  if(!r || r.delisted) return;
   const layer = recordLayer(r);
   // X2 fix: 外食モードは層を飲食に固定する契約（CLAUDE.md / test/eatoutMode.
   // test.js）。setLayer() 自身はそれを知らないので、飲食以外を無条件で渡すと
@@ -490,6 +490,8 @@ export function selectCondo(name, opts = {}){
   // old layer — two "current things" on one screen (audit C). 外食モード pins
   // its layer, so there the detail simply opens.
   const rec = CONDOS.find(x => x.name === name);
+  // A stale shared link must not bring a delisted record back onto the screen.
+  if(!rec || rec.delisted){ closeInfo(); return; }
   // Dining pins can be checked onto the home map now: peeking at one opens
   // its detail but must NOT yank the app into 外食モード (setLayer('dining')
   // would). The 外食 door stays the chip name / the mode switch.
@@ -498,12 +500,9 @@ export function selectCondo(name, opts = {}){
   }
   setActiveTab(opts.tab === 'nearby' ? 'nearby' : 'detail');
   setSelectedCondo(name);
-  const c=CONDOS.find(x=>x.name===name);
+  const c=rec;
   if(c){
-    // Do not move what the user just pressed: from a city-wide view the
-    // selection zooms in (you cannot see what you picked otherwise), but once
-    // you are comparing inside a neighbourhood the zoom is yours and the map
-    // only pans, and only far enough to get the pin out from under this panel.
+    // Selection always centers the record at FOCUS_ZOOM (the shared map rule).
     focusOnRecord(c.lat, c.lng);
     // Redraw the markers so the newly selected one gets its accent ring and
     // leaves the cluster (spec 2.7 / audit D3). closeInfo() does the same on

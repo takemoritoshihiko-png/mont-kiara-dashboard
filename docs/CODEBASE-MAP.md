@@ -8,14 +8,14 @@
 |---|---|
 | `index.html` | デザイントークン（`:root`）＋全CSS＋マークアップ。`@media(max-width:768px)` が末尾のモバイルブロック。JSは `src/main.js` を読むだけ |
 
-## src/ — アプリ本体（17モジュール）
+## src/ — アプリ本体（構成は下表）
 
 ### 起動と状態
 
 | ファイル | 役割 |
 |---|---|
 | `src/main.js` | 起動: 地図生成 → UI初期化 → CSV/JSON読込 → 初回描画 → URL状態の復元。インライン`onclick`用に関数を`window`へ公開 |
-| `src/state.js` | 共有する可変状態（データ・絞り込み結果・選択中・アクティブ層/タブ・**モード(住まい/外食)**・**外食の3ビュー**・各トグル・**飲食の「近く」中心(diningNear)**・**予算の昼夜基準(dayBudgetBasis)**）。書き込みは全てセッター経由 |
+| `src/state.js` | 共有する可変状態（データ・絞り込み結果・選択中・アクティブ層/タブ・**モード(住まい/外食)**・**外食の台帳・データ管理**・各トグル・**飲食の「近く」中心(diningNear)**・**予算の昼夜基準(dayBudgetBasis)**）。書き込みは全てセッター経由 |
 | `src/domain/snapshots.js` | **控え（自動バックアップ）の判断だけ**: いつ取るか(危険操作の直前=undo 1件／その日の最初の変更前=daily 7世代)・剪定・見出しの言葉。保存領域には触れない純ロジック |
 | `src/domain/recommend.js` | 推奨軸(2026-08-08): 家族>二重確証>通好み…のカテゴリ導出=**バッジ表示専用**(レンズ絞り込みは同日夜の裁定で撤去)。数値合成なし・保存は素材(recDivergence/closed/verified)のみ。経緯=specs/2026-08-08-dining-purpose-rethink.md |
 | `src/format.js` | num/esc/jsStrの唯一の実装(ui/とdomain/の両方から使うためui外に置く)。jsStrはJSエスケープ+HTML属性エスケープの2層 |
@@ -24,6 +24,7 @@
 
 | ファイル | 役割 |
 |---|---|
+| `src/data/basemap.js` | 背景地図のURL・帰属表示・最大ズーム。OpenStreetMap標準タイル |
 | `src/data/parseCsv.js` | CSVパーサ（引用符・改行対応）。**唯一の実装** |
 | `src/data/load.js` | ファイルURL定義・fetch・CSV/JSON列 → アプリのレコード形へのマッピング（飲食は `parseRestaurants`） |
 | `src/data/inline.js` | コードに埋めた固定データ: FIABCI受賞・開発会社・Tier色・年色スケール・ペナン9校の学費カーブ・ミシュランの表記 |
@@ -39,8 +40,9 @@
 | `src/domain/luxury.js` | ラグジュアリー指数とTier（S/A/B/C/D）の算出。premium_score を15点満点で正規化して加算 |
 | `src/domain/filter.js` | 層の判定（`recordLayer`）・全絞り込み条件の判定・カリキュラム一覧・帯レンジのパース・飲食の**大分類11(`CAT_GROUPS`)/小分類(`cat`・台帳から生成)**/ミシュラン/予算（`diningPriceCeiling`＝昼夜どちらの上限で見るかを引数で受ける）・**飲食の距離フィルタ `matchesDiningNear`（半径 `NEAR_KM`=3km）**。**2026-08-16: 評価下限と「車で(MKから)」の絞り込みは廃止**（実測で★4.3が90%残る／全店が44分以内で効かなかった）。**エリアのセレクトも同日に削除**（地図のジャンプバーで代替）だが、`AREA_BUCKETS`/`areaBucketOf` と `matchesDining` の判定は残してある（調査で作った対応表の知識を捨てないため）。検索は編集メモ・支持される点/割れる点に加え、**`f.personal` が渡されたときだけ**自分の感想も見る（住まいモードには渡さない＝公開の顔に個人記録が出ない契約） |
 | `src/domain/sort.js` | 層ごとの並び替え選択肢と比較関数。層を切り替えたとき使えない順序の扱いも。予算順は価格帯フィルタと**同じ基準（昼/夜）**で作られ、選択肢のラベルにも基準が出る |
+| `src/domain/markerLayout.js` | ピンの重なり半径・モール判定・同地点の表示オフセット。座標を変更しない純関数。map.jsは描画と連動を担当 |
 | `src/domain/geo.js` | 2点間の距離（haversine） |
-| `src/domain/nearby.js` | 「周辺」= 距離バケット（800m/2km/6km）へ種別ごとに仕分け＋距離の表記。層は `LAYERS` から自動で増える |
+| `src/domain/nearby.js` | 「周辺」= 距離バケット（800m/2km/6km）へ種別ごとに仕分け＋距離の表記。除名`delisted`は一覧・件数から除外。層は `LAYERS` から自動で増える |
 | `src/domain/fees.js` | 年齢 → 学年 → 年間学費。学年ラベルの解析。**補間せず**近い公表学年の実額を返す |
 | `src/domain/diningScore.js` | 台帳スコア（100点）。権威au / 継続性ct / 評価ev・ベイズ縮約★(M=800)・レビュー母数の厚み・exタグはENUM。`calcLedgerScores()` が全件に焼き付ける |
 
@@ -60,6 +62,12 @@
 
 | ファイル | 何を守るか |
 |---|---|
+| `test/basemap.test.js` | initMapが有効な標準タイルと帰属表示をLeafletへ渡すこと |
+| `test/cloudSync.test.js` | ログイン直後の同期判断・競合時の人による選択・保存可否 |
+| `test/markerOverlap.test.js` | モール優先と同地点ピンの散らし・元の座標を維持すること |
+| `test/filterLayout.test.js` | 飲食の常設条件・折りたたみ・記録トグルの配置 |
+| `test/infoSync.test.js` | 個人記録の詳細反映・モード遷移・除名店の直接選択拒否 |
+| `test/helpers/csv.js` | テスト用CSV読込み。アプリのCSVパーサを共有 |
 | `test/integrity.test.js` | **データの契約**: 件数・premium_score加重式・min≤max・座標域・名前の一意性・schools_detail のキー一致 |
 | `test/parseCsv.test.js` | CSVパーサ（引用符・カンマ・改行） |
 | `test/luxury.test.js` | 指数とTier境界 |
@@ -72,14 +80,14 @@
 | `test/urlState.test.js` | URLの読み書きと履歴 |
 | `test/visualSystem.test.js` | ページの識別・デザイントークン・情報の二重表示禁止・数値書式 |
 | `test/a11y.test.js` | ランドマーク・全コントロールの名前・状態のaria・フォーカス可視・モバイルブロック・OGP |
-| `test/dining.test.js` | **飲食データの契約**: id/placeId一意・座標域・価格 lo≤hi・9分類・ミシュランenum（対象件数は restaurants.json が正） |
+| `test/dining.test.js` | **飲食データの契約**: id/placeId一意・座標域・価格 lo≤hi・11分類・ミシュランenum（対象件数は restaurants.json が正） |
 | `test/diningLayer.test.js` | 飲食層: 絞り込み5軸・価格帯の判定基準・カード/ヒーロー文字列・並び替え・詳細パネル・読み込み |
 | `test/diningScore.test.js` | **台帳スコア**: 定数・exタグENUMと実データの照合・C=4.3600・手計算フィクスチャ・内訳が総合点と一致すること |
-| `test/personal.test.js` | **個人記録**: ローカル日付・読み取りが書き込まないこと・保存可否の起動テスト・デバウンス保存・v9形式の読み込み変換・書き出し往復 |
+| `test/personal.test.js` | **個人記録**: ローカル日付・読み取りが書き込まないこと・保存可否の起動テスト・デバウンス保存・v9形式の読み込み変換・書き出し往復・非表示フラグを含む7欄の統合 |
 | `test/uxDining.test.js` | UX2: 飲食のエリア連動（距離フィルタ・3kmの妥当性・ジャンプ配線）と昼夜基準（`diningPriceCeiling`/価格帯/並び替えが**同じ数字を読む**invariant）・層タブの飲食入口・トグルのmarkup契約 |
 | `test/snapshots.test.js` | 控えの契約: undoは常に1件・dailyは日ごと1件7世代・現地時刻で出す・**消える経路(全消去/まるごと置き換え)は必ず控えを通る**を実物のpersonal.jsで検査 |
 | `test/recommend.test.js` | 推奨軸の契約: ティア梯子・家族拒否権・実勢裁定の回帰(Dewakan=通好み等)・裁定なきcaution=0店 |
-| `test/eatoutMode.test.js` | 外食モード: **住まいモードに記録UIが出ないこと**（訪問済み✓バッジ含む）・記録欄・カード構造・3ビュー・独立トグル・台帳スコア順・markup契約 |
+| `test/eatoutMode.test.js` | 外食モード: **住まいモードに記録UIが出ないこと**（訪問済み✓バッジ含む）・記録欄・カード構造・台帳/データ管理・独立トグル・台帳スコア順・markup契約 |
 | `test/infoPanel.test.js` | 詳細パネルの表現契約: 物件=出典語併記(PSF)/未定表示・商業=運営者/NLA/エスケープ・学校=長文ブロックの既定折りたたみ(畳んでも情報は落とさない) |
 
 ## データファイル

@@ -16,6 +16,16 @@ const at = (m, over = {}) => ({
 
 const names = (bucket, layer) => bucket.byLayer[layer].map(x => x.record.name);
 
+it('除名した店は周辺の一覧と件数にも含めない', () => {
+  const [walk] = nearby(ORIGIN, [
+    at(100, { name: 'Removed', status: 'dining', delisted: true }),
+    at(200, { name: 'Open', status: 'dining' }),
+  ]);
+  expect(names(walk, 'dining')).toEqual(['Open']);
+  expect(walk.counts.dining).toBe(1);
+  expect(walk.total).toBe(1);
+});
+
 describe('bucket boundaries', () => {
   it('puts a point one metre inside the walking radius in the 800m bucket', () => {
     const [walk, drive5, drive15] = nearby(ORIGIN, [at(799)]);
