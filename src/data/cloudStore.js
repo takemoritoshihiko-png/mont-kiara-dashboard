@@ -302,13 +302,6 @@ async function pushNow(){
   }
 }
 
-/** 手で今すぐ同期する（画面のボタン用）。 */
-export async function cloudSyncNow(){
-  if(!user) return;
-  clearTimeout(timer);
-  await pushNow();
-}
-
 function shortTime(iso){
   if(!iso) return '';
   const d = new Date(iso);

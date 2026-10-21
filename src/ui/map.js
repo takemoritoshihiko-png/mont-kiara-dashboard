@@ -10,6 +10,9 @@ import { selectCondo, closeInfo } from './info.js';
 // Deferred-usage only (called inside functions): safe across the list.js<->map.js cycle.
 import { cardHeroText, ratingText, num } from './list.js';
 import { isVisited, getEntry } from '../data/personal.js';
+import { BASEMAP } from '../data/basemap.js';
+import { LABEL_ZOOM, overlapRadiusM, nearAnyMall, mallShiftOff, spotOffsets,
+  COMMERCIAL_Z, MALL_SHIFT_CLASS, MALL_APART_CLASS } from '../domain/markerLayout.js';
 
 // ============================================================
 // ZOOM THRESHOLDS (tune here)
@@ -20,7 +23,10 @@ import { isVisited, getEntry } from '../data/personal.js';
 // hover-only when zoomed out, always-on when zoomed in.
 // ============================================================
 export const CLUSTER_OFF_ZOOM = 16;
-export const LABEL_ZOOM = 17;
+export { LABEL_ZOOM, overlapRadiusM, nearAnyMall, mallShiftOff, spotOffsets,
+  MALL_OVERLAP_M, MALL_SHIFT_PX, COMMERCIAL_Z, MALL_SHIFT_MAX_ZOOM,
+  MALL_SHIFT_CLASS, MALL_APART_CLASS, SAME_SPOT_M, SAME_SPOT_RADIUS_PX,
+  SPOT_PRIORITY } from '../domain/markerLayout.js';
 
 /**
  * Pure helper: the tooltip mode that applies at a given zoom level.
@@ -102,119 +108,6 @@ export const MICHELIN_BIB_BORDER = '#6f3305';
 export const MICHELIN_SEL_BG = '#ecd48a';
 export const MICHELIN_SEL_BORDER = '#a17f24';
 
-// ============================================================
-// 商業施設と飲食店の重なり(2026-08-16 竹森氏指摘)
-//
-// モールの中や真上にある店は座標がほぼ同じなので、飲食のピンが商業の四角を
-// 覆って「モールが消える」ことが起きていた(実測: 80m以内に飲食がある商業施設が
-// 8件・Pavilion KLは6店)。裁定は「商業を優先に見せ、飲食はその横にずらす」。
-//
-// 手当ては3つ。
-//   1. 商業マーカーに zIndexOffset を与え、常に飲食の上に描く
-//   2. モールの近くにある飲食ピンは、アイコンだけ右へずらす(座標は動かさない
-//      ので、選択したときは正しい位置に寄る)
-//   3. まとまった数字玉も、中心がモールの近くなら同じだけ右へずらす
-// ずらすのは表示だけで、データ側の緯度経度には一切触れない。
-// ============================================================
-/**
- * 重なりは「画面上の現象」なので、判定の半径は縮尺から出す。
- * 引いた地図では1pxが何十mにもなるため、固定の半径だと取りこぼす
- * (ズーム13では1px≒19m＝30px離れた玉は実距離570m先でも重なって見える)。
- *
- * @param {number} zoom @param {number} lat @param {number} iconPx 相手側の大きさ
- * @returns {number} この距離より近ければ画面上で重なる(m)
- */
-export function overlapRadiusM(zoom, lat, iconPx){
-  const mPerPx = 156543.03392 * Math.cos((lat || 0) * Math.PI / 180) / Math.pow(2, zoom);
-  // モールの四角(最大30px)の半分 + 相手のアイコンの半分
-  return (15 + iconPx / 2) * mPerPx;
-}
-
-/** 個別ピン用の既定半径(m)。ピンが1つずつ出るのはズーム16以上＝1px≒2.4m。 */
-export const MALL_OVERLAP_M = 60;
-/**
- * ずらす量(px)。四角(最大30px)の右端の外へ、数字玉(32px)の左端が出る幅。
- * 15(四角の半分) + 16(玉の半分) + 1(隙間) = 32。
- */
-export const MALL_SHIFT_PX = 32;
-/** 商業を常に上に描くための持ち上げ量。 */
-export const COMMERCIAL_Z = 1000;
-/**
- * これより寄ったら、ずらしをやめて本当の位置に戻す縮尺。
- * ズーム17では1pxがおよそ1.2mなので、60m離れた店は50px離れて描かれる＝もう
- * 重ならない。重なっていないのにずらすと、今度はそれが嘘になる。
- * LABEL_ZOOM と同じ値にしてあるのは偶然ではない: 名前ラベルは本当の座標に付く
- * ので、ラベルが常時出る縮尺でずらしていると、名前とピンが離れて見える。
- */
-export const MALL_SHIFT_MAX_ZOOM = LABEL_ZOOM;
-/** ずらす対象につけるclass。実際に動かすかはCSS(地図側のclass)が決める。 */
-export const MALL_SHIFT_CLASS = 'mk-mall-shift';
-/** この縮尺以上のときに地図コンテナへ付くclass。ずらしを打ち消す。 */
-export const MALL_APART_CLASS = 'mk-mall-apart';
-
-/** その縮尺では、もうずらす必要がないか。 */
-export function mallShiftOff(zoom){ return zoom >= MALL_SHIFT_MAX_ZOOM; }
-
-// ============================================================
-// 同じ地点に複数ある場合（2026-08-16 竹森氏指示）
-//
-// 「どれだけ寄せても完全に重なる」組が実データにある。文字列としての座標一致
-// ではなく**実質同じ地点**で捉える必要がある（層をまたぐ0m級の組が3つ:
-// Agile Mont Kiara×宮武讃岐うどん / Pines Mont Kiara×Casa Rosa /
-// 163 Retail Park×Fei Fan火鍋）。同じ建物の1階が店、上が住居、という並びなので
-// データが間違っているわけではない。**表示だけ**を扇状に散らす。
-//
-// モールのずらし(MALL_SHIFT)と違い、これは**どの縮尺でも効かせる**。
-// 同じ地点は、寄っても永遠に離れないから。
-// ============================================================
-/** 実質同じ地点とみなす距離(m)。これより近いと、最大まで寄せても重なる。 */
-export const SAME_SPOT_M = 3;
-/** 散らす半径(px)。マーカー(最大30px)の隣に置ける幅。 */
-export const SAME_SPOT_RADIUS_PX = 20;
-/** 真ん中に残す優先順。商業を優先する既存方針に合わせる。 */
-export const SPOT_PRIORITY = ['commercial', 'school', 'condo', 'dining'];
-
-/**
- * 同じ地点に集まったレコードに、表示上のずらし量(px)を割り当てる。
- *
- * 優先度がいちばん高い1件は**本当の位置に残す**（動かすと、その施設を探して
- * いる人が見つけられなくなる）。残りを円周に等間隔で置く。
- * 並びは name で安定させる — 描き直すたびに位置が入れ替わると、目で追えない。
- *
- * @param {{key:string, lat:number, lng:number, layer:string}[]} records
- * @returns {Map<string,{dx:number,dy:number}>} ずらす必要があるものだけ
- */
-export function spotOffsets(records, { withinM = SAME_SPOT_M, radiusPx = SAME_SPOT_RADIUS_PX } = {}){
-  const out = new Map();
-  const pts = (records || []).filter(r => r && r.lat != null && r.lng != null);
-  const km = withinM / 1000;
-  const seen = new Set();
-  for(let i = 0; i < pts.length; i++){
-    if(seen.has(i)) continue;
-    const group = [i];
-    for(let j = i + 1; j < pts.length; j++){
-      if(seen.has(j)) continue;
-      if(haversineKm(pts[i].lat, pts[i].lng, pts[j].lat, pts[j].lng) <= km) group.push(j);
-    }
-    if(group.length < 2) continue;
-    group.forEach(k => seen.add(k));
-    const members = group.map(k => pts[k]).sort((a, b) => {
-      const pa = SPOT_PRIORITY.indexOf(a.layer), pb = SPOT_PRIORITY.indexOf(b.layer);
-      if(pa !== pb) return (pa < 0 ? 99 : pa) - (pb < 0 ? 99 : pb);
-      return String(a.key).localeCompare(String(b.key));
-    });
-    const rest = members.slice(1);
-    rest.forEach((m, idx) => {
-      const angle = (2 * Math.PI * idx) / rest.length;
-      out.set(m.key, {
-        dx: Math.round(radiusPx * Math.cos(angle)),
-        dy: Math.round(radiusPx * Math.sin(angle)),
-      });
-    });
-  }
-  return out;
-}
-
 /**
  * ずらしの入り切りを地図コンテナのclassで切り替える。
  * マーカーを作り直さずに済むので、ズームのたびに数百個を作り直さない。
@@ -223,18 +116,6 @@ function syncMallShift(){
   if(!map) return;
   const el = map.getContainer && map.getContainer();
   if(el) el.classList.toggle(MALL_APART_CLASS, mallShiftOff(map.getZoom()));
-}
-
-/**
- * その地点が、いま地図に出ている商業施設の近くにあるか。
- * @param {number} lat @param {number} lng
- * @param {{lat:number,lng:number}[]} malls 判定対象の商業施設
- * @param {number} [withinM]
- */
-export function nearAnyMall(lat, lng, malls, withinM = MALL_OVERLAP_M){
-  if(lat == null || lng == null || !malls || !malls.length) return false;
-  const km = withinM / 1000;
-  return malls.some(m => haversineKm(lat, lng, m.lat, m.lng) <= km);
 }
 
 // rebuild() が毎回作り直す「いま描く商業施設」の一覧。飲食ピンとクラスタ玉の
@@ -320,9 +201,7 @@ export function initMap() {
   // Mont Kiara, so that is where the map wakes up. KL全体/Penang are one tap.
   map = L.map('map',{zoomControl:false}).setView([3.1710,101.6520],15);
   L.control.zoom({ position: 'bottomright' }).addTo(map);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-    attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19
-  }).addTo(map);
+  L.tileLayer(BASEMAP.url, BASEMAP.options).addTo(map);
 
   clusterGroups = makeClusterGroups();
   Object.values(clusterGroups).forEach(g=>map.addLayer(g));
@@ -514,13 +393,8 @@ const CO_LOCATED_M = 30;   // この距離(m)以内は「同じ場所」— 同�
 
 /** Pure-ish: いま地図に描かれている中で、cと同地点にいるレコード(自身含む)。 */
 function coLocatedWith(c){
-  const R = 6371e3, rad = x => x * Math.PI / 180;
-  const near = (a, b) => {
-    const h = Math.sin(rad(b.lat - a.lat) / 2) ** 2 +
-      Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(rad(b.lng - a.lng) / 2) ** 2;
-    return 2 * R * Math.asin(Math.sqrt(h)) <= CO_LOCATED_M;
-  };
-  return Object.values(markers).map(m => m._rec).filter(r => near(c, r));
+  return Object.values(markers).map(m => m._rec)
+    .filter(r => haversineKm(c.lat, c.lng, r.lat, r.lng) <= CO_LOCATED_M / 1000);
 }
 
 /** 分岐ポップアップ: 同地点の店を並べ、押した店へ選択を乗り換える。 */

@@ -34,6 +34,29 @@ function fakeStorage({ seed = null, fail = false } = {}){
 
 const stored = (s) => JSON.parse(s.map.get(STORAGE_KEY) || '{}');
 
+describe('統合は非表示設定も保持する', () => {
+  it.each([[1, 0, 1], [0, 1, 1], [1, 1, 1], [0, 0, 0]])(
+    '端末h=%s・取込h=%s → h=%s', (base, incoming, expected) => {
+      const result = mergeStores(
+        { R0001: { h: base, m: '端末の感想' } },
+        { R0001: { h: incoming, amt: '80' } },
+      );
+      expect(result.R0001).toEqual({ w: 0, v: 0, vd: '', rv: '', m: '端末の感想', amt: '80', h: expected });
+    },
+  );
+
+  it('旧形式の記録を統合して保存・再読込・書出ししても非表示を失わない', () => {
+    const storage = fakeStorage({ seed: { R0001: { h: 1, m: '残す' } } });
+    initPersonal({ storage });
+    const imported = parseImport({ R0001: { v: 1, amt: '80' } });
+    expect(imported.ok).toBe(true);
+    mergeAll(imported.data);
+    initPersonal({ storage });
+    expect(hiddenIds()).toContain('R0001');
+    expect(parseImport(currentExportText()).data.R0001).toMatchObject({ h: 1, v: 1, m: '残す', amt: '80' });
+  });
+});
+
 // ============================================================
 // LOCAL DATE — v9 欠陥1
 // ============================================================

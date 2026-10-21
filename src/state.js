@@ -45,7 +45,7 @@ export let moreOpen = false;
 export let appMode = 'home';
 // The layer to come back to when 外食モード is left again.
 export let homeLayer = 'condo';
-// 外食モード's three views (v9's three tabs): 台帳 / 行った店 / データ.
+// 外食モードは台帳 / データ管理。訪問済みは台帳のトグルで絞る。
 export let listView = 'ledger';
 
 export let showAwardOnly = false;

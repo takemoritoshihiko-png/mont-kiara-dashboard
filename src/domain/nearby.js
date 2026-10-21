@@ -48,7 +48,7 @@ export function nearby(origin, records, { buckets = NEARBY_BUCKETS } = {}) {
   if (!origin || !Number.isFinite(origin.lat) || !Number.isFinite(origin.lng)) return out;
 
   for (const r of (records || [])) {
-    if (!r || r === origin) continue;
+    if (!r || r === origin || r.delisted) continue;
     // Records are identified by name everywhere else in the app (selectCondo,
     // markers, the URL), so a name match is the same record even if the object
     // identity differs.

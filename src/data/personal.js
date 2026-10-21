@@ -1,6 +1,6 @@
 // 個人記録 — the one place this app writes anything the user typed.
 //
-// 外食モード carries six pieces of memory per restaurant, inherited from 台帳v9:
+// 外食モード carries seven pieces of memory per restaurant:
 //
 //   w    行きたい            1 / 0
 //   v    訪問済み            1 / 0
@@ -8,10 +8,10 @@
 //   rv   また行きたいか      'a' また行く / 'm' 機会があれば / 'n' もういい / ''
 //   m    感想                free text (multi-line since D4; v9 was one line)
 //   amt  実際に払った額      ringgit per head, kept as typed
+//   h    非表示              1 / 0
 //
-// It lives in localStorage under one key, on the reader's own machine. The
-// published site is a static page with no server and no account, so there is
-// nowhere else it could go — and nothing here is ever sent anywhere.
+// This module owns localStorage. When signed in, cloudStore.js synchronizes
+// the export envelope to the user's Firebase document; UI owns that wiring.
 //
 // Three v9 defects are fixed here rather than carried over (inventory §9):
 //   1. the visit date was taken from toISOString() (UTC), so a meal logged
@@ -72,7 +72,7 @@ export function emptyEntry(){
 const flag = (v) => (v === 1 || v === '1' || v === true ? 1 : 0);
 const text = (v) => (v == null ? '' : String(v));
 
-/** Coerce anything that came out of storage or an import into the six fields. */
+/** Coerce anything that came out of storage or an import into the seven fields. */
 export function normalizeEntry(raw){
   if(!raw || typeof raw !== 'object' || Array.isArray(raw)) return emptyEntry();
   const rv = text(raw.rv);
@@ -198,6 +198,7 @@ function mergeEntry(base, inc){
     rv: i.rv || b.rv,
     m: i.m.trim() ? i.m : b.m,
     amt: i.amt ? i.amt : b.amt,
+    h: i.h || b.h,
   });
 }
 
