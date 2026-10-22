@@ -381,29 +381,29 @@ describe('mobile (≤768px)', () => {
   // 半分に切らない」という当時の意図をまだ満たしていなかった。55%で一覧197px、
   // カード188px（スマホでは点数をカード右上に寄せて28px回収）で1枚が丸ごと出る。
   it('gives the panel 55% of the split, so one whole card fits', () => {
-    expect(mobile).toContain('flex:0 0 55%');
+    expect(mobile).toContain('--mobile-panel:55%');
+    expect(mobile).toContain('flex:0 0 var(--mobile-panel)');
     expect(mobile).not.toContain('27vh');
     expect(mobile).not.toContain('73vh');
     // パネルの開閉ボタンは分割線の上に座るので、比率と必ず一致させる。
-    expect(mobile).toContain('bottom:55%');
+    expect(mobile).toContain('bottom:var(--mobile-panel)');
   });
 
   it('splits the height of .main, so the panel is not clipped by the header', () => {
-    expect(mobile).toContain('height:calc(100vh - 44px)');
-    expect(mobile).toContain('height:calc(100dvh - 44px)');
+    expect(css).toContain('.main{display:flex;flex:1;min-height:0;min-width:0}');
+    expect(mobile).toContain('body{height:100dvh}');
     expect(mobile).toContain('#map{flex:1 1 auto');
   });
 
-  it('caps the detail overlay inside the map area (55% split) and lets it scroll', () => {
+  it('lets the mobile detail fill the content area and scroll without hidden background controls', () => {
     const rule = mobile.slice(mobile.indexOf('.info-overlay{'));
     const decl = rule.slice(0, rule.indexOf('}'));
-    // 60vh overflowed the 55% map area by ~57px on a 667px phone and sat on
-    // top of the list panel; the cap is now relative to the split itself.
-    expect(decl).toContain('max-height:calc(55% - var(--s2))');
+    // The foreground sheet replaces the content area on narrow screens.
+    expect(decl).toContain('max-height:none');
     expect(decl).toContain('overflow-y:auto');
-    // The base rule stretches top-to-bottom; max-height only bites once that
-    // stretch is released.
-    expect(decl).toContain('bottom:auto');
+    // Both edges stay inside main, below the variable-height header.
+    expect(decl).toContain('bottom:var(--s2)');
+    expect(mobile).toContain('.main:has(.info-overlay.active)>:not(.info-overlay){visibility:hidden}');
   });
 
   it('carries every control added since B3a', () => {

@@ -17,7 +17,8 @@ import {
 } from '../domain/filter.js';
 import { sortOptionsFor, comparatorFor, sortOnArrival, sortAvailable } from '../domain/sort.js';
 import { map, rebuild } from './map.js';
-import { syncUrl } from './urlState.js';
+import { syncUrl, withUrlWritesSuspended } from './urlState.js';
+import { closeInfo } from './info.js';
 import {
   eatoutActive, eatoutCardExtraHtml, eatoutCardScoreHtml, eatoutListHtml, eatoutRecBadgeHtml, hiddenIdsSet,
   isVisited, personalMap, renderSaveBar, toast,
@@ -211,6 +212,8 @@ export function setLayer(layer){
 export function setMode(mode, { silent = false } = {}){
   const next = mode === 'eatout' ? 'eatout' : 'home';
   if(next === appMode){ syncLayerUI(); return; }
+  // The open detail belongs to the mode being left, including private fields.
+  if($('infoOverlay')?.classList.contains('active')) withUrlWritesSuspended(closeInfo);
   // The mode switch is also a layer switch, so the order of the layer being
   // left is banked here too — a trip through 外食モード must not delete the
   // order you had built in 物件 (the same defect sortOnArrival() exists for).
@@ -243,6 +246,7 @@ export function setMode(mode, { silent = false } = {}){
 export function setView(view){
   // 'log'(行った店ビュー)は2026-08-08廃止 — 旧リンクは台帳へ流す
   const next = view === 'data' ? 'data' : 'ledger';
+  if($('infoOverlay')?.classList.contains('active')) withUrlWritesSuspended(closeInfo);
   if(next === listView){ syncLayerUI(); return; }
   setListView(next);
   syncLayerUI();
@@ -250,6 +254,7 @@ export function setView(view){
   // and the summary still follow the 台帳's result set, so nothing is stale
   // when you come back.
   applyFilters();
+  if(next === 'data') document.querySelector('.dataview .data-btn')?.focus({ preventScroll: true });
 }
 
 /**
@@ -1065,12 +1070,11 @@ export function togglePanel(){
   // Desktop: the panel slides RIGHT to close, so the closed state points
   // left ('bring it back') and the open state points right ('push it away').
   // While closed, the button also says what is hidden - layer + count.
-  b.innerHTML = collapsed
-    ? (isMobile ? '&#9650; 一覧' : `&#9664; ${LAYER_LABELS[activeLayer]} ${filtered.length}件`)
-    : (isMobile ? '&#9660;' : '&#9654;');
+  b.innerHTML = `<span class="panel-arrow" aria-hidden="true">${collapsed ? '&#9664;' : '&#9654;'}</span>` +
+    `<span class="panel-caption">一覧</span>` +
+    (collapsed && !isMobile ? ` ${LAYER_LABELS[activeLayer]} ${filtered.length}件` : '');
   // The button's only content is an arrow glyph, which is no name at all — the
   // label and the expanded state are the whole of what a screen reader gets.
   b.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
   b.setAttribute('aria-label', collapsed ? '一覧パネルを開く' : '一覧パネルを閉じる');
-  setTimeout(() => map.invalidateSize(), 300);
 }

@@ -61,7 +61,7 @@ describe('design tokens (spec 2.9)', () => {
   });
 
   it('sets exactly one accent colour', () => {
-    expect(css).toContain('--accent:#0a6cff');
+    expect(css).toContain('--accent:#1f56b6');
   });
 
   it('carries none of the old mixed blues / greens / oranges outside the tokens', () => {

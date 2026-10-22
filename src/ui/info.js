@@ -31,8 +31,24 @@ let currentRecord = null;
 /** The overlay's accessible name when nothing is selected. */
 const DIALOG_LABEL_EMPTY = '詳細';
 
+export function focusRecordAfterClose(name, doc = document){
+  if(doc.getElementById('panel')?.classList.contains('collapsed')){
+    doc.getElementById('toggleBtn')?.focus({ preventScroll: true });
+    return;
+  }
+  // List rendering replaces nodes, so resolve the current card by its stable
+  // record name. School comparison may also hold a visible matching row.
+  const target = [...doc.querySelectorAll('#schoolFinder .sf-row, #condoList [role="button"]')].find(el => {
+    const label = el.getAttribute('aria-label') || '';
+    return (label === name || label.startsWith(name + '、')) && el.getClientRects().length;
+  });
+  (target || doc.getElementById('fSearch'))?.focus({ preventScroll: true });
+}
+
 export function closeInfo(){
   const ov = document.getElementById('infoOverlay');
+  const restoreFocus = ov.contains(document.activeElement);
+  const name = currentRecord?.name;
   ov.classList.remove('active');
   ov.setAttribute('aria-label', DIALOG_LABEL_EMPTY);
   currentRecord = null;
@@ -42,6 +58,7 @@ export function closeInfo(){
   setActiveTab('detail');
   rebuild();
   renderList();
+  if(restoreFocus) focusRecordAfterClose(name);
   syncUrl();
 }
 
@@ -472,7 +489,15 @@ export function refreshInfoIfOpen(){
   const id = active && active.id;
   if((tag === 'TEXTAREA' || tag === 'INPUT') && id &&
      (id.startsWith('amt-info-') || id.startsWith('memo-info-'))) return;
+  const overlay = document.getElementById('infoOverlay');
+  const restoreFocus = overlay.contains(active);
+  const action = restoreFocus && active?.getAttribute?.('onclick');
   renderInfo();
+  if(restoreFocus){
+    const replacement = [...overlay.querySelectorAll('[id], [onclick]')].find(el =>
+      (id && el.id === id) || (action && el.getAttribute('onclick') === action));
+    (replacement || overlay).focus({ preventScroll: true });
+  }
 }
 
 export function setInfoTab(tab){
@@ -480,6 +505,7 @@ export function setInfoTab(tab){
   if(tab === activeTab) return;
   setActiveTab(tab);
   renderInfo();
+  document.querySelector('.info-tab.active')?.focus({ preventScroll: true });
   // Switching tabs refines the current view — it must not stack history.
   syncUrl({ replace: true });
 }
@@ -519,11 +545,13 @@ export function selectCondo(name, opts = {}){
     // The dialog is named after what it is showing, not "詳細" for every record.
     ov.setAttribute('aria-label', c.name + ' の詳細');
     ov.classList.add('active');
+    ov.scrollTop = 0;
     // A selection is navigation: it earns its own history entry.
     syncUrl();
   }
   renderList();
   document.querySelectorAll('.condo-card').forEach(card=>{if(card.querySelector('.card-name')?.textContent===name)card.scrollIntoView({behavior:'smooth',block:'nearest'});});
+  document.getElementById('infoOverlay').focus({ preventScroll: true });
 }
 
 /**

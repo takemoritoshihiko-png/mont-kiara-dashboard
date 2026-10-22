@@ -52,7 +52,13 @@ function setPanel(on){
   if(list) list.style.display = on ? 'none' : '';
   // Opening no longer flies the map to Penang: the comparison spans both
   // islands now, so there is no single "overview" to jump to.
-  if(on) renderSchoolFinder(currentAge());
+  if(on){
+    const age = $('sfAge');
+    const selectedAge = $('fSchoolAge')?.value;
+    // The filter also offers 18; the existing comparison covers only 3–17.
+    if(age && selectedAge && [...age.options].some(o => o.value === selectedAge)) age.value = selectedAge;
+    renderSchoolFinder(currentAge());
+  }
 }
 
 export function closeSchoolFinder(){ setPanel(false); }

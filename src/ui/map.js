@@ -202,6 +202,9 @@ export function initMap() {
   map = L.map('map',{zoomControl:false}).setView([3.1710,101.6520],15);
   L.control.zoom({ position: 'bottomright' }).addTo(map);
   L.tileLayer(BASEMAP.url, BASEMAP.options).addTo(map);
+  // Filter expansion and the two-row mobile header change the map container
+  // without a window resize. Observe the actual box, including panel folding.
+  new ResizeObserver(() => map.invalidateSize({ animate: false })).observe(document.getElementById('map'));
 
   clusterGroups = makeClusterGroups();
   Object.values(clusterGroups).forEach(g=>map.addLayer(g));

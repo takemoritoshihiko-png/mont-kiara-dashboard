@@ -617,7 +617,7 @@ export function renderSaveBar(){
   // データ画面への入口はここ(旧3タブは2026-08-08廃止)。保存の話をする場所に併設。
   bar.innerHTML = `<span class="savebar-text" title="${esc(head + tail + ' / ' + PRIVACY_TEXT)}">` +
       `<span class="sb-head">${esc(head)}</span><span class="sb-tail">${esc(tail)}</span></span>` +
-    // スマホでは文字ラベルをCSSで隠して絵文字だけにするので、名前は aria-label が持つ
+    // 保存状況の描画でボタンを作り直しても、支援技術の名前は一定に保つ。
     `<button type="button" class="savebar-link" aria-label="データ管理" onclick="setView('data')">` +
       `<span aria-hidden="true">💾</span><span class="sb-btn-label" aria-hidden="true"> データ管理</span></button>`;
 }
