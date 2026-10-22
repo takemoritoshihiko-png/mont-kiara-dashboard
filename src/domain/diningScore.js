@@ -1,13 +1,14 @@
 import { num } from '../format.js';
 
-// 台帳スコア — the dining ledger's 100-point total, ported from 台帳v9 §3.
+// 評判参考点 — 受賞35点 + 口コミ40点、75点満点。
+// 継続実績は追加店で未調査のため、2026-10-22から全店の点数より除外。
+// 料理の味や家族との相性を採点する指標ではない。
 //
 // The number answers one question: "how much does this place's reputation
-// actually stand up?" It is built from three things that can be checked, and
+// actually stand up?" It is built from two things that can be checked, and
 // nothing that cannot:
 //
 //   au  権威    ミシュランの区分 + 外部の受賞・国際評価        max 35
-//   ct  継続性  Tier（何年続いているか・のれんの厚み）         max 25
 //   ev  評価    Google★をレビュー母数で縮約した値              max 40
 //
 // The evaluation term is the interesting one. A ★4.9 out of 12 reviews is not
@@ -27,9 +28,6 @@ export const PRIOR_WEIGHT = 800;
 /** ミシュランの区分 → 権威点. 'none' is 8, not 0: the ledger only lists places
  *  that were already selected by someone, so being in it is worth something. */
 export const MICHELIN_POINTS = { '2star': 35, '1star': 29, bib: 21, sel: 16, none: 8 };
-
-/** Tier（継続性）→ 点. Tier 0 is a place with no track record to speak of. */
-export const TIER_POINTS = { 4: 25, 3: 19, 2: 12, 1: 6, 0: 0 };
 
 /**
  * 追加評価タグ → 加点. An ENUM, not a substring match.
@@ -54,8 +52,8 @@ export const EX_TAG_POINTS = {
 
 /** Ceilings. au is capped because ★2 alone already spends the whole budget. */
 export const AUTHORITY_MAX = 35;
-export const CONTINUITY_MAX = 25;
 export const EVALUATION_MAX = 40;
+export const SCORE_MAX = AUTHORITY_MAX + EVALUATION_MAX;
 
 /** The shrunk star that scores 0 points, and the span that reaches full marks. */
 export const EV_FLOOR = 3.90;
@@ -108,12 +106,6 @@ export function authorityPoints(rec){
   return Math.min(AUTHORITY_MAX, base + extra);
 }
 
-/** 継続性点 ct: the Tier column, straight. */
-export function continuityPoints(rec){
-  const t = Number(rec && rec.tier);
-  return TIER_POINTS[t] ?? 0;
-}
-
 /**
  * rb — the shrunk star. (c×r + M×C) / (c + M).
  *
@@ -136,40 +128,38 @@ export function evaluationPoints(rb){
 /**
  * The whole score of one record.
  *
- * `total` is rounded ONCE, from the unrounded sum — rounding the three parts
+ * `total` is rounded ONCE, from the unrounded sum — rounding the two parts
  * first and adding them can land a point away. The parts are returned
  * unrounded too, so a caller that wants to print an internally consistent
  * breakdown can use evShown (see scoreBreakdownText).
  *
- * @returns {{au:number, ct:number, rb:number, ev:number, total:number}}
+ * @returns {{au:number, rb:number, ev:number, total:number}}
  */
 export function ledgerScore(rec, baseline){
   const au = authorityPoints(rec);
-  const ct = continuityPoints(rec);
   const rb = shrunkRating(rec, baseline);
   const ev = evaluationPoints(rb);
-  return { au, ct, rb, ev, total: Math.round(au + ct + ev) };
+  return { au, rb, ev, total: Math.round(au + ev) };
 }
 
 /**
- * 「35 + 25 + 20」 — the breakdown, made to add up to the printed total.
+ * 「35 + 20」 — the breakdown, made to add up to the printed total.
  *
- * v9 printed round(ev) beside round(au+ct+ev) and the two could disagree by a
- * point (欠陥5). au and ct are whole numbers by construction, so the printed ev
+ * v9 printed round(ev) beside the rounded total and the two could disagree by a
+ * point (欠陥5). au is a whole number by construction, so the printed ev
  * is derived from the total instead of rounded on its own: the line always
  * sums to the big number next to it.
  */
 export function scoreBreakdownText(s){
-  const evShown = s.total - s.au - s.ct;
-  return `${s.au} + ${s.ct} + ${evShown}`;
+  const evShown = s.total - s.au;
+  return `${s.au} + ${evShown}`;
 }
 
-/** The three bars, as fractions of their own ceilings (for the meters). */
+/** The two bars, as fractions of their own ceilings (for the meters). */
 export function scoreBars(s){
   return [
-    { key: 'au', label: '権威', value: s.au, max: AUTHORITY_MAX },
-    { key: 'ct', label: '継続性', value: s.ct, max: CONTINUITY_MAX },
-    { key: 'ev', label: '評価', value: s.ev, max: EVALUATION_MAX },
+    { key: 'au', label: '受賞', value: s.au, max: AUTHORITY_MAX },
+    { key: 'ev', label: '口コミ', value: s.ev, max: EVALUATION_MAX },
   ];
 }
 
@@ -199,9 +189,8 @@ export function reviewDepthLabel(reviewCount){
 /**
  * Stamp the score onto the records, the way calcLuxury() stamps luxScore.
  *
- * The score needs the whole ledger (C), so it cannot be a property of one row
- * computed at parse time — and re-deriving it inside a comparator would run it
- * 50·log(50) times per sort. Called once when restaurants.json lands.
+ * Uses the pinned baseline, and stamps each row once after restaurants.json
+ * lands so sorting and rendering consume the same result.
  *
  * @param {Array} records  the dining records, mutated in place.
  * @returns {number} the baseline C that was used.

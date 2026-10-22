@@ -8,9 +8,9 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import {
-  PRIOR_WEIGHT, MICHELIN_POINTS, TIER_POINTS, EX_TAG_POINTS,
+  PRIOR_WEIGHT, MICHELIN_POINTS, EX_TAG_POINTS,
   AUTHORITY_MAX, EVALUATION_MAX, EV_FLOOR, EV_SPAN,
-  baselineRating, BASELINE_STAR, knownExTags, authorityPoints, continuityPoints,
+  baselineRating, BASELINE_STAR, knownExTags, authorityPoints,
   shrunkRating, evaluationPoints, ledgerScore, scoreBreakdownText, scoreBars,
   reviewDepthLabel, ratingMetaText, calcLedgerScores,
 } from '../src/domain/diningScore.js';
@@ -29,6 +29,20 @@ const eat = (over = {}) => ({
   rating: 4.0, reviewCount: 100, ...over,
 });
 
+describe('unresearched continuity must not lower the reputation score', () => {
+  it('gives otherwise identical restaurants the same score regardless of historical tier', () => {
+    const reviews = { michelin: 'none', rating: 4.8, reviewCount: 21966 };
+    const totals = [undefined, null, 0, 1, 2, 3, 4].map(tier =>
+      ledgerScore(eat({ ...reviews, tier }), BASELINE_STAR).total);
+    expect(totals).toEqual([48, 48, 48, 48, 48, 48, 48]);
+  });
+
+  it('caps even the strongest awarded record at the 75 points actually assessed', () => {
+    const score = ledgerScore(eat({ michelin: '2star', tier: 4, rating: 5, reviewCount: 1000000 }), BASELINE_STAR);
+    expect(score.total).toBe(75);
+  });
+});
+
 // ============================================================
 // CONSTANTS
 // ============================================================
@@ -39,9 +53,8 @@ describe('the constants are the ledger\'s, not something that drifted', () => {
     expect(EVALUATION_MAX).toBe(40);
   });
 
-  it('keeps the michelin and tier tables exactly', () => {
+  it('keeps the authority scale unchanged', () => {
     expect(MICHELIN_POINTS).toEqual({ '2star': 35, '1star': 29, bib: 21, sel: 16, none: 8 });
-    expect(TIER_POINTS).toEqual({ 4: 25, 3: 19, 2: 12, 1: 6, 0: 0 });
   });
 
   it('puts the evaluation floor at ★3.90 and full marks at ★4.70', () => {
@@ -130,17 +143,6 @@ describe('権威点 au', () => {
   });
 });
 
-describe('継続性点 ct', () => {
-  it('reads the tier straight off the record', () => {
-    for(const [t, v] of Object.entries(TIER_POINTS)) expect(continuityPoints(eat({ tier: Number(t) }))).toBe(v);
-  });
-
-  it('is 0 for a tier the table does not know', () => {
-    expect(continuityPoints(eat({ tier: 9 }))).toBe(0);
-    expect(continuityPoints({})).toBe(0);
-  });
-});
-
 // ============================================================
 // rb / ev
 // ============================================================
@@ -187,61 +189,59 @@ describe('評価点 ev', () => {
 // arithmetic rather than with a magic number.
 // ============================================================
 describe('hand-computed totals', () => {
-  it('掲載店 / tier2 / ★4.0 out of 200, on a ledger averaging 4.0 → 33', () => {
-    // au = 16, ct = 12
+  it('掲載店 / ★4.0 out of 200, on a ledger averaging 4.0 → 21', () => {
+    // au = 16
     // rb = (200×4.0 + 800×4.0) / 1000 = 4.00
     // ev = 40 × (4.00 − 3.90) / 0.80 = 40 × 0.125 = 5
-    // total = round(16 + 12 + 5) = 33
+    // total = round(16 + 5) = 21
     const s = ledgerScore(eat({ michelin: 'sel', tier: 2, rating: 4.0, reviewCount: 200 }), 4.0);
     expect(s.au).toBe(16);
-    expect(s.ct).toBe(12);
     expect(s.rb).toBeCloseTo(4.00, 10);
     expect(s.ev).toBeCloseTo(5, 10);
-    expect(s.total).toBe(33);
+    expect(s.total).toBe(21);
   });
 
-  it('★1 + Tatler Best 20 / tier3 / ★4.7 out of 800, ledger 4.3 → 82', () => {
-    // au = 29 + 4 = 33, ct = 19
+  it('★1 + Tatler Best 20 / ★4.7 out of 800, ledger 4.3 → 63', () => {
+    // au = 29 + 4 = 33
     // rb = (800×4.7 + 800×4.3) / 1600 = 4.50
     // ev = 40 × (4.50 − 3.90) / 0.80 = 40 × 0.75 = 30
-    // total = round(33 + 19 + 30) = 82
+    // total = round(33 + 30) = 63
     const s = ledgerScore(eat({ michelin: '1star', tier: 3, extraFlags: ['Tatler Best 20'],
       rating: 4.7, reviewCount: 800 }), 4.3);
-    expect(s).toMatchObject({ au: 33, ct: 19, total: 82 });
+    expect(s).toMatchObject({ au: 33, total: 63 });
     expect(s.rb).toBeCloseTo(4.50, 10);
   });
 
   it('a place nobody has reviewed lands on the ledger average, not on zero', () => {
     // rb = C = 4.36 → ev = 40 × (0.46/0.80) = 23
-    // total = round(8 + 0 + 23) = 31
+    // total = round(8 + 23) = 31
     const s = ledgerScore(eat({ michelin: 'none', tier: 0, rating: 0, reviewCount: 0 }), 4.36);
     expect(s.rb).toBe(4.36);
     expect(s.total).toBe(31);
   });
 
-  it('Dewakan, from the real file: ★2 + 国際評価 / tier4 / ★4.2 of 548 → 80', () => {
-    // au = min(35, 35 + 3) = 35, ct = 25
+  it('Dewakan, from the real file: ★2 + 国際評価 / ★4.2 of 548 → 55', () => {
+    // au = min(35, 35 + 3) = 35
     // rb = (548×4.2 + 800×4.360029…) / 1348 = 4.29497…
     // ev = 40 × (4.29497 − 3.90) / 0.80 = 19.7486…
-    // total = round(35 + 25 + 19.7486) = 80
+    // total = round(35 + 19.7486) = 55
     const r = LEDGER.find(x => x.name === 'Dewakan');
     const s = ledgerScore(r, BASELINE_STAR);
     expect(s.au).toBe(35);
-    expect(s.ct).toBe(25);
     expect(s.rb).toBeCloseTo(4.29496, 4);
-    expect(s.total).toBe(80);
+    expect(s.total).toBe(55);
   });
 
-  it('akar, from the real file: ★1 / tier1 / ★4.8 of 1,178 → 71', () => {
-    // au = 29, ct = 6
+  it('akar, from the real file: ★1 / ★4.8 of 1,178 → 65', () => {
+    // au = 29
     // rb = (1178×4.8 + 800×C_REAL) / 1978 = 4.62204…
     //   C_REAL は先頭50店の実データから再計算される来歴チェック。2026-08-08 に
     //   Kappo Hiyori→Wagyu Kappo Yoshida の改名で評価値を実勢へ直したため
     //   小数第5位が動いた(アプリ本体は BASELINE_STAR=4.36 固定で無影響)。
     // ev = 40 × 0.72205/0.80 = 36.102…
-    // total = round(29 + 6 + 36.102) = 71
+    // total = round(29 + 36.102) = 65
     const s = ledgerScore(LEDGER.find(x => x.name === 'akar'), BASELINE_STAR);
-    expect(s).toMatchObject({ au: 29, ct: 6, total: 71 });
+    expect(s).toMatchObject({ au: 29, total: 65 });
     expect(s.rb).toBeCloseTo(4.62204, 4);
   });
 });
@@ -252,9 +252,9 @@ describe('hand-computed totals', () => {
 describe('the breakdown adds up to the number beside it (v9 欠陥5)', () => {
   it('derives the printed ev from the total instead of rounding it separately', () => {
     const s = ledgerScore(LEDGER.find(x => x.name === 'Dewakan'), C_REAL);
-    expect(scoreBreakdownText(s)).toBe('35 + 25 + 20');
+    expect(scoreBreakdownText(s)).toBe('35 + 20');
     const parts = scoreBreakdownText(s).split(' + ').map(Number);
-    expect(parts[0] + parts[1] + parts[2]).toBe(s.total);
+    expect(parts[0] + parts[1]).toBe(s.total);
   });
 
   it('holds for every restaurant in the file, not just the one that was checked', () => {
@@ -265,10 +265,10 @@ describe('the breakdown adds up to the number beside it (v9 欠陥5)', () => {
     }
   });
 
-  it('gives each bar its own ceiling so the three are comparable at a glance', () => {
+  it('shows only the two components that are assessed', () => {
     const bars = scoreBars(ledgerScore(eat(), 4.36));
-    expect(bars.map(b => b.key)).toEqual(['au', 'ct', 'ev']);
-    expect(bars.map(b => b.max)).toEqual([35, 25, 40]);
+    expect(bars.map(b => b.key)).toEqual(['au', 'ev']);
+    expect(bars.map(b => b.max)).toEqual([35, 40]);
   });
 });
 
@@ -308,7 +308,7 @@ describe('calcLedgerScores', () => {
       expect(r.ledgerTotal, r.name).toBe(r.ledgerScore.total);
       expect(r.ledgerBaseline).toBe(C);
       expect(r.ledgerTotal).toBeGreaterThan(0);
-      expect(r.ledgerTotal).toBeLessThanOrEqual(100);
+      expect(r.ledgerTotal).toBeLessThanOrEqual(75);
     }
   });
 
@@ -319,7 +319,7 @@ describe('calcLedgerScores', () => {
     // 台帳はデータ追加で伸びる(2026-08-09に131→217行)ので、正確な最小/最大の
     // ピン留めではなく「分布の幅」を守る。40点以上の開きがあればソートは機能する。
     expect(Math.min(...totals)).toBeLessThanOrEqual(35);
-    expect(Math.max(...totals)).toBeGreaterThanOrEqual(85);
+    expect(Math.max(...totals)).toBeGreaterThanOrEqual(60);
     expect(Math.max(...totals) - Math.min(...totals)).toBeGreaterThanOrEqual(40);
   });
 });

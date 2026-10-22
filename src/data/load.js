@@ -2,6 +2,7 @@
 // each row onto the record shape the UI expects.
 import { parseCsv } from './parseCsv.js';
 import { FIABCI_AWARDS } from './inline.js';
+import { normalizeDiningEvidence } from '../domain/diningEvidence.js';
 
 // ============================================================
 // DATA SOURCE: CSV/JSON files served alongside this page
@@ -171,6 +172,7 @@ export function parseRestaurants(jsonText) {
       priceNote: r.priceNote || '',
       editorNote: r.editorNote || '',
       vox: r.vox || { pros: '', cons: '' },
+      diningEvidence: normalizeDiningEvidence(r.diningEvidence),
     };
   // A record with no coordinates cannot be placed on the map. D2 allows
   // `lat: null` with geoPrecision 'pending' for a店 that could not be

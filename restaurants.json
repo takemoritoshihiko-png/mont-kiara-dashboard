@@ -1173,7 +1173,50 @@
   "driveKm": 4.2,
   "driveMinFree": 7,
   "driveMinJam": 13,
-  "verified": "2026-08-08"
+  "verified": "2026-08-08",
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Hor Poh Lui Cha（擂茶）",
+     "basis": "Michelinが具体的に薦め、ごま・落花生・ミントの香りとナッツ感を評価。",
+     "sourceUrls": [
+      "https://guide.michelin.com/my/en/kuala-lumpur-region/kuala-lumpur/restaurant/hor-poh-cuisine"
+     ]
+    },
+    {
+     "name": "Hor Poh Dumpling",
+     "basis": "Michelinが薄い皮で豆腐・にんにく・漬物を包む料理として紹介。",
+     "sourceUrls": [
+      "https://guide.michelin.com/my/en/kuala-lumpur-region/kuala-lumpur/restaurant/hor-poh-cuisine"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "独立ガイドの具体的料理支持は擂茶と餃子にある。",
+    "caution": "ガイドは混雑しやすいと記載。取得できた本文に具体的な味への不満はない。",
+    "limits": "Michelinの訪問日・掲載更新日は非表示。公式Facebookはブロックされ本文を読めず、公式営業情報の確認完了とは扱えない。元データの塩辛い炒飯・餃子最低個数・スープ追加料金は今回再確認できていない。"
+   },
+   "visitNote": "Michelin掲載は火曜休、その他11:00–15:00 / 17:00–21:00。店公式による当日の営業・価格は未確認。",
+   "sources": [
+    {
+     "title": "Hor Poh Cuisine — MICHELIN Guide",
+     "url": "https://guide.michelin.com/my/en/kuala-lumpur-region/kuala-lumpur/restaurant/hor-poh-cuisine",
+     "kind": "guide",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Hor Poh Cuisine official Facebook（本文取得不可）",
+     "url": "https://www.facebook.com/horpohyuan/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "Michelinの36 Jalan 6/38D, Taman Sri Sinar, Segambutが元住所と一致。",
+   "sourceCoverage": "対象店の独立ガイド本文と料理2品を確認。公式ページ探索・openは行ったが本文取得不可。公式と独立評価の2本合格にはしない。Google実値・直近口コミ・価格は未確認。"
+  }
  },
  {
   "id": "R0029",
@@ -1556,7 +1599,57 @@
   "driveMinJam": 7,
   "verified": "2026-08-08",
   "recDivergence": "tsuu",
-  "recNote": "2026年6月移転直後で評価母数リセット中。6ヶ月観察"
+  "recNote": "2026年6月移転直後で評価母数リセット中。6ヶ月観察",
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Pie Tee",
+     "basis": "現住所を載せるMichelinが野菜・えび入りの軽い前菜として具体的に薦める。",
+     "sourceUrls": [
+      "https://guide.michelin.com/sg/en/kuala-lumpur-region/kuala-lumpur/restaurant/lama"
+     ]
+    },
+    {
+     "name": "Ayam Pongteh / Ayam Kapitan",
+     "basis": "Steppesの2026年ガイドで紹介。味の独立した強い支持はPie Teeより弱く、煮込み／辛めのカレーを選ぶための料理情報として扱う。",
+     "sourceUrls": [
+      "https://sethlui.com/steppes-mont-kiara-food-guide-malaysia/"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "Michelinは家庭的ニョニャ料理とPie Teeを支持。大皿を分ける食べ方が中心と紹介。",
+    "caution": "ガイドは辛い料理と記載し、パンダン・レモングラス茶を合わせる提案。具体的な味の不満は今回本文で裏取りできず、旧voxは再利用しない。",
+    "limits": "Michelin本文の個別訪問日は非表示。SETHLUIは一部写真をGoogle利用者から使用し、全料理を筆者が実食したとは確認できない。公式SNS本文は取得不能。"
+   },
+   "visitNote": "現在のMichelin住所は既にG-1-1, Steppes, 32 Jalan Kiara 3。Michelinも移転先を掲載済み。営業時間はMichelinの毎日11:00–21:00とSETHLUIの11:30–15:00 / 17:30–22:00に差があり、確定しない。",
+   "sources": [
+    {
+     "title": "Lama — MICHELIN Guide（Steppes現住所）",
+     "url": "https://guide.michelin.com/sg/en/kuala-lumpur-region/kuala-lumpur/restaurant/lama",
+     "kind": "guide",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "10 best food spots to try at Steppes, Mont Kiara",
+     "url": "https://sethlui.com/steppes-mont-kiara-food-guide-malaysia/",
+     "kind": "guide",
+     "publishedAt": "2026-07-26（更新日）",
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "LAMA official Instagram（本文取得不可）",
+     "url": "https://www.instagram.com/lama.restaurant.fnb/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "元レコードとMichelin・SETHLUIのSteppes G-1-1が一致。旧Taman Ayer Panas店のレビューを移転後の実食根拠に混ぜていない。",
+   "sourceCoverage": "現支店のガイド2本で住所・料理を確認。公式SNSは探索したが本文未取得、時間に食い違い。現行価格・直近Google口コミの確認は未完。"
+  }
  },
  {
   "id": "R0038",
@@ -2551,7 +2644,65 @@
   "extraFlags": [],
   "driveKm": 10,
   "driveMinFree": 14,
-  "driveMinJam": 26
+  "driveMinJam": 26,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Swayamvara Lunch Buffet（チャパティ／プーリーと日替わり菜食料理）",
+     "basis": "公式が北・南インド料理の内容を列挙。HappyCowの2026-06-30投稿の実食談ではなす・芋・豆類などを食べ、再訪意向を記載。特定の毎日固定料理とはしない。",
+     "sourceUrls": [
+      "https://annalakshmi.com.my/swayamvara-lunch-buffet/",
+      "https://www.happycow.net/reviews/annalakshmi-kuala-lumpur-23772"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "2026年6月投稿の実食談では、筆者がビュッフェの野菜・豆料理を気に入りおかわりしている。",
+    "caution": "同じ実食者は乳製品使用について接客担当の最初の説明と厨房確認後の説明が異なったと記載。料理の材料確認は厨房への確認を含めて行う。",
+    "limits": "日替わり料理で、訪問時に同じものが出るとは限らない。別の2022年実食者は味を平均的と表現。直近Google口コミの全体傾向は未検証。"
+   },
+   "visitNote": "公式Lunch Buffetは火〜日11:00–15:00、LO14:30、大人RM37.10・7〜12歳RM31.80（公式表記はSST6%込み）。公式は1984年創業、現在Temple of Fine Arts地上階と記載。Riverside寄付制とは別の食事枠を混同しない。旧埋込メニューのビュッフェ価格は古いと公式自ら注意。来歴は参考。",
+   "sources": [
+    {
+     "title": "Annalakshmi — About Us",
+     "url": "https://annalakshmi.com.my/about-us/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Annalakshmi — Swayamvara Lunch Buffet",
+     "url": "https://annalakshmi.com.my/swayamvara-lunch-buffet/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Annalakshmi — Contact",
+     "url": "https://annalakshmi.com.my/contact/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Annalakshmi — Ala-Carte Dinner（旧価格注意）",
+     "url": "https://annalakshmi.com.my/ala-carte-dinner/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Annalakshmi — HappyCow、richpestoほかの実食投稿",
+     "url": "https://www.happycow.net/reviews/annalakshmi-kuala-lumpur-23772",
+     "kind": "firsthand",
+     "publishedAt": "2026-06-30（主要投稿）",
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "公式Contactの116 Jalan Berhalaと元住所が一致。公式Aboutは114–116と記載。上階／地上階の定額食事とRiverside寄付制の料金を統合しない。",
+   "sourceCoverage": "公式住所・来歴・ランチ料金・旧価格注意、2026年実食者の料理評価を本文確認。全営業枠の現在時刻・Riverside条件・Google実値は未確認。"
+  }
  },
  {
   "id": "R0062",
@@ -2592,7 +2743,50 @@
   "extraFlags": [],
   "driveKm": 1.1,
   "driveMinFree": 3,
-  "driveMinJam": 5
+  "driveMinJam": 5,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Kuro Tonkotsu Ramen",
+     "basis": "163店を訪れたChoi Yenの2025年記事で、黒にんにく油の香ばしさと柔らかい豚肉を支持。",
+     "sourceUrls": [
+      "https://www.choiyen.com/kanbe-ramen-163-retail-park/"
+     ]
+    },
+    {
+     "name": "Goma Tonkotsu Ramen",
+     "basis": "同筆者は胡麻の風味と硬めの麺を評価。ただし濃いスープは終盤に重く感じた。",
+     "sourceUrls": [
+      "https://www.choiyen.com/kanbe-ramen-163-retail-park/"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "2025年の支店実食でKuroとGomaの具体的な支持がある。",
+    "caution": "Gomaの濃厚さは食べ終わりに重いという同じ筆者の留保。行列の言及あり。",
+    "limits": "記事は2025-06-05掲載の個人経験。直近Google口コミ、現在価格・提供継続は未確認。"
+   },
+   "visitNote": "注文票で麺などを調整する方式との実食記録。営業時刻と現在の価格は未確認。",
+   "sources": [
+    {
+     "title": "Food Innovators 運営店舗紹介（Kanbe 163店）",
+     "url": "https://fijapan.co.jp/fihgp_store.pdf",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Kanbe Ramen @ 163 Retail Park — Mimi's Dining Room",
+     "url": "https://www.choiyen.com/kanbe-ramen-163-retail-park/",
+     "kind": "firsthand",
+     "publishedAt": "2025-06-05",
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "公式運営資料に163 Retail Park店の掲載を確認。実食記事も163店。PDF住所の数字は抽出時に文字化けがあるが支店名は一致。TRX等の評価は混ぜていない。",
+   "sourceCoverage": "運営元の業態・支店掲載と支店実食記事を本文取得。現在営業と価格の確証は不足。"
+  }
  },
  {
   "id": "R0063",
@@ -2716,7 +2910,59 @@
   "extraFlags": [],
   "driveKm": 2.4,
   "driveMinFree": 4,
-  "driveMinJam": 8
+  "driveMinJam": 8,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Valenciana Paella",
+     "basis": "The Signature店での2019年実食筆者が米の歯応えと魚介だしを評価。現公式オンラインメニューにも掲載。",
+     "sourceUrls": [
+      "https://www.choiyen.com/martas-kitchen-desa-sri-hartamas/",
+      "https://www.martaskitchen.my/"
+     ]
+    },
+    {
+     "name": "Champiñones Al Ajillo（にんにく風味のマッシュルーム）",
+     "basis": "同じ実食筆者が柔らかさと汁気を評価し、現公式にも同名料理がある。",
+     "sourceUrls": [
+      "https://www.choiyen.com/martas-kitchen-desa-sri-hartamas/",
+      "https://www.martaskitchen.my/"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "具体的実食はパエリアとマッシュルームを支持。TatlerのHartamas店ガイドもタパスとパエリアを紹介。",
+    "caution": "実食筆者はチュロスをやや油っぽく感じたと記載。",
+    "limits": "詳細な実食は2019年。公式オンライン商品とHartamas店内の価格・量・注文条件が同じとは確認していない。現在の味や混雑への保証にはしない。"
+   },
+   "visitNote": "公式オンライン表示はValenciana Paella RM37、Champiñones Al Ajillo RM21。ただし店内価格としては未確定。公式Locationsのテキストに店舗詳細が出ず、営業時刻・パエリア最低人数・調理時間・サービス料は未確認。",
+   "sources": [
+    {
+     "title": "Marta's Kitchen official online menu",
+     "url": "https://www.martaskitchen.my/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Marta’s Kitchen @ Desa Sri Hartamas — Mimi's Dining Room",
+     "url": "https://www.choiyen.com/martas-kitchen-desa-sri-hartamas/",
+     "kind": "firsthand",
+     "publishedAt": "2019-09-05",
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Marta’s Kitchen — Tatler Asia",
+     "url": "https://www.tatlerasia.com/dining/martas-kitchen",
+     "kind": "guide",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "実食記事がThe Signature, Jalan Sri Hartamas 22を明記し元レコードと一致。公式サイトは複数店共通のため価格・提供条件はHartamas個店確認済みとしない。",
+   "sourceCoverage": "公式メニューの料理存在とオンライン表示額、対象店の実食・独立ガイドを本文確認。現店舗営業・店内価格条件・直近口コミは未確認。"
+  }
  },
  {
   "id": "R0066",
@@ -3459,7 +3705,65 @@
   "extraFlags": [],
   "driveKm": 6.6,
   "driveMinFree": 10,
-  "driveMinJam": 18
+  "driveMinJam": 18,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Dancing Fish（揚げ魚、ソースを選択）",
+     "basis": "店公式メニューが揚げ魚料理を掲載。Michelinは外の歯ざわりと柔らかな身を具体的に評価。",
+     "sourceUrls": [
+      "https://dancingfish.asia/menu/",
+      "https://guide.michelin.com/my/en/kuala-lumpur-region/kuala-lumpur/restaurant/dancing-fish"
+     ]
+    },
+    {
+     "name": "Tahu Telur",
+     "basis": "店公式メニューに豆腐と卵、辛酸味のkencurソースを使う料理として掲載。今回取得した独立本文の個別支持はなく、メニュー候補として扱う。",
+     "sourceUrls": [
+      "https://dancingfish.asia/menu/"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "看板揚げ魚は公式の存在確認に加え、独立ガイドの具体的な食感評価がある。",
+    "caution": "公式メニューには辛い・酸味のあるソースの料理が複数ある。魚のソースは複数版なので注文時に名称を確認。味への具体的不満は取得した本文では見つからなかった。",
+    "limits": "Michelinの実食日は非表示。Tahu Telurの今回の根拠は公式説明のみ。直近口コミの継続的傾向や全料理への支持には広げない。"
+   },
+   "visitNote": "Michelin住所はBSC3階T120/121。ガイド営業時間は毎日11:30–22:00。現価格は未取得。店公式はBangsarで2010年からと明記（来歴参考、味の証明ではない）。公式メニューは共通ページのためBSC個店との提供差は未確認。",
+   "sources": [
+    {
+     "title": "Dancing Fish — official home",
+     "url": "https://dancingfish.asia/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Dancing Fish — official menu",
+     "url": "https://dancingfish.asia/menu/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Dancing Fish — Bangsar Shopping Centre tenant directory",
+     "url": "https://www.bsc.com.my/stores/cafes-bars-restaurants/dancing-fish-malay-indo-cuisine",
+     "kind": "directory",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Dancing Fish — MICHELIN Guide",
+     "url": "https://guide.michelin.com/my/en/kuala-lumpur-region/kuala-lumpur/restaurant/dancing-fish",
+     "kind": "guide",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "BSC施設公式とMichelinで元レコードのBangsar Shopping Centreに一致。Singapore SignatureやCampus Ampangの口コミをBSCの味の根拠へ混ぜない。",
+   "sourceCoverage": "店公式・BSC施設公式で営業先と料理、独立ガイドで看板料理支持を確認。現行価格・直近Google実値/口コミは未確認。"
+  }
  },
  {
   "id": "R0084",
@@ -3500,7 +3804,58 @@
   "extraFlags": [],
   "driveKm": 3.3,
   "driveMinFree": 7,
-  "driveMinJam": 13
+  "driveMinJam": 13,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Pork Udon",
+     "basis": "ThoKoh Makanの2022年実食で、だしと玉ねぎの甘み、弾力ある麺を評価。",
+     "sourceUrls": [
+      "https://thokohmakan.com/miyatake-sanuki-udon-mont-kiara/"
+     ]
+    },
+    {
+     "name": "Tori Karaage",
+     "basis": "2022年のThoKoh Makanと2023年のMalay Mailが、ともに大きさと衣の軽さ・肉のジューシーさを実食で支持。",
+     "sourceUrls": [
+      "https://thokohmakan.com/miyatake-sanuki-udon-mont-kiara/",
+      "https://www.malaymail.com/news/eat-drink/2023/09/20/find-chewy-udon-noodles-paired-with-various-broths-and-toppings-at-mont-kiaras-miyatake-sanuki-udon/91832"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "温かいうどんと唐揚げには独立した支店実食の根拠がある。",
+    "caution": "2022年筆者は冷たいざるうどんが最初は硬すぎたと記載。天ぷらは同筆者には普通、2023年Malay Mailには高評価で好みが分かれる。",
+    "limits": "実食は2022〜2023年。公式Facebookは本文取得がブロックされ、最新メニュー・営業時間を公式確認できていない。"
+   },
+   "visitNote": "当時は昼夜の中休みと夕方の混雑・予約推奨の記録あり。現在時刻・無料駐車条件・価格は要再確認。",
+   "sources": [
+    {
+     "title": "Miyatake Sanuki Udon, Mont Kiara — Thokohmakan",
+     "url": "https://thokohmakan.com/miyatake-sanuki-udon-mont-kiara/",
+     "kind": "firsthand",
+     "publishedAt": "2022-10-24",
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Find chewy udon noodles... — Malay Mail",
+     "url": "https://www.malaymail.com/news/eat-drink/2023/09/20/find-chewy-udon-noodles-paired-with-various-broths-and-toppings-at-mont-kiaras-miyatake-sanuki-udon/91832",
+     "kind": "firsthand",
+     "publishedAt": "2023-09-20",
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Miyatake Sanuki Udon Malaysia（取得ブロック）",
+     "url": "https://www.facebook.com/miyatakesanukiudon.malaysia/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "両実食記事のLG3-1 Residensi/Duta Kiara Residences、7 Jalan Duta Hartamasは元レコードと一致。1 Utama旧店やTRX店ではない。",
+   "sourceCoverage": "支店実食2本取得。営業・料理の公式現況確認は未達。公式リンクは取得失敗を明示して保存。"
+  }
  },
  {
   "id": "R0085",
@@ -3834,7 +4189,65 @@
   "tier": 0,
   "driveKm": 9.5,
   "driveMinFree": 13,
-  "driveMinJam": 24
+  "driveMinJam": 24,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Buckwheat Fried Chicken",
+     "basis": "Thokohmakanの2023年実食が薄く香ばしい衣と肉の汁気を評価。Tatlerの現掲載も具体的に薦める。",
+     "sourceUrls": [
+      "https://thokohmakan.com/table-apron-pj/",
+      "https://www.tatlerasia.com/dining/table-and-apron?listId=332"
+     ]
+    },
+    {
+     "name": "Ulam Herb Rice with Smoked Mackerel",
+     "basis": "Tatlerが具体的に薦める料理。Thokohmakanでは未実食候補だったため、その記事を実食支持に数えない。",
+     "sourceUrls": [
+      "https://www.tatlerasia.com/dining/table-and-apron?listId=332"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "フライドチキンは異なる媒体の具体的支持が一致。2023年実食は過度な塩気や厚い衣ではないと記述。",
+    "caution": "記事のPaku Saladは天然採取材料ゆえ当日の提供数が限られるとの注記。現在も同条件かは未確認。",
+    "limits": "料理別の実食記事は2023年。公式メニューページは画像形式で今回文字起こし・価格検証をしていない。ガイドの更新日や訪問日は明示されない。"
+   },
+   "visitNote": "公式は2026-04-13から毎日営業。月〜木17:30–22:00、金〜日11:30–15:00 / 17:30–22:00、キッチンLO14:30・21:20。2014年創業を公式本文確認（参考の来歴、味の証明ではない）。",
+   "sources": [
+    {
+     "title": "Table & Apron official — About and opening hours",
+     "url": "https://www.tableandapron.my/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Table & Apron official menu（画像形式）",
+     "url": "https://www.tableandapron.my/menu",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Table & Apron, PJ — Thokohmakan",
+     "url": "https://thokohmakan.com/table-apron-pj/",
+     "kind": "firsthand",
+     "publishedAt": "2023-05-15",
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Table & Apron — Tatler Asia",
+     "url": "https://www.tatlerasia.com/dining/table-and-apron?listId=332",
+     "kind": "guide",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "Tatlerの23 Jalan SS20/11, Damansara Kimと元レコードが一致。隣のUniversal Bakehouseの品を本店料理に混ぜない。",
+   "sourceCoverage": "公式営業・創業年、実食とガイドの料理支持を確認。現行価格・直近Google口コミは未確認。"
+  }
  },
  {
   "id": "R0093",
@@ -4207,7 +4620,58 @@
   "extraFlags": [],
   "driveKm": 7.1,
   "driveMinFree": 11,
-  "driveMinJam": 19
+  "driveMinJam": 19,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Raclette",
+     "basis": "Michelinが現掲載でチーズ料理を紹介し、Tatlerの2019年実食筆者も温かいラクレットを具体的に薦める。",
+     "sourceUrls": [
+      "https://guide.michelin.com/my/en/kuala-lumpur-region/kuala-lumpur/restaurant/la-suisse",
+      "https://www.tatlerasia.com/dining/food/la-suisse-restaurant-ttdi-swiss-cuisine-review"
+     ]
+    },
+    {
+     "name": "Malakow",
+     "basis": "Michelinがスイス系チーズ料理の一つとして掲載。今回の取得範囲では実食筆者の個別評価はなく、ガイド根拠のみ。",
+     "sourceUrls": [
+      "https://guide.michelin.com/my/en/kuala-lumpur-region/kuala-lumpur/restaurant/la-suisse"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "ラクレットに独立ガイドと実食記事の具体的支持がある。",
+    "caution": "Tatlerはチーズやクリームを用いた濃厚な食事として描写。軽い一皿を求める日は現メニューの内容を確認して選ぶ。具体的な味の不満は未取得。",
+    "limits": "詳細な実食記事は本文が2019年の訪問を示すが正確な発行日は確認できず。公式サイトは取得不能。企業LinkedInは自己申告情報としてのみ使い、味の評価に数えない。"
+   },
+   "visitNote": "Michelin本文の営業時間は月曜休、火〜土12:00–15:00 / 18:00–23:00、日18:00–23:00。現在の店公式による時刻・価格の確認は未完。企業LinkedInのFounded 1992と住所を確認し、Michelinも1992年開業と記載（来歴参考）。",
+   "sources": [
+    {
+     "title": "La Suisse Restaurant — company LinkedIn",
+     "url": "https://www.linkedin.com/company/la-suisse-restaurant",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "La Suisse — MICHELIN Guide",
+     "url": "https://guide.michelin.com/my/en/kuala-lumpur-region/kuala-lumpur/restaurant/la-suisse",
+     "kind": "guide",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "La Suisse restaurant TTDI Swiss cuisine review — Tatler",
+     "url": "https://www.tatlerasia.com/dining/food/la-suisse-restaurant-ttdi-swiss-cuisine-review",
+     "kind": "firsthand",
+     "publishedAt": "2019（記事本文の時期、月日未確認）",
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "Michelin・会社LinkedInの17 Lorong Rahim Kajai 13が元住所と一致。Tatlerの実食写真はTTDI現店舗と明示。旧店の写真と区別。",
+   "sourceCoverage": "企業自己紹介の住所・創業年、独立ガイドと旧実食記事を確認。公式サイト本文・公式メニュー・現行価格・直近口コミは未取得。"
+  }
  },
  {
   "id": "R0102",
@@ -5043,7 +5507,57 @@
   "extraFlags": [],
   "driveKm": 2.9,
   "driveMinFree": 6,
-  "driveMinJam": 11
+  "driveMinJam": 11,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Spicy Rice Balls（辛いおにぎり）",
+     "basis": "Time OutのSolaris Mont Kiara店記事が具体的に薦める。",
+     "sourceUrls": [
+      "https://www.timeout.com/kuala-lumpur/restaurants/sae-ma-eul"
+     ]
+    },
+    {
+     "name": "Baby Octopus（小だこのグリル）",
+     "basis": "同じ支店記事の推奨料理。",
+     "sourceUrls": [
+      "https://www.timeout.com/kuala-lumpur/restaurants/sae-ma-eul"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "Time Outは炭火焼肉の店として小だこと辛いライスボールを支持。",
+    "caution": "辛いライスボールは辛味を避ける日の選択には向きにくい。開放型で炭火を使う席環境という記事情報がある。今回対象支店の味の不満は取得できなかった。",
+    "limits": "主要記事は2023年、Burppleの料理記事は2016年と古い。公式Facebookはブロックされ営業・現行メニュー未確認。Publika支店の否定的記事を見つけたが別支店なので採用しない。"
+   },
+   "visitNote": "Time Outでは毎日15:00–24:00、Burppleは02:00閉店と差がある。いずれも現公式で確定できず、昼営業・閉店時刻は訪問前確認事項。古いセット価格は転記しない。",
+   "sources": [
+    {
+     "title": "Sae Ma Eul — Time Out Kuala Lumpur",
+     "url": "https://www.timeout.com/kuala-lumpur/restaurants/sae-ma-eul",
+     "kind": "guide",
+     "publishedAt": "2023-09-21",
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Sae Ma Eul BBQ (Mont Kiara) — Burpple",
+     "url": "https://www.burpple.com/sae-ma-eul-bbq",
+     "kind": "directory",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Sae Ma Eul Solaris official Facebook（本文取得不可）",
+     "url": "https://www.facebook.com/Saemaeulbbqsolaris/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "Time Out・Burppleは1 Jalan Solaris 4, Solaris Mont Kiaraと一致。Time Outのカテゴリ表示Petaling Jayaより本文住所を優先。同名Publika・Setapak店の実食は不採用。",
+   "sourceCoverage": "対象支店ガイド本文の具体的料理2品、ディレクトリ、公式URLを確認。公式本文・現行価格・直近口コミは未取得。"
+  }
  },
  {
   "id": "R0122",
@@ -5084,7 +5598,58 @@
   "extraFlags": [],
   "driveKm": 2.9,
   "driveMinFree": 6,
-  "driveMinJam": 11
+  "driveMinJam": 11,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Steamed / Roasted Chicken Rice",
+     "basis": "Solaris支店のFoodpandaメニューに両方掲載。2025年Malaysia Food and Travel記事も両方を紹介するが口コミをもとにした二次記事。",
+     "sourceUrls": [
+      "https://www.foodpanda.my/restaurant/n7ub/seng-kee-chicken-rice-mont-kiara/reviews",
+      "https://malaysiafoodandtravel.com/seng-kee-chicken-rice-and-porridge-open-till-12am-mont-kiara-kl/"
+     ]
+    },
+    {
+     "name": "Char Siu Rice / お粥",
+     "basis": "支店販売メニューに掲載。Foodpanda購入者コメントに叉焼とお粥への個別支持を確認。",
+     "sourceUrls": [
+      "https://www.foodpanda.my/restaurant/n7ub/seng-kee-chicken-rice-mont-kiara/reviews"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "購入者の具体的支持は叉焼とお粥。鶏飯は二次記事で肉と生姜ねぎソースの支持を紹介。",
+    "caution": "同じ配達口コミには鶏肉量不足、肉が硬い、価格に対する量の不満もある。麺は二次記事で味が普通との留保。",
+    "limits": "配達口コミは店内実食と分けて扱う。相対日付が検索結果と本文でずれるため最新口コミと断定しない。"
+   },
+   "visitNote": "取得した配達メニューでは蒸し/ロースト鶏飯セット各RM18.80から（配達表示価格、店内価格ではない）。2025年記事の深夜営業や鶏飯10時開始は現在未確認。",
+   "sources": [
+    {
+     "title": "Seng Kee Chicken Rice Mont Kiara — Foodpanda販売メニュー・購入者口コミ",
+     "url": "https://www.foodpanda.my/restaurant/n7ub/seng-kee-chicken-rice-mont-kiara/reviews",
+     "kind": "directory",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Chicken rice and porridge in Mont Kiara — Malaysia Food and Travel",
+     "url": "https://malaysiafoodandtravel.com/seng-kee-chicken-rice-and-porridge-open-till-12am-mont-kiara-kl/",
+     "kind": "guide",
+     "publishedAt": "2025-02-25",
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Seng Kee Solaris販売ページ（JS必要で内容未取得）",
+     "url": "https://sengkeechickenricesolaris.beepit.com/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "販売ページと記事のNo.8 Jalan Solaris 3がSolaris Mont Kiara支店に一致。元住所は施設までの粗さのため番地を補強できた。",
+   "sourceCoverage": "支店販売メニューと購入者口コミ、二次ガイドを本文取得。自社ページの本文・最新店内営業は未確認。"
+  }
  },
  {
   "id": "R0123",
@@ -5167,7 +5732,43 @@
   "extraFlags": [],
   "driveKm": 1.1,
   "driveMinFree": 3,
-  "driveMinJam": 5
+  "driveMinJam": 5,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Pork bone / Mala soup",
+     "basis": "Malaysian Foodieが2019年に163店で実食した2スープ。幅広い肉・手作り肉団子類も紹介。",
+     "sourceUrls": [
+      "https://www.malaysianfoodie.com/2019/08/fei-fan-hotpot-163-retail-park.html"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "163店で豚骨・麻辣を試した筆者は料理と選択肢を評価。",
+    "caution": "同記事は週末の行列と事前予約を勧める。海鮮には別料金品があった。",
+    "limits": "実食は2019年と古く、招待・自己負担の別も不明。現在の味・食べ放題内容・価格・制限時間は未確認。"
+   },
+   "visitNote": "支店注文ページを取得したがメニュー本文は表示されずOFF Todayとある。注文窓口休止を店舗閉店と解釈しない。2019年の金額・120分制を現行条件として使わない。",
+   "sources": [
+    {
+     "title": "Fei Fan Hotpot 163 Retail Park — MM Meal支店注文ページ",
+     "url": "https://mmqueue.com/meal?BranchCode=FQ93JPL2&CorporateCode=I8X3ZX7R&ShowWelcome=0",
+     "kind": "directory",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Fei Fan Hotpot @163 Retail Park — Malaysian Foodie",
+     "url": "https://www.malaysianfoodie.com/2019/08/fei-fan-hotpot-163-retail-park.html",
+     "kind": "firsthand",
+     "publishedAt": "2019-08-24",
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "実食記事は1F-09 163 Retail Park。注文ページは同店名・同電話03-6419 4928で一致。1 Utama等の実食は使っていない。",
+   "sourceCoverage": "支店注文窓口と古い支店実食を本文取得。施設公式directoryは429で取得不可。現在営業とメニューの一次確認は未達。"
+  }
  },
  {
   "id": "R0125",
@@ -5459,7 +6060,51 @@
   "extraFlags": [],
   "driveKm": 1.2,
   "driveMinFree": 3,
-  "driveMinJam": 6
+  "driveMinJam": 6,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Jake'sのリブアイステーキ",
+     "basis": "Mtownの2023年レビューが柔らかさと肉の旨みを紹介。現公式もJake'sの主要料理を提供すると記載。",
+     "sourceUrls": [
+      "https://www.mtown.my/eat/casa_rosa/",
+      "https://www.jakes.com.my/casarosamontkiara"
+     ]
+    },
+    {
+     "name": "牛テールシチュー",
+     "basis": "Mtownが長く煮込んだ食感と日本人客の支持を紹介。現在の単品提供は要確認。",
+     "sourceUrls": [
+      "https://www.mtown.my/eat/casa_rosa/"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "日本語レストランレビューに具体的な肉料理の紹介がある。",
+    "caution": "Mtownは店主紹介を含む好意的な記事で、招待・広告関係は本文から判定できない。厳密な匿名実食評価とは扱わない。",
+    "limits": "具体的な味の記述は2023年記事が中心。Burppleは2017年の短い投稿しか読めず追加の強い根拠にしなかった。2026年の安定性を示す直近口コミ調査は未実施。"
+   },
+   "visitNote": "現公式では毎日ランチ12:00–15:00（LO14:15）、ディナー18:00–23:00（LO22:15）。昼営業があることを公式で確認。コンド入口では店へ行く旨を伝え、身分証を求められる場合ありとの2023年記事。現価格は未取得。",
+   "sources": [
+    {
+     "title": "Casa Rosa Mont Kiara Pines — Jake's official",
+     "url": "https://www.jakes.com.my/casarosamontkiara",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "グルメ御用達！CASA ROSAで多国籍料理とワインを堪能する",
+     "url": "https://www.mtown.my/eat/casa_rosa/",
+     "kind": "guide",
+     "publishedAt": "2023-10-04",
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "公式・MtownともAspen Clubhouse, Mont Kiara Pines。公式ページ内のCasa Seventeen専用イベント会場情報や専用写真をCasa Rosaへ流用しない。",
+   "sourceCoverage": "対象店公式の営業・料理系統と日本語媒体の料理紹介を本文確認。独立性の明瞭な新しい実食レビュー、現在価格は未確認。"
+  }
  },
  {
   "id": "R0132",
@@ -8083,7 +8728,50 @@
   "extraFlags": [],
   "driveKm": 2.8,
   "driveMinFree": 6,
-  "driveMinJam": 11
+  "driveMinJam": 11,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Chicken Varuval / Mutton Chukka",
+     "basis": "Solaris販売メニューで提供名を確認。今回取得できた本文から味の推薦まではできない。",
+     "sourceUrls": [
+      "https://www.foodpanda.my/ms/restaurant/cdth/maya-solaris"
+     ]
+    },
+    {
+     "name": "バナナリーフミール",
+     "basis": "The Starの2024年記事冒頭でSolaris店のバナナリーフ食を確認。記事本文は購読壁のため詳細評価は未取得。",
+     "sourceUrls": [
+      "https://www.thestar.com.my/metro/metro-news/2024/04/08/banana-leaf-spread-inspired-by-mums-recipes"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "独立した具体的な味の支持は今回の本文取得では未確認。",
+    "caution": "提供名の確認だけでおすすめ料理とはしない。",
+    "limits": "The Starは冒頭のみ、口コミ集約ページは取得失敗。チキンビリヤニ・蟹ラッサム等の既存説明を今回の根拠で追認していない。"
+   },
+   "visitNote": "Foodpandaには料理別販売がある。配達価格と店内バナナリーフセット価格は別物なので現行店内価格・時間・追加皿料金は要確認。",
+   "sources": [
+    {
+     "title": "Maya Solaris — Foodpanda販売メニュー",
+     "url": "https://www.foodpanda.my/ms/restaurant/cdth/maya-solaris",
+     "kind": "directory",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Banana leaf spread inspired by mum's recipes — The Star（冒頭のみ）",
+     "url": "https://www.thestar.com.my/metro/metro-news/2024/04/08/banana-leaf-spread-inspired-by-mums-recipes",
+     "kind": "guide",
+     "publishedAt": "2024-04-08",
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "両ページはSolaris店名を明示。元レコードの1 Jalan Solaris2の番地を取得本文では独立再確認できていない。",
+   "sourceCoverage": "支店名付き販売料理と新聞記事冒頭取得。公式営業・住所番地・具体的実食評価が未確認。2ソース合格扱いにしない。"
+  }
  },
  {
   "id": "R0196",
@@ -8165,7 +8853,57 @@
   "extraFlags": [],
   "driveKm": 2.3,
   "driveMinFree": 4,
-  "driveMinJam": 8
+  "driveMinJam": 8,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Ppyo Haejang-guk（豚骨スープ）",
+     "basis": "2024年の日本語実食記事で、骨周りの柔らかい肉と比較的控えめな唐辛子を評価。",
+     "sourceUrls": [
+      "https://www.gorillameshi.com/archives/33570117.html"
+     ]
+    },
+    {
+     "name": "Sundubu-Jjigae / Jjajangmyeon",
+     "basis": "2022年Malay Mail筆者が豆腐チゲの旨辛い汁、ジャージャー麺の麺と濃いソースを実食で支持。",
+     "sourceUrls": [
+      "https://www.malaymail.com/news/eat-drink/2022/09/29/from-fiery-red-tofu-stews-to-smoky-bulgogi-shin-yangpyung-haejang-guk-in-desa-sri-hartamas-promises-a-true-korean-feast/30679"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "スープ、麺、キムチに具体的な実食支持がある。",
+    "caution": "辛さ・内臓・血を使う料理も記事にあるため、料理名から内容を確認して選ぶ。混雑と周辺駐車の難しさの記録あり。",
+    "limits": "料理の実食記事は2022・2024年。公式メニュー未取得。Restaurant Guruの支店住所・営業時間は二次ディレクトリで、最新営業を保証しない。"
+   },
+   "visitNote": "二次ディレクトリでは火曜休、昼10〜15時/夜17〜21:30。古い記事と開店時刻が異なるため訪問前に確認。現行価格は未確認。",
+   "sources": [
+    {
+     "title": "Shin Yangpyung Haejang-Guk — Restaurant Guru",
+     "url": "https://restaurantguru.com/Shin-Yangpyung-Haejang-Guk-Kuala-Lumpur",
+     "kind": "directory",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "大使館じゃなくなってた — クアラルンプールのゴリ飯",
+     "url": "https://www.gorillameshi.com/archives/33570117.html",
+     "kind": "firsthand",
+     "publishedAt": "2024-02-29",
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "From fiery red tofu stews... — Malay Mail",
+     "url": "https://www.malaymail.com/news/eat-drink/2022/09/29/from-fiery-red-tofu-stews-to-smoky-bulgogi-shin-yangpyung-haejang-guk-in-desa-sri-hartamas-promises-a-true-korean-feast/30679",
+     "kind": "firsthand",
+     "publishedAt": "2022-09-29",
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "Malay Mailとディレクトリの40G Jalan25/70aが一致。日本語記事も同屋号のHartamas訪問だが本文住所はないため補助扱い。",
+   "sourceCoverage": "住所付き支店記事と二次営業情報取得。店自身の一次情報と直近Google直読は未確認。"
+  }
  },
  {
   "id": "R0198",
@@ -8247,7 +8985,44 @@
   "extraFlags": [],
   "driveKm": 2.4,
   "driveMinFree": 4,
-  "driveMinJam": 8
+  "driveMinJam": 8,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Mutton Rogan Josh",
+     "basis": "ブランド公式が看板料理として掲載。Hartamas住所付きWanderlogに転載された2024-11-28のZHEN Oの食事記録も羊肉とパンを支持。",
+     "sourceUrls": [
+      "https://namasteindia.com.my/",
+      "https://wanderlog.com/place/details/5363085/namaste-india-hartamas"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "支店口コミの具体例ではRogan Josh、パンを支持。",
+    "caution": "別の2024年口コミは料理提供の遅さ、複数口コミは駐車難を指摘。",
+    "limits": "口コミはGoogle直読ではなくWanderlogの転載。2026年Tripadvisor検索結果には相反する評価があったが本文取得失敗のため味の根拠に採用していない。"
+   },
+   "visitNote": "公式にHartamas店と電話03-5888 7537を確認。現行価格と休憩時間は未確認。支店別ハラル認証は今回確認していない。",
+   "sources": [
+    {
+     "title": "Namaste India公式",
+     "url": "https://namasteindia.com.my/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Namaste India Hartamas — Wanderlog（購入者口コミ転載）",
+     "url": "https://wanderlog.com/place/details/5363085/namaste-india-hartamas",
+     "kind": "directory",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "公式Hartamas電話と二次ページの6-G Jalan31/70a・電話一致。他支店の公式掲載料理はブランド共通情報と明記。",
+   "sourceCoverage": "公式支店存在・ブランド料理、住所一致の食事口コミ取得。独立ガイドの現況と直近Google直読は不足。"
+  }
  },
  {
   "id": "R0200",
@@ -8411,7 +9186,50 @@
   "extraFlags": [],
   "driveKm": 2.4,
   "driveMinFree": 4,
-  "driveMinJam": 8
+  "driveMinJam": 8,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Perch / Cherry Snapper Fish & Chips",
+     "basis": "The Perpetual SaturdayのSri Hartamas実食では、Doryよりこれらの魚の食感・味を好み、均一な衣と魚の風味を評価。",
+     "sourceUrls": [
+      "https://theperpetualsaturday.com/cor-blimey-fish-and-chips/"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "支店実食でPerchとCherry Snapperの具体的支持あり。",
+    "caution": "同筆者は油の重さと食事総額を留保。Doryは普通という評価。",
+    "limits": "初出2019-08-20、ページに2026-05-13更新日もあるが再訪日の証拠ではない。記事中の価格・魚種の現行提供は未確認。"
+   },
+   "visitNote": "公式は月曜休、平日夕方・金〜日昼からとする一方、同ページにMonday–Thursdayとも書く矛盾あり。ラストオーダーも閉店30分前と一律21:30の両記載。遅い訪問は確認が必要。",
+   "sources": [
+    {
+     "title": "CorBlimey公式Branches",
+     "url": "https://www.corblimeymy.com/branches",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "CorBlimey公式Contact Us",
+     "url": "https://www.corblimeymy.com/contact-us",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Cor Blimey Sri Hartamas — The Perpetual Saturday",
+     "url": "https://theperpetualsaturday.com/cor-blimey-fish-and-chips/",
+     "kind": "firsthand",
+     "publishedAt": "2019-08-20（ページ更新表記2026-05-13、再実食日不明）",
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "公式と実食記事とも58 Jalan27/70a Sri Hartamasで一致。SS15/DU/Ampangの評価を混ぜていない。",
+   "sourceCoverage": "公式支店住所・営業案内と支店実食取得。営業表記に内部矛盾、現行メニュー価格と最近の味は未確認。"
+  }
  },
  {
   "id": "R0204",
@@ -8493,7 +9311,50 @@
   "extraFlags": [],
   "driveKm": 3.3,
   "driveMinFree": 7,
-  "driveMinJam": 13
+  "driveMinJam": 13,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Nasi Kerabu Ayam Percik",
+     "basis": "2025-04-28の家族実食記事で注文し、料理全体を好評価。公式トップの検索表示にも掲載されるがトップ本文はタイムアウトしたため、現在の提供は未確定。",
+     "sourceUrls": [
+      "https://mamatisya.blogspot.com/2025/04/birthday-lunch-kantan-plaza-damas.html"
+     ]
+    },
+    {
+     "name": "Laksam Kelantan / Nasi Dagang Gulai Ayam",
+     "basis": "同じ実食記事の注文品。単品ごとの詳細採点ではなく、クランタン料理全体への支持として読む。",
+     "sourceUrls": [
+      "https://mamatisya.blogspot.com/2025/04/birthday-lunch-kantan-plaza-damas.html"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "実食筆者は家族の好みに合うクランタン料理と評価し、再訪して複数料理を注文している。",
+    "caution": "同じ食事のAsam Pedas Daging Tetelは夫と義母の好みに合わなかったと記載。全品一律の支持ではない。",
+    "limits": "独立した具体的実食根拠は2025年の記事。2026年直近口コミの体系的確認は未実施。公式サイト内の自社掲載口コミは独立評価に数えない。"
+   },
+   "visitNote": "公式Outlets本文でDamas店は火〜日11:00–22:00。記事の料理価格は2025年当時なので現行予算には転記しない。公式/menuは物販ページで店内全メニューを確認できなかった。",
+   "sources": [
+    {
+     "title": "Kantan Outlets - Authentic Kelantanese Dining",
+     "url": "https://kantandamas.co/outlets/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Birthday Lunch @ KANTAN, Plaza Damas",
+     "url": "https://mamatisya.blogspot.com/2025/04/birthday-lunch-kantan-plaza-damas.html",
+     "kind": "firsthand",
+     "publishedAt": "2025-04-28",
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "元レコードC-0-14に対し公式はC-0-14 & C-0-15 Plaza Damas。同じDamas店。Sunway NexisのKota Damansara店は使わない。",
+   "sourceCoverage": "公式支店住所・営業時間と独立実食記事を本文確認。現在の店内価格、直近Google実値・直近口コミは未確認。トップ本文の取得失敗はOutlets本文で営業情報のみ補った。"
+  }
  },
  {
   "id": "R0206",
@@ -8575,7 +9436,58 @@
   "extraFlags": [],
   "driveKm": 3.5,
   "driveMinFree": 7,
-  "driveMinJam": 12
+  "driveMinJam": 12,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Yuzu-Lime Lemon Choux",
+     "basis": "Hartamasの住所付き転載口コミで、2025-10のNurzetty Kと2026-01のJavedが具体的に支持。",
+     "sourceUrls": [
+      "https://wanderlog.com/place/details/1515302/orito--hartamas-kl"
+     ]
+    },
+    {
+     "name": "Paris-Brest",
+     "basis": "公式が看板菓子として掲載。ただし支店口コミには生地の焼き・食感への不満があり、無条件推薦はしない。",
+     "sourceUrls": [
+      "https://orito.com.my/",
+      "https://wanderlog.com/place/details/1515302/orito--hartamas-kl"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "柚子系シューには支店食事口コミの具体的支持。",
+    "caution": "ドーナツは普通という2026-02口コミ。2026-01口コミはParis-Brest生地のむらと硬い背もたれなし席を指摘。",
+    "limits": "口コミはGoogleの転載であり直読ではない。2020年独立ブログはタイムアウトで本文未取得。現在の在庫・価格は未確認。"
+   },
+   "visitNote": "公式Hartamas店舗案内は毎日9〜18時。日常のパン・菓子持帰り候補。長居用席の快適さは口コミで留保あり。",
+   "sources": [
+    {
+     "title": "Orito公式",
+     "url": "https://orito.com.my/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Locate Us — Orito公式",
+     "url": "https://orito.com.my/pages/contact",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Orito Hartamas — Wanderlog（食事口コミ転載）",
+     "url": "https://wanderlog.com/place/details/1515302/orito--hartamas-kl",
+     "kind": "directory",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "公式と口コミのB-0-5 Plaza Damas、Jalan Sri Hartamas1一致。TTDIの実食記事は採用していない。",
+   "sourceCoverage": "公式支店住所・時間・看板菓子と支店口コミ取得。独立長文実食・直近Google直読は未確認。"
+  }
  },
  {
   "id": "R0208",
@@ -13905,7 +14817,59 @@
   "extraFlags": [],
   "driveKm": 5.7,
   "driveMinFree": 11,
-  "driveMinJam": 19
+  "driveMinJam": 19,
+  "diningEvidence": {
+   "checkedAt": "2026-10-22",
+   "dishes": [
+    {
+     "name": "Chicken Tenders meal",
+     "basis": "公式MET欄で4本のテンダーセットを掲載。MET住所付き転載口コミの2025-11投稿の口コミは肉の大きさとジューシーさを支持。",
+     "sourceUrls": [
+      "https://fowlboys.com/menu/",
+      "https://wanderlog.com/place/details/7240066/fowlboys--hartamas"
+     ]
+    },
+    {
+     "name": "Chicken & Waffle",
+     "basis": "公式METメニューに掲載。2025-11-23のCMによる食事口コミでワッフルの食感と鶏肉を評価。",
+     "sourceUrls": [
+      "https://fowlboys.com/menu/",
+      "https://wanderlog.com/place/details/7240066/fowlboys--hartamas"
+     ]
+    }
+   ],
+   "tasteEvidence": {
+    "positive": "MET住所付き口コミにテンダー、ワッフル、Sugar Daddy等の具体的支持。",
+    "caution": "辛さは個人差が大きい。公式はNeat/Mild/Hot/Xtra Hotを提供しているため初回は選択に注意。",
+    "limits": "転載ページは旧Hartamas名が本文に残り口コミ統合の可能性を否定できない。Google直読・現地実食は未実施。旧18 Jalan25/70a住所のTime Out記事はMET評価に流用していない。"
+   },
+   "visitNote": "公式METは毎日12〜22時。公式METメニューのTenders meal RM26（4本・ディップ・コールスロー・フライ・飲物）、価格欄末尾は6%SST別と表記。店内最新提示で最終確認。",
+   "sources": [
+    {
+     "title": "Fowlboys公式Menu（The MET欄）",
+     "url": "https://fowlboys.com/menu/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Find a diner — Fowlboys公式",
+     "url": "https://fowlboys.com/visit/",
+     "kind": "official",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    },
+    {
+     "title": "Fowlboys The MET — Wanderlog（食事口コミ転載）",
+     "url": "https://wanderlog.com/place/details/7240066/fowlboys--hartamas",
+     "kind": "directory",
+     "publishedAt": null,
+     "checkedAt": "2026-10-22"
+    }
+   ],
+   "identityNotes": "公式METメニューのLG-01 Menara The MET Jalan Dutamas2一致。公式メニュー内Campus欄の価格・料理は使っていない。転載口コミの旧屋号混在は留保。",
+   "sourceCoverage": "支店別公式料理・価格・営業時間取得。支店住所の口コミも取得したが旧店からの移行混在可能性は残る。"
+  }
  },
  {
   "id": "R0338",

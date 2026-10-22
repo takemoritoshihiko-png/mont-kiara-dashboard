@@ -19,7 +19,7 @@
 import { CONDOS, filtered, appMode, listView } from '../state.js';
 import { recordLayer } from '../domain/filter.js';
 import {
-  ledgerScore, scoreBreakdownText, scoreBars, ratingMetaText, BASELINE_STAR,
+  ledgerScore, scoreBreakdownText, scoreBars, ratingMetaText, BASELINE_STAR, SCORE_MAX,
 } from '../domain/diningScore.js';
 import * as P from '../data/personal.js';
 import * as CS from '../data/cloudStore.js';
@@ -59,7 +59,13 @@ export function scoreOf(c){
 
 export function totalOf(c){ return scoreOf(c).total; }
 
-/** The big number, the breakdown and the three meters. */
+const SCORE_HINT = '受賞と口コミをもとにした参考点。料理の味や家族との相性を採点したものではありません。';
+function scoreTotalHtml(s){
+  return `<div class="sc-total" aria-label="評判参考点 ${s.total} / ${SCORE_MAX}" title="${esc(SCORE_HINT)}">` +
+    `<span class="sc-num">${s.total}</span><span class="sc-unit"><span>/${SCORE_MAX}</span><span>参考点</span></span></div>`;
+}
+
+/** The big number, the breakdown and the two meters. */
 export function scoreBlockHtml(c){
   const s = scoreOf(c);
   const bars = scoreBars(s).map(b =>
@@ -68,7 +74,7 @@ export function scoreBlockHtml(c){
     `<span class="sc-bar-track"><span class="sc-bar-fill sc-${b.key}" style="width:${Math.round(100 * b.value / b.max)}%"></span></span>` +
     `</div>`).join('');
   return `<div class="scorebox">` +
-    `<div class="sc-total"><span class="sc-num">${s.total}</span><span class="sc-unit">/100</span></div>` +
+    scoreTotalHtml(s) +
     `<div class="sc-break">${esc(scoreBreakdownText(s))}</div>` +
     `<div class="sc-bars">${bars}</div></div>`;
 }
@@ -91,15 +97,11 @@ export function ratingLineCardHtml(c){
 
 /**
  * カードが先頭に出す点数（2026-08-16）。
- * 棒3本は台帳スコアの内訳だが、ラベルはCSSで隠されていて意味が読めず、しかも
- * 「継続性」は312/357店(87%)で常にゼロ＝空の棒が並ぶだけだった。棒と内訳は
- * 詳細パネル(scoreBlockHtml)にだけ残し、カードは数字1つにする。
- * 数字自体は残す — 既定の並び順が台帳スコア順なので、消すと順番の理由が読めなくなる。
+ * 内訳は詳細パネル(scoreBlockHtml)に置き、カードは参考点1つにする。
  */
 export function scoreNumberHtml(c){
   const s = scoreOf(c);
-  return `<div class="scorebox"><div class="sc-total">` +
-    `<span class="sc-num">${s.total}</span><span class="sc-unit">/100</span></div></div>`;
+  return `<div class="scorebox">${scoreTotalHtml(s)}</div>`;
 }
 
 // ============================================================
@@ -169,8 +171,8 @@ export function visitBoxHtml(c, ctx = 'led'){
       ` placeholder="例: 180" oninput="dineAmount('${jsStr(id)}',this.value)">` +
     `</div>` +
     `<div class="vb-field">` +
-      `<label class="vb-flabel" for="memo-${key}">感想</label>` +
-      `<textarea id="memo-${key}" class="vb-memo" rows="3" placeholder="何を食べて、どうだったか"` +
+      `<label class="vb-flabel" for="memo-${key}">食べた料理・感想</label>` +
+      `<textarea id="memo-${key}" class="vb-memo" rows="3" placeholder="料理名と、また行く／見送る理由"` +
       ` oninput="dineMemo('${jsStr(id)}',this.value)">${esc(e.m)}</textarea>` +
     `</div></div>`;
 }
