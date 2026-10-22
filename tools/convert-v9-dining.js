@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
+import { attachDiningEvidence } from '../src/domain/diningEvidence.js';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const V9_PATH = process.argv[2] || 'C:/Users/takem/OneDrive/デスクトップ/kl-dining-ledger-v9.html';
@@ -141,6 +142,8 @@ if (fs.existsSync(DRIVE)) {
   console.log(`所要時間の焼き込み: ${hit}/${out.length}件`);
 }
 
+// Research is maintained separately by stable ID; regeneration must retain it.
+out = attachDiningEvidence(out, JSON.parse(fs.readFileSync(path.join(ROOT, 'tools/dining-evidence.json'), 'utf8')));
 fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
 const geo = out.filter(r => r.lat !== null).length;
 console.log(`restaurants.json: ${out.length}件 (座標あり ${geo} / pending ${out.length - geo})`);

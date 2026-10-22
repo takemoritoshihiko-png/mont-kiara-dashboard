@@ -21,6 +21,7 @@ import { nearby, formatDistance, BUCKET_LABELS, NEARBY_BUCKETS } from '../domain
 import { focusOnRecord, rebuild } from './map.js';
 import { renderList, setLayer, setMode, applyFilters, syncCatSubOptions, esc, jsStr, num, priceRangeText, ratingText } from './list.js';
 import { eatoutDetailHtml, eatoutRecBadgeHtml, toast } from './dining.js';
+import { restaurantEvidenceHtml } from './restaurantEvidence.js';
 import { syncUrl, withUrlWritesSuspended, applyFilterParam } from './urlState.js';
 
 // The record the overlay is currently showing. Kept so a tab switch can
@@ -238,12 +239,16 @@ function diningDetail(c){
     const place = [c.area, c.venue].filter(Boolean).join(' ・ ');
     h += section('場所', `<div class="info-sec-body">${esc(place)}</div>`);
   }
+  if(c.diningEvidence) h += section('料理を選ぶための情報', restaurantEvidenceHtml(c.diningEvidence));
   // The two halves of the reputation. Shown together and always both, because
   // a page that prints only the praise is an advert, not a ledger.
   const vox = c.vox || {};
-  h += section('支持される点', `<div class="info-sec-body">${esc(vox.pros || '—')}</div>`);
-  h += section('割れる点・不満', `<div class="info-sec-body">${esc(vox.cons || '—')}</div>`);
-  if(c.editorNote) h += section('編集メモ', `<div class="info-sec-body">${esc(c.editorNote)}</div>`);
+  const previous = section('支持される点', `<div class="info-sec-body">${esc(vox.pros || '—')}</div>`) +
+    section('割れる点・不満', `<div class="info-sec-body">${esc(vox.cons || '—')}</div>`) +
+    (c.editorNote ? section('編集メモ', `<div class="info-sec-body">${esc(c.editorNote)}</div>`) : '');
+  h += c.diningEvidence
+    ? `<details class="dining-previous"><summary>以前の調査メモ（今回未確認）</summary>${previous}</details>`
+    : previous;
   // 外食モードだけ: 台帳スコアと自分の記録。住まいモードでは空文字＝一切出ない。
   h += eatoutDetailHtml(c);
   return h;

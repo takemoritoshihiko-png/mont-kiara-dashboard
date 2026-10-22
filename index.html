@@ -76,8 +76,8 @@
   --rv-maybe:#c4901f;   /* 機会があれば */
   --rv-never:#a94a38;   /* もういい */
   --rv-none:#8a968f;    /* 未回答 */
-  /* 台帳スコアの3本バー: 権威 / 継続性 / 評価 */
-  --bar-au:#a94a38; --bar-ct:#123b35; --bar-ev:#c4901f;
+  /* 評判参考点の2本バー: 受賞 / 口コミ */
+  --bar-au:#a94a38; --bar-ev:#c4901f;
   /* 訪問済みのカードが一覧で沈む度合い（v9 の .visited）。 */
   --visited-dim:.55;
   /* 飲食 — mirrored as MARKER_COLORS.dining in src/ui/map.js, because Leaflet
@@ -86,6 +86,7 @@
 
   /* Spacing — 8px grid */
   --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
+  --touch-min:40px;
 
   /* Shape */
   --r-card:10px; --r-control:8px; --r-pill:999px;
@@ -483,14 +484,22 @@ button,input,select{font-family:inherit}
 .scorebox{display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s2);padding-bottom:var(--s2);border-bottom:1px solid var(--hairline)}
 .sc-total{display:flex;align-items:baseline;gap:2px;flex-shrink:0}
 .sc-num{font-size:var(--fs-xl);font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;letter-spacing:-1px}
-.sc-unit{font-size:var(--fs-label);color:var(--text-2)}
+.sc-unit{display:inline-flex;flex-direction:column;align-self:center;font-size:var(--fs-label);color:var(--text-2)}
 .sc-break{font-size:var(--fs-label);color:var(--text-2);font-variant-numeric:tabular-nums;flex-shrink:0}
 .sc-bars{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .sc-bar{display:flex;align-items:center;gap:var(--s1)}
 .sc-bar-label{font-size:var(--fs-label);color:var(--text-2);width:3.4em;flex-shrink:0}
 .sc-bar-track{flex:1;min-width:0;height:4px;background:var(--hairline);border-radius:2px;overflow:hidden}
 .sc-bar-fill{display:block;height:100%;border-radius:2px}
-.sc-au{background:var(--bar-au)}.sc-ct{background:var(--bar-ct)}.sc-ev{background:var(--bar-ev)}
+.sc-au{background:var(--bar-au)}.sc-ev{background:var(--bar-ev)}
+.dining-evidence p{margin:var(--s2) 0}
+.dining-evidence ul{padding-left:var(--s4);margin:var(--s2) 0}
+.dining-evidence li{margin-bottom:var(--s2)}
+.dining-evidence a{overflow-wrap:anywhere}
+.dining-evidence summary{cursor:pointer;color:var(--text-2);padding:var(--s2) 0}
+.dining-previous{margin-top:var(--s4);color:var(--text-2)}
+.dining-previous summary{cursor:pointer;padding:var(--s2) 0;font-size:var(--fs-label)}
+.evidence-meta{color:var(--text-2);font-size:var(--fs-label)}
 .sc-rating{font-size:var(--fs-xs);color:var(--text-2);font-variant-numeric:tabular-nums;padding:0 var(--s3) var(--s2)}
 
 /* ---- 記録欄 (visitbox) ---- */
@@ -644,6 +653,8 @@ button,input,select{font-family:inherit}
   .panel.collapsed{flex:0 0 0;height:0;min-height:0}
   .toggle-panel{right:var(--s3)!important;top:auto;bottom:55%;border-radius:var(--r-control) var(--r-control) 0 0;padding:var(--s2) var(--s4);z-index:1001;font-size:var(--fs-xs);min-height:40px}
   .toggle-panel.collapsed{bottom:0}
+  /* The floating list toggle otherwise covers the open detail's text. */
+  .info-overlay.active + .toggle-panel{visibility:hidden}
   .summary-bar{gap:3px;padding:var(--s1)}
   /* 縦積みにした分（2026-08-16）、狭い画面では行間と余白を詰めて取り返す。
      一覧はカード1枚がちょうど収まる高さしかないので、数pxが効く。 */
@@ -717,6 +728,8 @@ button,input,select{font-family:inherit}
   .chip-vis{width:24px;height:24px}
   .data-details>summary{min-height:40px;display:flex;align-items:center}
   .info-tab{min-height:40px}
+  .dining-evidence summary,.dining-previous summary{min-height:var(--touch-min)}
+  .dining-evidence a{display:inline-flex;align-items:center;min-height:var(--touch-min);min-width:var(--touch-min)}
   .nb-row,.sf-row,.sf-condo-row{min-height:40px}
   /* A chip's ✕ has to stay small or the pill stops being a pill, so the tap
      area is grown invisibly around the glyph instead of the glyph itself. */

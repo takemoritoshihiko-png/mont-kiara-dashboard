@@ -44,7 +44,8 @@
 | `src/domain/geo.js` | 2点間の距離（haversine） |
 | `src/domain/nearby.js` | 「周辺」= 距離バケット（800m/2km/6km）へ種別ごとに仕分け＋距離の表記。除名`delisted`は一覧・件数から除外。層は `LAYERS` から自動で増える |
 | `src/domain/fees.js` | 年齢 → 学年 → 年間学費。学年ラベルの解析。**補間せず**近い公表学年の実額を返す |
-| `src/domain/diningScore.js` | 台帳スコア（100点）。権威au / 継続性ct / 評価ev・ベイズ縮約★(M=800)・レビュー母数の厚み・exタグはENUM。`calcLedgerScores()` が全件に焼き付ける |
+| `src/domain/diningScore.js` | 評判参考点（75点満点）。受賞au35＋口コミev40・ベイズ縮約★(M=800、固定C=4.36)。未調査の偏りを避けるためtierは採点しない。味や家族との相性の点数ではない。`SCORE_MAX`を表示・ソートで共有 |
+| `src/domain/diningEvidence.js` | 公開する料理調査の正規化と店舗ID/名前による照合。料理と出典URL・確認日・未確認範囲を検査。公開データ生成と読込で同じ契約を共有 |
 
 ### ui/ — 画面の描画と操作
 
@@ -53,6 +54,7 @@
 | `src/ui/map.js` | Leaflet地図・マーカー生成（種別別の見た目。**ミシュランは星=濃い金+★／掲載店=淡い金+Ⓜ／ビブ=琥珀+🍽 の3段。並びは絞り込みの選択肢と凡例で揃える**）・**外食モードのピンに ✓訪問済み(右上) と ♡行きたい(左上) のバッジ**・クラスタ・ラベルのズーム連動・エリアジャンプ（住まい層は `fArea`、飲食層は**中心からの半径3km**で絞る）・凡例。**商業と飲食の重なり対策**（商業は `zIndexOffset` で常に上／モールに重なる飲食は `.mk-mall-shift` で見た目だけ右へ32px／判定半径は `overlapRadiusM` が縮尺から出す／ラベルが出る縮尺17以上では打ち消す。座標は動かさない）・**完全に同じ地点の散らし**（`spotOffsets` が3m以内の組を見つけ、商業>学校>物件>飲食の順で1件を真の位置に残し、残りを半径20pxの円周に等間隔で配置。inline style の `transform` なので**どの縮尺でも効く**＝寄っても永遠に離れない組のため。モールのずらしとは排他） |
 | `src/ui/list.js` | 層セグメント・層別フィルタ・適用中チップ・並び替え・種別別カード・サマリー4枠・スケルトン・パネル開閉。**飲食の小分類セレクトは `syncCatSubOptions()` が大分類に従って毎回作り直す**（大分類が未選択の間は枠ごと隠す）。**`shareView()`＝いまの画面のリンクをコピー**（同期の選択コピーを先に試し、駄目なら新API）。**スマホでは `body.more-open` で絞り込みと並び替えをまとめて開閉する** |
 | `src/ui/info.js` | 詳細オーバーレイ（dialog）: ヘッダー／「詳細」「周辺」タブ／外部リンク／選択の遷移 |
+| `src/ui/restaurantEvidence.js` | 料理・味の支持/注意・未確認・来店条件・出典を表示。公表日と確認日、公式案内と実食根拠を区別。個人記録には触れない |
 | `src/ui/urlState.js` | URL ⇄ 画面状態（`?mode=&layer=&sel=&tab=&f=`）。`mode=eatout` のときだけ書かれる（住まいは既定＝省略）。履歴の積み方（push/replace）もここ。**`f=` の小分類(fCat)は選択肢が大分類に依存するので、復元は info.js が「書く→選択肢を作る→もう一度書く」の2回で行う**。**並び替え(fSort)も載るが、既定値のときは載せない**（全リンクに `?f=fSort:` が付くのを防ぐ）。トグル（子連れ・昼の予算・自分の記録）は載せない＝共有ボタンが押されたときにトーストで名指しする |
 | `src/ui/schoolFinder.js` | 学費くらべ: 年齢別の全校比較リスト・学費推移チャート・選んだ学校の周辺コンド |
 | `src/ui/dining.js` | **外食モードの画面**。台帳スコアの表示・記録欄(visitbox)・🗑非表示(dineHide/dineUnhide)・toast・保存バー。書き込みは全部 `data/personal.js` 経由。**データ管理は3節だけ**（記録の保存先／控え（自動）／片づけ・2026-08-16に6節から整頓）。**押す保存は無い**（書いた瞬間に自動）。**保存の状況はヘッダーの 住まい/外食 の右**（2026-08-16に一覧の下から移動。ヘッダーは畳まれないのでスマホでも常に見える）。文は**前半＝誰として保存しているか（絶対に落とさない）／後半＝いつ（スマホでは畳む）**の2つに分かれる |
@@ -83,6 +85,7 @@
 | `test/dining.test.js` | **飲食データの契約**: id/placeId一意・座標域・価格 lo≤hi・11分類・ミシュランenum（対象件数は restaurants.json が正） |
 | `test/diningLayer.test.js` | 飲食層: 絞り込み5軸・価格帯の判定基準・カード/ヒーロー文字列・並び替え・詳細パネル・読み込み |
 | `test/diningScore.test.js` | **台帳スコア**: 定数・exタグENUMと実データの照合・C=4.3600・手計算フィクスチャ・内訳が総合点と一致すること |
+| `test/diningEvidence.test.js` | 20店の正本/公開JSON一致・他欄不変・繰返し反映不変・支店/出典/日付/URL検査・読込から表示までの経路 |
 | `test/personal.test.js` | **個人記録**: ローカル日付・読み取りが書き込まないこと・保存可否の起動テスト・デバウンス保存・v9形式の読み込み変換・書き出し往復・非表示フラグを含む7欄の統合 |
 | `test/uxDining.test.js` | UX2: 飲食のエリア連動（距離フィルタ・3kmの妥当性・ジャンプ配線）と昼夜基準（`diningPriceCeiling`/価格帯/並び替えが**同じ数字を読む**invariant）・層タブの飲食入口・トグルのmarkup契約 |
 | `test/snapshots.test.js` | 控えの契約: undoは常に1件・dailyは日ごと1件7世代・現地時刻で出す・**消える経路(全消去/まるごと置き換え)は必ず控えを通る**を実物のpersonal.jsで検査 |
@@ -102,6 +105,8 @@
 | `tools/gen-drive-times.js` | Mont Kiara基点の車所要時間をOSRMで一括計算→drive-times.json。converterが焼き込む。更新手順: convert→gen-drive-times→convert |
 | `tools/fetch-place-ids.js` | Google Place ID を鍵なしで採取（`/search?tbm=map` の応答から店名・座標・Place IDを取り出す）。**別の店を掴まないための関門は2つ＝距離（台帳の検証済み座標から building 250m / venue 450m / street 700m 以内）と店名の一致**。どちらか欠けたら採らず `review` に落とす。`--check`＝既にIDがある店で答え合わせ（精度の実測用）／`--fill`＝`pending:` の店を採取 |
 | `tools/apply-place-ids.js` | 採取結果を restaurants.json へ入れる。`ok` のものだけ・墓標には触れない・既存IDの書き換えは前→後を必ず印字。既定は下読み、`--write` で書く |
+| `tools/dining-evidence.json` | 料理別調査の正本。2026-10-22は日常使い中心の既存20店・36料理候補。未確認/古い根拠/支店混在の留保も保持 |
+| `tools/apply-dining-evidence.js` | 正本からrestaurants.jsonのdiningEvidence欄だけを反映。既定は下読み、`--write`で書く。全converterでも同じ照合関数で再適用 |
 
 ## その他
 

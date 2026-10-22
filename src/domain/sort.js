@@ -5,6 +5,7 @@
 // order is deterministic when the primary key ties.
 
 import { diningPriceCeiling, BUDGET_BASIS_NIGHT, BUDGET_BASIS_DAY } from './filter.js';
+import { SCORE_MAX } from './diningScore.js';
 
 const byName = (a, b) => String(a.name).localeCompare(String(b.name));
 
@@ -103,7 +104,7 @@ export const SORT_OPTIONS = {
  * where the raw Google rating is the honest lead. See the mode note in
  * src/state.js.
  */
-const LEDGER_SORT = { value: 'ledgerHigh', label: '台帳スコア順（総合点）' };
+const LEDGER_SORT = { value: 'ledgerHigh', label: `評判参考点順（${SCORE_MAX}点満点）` };
 
 /**
  * The options a layer offers in a given mode.

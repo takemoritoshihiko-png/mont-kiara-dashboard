@@ -104,6 +104,36 @@ it('除名した店を古いリンクから選んでも詳細を開かない', (
   expect(document.getElementById('infoContent').innerHTML).not.toContain(DEWAKAN.name);
 });
 
+const PUBLIC_EVIDENCE = {
+  checkedAt: '2026-10-22',
+  dishes: [{ name: '香りのある麺 <script>', basis: '公式メニューに掲載', sourceUrls: ['https://example.com/menu'] }],
+  tasteEvidence: { positive: '料理の根拠', caution: '味の不満は未確認', limits: '直近の実食評価は未取得' },
+  visitNote: '来店前に営業日を確認',
+  sources: [{ title: '公式メニュー', url: 'https://example.com/menu', kind: 'official', publishedAt: null, checkedAt: '2026-10-22' }],
+  identityNotes: '対象支店を確認', sourceCoverage: '公式案内のみ',
+};
+
+it('料理の根拠を読込から詳細まで保ち、確認日と記事日を区別して表示する', () => {
+  const recs = parseRestaurants(JSON.stringify([{ ...DEWAKAN, diningEvidence: PUBLIC_EVIDENCE }]));
+  setCondos(recs);
+  setAppMode('home');
+  selectCondo(DEWAKAN.name);
+  const detail = document.getElementById('infoContent').innerHTML;
+  expect(detail).toContain('香りのある麺 &lt;script&gt;');
+  expect(detail).not.toContain('香りのある麺 <script>');
+  expect(detail).toContain('https://example.com/menu');
+  expect(detail).toContain('情報確認: 2026-10-22');
+  expect(detail).toContain('公表日不明');
+  expect(detail).toContain('直近の実食評価は未取得');
+  expect(detail).not.toContain('わたしの記録');
+});
+
+it('危険な出典リンクをデータ読込境界で拒否する', () => {
+  const bad = structuredClone(PUBLIC_EVIDENCE);
+  bad.sources[0].url = 'javascript:alert(1)';
+  expect(() => parseRestaurants(JSON.stringify([{ ...DEWAKAN, diningEvidence: bad }]))).toThrow(/出典URL/);
+});
+
 // ============================================================
 // X1 — 個人記録の変更が、開いているオーバーレイに反映される
 // ============================================================
