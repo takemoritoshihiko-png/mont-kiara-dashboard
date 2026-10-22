@@ -111,11 +111,13 @@ describe('保存の状況はヘッダーの 住まい/外食 の右にある', (
   });
 
   // スマホのヘッダーで空くのは実測106px。全文211pxは入らないので、後半（いつ
-  // 保存したか）と💾のラベルだけを畳み、**名前は必ず残す**。1つの文字列を
+  // 保存したか）だけを畳み、**名前は必ず残す**。1つの文字列を
   // 切り詰めると、いちばん大事な名前から先に消えていく。
-  it('スマホでは後半と💾のラベルだけを隠す（名前は隠さない）', () => {
+  it('スマホでは保存状況を別行に置き、名前とデータ管理ラベルを残す', () => {
     const mobile = html.slice(html.indexOf('@media(max-width:768px)'));
-    expect(mobile).toContain('.sb-tail,.sb-btn-label{display:none}');
+    expect(mobile).toContain('.sb-tail{display:none}');
+    expect(mobile).toContain('.sb-btn-label{display:inline}');
+    expect(mobile).toContain('.savebar{grid-column:1 / -1');
     expect(mobile).not.toContain('.sb-head{display:none}');
   });
 

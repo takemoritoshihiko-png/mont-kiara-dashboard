@@ -40,26 +40,27 @@
   /* Type — one system stack, one scale */
   --font:-apple-system,"Segoe UI","Hiragino Sans","Noto Sans JP",sans-serif;
   --fs-xs:12px;   /* meta, secondary lines */
-  --fs-sm:13px;   /* controls, body */
+  --fs-sm:13px;   /* controls, compact body */
+  --fs-body:14px; /* detail reading */
   --fs-md:15px;   /* card name, stat values */
   --fs-lg:17px;   /* detail name, hero numbers */
   --fs-xl:22px;   /* reserved: page-level figures */
-  /* The one documented exception to the 12/13/15/17/22 scale: ALL-CAPS micro
+  /* Micro-label exception to the body/title scale: ALL-CAPS micro
      labels only. Uppercase reads about a step larger than its px suggests, so
      11px caps sit visually level with 12px sentence case. Never use it for
      sentence-case text. */
   --fs-label:11px;
 
   /* Colour — ONE accent for everything interactive */
-  --accent:#0a6cff;
-  --accent-strong:#0857cc;
-  --accent-soft:#e8f0fe;
-  --accent-ink:#0a4fbf;
+  --accent:#1f56b6;
+  --accent-strong:#17428e;
+  --accent-soft:#eaf0fa;
+  --accent-ink:#17428e;
 
   /* Grays */
-  --text:#1d1d1f;
-  --text-2:#6e6e73;
-  --hairline:#e5e5ea;
+  --text:#172a3a;
+  --text-2:#526274;
+  --hairline:#d4dee8;
   --bg:#f5f5f7;
   --surface:#fff;
 
@@ -87,6 +88,16 @@
   /* Spacing — 8px grid */
   --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
   --touch-min:40px;
+  --control-height:32px;
+  --header-height:56px;
+  --panel-width:400px;
+  --detail-width:360px;
+  --result-min:144px;
+  --result-min-mobile:224px;
+  --hairline-width:1px;
+  --map-controls-left:50px;
+  --map-controls-gap:66px;
+  --check-size:24px;
 
   /* Shape */
   --r-card:10px; --r-control:8px; --r-pill:999px;
@@ -102,23 +113,22 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:var(--font);background:var(--bg);color:var(--text);overflow:hidden;height:100vh;font-size:var(--fs-sm);-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);background:var(--bg);color:var(--text);overflow:hidden;height:100vh;font-size:var(--fs-sm);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
 button,input,select{font-family:inherit}
 
 /* ---- Shell ---- */
-.header{background:var(--surface);padding:0 var(--s4);display:flex;align-items:center;border-bottom:1px solid var(--hairline);height:52px}
+.header{background:var(--surface);padding:0 var(--s5);display:flex;align-items:center;border-bottom:var(--hairline-width) solid var(--hairline);height:var(--header-height);flex-shrink:0}
 .header h1{font-size:var(--fs-lg);color:var(--text);font-weight:600;letter-spacing:-.2px;display:flex;align-items:baseline;gap:var(--s2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .header h1 .en{font-size:var(--fs-xs);color:var(--text-2);font-weight:400;letter-spacing:0}
-.main{display:flex;height:calc(100vh - 52px)}
+.main{display:flex;flex:1;min-height:0;min-width:0}
 #map{flex:1;min-width:0}
-.panel{width:336px;background:var(--bg);border-left:1px solid var(--hairline);display:flex;flex-direction:column;overflow:hidden;transition:width var(--dur) var(--ease)}
-/* 一覧は「決める面」なのに336px固定で、画面を広くしても地図だけが広がっていた
-   （1500px幅で地図72%）。広い画面でだけ一覧にも分け前を渡す（2026-08-16）。 */
-@media(min-width:1600px){.panel{width:400px}}
-@media(min-width:1920px){.panel{width:460px}}
+.panel{width:var(--panel-width);min-height:0;background:var(--bg);border-left:var(--hairline-width) solid var(--hairline);display:flex;flex-direction:column;overflow:hidden;transition:width var(--dur) var(--ease)}
+@media(min-width:1920px){:root{--panel-width:460px}}
+@media(min-width:769px) and (max-width:1199px){:root{--panel-width:336px;--detail-width:320px}}
 .panel.collapsed{width:0;border:none}
-.toggle-panel{position:absolute;right:336px;top:57px;z-index:1000;background:var(--surface);border:1px solid var(--hairline);color:var(--accent);padding:6px var(--s2);cursor:pointer;border-radius:var(--r-control) 0 0 var(--r-control);font-size:var(--fs-sm);transition:right var(--dur) var(--ease);box-shadow:-2px 0 4px rgba(0,0,0,.06)}
+.toggle-panel{position:absolute;right:var(--panel-width);top:var(--s2);z-index:1000;background:var(--surface);border:var(--hairline-width) solid var(--hairline);color:var(--accent);min-height:var(--touch-min);padding:var(--s2);cursor:pointer;border-radius:var(--r-control) 0 0 var(--r-control);font-size:var(--fs-sm);transition:right var(--dur) var(--ease);box-shadow:var(--shadow-1)}
 .toggle-panel.collapsed{right:0}
+.panel-caption{display:none}
 
 /* ---- Summary tiles ---- */
 .summary-bar{padding:var(--s1) var(--s2);background:var(--bg);border-bottom:1px solid var(--hairline);display:flex;gap:var(--s1);flex-shrink:0}
@@ -138,7 +148,7 @@ button,input,select{font-family:inherit}
 .rec-line{margin-bottom:var(--s2)}
 
 /* ---- Controls ---- */
-.filters{padding:var(--s2) var(--s2) var(--s1);background:var(--surface);border-bottom:1px solid var(--hairline);flex-shrink:1;overflow-y:auto}
+.filters{padding:var(--s3);background:var(--surface);border-bottom:var(--hairline-width) solid var(--hairline);flex-shrink:1;overflow-y:auto}
 .filter-row{display:flex;gap:var(--s2);margin-bottom:var(--s1)}
 /* 4つ横並びだと1つ約90pxになり、選んだ値（「洋食・グリル」）が読めなくなる。
    飲食の行だけ2列で折り返す（2026-08-15 小分類セレクト追加にあわせて実測）。 */
@@ -151,7 +161,7 @@ button,input,select{font-family:inherit}
 /* Two toggles under one caption (外食モードの「自分の記録」). A second caption
    would be a <span> with nothing to say — the buttons name themselves. */
 .fg-btns{display:flex;gap:var(--s2);flex-wrap:wrap}
-.filter-group select,.filter-group input{background:var(--surface);border:1px solid var(--hairline);color:var(--text);padding:3px var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm);min-width:0}
+.filter-group select,.filter-group input{background:var(--surface);border:var(--hairline-width) solid var(--hairline);color:var(--text);padding:var(--s1) var(--s2);border-radius:var(--r-control);font-size:var(--fs-sm);min-width:0;min-height:var(--control-height)}
 /* 小分類セレクトは大分類を選ぶまで押せない。.filter-group select が color を
    明示しているので、ブラウザ既定のグレーアウトは効かない — ここで名乗る。 */
 .filter-group select:disabled{color:var(--text-2);background:var(--bg);cursor:not-allowed;opacity:1}
@@ -188,8 +198,7 @@ button,input,select{font-family:inherit}
 .fchip-x::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px}
 
 /* ---- Progressive disclosure ---- */
-.disclosure{background:var(--bg);border:1px solid var(--hairline);border-radius:var(--r-pill);padding:2px var(--s3);color:var(--accent);font-size:var(--fs-xs);font-weight:600;cursor:pointer;padding:var(--s1) 0;margin-top:2px}
-.disclosure{padding:2px 0;margin-top:0}
+.disclosure{background:var(--bg);border:var(--hairline-width) solid var(--hairline);border-radius:var(--r-control);padding:var(--s1) var(--s3);color:var(--accent);font-size:var(--fs-xs);font-weight:600;cursor:pointer;min-height:var(--control-height)}
 .disclosure:hover{text-decoration:underline}
 .chip-toggle{background:var(--surface);border:1px solid var(--hairline);color:var(--text-2);border-radius:var(--r-pill);padding:5px var(--s3);font-size:var(--fs-xs);font-weight:600;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
 .chip-toggle:hover{border-color:var(--accent);color:var(--accent)}
@@ -205,7 +214,7 @@ button,input,select{font-family:inherit}
 @keyframes chipIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
 
 /* ---- List ---- */
-.condo-list{flex:1;overflow-y:auto;padding:var(--s2)}
+.condo-list{flex:1;min-height:var(--result-min);overflow-y:auto;padding:var(--s3);scroll-padding:var(--s2)}
 .condo-list::-webkit-scrollbar{width:6px}
 .condo-list::-webkit-scrollbar-thumb{background:#d0d0d6;border-radius:3px}
 .condo-card{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-card);padding:var(--s3);margin-bottom:var(--s2);cursor:pointer;transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease);box-shadow:var(--shadow-1)}
@@ -270,7 +279,7 @@ button,input,select{font-family:inherit}
 /* ============================================================
    DETAIL OVERLAY (spec 2.6)
    ============================================================ */
-.info-overlay{position:absolute;top:48px;left:0;bottom:0;z-index:1001;background:var(--surface);border-radius:0 0 var(--r-card) 0;box-shadow:var(--shadow-2);width:300px;max-height:100%;overflow-y:auto;display:none}
+.info-overlay{position:absolute;top:var(--header-height);left:var(--s2);bottom:var(--s2);z-index:1001;background:var(--surface);border:var(--hairline-width) solid var(--hairline);border-radius:var(--r-card);box-shadow:var(--shadow-2);width:var(--detail-width);max-height:100%;overflow-y:auto;overscroll-behavior:contain;display:none}
 .info-overlay.active{display:block;animation:infoIn var(--dur) var(--ease)}
 @keyframes infoIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
 /* 3px band in the record's type colour — the only place type colour appears in the panel. */
@@ -280,7 +289,7 @@ button,input,select{font-family:inherit}
 .info-sticky{position:sticky;top:0;z-index:3;background:var(--surface);border-bottom:1px solid var(--hairline)}
 .info-close{position:absolute;top:var(--s1);right:var(--s1);width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:none;border:none;font-size:var(--fs-md);cursor:pointer;color:var(--text-2);line-height:1;border-radius:50%;z-index:2;transition:background var(--dur) var(--ease)}
 .info-close:hover{background:var(--bg);color:var(--text)}
-.info-head{padding:var(--s3) var(--s3) var(--s2)}
+.info-head{padding:var(--s4) var(--s4) var(--s3)}
 .info-name{font-size:var(--fs-lg);font-weight:600;color:var(--text);line-height:1.3;letter-spacing:-.3px;padding-right:36px}
 .info-ja{font-size:var(--fs-xs);color:var(--text-2);margin-top:2px}
 .info-addr{font-size:var(--fs-xs);color:var(--text-2);margin-top:var(--s1)}
@@ -290,13 +299,13 @@ button,input,select{font-family:inherit}
 .info-tab{flex:1;background:none;border:none;border-bottom:2px solid transparent;padding:var(--s2) var(--s1);font-size:var(--fs-sm);font-weight:600;color:var(--text-2);cursor:pointer;transition:color var(--dur) var(--ease)}
 .info-tab:hover{color:var(--accent)}
 .info-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
-.info-tab-body{padding:var(--s3)}
+.info-tab-body{padding:var(--s4);overflow-wrap:anywhere}
 /* Key stats: label / value pairs on a 2-column grid */
 .kv-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3) var(--s2)}
 /* The key labels are Japanese now, so the caps transform is gone: it did
    nothing to 日本語 and only stretched the few latin words (LUXURY) that still
    have to fit a 134px column beside their source term. */
-.kv-label{font-size:var(--fs-label);color:var(--text-2);letter-spacing:.3px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kv-label{font-size:var(--fs-xs);color:var(--text-2);font-weight:600}
 /* The source's own English term (PSF / NLA), kept beside the Japanese so a
    listing on iProperty or EdgeProp can still be matched. Subordinate by weight
    and tone, not by size — 11px is the bottom of the scale. */
@@ -307,7 +316,7 @@ button,input,select{font-family:inherit}
 .kv-val.muted{color:var(--text-2);font-weight:500}
 /* Any further block of information: a hairline, a caps title, then the content. */
 .info-sec{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--hairline)}
-.info-sec-title{font-size:var(--fs-label);text-transform:uppercase;letter-spacing:.3px;color:var(--text-2);font-weight:700;margin-bottom:var(--s2);display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2)}
+.info-sec-title{font-size:var(--fs-sm);color:var(--text);font-weight:700;margin-bottom:var(--s2);display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2)}
 /* A second fact about the block (a score, a count) at the right of its title —
    never smuggled into the title text, where a number reads as a count of what
    is listed below it. */
@@ -315,13 +324,13 @@ button,input,select{font-family:inherit}
 /* A folded block replaces the title with its own summary, so it does not add a
    second gap on top of the section's. */
 .info-sec>.data-details{margin-top:0}
-.info-sec-body{font-size:var(--fs-xs);color:var(--text);line-height:1.6}
+.info-sec-body{font-size:var(--fs-body);color:var(--text);line-height:1.7}
 .info-fees{width:100%;font-size:var(--fs-xs);border-collapse:collapse;font-variant-numeric:tabular-nums}
 .info-fees td{padding:var(--s1) 0;border-bottom:1px solid var(--hairline)}
 .info-fees td:first-child{color:var(--text-2)}
 .info-fees td:last-child{text-align:right;font-weight:600;color:var(--text)}
 .info-fees tr:last-child td{border-bottom:none}
-.info-note{font-size:var(--fs-label);color:var(--text-2);margin-top:var(--s2);line-height:1.5}
+.info-note{font-size:var(--fs-xs);color:var(--text-2);margin-top:var(--s2);line-height:1.6}
 /* Each facility wraps as a unit — Japanese breaks between any two characters,
    so a run of space-separated text split 「1フロア3戸以下」 across two lines. */
 .info-feature-list{font-size:var(--fs-xs);color:var(--text);line-height:1.6;display:flex;flex-wrap:wrap;gap:var(--s1) var(--s3)}
@@ -343,12 +352,9 @@ button,input,select{font-family:inherit}
 .nb-empty{font-size:var(--fs-xs);color:var(--text-2);padding:var(--s3) 2px;text-align:center}
 
 /* ---- Map furniture ---- */
-/* The bar floats over the MAP only: its max-width stops 352px short of the
-   right edge (336px list panel + its fold button), because before this it
-   spanned .main's full width and buried the panel's summary tiles
-   (TOTAL / SHOWN) under itself. When the panel is folded away it reclaims
-   that width. 50px on the left keeps it clear of the zoom control. */
-.area-jump{position:absolute;top:var(--s2);left:50px;z-index:1000;display:flex;align-items:center;gap:var(--s1);background:rgba(255,255,255,.96);padding:5px var(--s2);border-radius:var(--r-pill);box-shadow:var(--shadow-2);border:1px solid var(--hairline);max-width:calc(100% - 402px);overflow-x:auto;white-space:nowrap;scrollbar-width:none;mask-image:linear-gradient(to right,#000 92%,transparent)}
+/* The area bar and panel toggle share --panel-width with the list, including
+   intermediate and wide desktop breakpoints. */
+.area-jump{position:absolute;top:var(--s2);left:var(--map-controls-left);z-index:1000;display:flex;align-items:center;gap:var(--s1);background:var(--surface);padding:var(--s1) var(--s2);border-radius:var(--r-pill);box-shadow:var(--shadow-2);border:var(--hairline-width) solid var(--hairline);max-width:calc(100% - var(--panel-width) - var(--map-controls-gap));overflow-x:auto;white-space:nowrap;scrollbar-width:none}
 .main:has(#panel.collapsed) .area-jump{max-width:calc(100% - 120px)}
 .area-jump::-webkit-scrollbar{display:none}
 .area-jump button{background:var(--bg);border:1px solid var(--hairline);color:var(--text);padding:3px var(--s3);border-radius:var(--r-pill);font-size:var(--fs-xs);cursor:pointer;font-weight:600;white-space:nowrap;transition:all var(--dur) var(--ease)}
@@ -637,31 +643,32 @@ button,input,select{font-family:inherit}
 
 @media(max-width:768px){
   body{height:100dvh}
-  /* 端の余白を1段詰めるのは、ヘッダーに保存の状況が入って実測362pxが満杯に
-     なったため（ユーザー名102px に対し94pxしか空かなかった・2026-08-16）。 */
-  .header{padding:0 var(--s2);height:44px}
+  /* Identity and modes share the first row. Private save status gets its own
+     row, so the account name and data-management action remain readable. */
+  .header{padding:var(--s1) var(--s3);height:auto;min-height:var(--header-height);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 var(--s2)}
   .header h1{font-size:var(--fs-md)}
   .header h1 .en{display:none}
-  .main{flex-direction:column;height:calc(100vh - 44px);height:calc(100dvh - 44px)}
+  .main{flex-direction:column;--mobile-panel:55%;--result-min:var(--result-min-mobile)}
+  body.more-open .main{--mobile-panel:85%}
+  .main:has(#panel.collapsed){--mobile-panel:0%}
   #map{flex:1 1 auto;height:auto;min-height:0}
-  /* 45% は 2026-08-07 に一度直した値だが、実測すると一覧に残るのは 126px で、
-     カード1枚(220px)が丸ごと入らなかった（サマリー35 + 絞り込み101 + 保存バー35
-     + 出典24 が上下を食う）＝「カードを半分に切らない」という当時の意図をまだ
-     満たせていなかった。55% にすると一覧197px＝1枚が丸ごと出る。地図は321pxで、
-     周辺が読める大きさは保っている（2026-08-16 実測）。 */
-  .panel{width:100%!important;flex:0 0 55%;height:auto;border-left:none;border-top:1px solid var(--hairline)}
+  /* Keep the normal map/list split; expanded filters temporarily get more
+     room. The list keeps a complete card while the filters scroll. */
+  .panel{width:100%!important;flex:0 0 var(--mobile-panel);height:auto;border-left:none;border-top:var(--hairline-width) solid var(--hairline)}
   .panel.collapsed{flex:0 0 0;height:0;min-height:0}
-  .toggle-panel{right:var(--s3)!important;top:auto;bottom:55%;border-radius:var(--r-control) var(--r-control) 0 0;padding:var(--s2) var(--s4);z-index:1001;font-size:var(--fs-xs);min-height:40px}
+  .toggle-panel{right:var(--s3)!important;top:auto;bottom:var(--mobile-panel);border-radius:var(--r-control) var(--r-control) 0 0;padding:var(--s2) var(--s4);z-index:1001;font-size:var(--fs-xs);min-height:var(--touch-min)}
   .toggle-panel.collapsed{bottom:0}
   /* The floating list toggle otherwise covers the open detail's text. */
-  .info-overlay.active + .toggle-panel{visibility:hidden}
+  .main:has(.info-overlay.active)>:not(.info-overlay){visibility:hidden}
   .summary-bar{gap:3px;padding:var(--s1)}
   /* 縦積みにした分（2026-08-16）、狭い画面では行間と余白を詰めて取り返す。
      一覧はカード1枚がちょうど収まる高さしかないので、数pxが効く。 */
   .summary-item{padding:1px}
   .summary-val{font-size:var(--fs-sm);line-height:1.15}
   .summary-label{font-size:var(--fs-label);letter-spacing:0;line-height:1.1}
-  .filters{padding:var(--s2)}
+  .filters{padding:var(--s2);min-height:0;display:flex;flex-direction:column;overscroll-behavior:contain}
+  .filters>*{flex-shrink:0}
+  .filters #moreToggle{order:-1;position:sticky;top:0;z-index:2;background:var(--surface);margin-bottom:var(--s1)}
   .filter-row{gap:var(--s1);margin-bottom:var(--s1)}
   .sort-row{gap:var(--s1);margin-top:var(--s1)}
   .layer-seg{margin-bottom:var(--s2)}
@@ -680,7 +687,7 @@ button,input,select{font-family:inherit}
      実測: 390×780でパネルは331px、そのうち約296pxがコントロールで埋まり、
      最初のカードは上から731px＝初期画面に店が1軒も映っていなかった。
      タップ標的40pxは下げられない（a11y要件）ので、枠の数を減らすしかない。
-     地図の取り分(45%)は2026-08-07に是正済みの値なので触らない。
+     2026-10-22: 開いている間はパネルを85%へ広げ、長い学校カードにも一覧領域を確保する。
      `!important` は data-layer-only / data-mode-only をJSがインラインstyleで
      出し入れするため（インラインstyleに勝つ必要がある）。 */
   body:not(.more-open) .filter-row[data-layer-only]{display:none!important}
@@ -697,8 +704,7 @@ button,input,select{font-family:inherit}
   .card-chips .card-chip{max-width:calc(50% - var(--s1))}
 
   /* ---- 外食モード (D4) ---- */
-  /* The header is 44px here and the h1 already fills it, so the mode switch
-     drops its emoji-plus-word to the word and keeps a 40px tap target. */
+  /* Compact modes retain their 40px tap targets. */
   .mode-seg{margin-left:var(--s2)}
   .mode-btn{min-height:40px;padding:0 var(--s2);font-size:var(--fs-label)}
   #toggleVisited{min-height:40px;padding:6px 2px;font-size:var(--fs-xs)}
@@ -711,21 +717,21 @@ button,input,select{font-family:inherit}
   .card-main{padding:var(--s2) var(--s3)}
   .visitbox{padding:var(--s2)}
   .data-area{font-size:var(--fs-label)}
-  /* The bar is the last thing above the footer; it must not eat the list. */
-  /* ヘッダー44pxの中で、切り替えボタンと取り合う。名前が長くても省略記号で
-     受け、💾ボタンは絵文字だけに縮める（ラベルはJS側で切り替える）。 */
-  .savebar{margin-left:var(--s1);gap:var(--s1)}
-  /* 44pxのヘッダーで空くのは実測128px。全文206pxは入らないので、後半(いつ保存
-     したか)と💾のラベルを落とし、名前だけは必ず残す。落とした情報はデータ管理
-     画面と title 属性が持っている。 */
-  .sb-tail,.sb-btn-label{display:none}
-  .savebar-link{padding:1px 6px}
+  /* Save status remains in the header when the list is collapsed. */
+  .savebar{grid-column:1 / -1;margin-left:0;gap:var(--s2);justify-content:space-between;min-height:var(--touch-min);border-top:var(--hairline-width) solid var(--hairline);font-size:var(--fs-xs)}
+  /* Keep the account and action label; full timing is in data management. */
+  .sb-tail{display:none}
+  .sb-btn-label{display:inline}
+  .savebar-link{padding:var(--s1) var(--s3);min-height:var(--touch-min)}
   .toast{bottom:var(--s4);max-width:90vw}
   .disclosure{min-height:40px;padding:var(--s2) 0}
   .chip-toggle,.sort-btn,.sf-back,.fchip-clear,.btn-clear-all{min-height:40px}
   .search-clear{min-width:40px;min-height:40px;display:flex;align-items:center;justify-content:center;padding:0}
-  .chip-name{min-height:40px}
-  .chip-vis{width:24px;height:24px}
+  .chip-name{min-height:40px;min-width:var(--touch-min)}
+  .chip-icon{display:none}
+  .chip-vis[aria-pressed]{position:relative;width:var(--touch-min);height:var(--touch-min);margin-left:0;border:none;background:transparent;color:transparent}
+  .chip-vis::before{content:"";position:absolute;width:var(--check-size);height:var(--check-size);border:var(--hairline-width) solid var(--text-2);border-radius:var(--s1);background:var(--surface)}
+  .chip-vis[aria-pressed="true"]::before{content:"✓";display:flex;align-items:center;justify-content:center;background:var(--accent);border-color:var(--accent);color:var(--surface)}
   .data-details>summary{min-height:40px;display:flex;align-items:center}
   .info-tab{min-height:40px}
   .dining-evidence summary,.dining-previous summary{min-height:var(--touch-min)}
@@ -742,19 +748,18 @@ button,input,select{font-family:inherit}
   .fchip{flex-shrink:0}
 
   .condo-card{padding:var(--s2) var(--s3)}
-  .card-name{font-size:var(--fs-sm)}
+  .card-name{font-size:var(--fs-md)}
   .card-hero{font-size:var(--fs-md)}
   .skel-card{padding:var(--s2) var(--s3)}
   .empty-state{padding:var(--s4) var(--s3)}
   .panel-footer{padding:var(--s1) var(--s2)}
-  .map-legend{bottom:var(--s2);left:var(--s2);padding:var(--s2);max-width:70vw}
+  .map-legend{bottom:calc(var(--mobile-panel) + var(--s2));left:var(--s2);padding:var(--s2);max-width:70vw;max-height:calc(100% - var(--mobile-panel) - var(--s4));min-height:var(--touch-min);overflow-y:auto;overscroll-behavior:contain}
   .tier-badge{width:12px!important;height:12px!important;line-height:12px!important;font-size:8px!important}
 
-  /* ---- Detail overlay: a sheet over the map, not a full-height column.
-     bottom:auto releases the base rule's top/bottom stretch so max-height can
-     actually cap it; the header inside stays sticky and the body scrolls. ---- */
-  .info-overlay{top:0;bottom:auto;left:var(--s2);right:var(--s2);width:auto;max-width:none;max-height:calc(55% - var(--s2));overflow-y:auto;border-radius:var(--r-card)}
-  .info-name{font-size:var(--fs-md)}
+  /* The foreground detail owns the content area; CSS visibility also removes
+     covered controls from keyboard navigation and reverses on desktop resize. */
+  .info-overlay{top:var(--s2);bottom:var(--s2);left:var(--s2);right:var(--s2);width:auto;max-width:none;max-height:none;overflow-y:auto;border-radius:var(--r-card)}
+  .info-name{font-size:var(--fs-lg)}
 
   /* ---- 学費くらべ ---- */
   .sf-header{padding:var(--s2)}
@@ -766,6 +771,15 @@ button,input,select{font-family:inherit}
      折りたたみもドロップダウンも要らない。 */
   .area-jump button{font-size:var(--fs-label);padding:var(--s1) var(--s2);min-height:40px}
   .aj-label{font-size:var(--fs-label)}
+  .leaflet-control-zoom a{width:var(--touch-min);height:var(--touch-min);line-height:var(--touch-min)}
+  .leaflet-control-zoom{margin-bottom:calc(var(--touch-min) + var(--s3))}
+  body.more-open .leaflet-control-zoom{display:none}
+  .panel-arrow{display:inline-block;transform:rotate(90deg)}
+  .panel-caption{display:inline;margin-left:var(--s1)}
+}
+@media(max-width:380px){
+  .main{--mobile-panel:60%}
+  .layer-seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 </style>
 </head>
@@ -814,7 +828,7 @@ button,input,select{font-family:inherit}
        the list, the filters and the map stay operable behind it. Its
        aria-label is rewritten with the selected record's name by info.js. -->
   <div class="info-overlay" id="infoOverlay" role="dialog" aria-modal="false" aria-label="詳細" tabindex="-1"><div id="infoContent"></div></div>
-  <button class="toggle-panel" id="toggleBtn" aria-label="一覧パネルを閉じる" aria-expanded="true" aria-controls="panel" onclick="togglePanel()">&#9664;</button>
+  <button class="toggle-panel" id="toggleBtn" aria-label="一覧パネルを閉じる" aria-expanded="true" aria-controls="panel" onclick="togglePanel()"><span class="panel-arrow" aria-hidden="true">&#9654;</span><span class="panel-caption">一覧</span></button>
   <aside class="panel" id="panel" aria-label="検索と一覧">
     <!-- Each figure is tied to its caption with aria-labelledby: on its own,
          「271」 tells a screen-reader user nothing. Shown is a live region so a
@@ -838,19 +852,19 @@ button,input,select{font-family:inherit}
       <div class="layer-seg" id="layerSeg" role="group" aria-label="表示する種別">
         <div class="layer-chip active" data-layer="condo">
           <button type="button" class="chip-vis" aria-pressed="true" aria-label="物件を地図に表示" onclick="toggleLayerVisible('condo')">✓</button>
-          <button type="button" class="chip-name" aria-current="true" onclick="setLayer('condo')">🏠 物件</button>
+          <button type="button" class="chip-name" aria-current="true" onclick="setLayer('condo')"><span class="chip-icon">🏠 </span>物件</button>
         </div>
         <div class="layer-chip" data-layer="school">
           <button type="button" class="chip-vis" aria-pressed="false" aria-label="学校を地図に表示" onclick="toggleLayerVisible('school')">✓</button>
-          <button type="button" class="chip-name" aria-current="false" onclick="setLayer('school')">🎓 学校</button>
+          <button type="button" class="chip-name" aria-current="false" onclick="setLayer('school')"><span class="chip-icon">🎓 </span>学校</button>
         </div>
         <div class="layer-chip" data-layer="commercial">
           <button type="button" class="chip-vis" aria-pressed="false" aria-label="商業施設を地図に表示" onclick="toggleLayerVisible('commercial')">✓</button>
-          <button type="button" class="chip-name" aria-current="false" onclick="setLayer('commercial')">🛒 商業</button>
+          <button type="button" class="chip-name" aria-current="false" onclick="setLayer('commercial')"><span class="chip-icon">🛒 </span>商業</button>
         </div>
         <div class="layer-chip" data-layer="dining">
           <button type="button" class="chip-vis" aria-pressed="false" aria-label="飲食店を地図に表示" onclick="toggleLayerVisible('dining')">✓</button>
-          <button type="button" class="chip-name" aria-current="false" onclick="setLayer('dining')" title="外食モードを開く">🍽 飲食 ↗</button>
+          <button type="button" class="chip-name" aria-current="false" onclick="setLayer('dining')" title="外食モードを開く"><span class="chip-icon">🍽 </span>飲食<span class="chip-icon"> ↗</span></button>
         </div>
       </div>
 

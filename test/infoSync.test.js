@@ -18,7 +18,7 @@ import {
 } from '../src/state.js';
 import { initPersonal, getEntry } from '../src/data/personal.js';
 import { setOnPersonalChange, dineVisit, eatoutActive } from '../src/ui/dining.js';
-import { applyFilters } from '../src/ui/list.js';
+import { applyFilters, setMode, setView } from '../src/ui/list.js';
 import { parseRestaurants } from '../src/data/load.js';
 import { calcLedgerScores } from '../src/domain/diningScore.js';
 import { selectCondo, selectNearby, closeInfo, refreshInfoIfOpen } from '../src/ui/info.js';
@@ -63,6 +63,8 @@ function makeNode(){
     getAttribute(k){ return this.attrs[k]; },
     querySelector: () => null,
     querySelectorAll: () => [],
+    focus(){ document.activeElement = this; },
+    contains(node){ return node === this; },
     appendChild(){}, scrollIntoView(){},
   };
 }
@@ -93,6 +95,34 @@ beforeEach(() => {
 afterEach(() => {
   closeInfo();
   delete globalThis.document;
+});
+
+it('別の対象を開くと、以前読んでいた詳細のスクロール位置を引き継がない', () => {
+  setAppMode('home');
+  selectCondo(DEWAKAN.name);
+  document.getElementById('infoOverlay').scrollTop = 800;
+  selectCondo(SCHOOL.name);
+  expect(document.getElementById('infoOverlay').scrollTop).toBe(0);
+});
+
+it('外食の詳細を開いてから住まいへ切り替えると、個人記録の詳細を閉じる', () => {
+  setAppMode('eatout');
+  setActiveLayer('dining');
+  setHomeLayer('condo');
+  selectCondo(DEWAKAN.name);
+  expect(document.getElementById('infoContent').innerHTML).toContain('わたしの記録');
+  setMode('home');
+  expect(document.getElementById('infoOverlay').classList.contains('active')).toBe(false);
+});
+
+it('詳細からデータ管理へ進むと、詳細を閉じて管理画面を操作できる', () => {
+  setAppMode('eatout');
+  setActiveLayer('dining');
+  setListView('ledger');
+  selectCondo(DEWAKAN.name);
+  setView('data');
+  expect(listView).toBe('data');
+  expect(document.getElementById('infoOverlay').classList.contains('active')).toBe(false);
 });
 
 it('除名した店を古いリンクから選んでも詳細を開かない', () => {
@@ -193,6 +223,28 @@ describe('X1: 訪問済みを押すと開いているオーバーレイが描き
     dineVisit(DEWAKAN.id);
     refreshInfoIfOpen();
     expect(document.getElementById('infoContent').innerHTML).toContain('>✓ 訪問済み<');
+  });
+
+  it.each([true, false])('詳細の再描画で旧ボタンを失っても、操作位置と閉じた後の復帰を保つ（対応ボタン=%s）', (hasReplacement) => {
+    selectCondo(DEWAKAN.name);
+    const overlay = document.getElementById('infoOverlay');
+    const content = document.getElementById('infoContent');
+    const oldButton = makeNode();
+    const newButton = makeNode();
+    oldButton.setAttribute('onclick', `dineVisit('${DEWAKAN.id}')`);
+    newButton.setAttribute('onclick', oldButton.getAttribute('onclick'));
+    overlay.contains = node => [overlay, oldButton, newButton].includes(node);
+    overlay.querySelectorAll = () => hasReplacement ? [newButton] : [];
+    let html = content.innerHTML;
+    Object.defineProperty(content, 'innerHTML', {
+      get: () => html,
+      set: value => { html = value; document.activeElement = null; },
+    });
+    oldButton.focus();
+    refreshInfoIfOpen();
+    expect(document.activeElement).toBe(hasReplacement ? newButton : overlay);
+    closeInfo();
+    expect(document.activeElement).toBe(document.getElementById('fSearch'));
   });
 });
 
